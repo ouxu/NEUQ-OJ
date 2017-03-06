@@ -1,0 +1,32 @@
+.status-table{
+    &-warp{
+        background-color: #fff;
+    }
+    &-header{
+        display: flex;
+        justify-content: space-between;
+        padding: 8px;
+        &-title {
+            font-size: 14px;
+            line-height: 28px;
+            padding-left: 8px;
+        }
+        &-other {
+            input {
+                width: 200px;
+                margin-right: 8px;
+            }
+            &-select {
+                margin-right: 8px;
+            }
+        }
+    }
+}
+
+.status {
+    &-id,&-problem-id,&-user-id,&-user-name,&-result {
+        overflow: hidden;
+        word-break:keep-all;/* 不换行 */
+        white-space:nowrap;/* 不换行 */
+    }
+}

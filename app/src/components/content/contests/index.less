@@ -1,0 +1,29 @@
+.contests-table {
+    &-wrap{
+        background-color: #fff;
+    }
+    &-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px;
+        &-title{
+            font-size: 14px;
+            line-height: 28px;
+            padding-left: 8px;
+        }
+
+    }
+}
+
+.contests{
+    &-id,&-title,&creator-name,&-status {
+        overflow: hidden;
+        word-break:keep-all;/* 不换行 */
+        white-space:nowrap;/* 不换行 */
+    }
+    &-status{
+        &-progress{
+            width: 120px;
+        }
+    }
+}

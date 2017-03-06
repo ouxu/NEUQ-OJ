@@ -1,0 +1,40 @@
+.problem-table{
+    &-warp{
+        background-color: #fff;
+    }
+    &-header{
+        display: flex;
+        justify-content: space-between;
+        padding: 8px;
+        &-title {
+            font-size: 14px;
+            line-height: 28px;
+            padding-left: 8px;
+        }
+
+    }
+}
+
+.problem {
+    &-id,&-diff,&-title,&-source {
+        overflow: hidden;
+        word-break:keep-all;/* 不换行 */
+        white-space:nowrap;/* 不换行 */
+    }
+}
+
+
+.problem-title {
+    padding: 0;
+    &-tags {
+        float: right;
+        margin: auto 5px -10px auto;
+    }
+    @media screen and (max-width: 920px) {
+        .problem-title-tags {
+            display: none;
+        }
+    }
+}
+
+

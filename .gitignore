@@ -1,0 +1,8 @@
+node_modules
+app/dist/
+npm-debug.log
+.idea
+.DS_Store
+gulpfile.js
+app/build/
+

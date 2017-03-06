@@ -1,0 +1,79 @@
+body {
+  background: #edf4f5;
+}
+
+.ant-layout-aside {
+  min-height: 100%;
+  .ant-layout-sider{
+    height: 100%;
+    width: 160px;
+    background: #404040;
+
+    //position: fixed;
+    //left: 0;
+
+    //other way
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow: visible;
+    padding-bottom: 24px;
+
+    transition: all 0.3s ease-out;
+
+
+  }
+  .ant-aside-action {
+    height: 42px;
+    width: 160px;
+    position: fixed;
+    bottom: 0;
+    background: #656565;
+    color: #fff;
+    text-align: center;
+    line-height: 42px;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+  }
+  .ant-layout-main {
+    box-sizing: border-box;
+
+    position: absolute;
+    top: 0;
+    left: 160px;
+    right: 0;
+    bottom: 0;
+
+    overflow-y: auto;
+
+    //margin-left: 160px;
+    transition: all 0.3s ease-out;
+    .main-content {
+      margin: 16px 16px 58px 16px;
+    }
+  }
+
+}
+.ant-layout-aside-collapse {
+  .ant-layout-sider{
+    width: 64px;
+  }
+  .ant-aside-action {
+    width: 64px;
+    transition: all 0.3s ease-out;
+  }
+  .ant-layout-main {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 64px;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    //margin-left: 64px;
+    //transition: all 0.3s ease-out;
+  }
+}
+
+

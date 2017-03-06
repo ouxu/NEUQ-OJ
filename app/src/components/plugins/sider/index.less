@@ -1,0 +1,80 @@
+.ant-layout-logo {
+  height: 32px;
+  margin: 12px auto auto 12px;
+  .brand-logo{
+    display: inline-block;
+    animation: fadeInFromNone 0.5s ease-out;
+  }
+}
+.ant-menu {
+  margin-bottom: 20px;
+  .ant-menu-item {
+    margin: 16px 0;
+    .nav-text {
+      display: inline-block;
+      animation: fadeInFromNone 0.5s ease-out;
+      font-size: 14px;
+      line-height: 16px;
+      padding: 13px 0;
+      .anticon{
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+#sidernormal {
+  .hideitem {
+    display: none;
+    animation: fadeNoneFromIn 0.5s ease-out;
+  }
+}
+
+#sidercollapse {
+  .hideitem {
+    display: inline-block;
+    animation: fadeInFromNone 0.5s ease-out;
+    font-size: 16px;
+    .sidericon{
+      padding-right: 10px;
+    }
+  }
+  .showitem {
+    display: none;
+    animation: fadeNoneFromIn 0.5s ease-out;
+    //max-height: 0;
+  }
+}
+
+@keyframes fadeInFromNone {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+
+  1% {
+    display: block;
+    opacity: 0;
+  }
+
+  100% {
+    display: block;
+    opacity: 1;
+  }
+}
+@keyframes fadeNoneFromIn {
+  0% {
+    display: block;
+    opacity: 0;
+  }
+
+  1% {
+    display: none;
+    opacity: 0;
+  }
+
+  100% {
+    display: none;
+    opacity: 1;
+  }
+}
