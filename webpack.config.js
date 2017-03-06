@@ -2,15 +2,17 @@ var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin'); //抽取CSS文件插件
 var OpenBrowserPlugin = require('open-browser-webpack-plugin'); //自动打开浏览器插件
+var Dashboard = require('webpack-dashboard');
+var DashboardPlugin = require('webpack-dashboard/plugin');
+var dashboard = new Dashboard();
 
 module.exports = {
     // 配置服务器
     devServer: {
         historyApiFallback: true,
         hot: true,
-        progress: true,
         contentBase: "./app",
-        port: 8081
+        port: 8080,
     },
 
     // 配置入口
@@ -42,6 +44,7 @@ module.exports = {
         // 如需jquery请解锁
         // new webpack.ProvidePlugin({ $: "jquery" }),
         new webpack.HotModuleReplacementPlugin(),
-        new OpenBrowserPlugin({ url: 'http://localhost:8080' })
+        new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
+        new DashboardPlugin(dashboard.setData)
     ]
 };

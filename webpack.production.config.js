@@ -1,7 +1,9 @@
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin'); //抽取CSS文件插件
-
+var Dashboard = require('webpack-dashboard');
+var DashboardPlugin = require('webpack-dashboard/plugin');
+var dashboard = new Dashboard();
 module.exports = {
     entry: {
         pages: __dirname +'/app/src/main.js',
@@ -38,6 +40,8 @@ module.exports = {
                 warnings: false
             }
         }),
+        new DashboardPlugin(dashboard.setData),
+
         // 配置环境变量到Production，防止控制台警告
         new webpack.optimize.DedupePlugin(),
         new webpack.DefinePlugin({

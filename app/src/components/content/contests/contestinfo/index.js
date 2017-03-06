@@ -22,7 +22,7 @@ class ContestInfo extends React.Component {
         },{
             title: '状态',
             dataIndex: 'user_status',
-            width: '9%',
+            width: '10%',
             key: 'contest-info-status',
             className: 'contest-info-status over-hidden'
         },{

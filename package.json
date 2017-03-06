@@ -4,8 +4,8 @@
   "description": "",
   "main": "app/src/main.js",
   "scripts": {
-    "build": "rm -rf ./app/dist/* && cp ./app/favicon.ico ./app/dist/ && webpack  --progress --colors --config  webpack.production.config.js",
-    "start": "webpack-dev-server --progress --inline --hot --colors",
+    "build": "rm -rf ./app/dist/* && cp ./app/favicon.ico ./app/dist/ && webpack  --config  webpack.production.config.js",
+    "start": "webpack-dev-server --config ",
     "upload": "gulp inject && gulp --colors",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
@@ -16,6 +16,7 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-runtime": "^6.11.6",
     "console-polyfill": "^0.2.2",
+    "gulp": "^3.9.1",
     "gulp-rev-collector": "^1.0.5",
     "immutable": "^3.8.1",
     "moment": "^2.15.1",
@@ -36,6 +37,7 @@
     "whatwg-fetch": "^2.0.1"
   },
   "devDependencies": {
+    "@kadira/storybook": "^2.21.0",
     "babel-core": "6.x",
     "babel-eslint": "^7.1.1",
     "babel-loader": "6.x",
@@ -70,8 +72,8 @@
     "style-loader": "~0.13.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.16.3",
-    "@kadira/storybook": "^2.21.0"
+    "webpack-dashboard": "^0.3.0",
+    "webpack-dev-server": "^1.16.3"
   },
   "keywords": [
     "es6",
