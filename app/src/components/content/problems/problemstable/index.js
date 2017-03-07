@@ -24,7 +24,6 @@ class ProblemsTable extends React.Component {
         this.props.getProblemTable(page,size);
     }
 
-    //TODO 搜索分页，难度分布
     onInputChange(e){
         this.setState({searchText: e.target.value})
     }

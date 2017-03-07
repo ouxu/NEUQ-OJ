@@ -20,8 +20,8 @@ class ContestPage extends React.Component {
     }
 
     componentWillMount() {
-        let page = sessionStorage.getItem("neuq_oj.contestspagecurr")||1;
-        let size = sessionStorage.getItem("neuq_oj.contestspagesize")||20;
+        let page = sessionStorage.getItem("neuq_oj.contestspagecurr") || 1;
+        let size = sessionStorage.getItem("neuq_oj.contestspagesize") || 20;
         this.props.getContestsTable(page, size);
 
         let presentTime = new Date();
@@ -62,10 +62,11 @@ class ContestPage extends React.Component {
             running: (time, start_time, end_time) => (
                 <div>
                     <Progress
-                        active
-                        percent={parseInt(100 * (end_time - this.state.presentTime) / (end_time - start_time))}
+                        status="active"
+                        percent={parseInt(100 * ( this.state.presentTime-start_time) / (end_time - start_time))}
                         strokeWidth={5}
                         className='contests-status-progress'
+                        format={percent=>percent}
                     />
                     进行中 @ {time}
                 </div>
@@ -89,21 +90,29 @@ class ContestPage extends React.Component {
             className: 'status-none'
         }, {
             title: '#',
-            render: (record) => (
-                <span>
-                    <Link to={`contests/${record.id}`}> {record.id}</Link>
-                </span>
-            ),
+            render: (record) => {
+                const start_time = new Date(record.start_time)
+                const start_status = (this.state.presentTime > start_time)
+                return start_status ?
+                    (<span>
+                        <Link to={`contests/${record.id}`}> {record.id}</Link>
+                    </span>
+                    ) : (<span>{record.id}</span>)
+            },
             width: '7%',
             key: 'contests-id',
             className: 'contests-id'
         }, {
             title: '标题',
-            render: (record) => (
-                <span>
-                    <Link to={`contests/${record.id}`}> {record.title}</Link>
-                </span>
-            ),
+            render: (record) => {
+                const start_time = new Date(record.start_time)
+                const start_status = (this.state.presentTime > start_time)
+                return start_status ?
+                    (<span>
+                        <Link to={`contests/${record.id}`}> {record.title}</Link>
+                     </span>
+                    ) : (<span>{record.title}</span>)
+            },
             width: '30%',
             key: 'contests-title',
             className: 'contests-title'
@@ -118,7 +127,6 @@ class ContestPage extends React.Component {
             key: 'contests-creator-name'
         }, {
             title: '状态',
-            //TODO private解释
             render: (record) => {
                 const start_time = new Date(record.start_time)
                 const end_time = new Date(record.end_time)

@@ -81,7 +81,6 @@ class StatusTable extends React.Component {
 
 
 
-    //TODO 题目运行结果 添加超链接 userId 问题
     render (){
         const {data}=this.props;
 

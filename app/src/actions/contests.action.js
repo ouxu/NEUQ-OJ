@@ -4,7 +4,7 @@
 import {SET_CONTESTS_TABLE,SET_CONTEST} from './type'
 import API from '../api';
 
-import codeHelper from '../utils/checkData';
+import codeHelper from '../utils/codeHelper';
 
 /**
  * 获取竞赛列表

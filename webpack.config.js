@@ -12,7 +12,7 @@ module.exports = {
         historyApiFallback: true,
         hot: true,
         contentBase: "./app",
-        port: 8080,
+        port: 8080
     },
 
     // 配置入口
@@ -45,6 +45,6 @@ module.exports = {
         // new webpack.ProvidePlugin({ $: "jquery" }),
         new webpack.HotModuleReplacementPlugin(),
         new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
-        new DashboardPlugin(dashboard.setData)
+        // new DashboardPlugin(dashboard.setData)
     ]
 };
