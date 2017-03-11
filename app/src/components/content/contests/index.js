@@ -4,8 +4,10 @@
 import React from "react";
 import {Link} from "react-router";
 import QueueAnim from "rc-queue-anim";
-import {Table, Progress, Input} from "antd";
+import {Table, Progress, Input, Icon, Modal} from "antd";
 import "./index.less";
+import goto from "../../../utils/goto";
+import newDate from "../../../utils/newDate";
 
 const Search = Input.Search;
 class ContestPage extends React.Component {
@@ -13,13 +15,20 @@ class ContestPage extends React.Component {
         super(props);
         this.state = {
             searchText: '',
-            presentTime: ''
-        }
+            presentTime: '',
+            visible: false,
+            contestId: null,
+            password: '',
+        };
         this.onInputChange = this.onInputChange.bind(this);
-        this.onSeacrch = this.onSeacrch.bind(this)
+        this.onPasswordChange = this.onPasswordChange.bind(this);
+        this.onSeacrch = this.onSeacrch.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
+        this.showModal = this.showModal.bind(this);
+        this.handleok = this.handleok.bind(this)
     }
 
-    componentWillMount() {
+    componentDidMount() {
         let page = sessionStorage.getItem("neuq_oj.contestspagecurr") || 1;
         let size = sessionStorage.getItem("neuq_oj.contestspagesize") || 20;
         this.props.getContestsTable(page, size);
@@ -34,6 +43,7 @@ class ContestPage extends React.Component {
         this.setState({searchText: e.target.value})
     }
 
+
     onSeacrch() {
         const searchText = encodeURIComponent(this.state.searchText);
         if (searchText.length < 1) {
@@ -45,8 +55,46 @@ class ContestPage extends React.Component {
         }
     }
 
+    showModal(id, pri) {
+        console.log(id,pri);
+        if (pri === 1) {
+            this.setState({
+                visible: true,
+                contestId: id
+            });
+        } else {
+            this.setState({
+                contestId: id
+            });
+            goto("contests/" + id)
+        }
+    }
+
+    handleCancel() {
+        this.setState({
+            visible: false,
+        })
+    }
+
+    onPasswordChange(e) {
+        this.setState({password: e.target.value})
+    }
+
+    handleok() {
+        const body = {password: this.state.password};
+        this.props.joinContest(this.state.contestId, body);
+        this.setState({
+            visible: false,
+        })
+    }
+
     render() {
         const {data}=this.props;
+        const privatestatus = [
+            '公开',
+            '加密',
+            '私有'
+        ];
         const progress = {
             unstart: (time) => (
                 <div>
@@ -63,10 +111,10 @@ class ContestPage extends React.Component {
                 <div>
                     <Progress
                         status="active"
-                        percent={parseInt(100 * ( this.state.presentTime-start_time) / (end_time - start_time))}
+                        percent={parseInt(100 * ( this.state.presentTime - start_time) / (end_time - start_time))}
                         strokeWidth={5}
                         className='contests-status-progress'
-                        format={percent=>percent}
+                        format={percent => percent}
                     />
                     进行中 @ {time}
                 </div>
@@ -82,7 +130,8 @@ class ContestPage extends React.Component {
                     已结束 @ {time}
                 </div>
             )
-        }
+        };
+
         const columns = [{
             title: '',
             width: '1%',
@@ -91,8 +140,8 @@ class ContestPage extends React.Component {
         }, {
             title: '#',
             render: (record) => {
-                const start_time = new Date(record.start_time)
-                const start_status = (this.state.presentTime > start_time)
+                const start_time = newDate(record.start_time);
+                const start_status = (this.state.presentTime > start_time);
                 return start_status ?
                     (<span>
                         <Link to={`contests/${record.id}`}> {record.id}</Link>
@@ -105,11 +154,11 @@ class ContestPage extends React.Component {
         }, {
             title: '标题',
             render: (record) => {
-                const start_time = new Date(record.start_time)
-                const start_status = (this.state.presentTime > start_time)
+                const start_time = newDate(record.start_time);
+                const start_status = (this.state.presentTime > start_time);
                 return start_status ?
-                    (<span>
-                        <Link to={`contests/${record.id}`}> {record.title}</Link>
+                    (<span onClick={this.showModal = this.showModal.bind(this, record.id, record.private)}>
+                            <Link> {record.title}</Link>
                      </span>
                     ) : (<span>{record.title}</span>)
             },
@@ -128,10 +177,10 @@ class ContestPage extends React.Component {
         }, {
             title: '状态',
             render: (record) => {
-                const start_time = new Date(record.start_time)
-                const end_time = new Date(record.end_time)
-                const start_status = (this.state.presentTime < start_time)
-                const end_status = (this.state.presentTime > end_time)
+                const start_time = newDate(record.start_time);
+                const end_time = newDate(record.end_time);
+                const start_status = (this.state.presentTime < start_time);
+                const end_status = (this.state.presentTime > end_time);
                 return (
                     <div>
                         {start_status ? progress.unstart(record.start_time) : ''}
@@ -151,7 +200,7 @@ class ContestPage extends React.Component {
             //TODO private解释
             render: (record) =>
                 (<span>
-                    {record.private ? '私有' : '公开'}
+                    {privatestatus[record.private]}
                 </span>)
             ,
             width: '8%',
@@ -174,9 +223,9 @@ class ContestPage extends React.Component {
 
             },
             onChange: (current) => {
-                sessionStorage.setItem("neuq_oj.contestspagecurr", current)
+                sessionStorage.setItem("neuq_oj.contestspagecurr", current);
                 const searchText = encodeURIComponent(this.state.searchText);
-                const pageSize = sessionStorage.getItem("neuq_oj.contestspagesize", pageSize)
+                const pageSize = sessionStorage.getItem("neuq_oj.contestspagesize", pageSize);
                 if (searchText.length < 1) {
                     this.props.getContestsTable(current, pageSize)
                 } else {
@@ -209,6 +258,20 @@ class ContestPage extends React.Component {
                     pagination={pagination}
                     key="contests-2"
                 />
+                <Modal title="请输入密码"
+                       visible={this.state.visible}
+                       onCancel={this.handleCancel}
+                       width={300}
+                       onOk={this.handleok}
+                >
+                    <Input addonBefore={<Icon type="lock"/>}
+                           type="password"
+                           placeholder="Password"
+                           size="large"
+                           onChange={this.onPasswordChange}
+                    />
+
+                </Modal>
 
             </QueueAnim>
         )

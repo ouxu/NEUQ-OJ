@@ -5,7 +5,7 @@ import React from 'react';
 
 import {Link} from 'react-router'
 import QueueAnim from 'rc-queue-anim';
-import { Table,Tag,Input} from 'antd';
+import { Table,Tag,Input,Icon} from 'antd';
 
 import './index.less'
 const Search = Input.Search;
@@ -14,7 +14,7 @@ class ProblemsTable extends React.Component {
         super(props);
         this.state= {
             searchText: ''
-        }
+        };
         this.onInputChange=this.onInputChange.bind(this);
         this.onSeacrch=this.onSeacrch.bind(this)
     }
@@ -43,6 +43,10 @@ class ProblemsTable extends React.Component {
     render (){
         const {data}=this.props;
         const difficultyArr=['简单','中等','困难'];
+        const accepted={
+            Y: <Icon className="status-yes" type="check-circle" />,
+            N: <Icon className="status-no" type="close-circle" />
+        };
         const columns = [{
             title: '',
             width: '1%',
@@ -50,7 +54,15 @@ class ProblemsTable extends React.Component {
             className: 'status-none'
         },{
             title: '状态',
-            dataIndex: 'user_status',
+            render: (record)=> {
+                let status=record.user_status;
+                if (status==='Y')
+                    return accepted.Y;
+                else if (status==='N')
+                    return accepted.N;
+                else
+                    return null
+            },
             width: '7%',
             key: 'problem-status',
             className: 'problem-status'
@@ -131,16 +143,16 @@ class ProblemsTable extends React.Component {
 
             },
             onChange: (current) => {
-                sessionStorage.setItem("neuq_oj.problempagecurr",current)
+                sessionStorage.setItem("neuq_oj.problempagecurr",current);
                 const searchText = encodeURIComponent(this.state.searchText);
-                const pageSize=sessionStorage.getItem("neuq_oj.problempagesize",pageSize)
+                const pageSize=sessionStorage.getItem("neuq_oj.problempagesize",pageSize);
                 if (searchText.length<1){
                     this.props.getProblemTable(current,pageSize)
                 }else{
                     this.props.searchProblems(searchText,current,pageSize)
                 }
             },
-        }
+        };
         return (
             <QueueAnim className="problem-table-warp" delay={100}>
                 <div className="problem-table-header" key="problem-1">
@@ -159,8 +171,8 @@ class ProblemsTable extends React.Component {
                     columns={columns}
                     rowKey={record => `problem-${record.id}`}
                     dataSource={data}
-                        //bordered
-                        //分页
+                    //bordered
+                    //分页
                     pagination={pagination}
                     scroll={{ x: 768 }}
                     key="problem-2"

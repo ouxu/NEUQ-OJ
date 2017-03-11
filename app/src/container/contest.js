@@ -6,7 +6,7 @@ import ContestPage from '../components/content/contests';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {getContestsTable,searchContests} from '../actions';
+import {getContestsTable,searchContests,joinContest} from '../actions';
 
 class ContestsContainer extends React.Component{
     render (){
@@ -19,6 +19,7 @@ class ContestsContainer extends React.Component{
                     <ContestPage data={conteststable.data}
                                  getContestsTable={this.props.action.getContestsTable}
                                  searchContests={this.props.action.searchContests}
+                                 joinContest={this.props.action.joinContest}
                     />
                 }
             </div>
@@ -32,7 +33,7 @@ const mapStateToProps=(state)=>{
 }
 
 const mapDispatchToProps=(dispatch)=>{
-    const actions = {getContestsTable,searchContests};
+    const actions = {getContestsTable,searchContests,joinContest};
     const actionMap = {action: bindActionCreators(actions ,dispatch)};
     return actionMap;
 }

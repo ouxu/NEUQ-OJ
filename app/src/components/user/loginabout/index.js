@@ -19,7 +19,6 @@ class LoginAbout extends React.Component {
         super(props);
         this.state = {
             visible: false,
-            disavled: true
         };
         this.showModal = this.showModal.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -64,52 +63,52 @@ class LoginAbout extends React.Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
-        <li className="nav-ul-user">
-            <QueueAnim delay={150}>
-                <div className="userlogin-warp" key="userlogin-1">
-                    <Button className="nav-button" onClick={this.showModal}>登录 </Button>
-                    <span className="middle-warp"> | </span>
-                    <Button className="nav-button" onClick={this.gotoRegister}> 注册</Button>
-                </div>
-            </QueueAnim>
+            <li className="nav-ul-user">
+                <QueueAnim delay={150}>
+                    <div className="userlogin-warp" key="userlogin-1">
+                        <Button className="nav-button" onClick={this.showModal}>登录 </Button>
+                        <span className="middle-warp"> | </span>
+                        <Button className="nav-button" onClick={this.gotoRegister}> 注册</Button>
+                    </div>
+                </QueueAnim>
 
-            <Modal title="登录NEUQ-OJ"
-                   visible={this.state.visible}
-                   footer={null}  //清楚脚部回调
-                   onCancel={this.handleCancel}
-                   width={300}
-                   onOk={null}
-            >
-                <div className="login-wrap">
-                    <Form onSubmit={this.handleSubmit} >
-                        <FormItem>
-                            {getFieldDecorator('identifier', {
-                                rules: [{
-                                    required: true, message: '请输入UserName/手机号/邮箱',
-                                }],
-                            })(
-                                <Input addonBefore={<Icon type="user" />} placeholder="UserName/手机号/邮箱" />
-                            )}
-                        </FormItem>
-                        <FormItem>
-                            {getFieldDecorator('password', {
-                                rules: [{
-                                    pattern: verify.password, message: '请输入有效的密码(6-18位)',
-                                }, {
-                                    required: true, message: '请输入密码！',
-                                }],
-                            })(
-                                <Input addonBefore={<Icon type="lock" />} type="password" placeholder="Password" />
-                            )}
-                        </FormItem>
+                <Modal title="登录NEUQ-OJ"
+                       visible={this.state.visible}
+                       footer={null}  //清楚脚部回调
+                       onCancel={this.handleCancel}
+                       width={300}
+                       onOk={null}
+                >
+                    <div className="login-wrap">
+                        <Form onSubmit={this.handleSubmit} >
+                            <FormItem>
+                                {getFieldDecorator('identifier', {
+                                    rules: [{
+                                        required: true, message: '请输入UserName/手机号/邮箱',
+                                    }],
+                                })(
+                                    <Input addonBefore={<Icon type="user" />} placeholder="UserName/手机号/邮箱" />
+                                )}
+                            </FormItem>
+                            <FormItem>
+                                {getFieldDecorator('password', {
+                                    rules: [{
+                                        pattern: verify.password, message: '请输入有效的密码(6-18位)',
+                                    }, {
+                                        required: true, message: '请输入密码！',
+                                    }],
+                                })(
+                                    <Input addonBefore={<Icon type="lock" />} type="password" placeholder="Password" />
+                                )}
+                            </FormItem>
 
-                        <Button disabled={false} type="primary" htmlType="submit" id="login-btn">登录</Button>
-                        <a onClick={this.gotoRegister}>注册账号</a>
-                        <a className="login-form-forgot">忘记密码</a>
-                    </Form>
-                </div>
-            </Modal>
-        </li>
+                            <Button disabled={false} type="primary" htmlType="submit" id="login-btn">登录</Button>
+                            <a onClick={this.gotoRegister}>注册账号</a>
+                            <a className="login-form-forgot">忘记密码</a>
+                        </Form>
+                    </div>
+                </Modal>
+            </li>
         );
     }
 }

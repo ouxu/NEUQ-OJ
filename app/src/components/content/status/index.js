@@ -18,7 +18,7 @@ class StatusTable extends React.Component {
             result: null,
             language: null,
             user_id: null
-        }
+        };
         this.onInputUser=this.onInputUser.bind(this);
         this.onInputId=this.onInputId.bind(this);
         this.onSeacrch=this.onSeacrch.bind(this);
@@ -33,51 +33,51 @@ class StatusTable extends React.Component {
         this.props.getStatusTable(page,size);
     }
 
-    SelectResult=(value)=> {
+    SelectResult(value) {
         this.setState({
             result: value
         })
-    }
-    SelectLanguage=(value)=> {
+    };
+    SelectLanguage(value) {
         this.setState({
             language: value
         })
-    }
+    };
 
-    onInputUser=(e)=>{
+    onInputUser(e){
         const { value } = e.target;
         const reg = /^\d+$/;
         if ((!isNaN(value) && reg.test(value)) || value === '') {
             this.setState({user_id: value==''?null:value})
         }
 
-    }
-    onInputId=(e)=> {
+    };
+    onInputId(e) {
         const {value} = e.target;
         const reg = /^\d+$/;
         if ((!isNaN(value) && reg.test(value)) || value === '') {
             this.setState({problem_id: value == '' ? null : value})
         }
-    }
+    };
 
-    onSeacrch=()=>{
+    onSeacrch(){
         const searchobj=this.state;
         let searchText= urlEncode(searchobj);
         if (searchText.length<1){
-            let page = 1
-            let size= sessionStorage.getItem("neuq_oj.statuspagesize")
+            let page = 1;
+            let size= sessionStorage.getItem("neuq_oj.statuspagesize");
             this.props.getStatusTable(page,size);
         }else{
             this.props.searchStatus(searchText);
         }
-    }
+    };
 
-    Cancel=()=>{
+    Cancel(){
         this.setState({
             problem_id: null,
             user_id: null
         })
-    }
+    };
 
 
 
@@ -91,7 +91,7 @@ class StatusTable extends React.Component {
             showSizeChanger: true,
             onShowSizeChange: (current, pageSize) => {
                 const searchobj=this.state;
-                let searchText= urlEncode(searchobj)
+                let searchText= urlEncode(searchobj);
                 if (searchText.length<1){
                     this.props.getStatusTable(current,pageSize)
                 }else{
@@ -100,16 +100,16 @@ class StatusTable extends React.Component {
             },
             onChange: (current) => {
                 const searchobj=this.state;
-                let searchText= urlEncode(searchobj)
-                sessionStorage.setItem("neuq_oj.statuspagecurr",current)
-                const pageSize=sessionStorage.getItem("neuq_oj.statuspagesize",pageSize)
+                let searchText= urlEncode(searchobj);
+                sessionStorage.setItem("neuq_oj.statuspagecurr",current);
+                const pageSize=sessionStorage.getItem("neuq_oj.statuspagesize",pageSize);
                 if (searchText.length<1){
                     this.props.getStatusTable(current,pageSize)
                 }else{
                     this.props.searchStatus(searchText,current,pageSize)
                 }
             }
-        }
+        };
 
         return(
             <QueueAnim className="status-table-warp" delay={100}>
@@ -138,10 +138,10 @@ class StatusTable extends React.Component {
                         <Button type="primary" onClick={this.onSeacrch}>搜索</Button>
 
                         {/*<ButtonGroup>*/}
-                            {/*<Button type="primary" onClick={this.onSeacrch}>搜索</Button>*/}
-                            {/*<Tooltip title="结果状态和语言选择不清除!" placement='bottom'>*/}
-                                {/*<Button type="primary" icon="close-circle" onClick={this.Cancel}/>*/}
-                            {/*</Tooltip>*/}
+                        {/*<Button type="primary" onClick={this.onSeacrch}>搜索</Button>*/}
+                        {/*<Tooltip title="结果状态和语言选择不清除!" placement='bottom'>*/}
+                        {/*<Button type="primary" icon="close-circle" onClick={this.Cancel}/>*/}
+                        {/*</Tooltip>*/}
                         {/*</ButtonGroup>*/}
                     </div>
                 </div>
@@ -149,8 +149,8 @@ class StatusTable extends React.Component {
                        rowKey={record => `status-${record.id}`}
                        dataSource={data}
                        scroll={{ x: 960 }}
-                        //bordered
-                        //分页
+                    //bordered
+                    //分页
                        pagination={pagination}
                        key="status-1"
 

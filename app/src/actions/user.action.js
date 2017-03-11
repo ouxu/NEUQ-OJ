@@ -31,7 +31,7 @@ export function tokenVerify() {
                 localStorage.clear('neuq_oj.token')
                 localStorage.clear('neuq_oj.id')
                 message.error('登录过期')
-                window.history.go(0)
+                window.location.reload();
 
                 return false
             }
@@ -63,7 +63,7 @@ export function login(body) {
                 localStorage.setItem("neuq_oj.name", json.data.user.name);
                 localStorage.setItem("neuq_oj.id", json.data.user.id);
                 dispatch(setUserinfo(json.data.user));
-                window.history.go(0)
+                window.location.reload();
                 message.success('登录成功')
             } else {
                 codeHelper(json.code)
@@ -93,7 +93,7 @@ export function logout(){
         }).then((json)=> {
             if(json.code===0){
                 dispatch(clearUserinfo())
-                window.history.go(0)
+                window.location.reload();
                 message.success('登出成功')
             } else {
                 codeHelper(json.code)

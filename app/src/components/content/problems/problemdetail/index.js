@@ -14,9 +14,11 @@ import "codemirror/mode/clike/clike";
 import ProblemDes from "./problemdes";
 import API from "../../../../api";
 import codeHelper from "../../../../utils/codeHelper";
-
 const ButtonGroup = Button.Group;
 const Panel = Collapse.Panel;
+
+import 'es6-promise/dist/es6-promise.min.js';
+
 class ProblemDetail extends React.Component {
     constructor(props) {
         super(props)
@@ -106,36 +108,36 @@ class ProblemDetail extends React.Component {
     submitProblem(id, body) {
         const token = localStorage.getItem('neuq_oj.token');
         return token&&fetch(API.problem + id + '/submit', {
-            method: 'POST',
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                "token": token
-            },
-            body: JSON.stringify(body)
-        }).then((res) => {
-            return res.json()
-        }).then((json) => {
-            if (json.code === 0) {
-                return json.data.solution_id
-            } else {
-                codeHelper(json.code)
-            }
-        }).then((solution_id) => {
-            this.timer = setInterval(() => {
-                this.getResultData(solution_id);
-                let result = this.state.result;
-                console.log(result)
-                if (result > 3) {
-                    if (result>9) {
-                        this.getErrorInfo(solution_id,result)
-                    }
-                    clearInterval(this.timer);
+                method: 'POST',
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "token": token
+                },
+                body: JSON.stringify(body)
+            }).then((res) => {
+                return res.json()
+            }).then((json) => {
+                if (json.code === 0) {
+                    return json.data.solution_id
+                } else {
+                    codeHelper(json.code)
                 }
-            }, 1000)
-        }).catch((e) => {
-            console.log(e.message)
-        })
+            }).then((solution_id) => {
+                this.timer = setInterval(() => {
+                    this.getResultData(solution_id);
+                    let result = this.state.result;
+                    console.log(result)
+                    if (result > 3) {
+                        if (result>9) {
+                            this.getErrorInfo(solution_id,result)
+                        }
+                        clearInterval(this.timer);
+                    }
+                }, 1000)
+            }).catch((e) => {
+                console.log(e.message)
+            })
     }
 
 
@@ -171,7 +173,7 @@ class ProblemDetail extends React.Component {
             if (json.code === 0) {
                 const data = json.data;
                 await this.setStateAsync({
-                   errorinfo: data.error
+                    errorinfo: data.error
                 })
             } else {
                 codeHelper(json.code)

@@ -2,23 +2,55 @@
  * Created by out_xu on 17/3/5.
  */
 import React from "react";
-import {Card, Table, Icon, Col, Row, Button, Timeline,Progress} from "antd";
+import {Card, Table, Icon, Col, Row, Tabs, Spin} from "antd";
 import QueueAnim from "rc-queue-anim";
 import {Link} from "react-router";
 import ContestProgress from './contestprogress'
 import "./index.less";
+import newDate from '../../../../utils/newDate';
+const TabPane = Tabs.TabPane;
 
 class ContestInfo extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
+        this.state= {
+            time :new Date(),
+        }
     }
-    createMarkup = (html) => {
+
+
+    componentDidMount() {
+        this.timer = setInterval(() => {
+            this.setStateAsync({time:new Date()});
+            let end_time = newDate(this.props.data.contest_info.end_time);
+            if (this.state.time>end_time) {
+                clearInterval(this.timer);
+            }
+        }, 1000)
+    }
+    componentWillUnmount() {
+        // 如果存在this.timer，则使用clearTimeout清空。
+        // 如果你使用多个timer，那么用多个变量，或者用个数组来保存引用，然后逐个clear
+        this.timer && clearInterval(this.timer);
+    }
+
+    createMarkup=(html)=>{
         return {__html: html};
     };
+
+    setStateAsync(state) {
+        return new Promise((resolve) => {
+            this.setState(state, resolve);
+        });
+    }
 
 
     render() {
         const {contest_info, problem_info}= this.props.data;
+        const accepted={
+            Y: <Icon className="status-yes" type="check-circle" />,
+            N: <Icon className="status-no" type="close-circle" />
+        };
         const columns = [{
             title: '',
             width: '1%',
@@ -26,7 +58,15 @@ class ContestInfo extends React.Component {
             className: 'contest-info-none'
         }, {
             title: '状态',
-            dataIndex: 'user_status',
+            render: (record)=> {
+                let status=record.user_status;
+                if (status==='Y')
+                    return accepted.Y;
+                else if (status==='N')
+                    return accepted.N;
+                else
+                    return null
+            },
             width: '10%',
             key: 'contest-info-status',
             className: 'contest-info-status'
@@ -75,60 +115,58 @@ class ContestInfo extends React.Component {
         }];
 
         return (
-            <Card
-                className="contest-info-wrap"
-                bodyStyle={{padding: 0}}
-            >
-                <QueueAnim className="contest-info-wrap" delay={100}>
-                    <div className="contest-info-header" key='contest-info-header'>
+            <Spin spinning={!(contest_info).hasOwnProperty("id")}>
+                <Card
+                    className="contest-info-wrap"
+                    bodyStyle={{padding: 0}}
+                >
+                    <QueueAnim className="contest-info-wrap" delay={100}>
+                        <div className="contest-info-header" key='contest-info-header'>
 
-                        <h1 className="contest-info-header-title">
-                            <Link to={'/contests'}>
-                                <span> # Contest-</span>
-                            </Link>
-                            {contest_info.id}
-                            <span className="contest-info-header-title-sub">{contest_info.title}</span>
-                        </h1>
-                        {ContestProgress(contest_info.start_time,contest_info.end_time)}
-                        <p dangerouslySetInnerHTML={this.createMarkup(contest_info.description)}/>
-                    </div>
-                    <Row className="contest-info-content"
-                         type="flex"
-                         gutter={12}
-                         key='contest-info-content'
-                    >
-                        <Col className="contest-info-content-left" xs={{span: 24}} sm={{span: 16}}>
-                            <h2 >题目列表</h2>
-                            <Table columns={columns}
-                                   rowKey={record => `contest-${record.pid}`}
-                                   dataSource={problem_info}
-                                   scroll={{x: 680}}
-                                //size='small'
-                                   pagination={false}
-                                   key="result-1"
-                                   className="contest-info-content-table"
-                            />
-                        </Col>
-                        <Col className="contest-info-content-right" xs={{span: 24}} sm={{span: 8}}>
-                            <h2 >题目状态</h2>
-                            <Timeline className="contest-info-content-box">
-                                <Timeline.Item>Create by {contest_info.creator_name}</Timeline.Item>
-                                <Timeline.Item>Start time @{contest_info.start_time}</Timeline.Item>
-                                <Timeline.Item dot={<Icon type="clock-circle-o" style={{fontSize: '16px'}}/>}
-                                               color="red"
-                                >
-                                    Contest is running
-                                </Timeline.Item>
-                                <Timeline.Item>End time @{contest_info.end_time}</Timeline.Item>
-                            </Timeline>
+                            <h1 className="contest-info-header-title">
+                                <Link to={'/contests'}>
+                                    <span> # Contest-</span>
+                                </Link>
+                                {contest_info.id}
+                                <span className="contest-info-header-title-sub">{contest_info.title}</span>
+                            </h1>
+                            {ContestProgress(this.state.time,contest_info.start_time,contest_info.end_time)}
+                            <p dangerouslySetInnerHTML={this.createMarkup(contest_info.description)}/>
+                        </div>
 
+                        <Tabs defaultActiveKey="1" tabPosition="right" >
+                            <TabPane tab="题目列表" key="1">
+                                <Table columns={columns}
+                                       rowKey={record => `contest-${record.pid}`}
+                                       dataSource={problem_info}
+                                       scroll={{x: 680}}
+                                    //size='small'
+                                       pagination={false}
+                                       key="result-1"
+                                       className="contest-info-content-table"
+                                />
+                            </TabPane>
+                            <TabPane tab="排行榜" key="2">Content of Tab Pane 2</TabPane>
+                            <TabPane tab="Tab 3" key="3">Content of Tab Pane 3</TabPane>
+                        </Tabs>
 
-                        </Col>
+                        <Row className="contest-info-content"
+                             type="flex"
+                             gutter={12}
+                             key='contest-info-content'
+                        >
+                            <Col className="contest-info-content-left" xs={{span: 24}} sm={{span: 16}}>
 
-                    </Row>
+                            </Col>
+                            <Col className="contest-info-content-right" xs={{span: 24}} sm={{span: 8}}>
+                            </Col>
 
-                </QueueAnim>
-            </Card>
+                        </Row>
+
+                    </QueueAnim>
+                </Card>
+            </Spin>
+
         )
     }
 }
