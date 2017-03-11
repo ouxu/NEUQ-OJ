@@ -12,7 +12,7 @@ module.exports = {
         historyApiFallback: true,
         hot: true,
         contentBase: "./app",
-        port: 8081
+        port: 8080
     },
 
     // 配置入口

@@ -13,9 +13,9 @@ import jumpTo from '../utils/windowScroll'
 export function getProblemTable(page=1, size=20) {
     return (dispatch)=> {
         //将当前输入的页码存入sessionStorage
-        sessionStorage.setItem("neuq_oj.problempagecurr", page)
-        sessionStorage.setItem("neuq_oj.problempagesize", size)
-        const token = localStorage.getItem('neuq_oj.token')
+        sessionStorage.setItem("neuq_oj.problempagecurr", page);
+        sessionStorage.setItem("neuq_oj.problempagesize", size);
+        const token = localStorage.getItem('neuq_oj.token');
         return fetch(API.problems + '?page=' + page + '&size=' + size, {
             method: 'GET',
             headers: {
@@ -25,8 +25,9 @@ export function getProblemTable(page=1, size=20) {
             return res.json()
         }).then((json)=> {
             if (json.code === 0) {
-                sessionStorage.setItem("neuq_oj.problempagecount", json.total_count)
-                dispatch(setProblemList(json.data))
+                sessionStorage.setItem("neuq_oj.problempagecount", json.total_count);
+                dispatch(setProblemList(json.data));
+                jumpTo('navigation')
             } else {
                 codeHelper(json.code)
             }
@@ -48,15 +49,18 @@ const setProblemList = (data)=> {
             data
         }
     }
-}
+};
 
 /**
  * 获取某个题目
  * @param body
  */
-export function getProblemInfo(id) {
+export function getProblemInfo(params) {
+
+    const url= params.pnum?API.host+'contest/'+params.cid+'/problem/'+ params.pnum:API.host+'problem/'+params.id;
+
     return (dispatch)=>{
-        return fetch(API.host+'problem/'+id,{
+        return fetch(url,{
             method: 'GET'
         }).then((res)=> {
             return res.json()
@@ -83,7 +87,7 @@ const setProblemDetail = (data)=> {
             data
         }
     }
-}
+};
 
 /**
  * 搜索问题
@@ -91,8 +95,8 @@ const setProblemDetail = (data)=> {
  */
 export function searchProblems(value,page=1,size=20) {
     return (dispatch)=> {
-        sessionStorage.setItem("neuq_oj.problempagecurr", page)
-        sessionStorage.setItem("neuq_oj.problempagesize", size)
+        sessionStorage.setItem("neuq_oj.problempagecurr", page);
+        sessionStorage.setItem("neuq_oj.problempagesize", size);
 
         return fetch(API.problemssearch+'?keyword=' + value+ '&page=' +page+'&size='+size, {
             method: 'GET'
@@ -100,8 +104,9 @@ export function searchProblems(value,page=1,size=20) {
             return res.json()
         }).then((json)=>{
             if (json.code === 0){
-                sessionStorage.setItem("neuq_oj.problempagecount", json.total_count)
-                dispatch(setProblemList(json.data))
+                sessionStorage.setItem("neuq_oj.problempagecount", json.total_count);
+                dispatch(setProblemList(json.data));
+                jumpTo('navigation')
             } else {
                 codeHelper(json.code)
             }

@@ -14,14 +14,14 @@ class ProblemDetailContainer extends React.Component {
     }
 
     componentWillMount() {
-        this.props.action.getProblemInfo(this.props.params.id)
+        this.props.action.getProblemInfo(this.props.params)
     }
 
     render() {
         const {problemdetail}=this.props;
         return (
             <ProblemDetail
-                id={this.props.params.id}
+                params={this.props.params}
                 data={problemdetail.data}
             />
         )

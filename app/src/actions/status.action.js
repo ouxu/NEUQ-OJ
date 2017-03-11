@@ -5,14 +5,16 @@ import {SET_STATUS_TABLE} from "./type";
 import API from "../api";
 import codeHelper from "../utils/codeHelper";
 import urlEncode from '../utils/urlEncode'
+import jumpTo from '../utils/windowScroll'
+
 /**
  * 获取当前提交状态
  * @param body
  */
 export function getStatusTable(page=1, size=20) {
     return (dispatch) => {
-        sessionStorage.setItem("neuq_oj.statuspagecurr", page)
-        sessionStorage.setItem("neuq_oj.statuspagesize", size)
+        sessionStorage.setItem("neuq_oj.statuspagecurr", page);
+        sessionStorage.setItem("neuq_oj.statuspagesize", size);
 
         return fetch(API.status + '?page=' + page + '&size=' + size, {
             method: 'GET'
@@ -20,7 +22,9 @@ export function getStatusTable(page=1, size=20) {
             return res.json()
         }).then((json) => {
             if (json.code === 0) {
-                dispatch(setStatusList(json.data))
+                dispatch(setStatusList(json.data));
+                jumpTo('navigation')
+
             } else {
                 codeHelper(json.code)
             }
@@ -42,7 +46,7 @@ const setStatusList = (data) => {
             data
         }
     }
-}
+};
 
 /**
  * 筛选状态
@@ -50,16 +54,18 @@ const setStatusList = (data) => {
  */
 export function searchStatus(str, page=1, size=20) {
     return (dispatch) => {
-        sessionStorage.setItem("neuq_oj.statuspagecurr", page)
-        sessionStorage.setItem("neuq_oj.statuspagesize", size)
+        sessionStorage.setItem("neuq_oj.statuspagecurr", page);
+        sessionStorage.setItem("neuq_oj.statuspagesize", size);
         return fetch(API.status+'?'+str+'&page='+page+'&size='+size, {
             method: 'GET'
         }).then((res) => {
             return res.json()
         }).then((json) => {
             if (json.code === 0) {
-                sessionStorage.setItem("neuq_oj.statuspagecount", json.total_count)
-                dispatch(setStatusList(json.data))
+                sessionStorage.setItem("neuq_oj.statuspagecount", json.total_count);
+                dispatch(setStatusList(json.data));
+                jumpTo('navigation')
+
             } else {
                 codeHelper(json.code)
             }

@@ -156,7 +156,7 @@ class ProblemsTable extends React.Component {
         return (
             <QueueAnim className="problem-table-warp" delay={100}>
                 <div className="problem-table-header" key="problem-1">
-                    <span className="problem-table-header-title">问题列表</span>
+                    <span className="problem-table-header-title" >问题列表</span>
                     <div>
                         <Search
                             placeholder="题号/标题/作者/标签"

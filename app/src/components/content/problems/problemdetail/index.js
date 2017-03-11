@@ -21,7 +21,7 @@ import 'es6-promise/dist/es6-promise.min.js';
 
 class ProblemDetail extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             submit: this.props.submit||false,
             unsubmit: false,
@@ -31,8 +31,8 @@ class ProblemDetail extends React.Component {
             resultdata: [],
             result: null,
             errorinfo:''
-        }
-        this.handleMenuClick = this.handleMenuClick.bind(this)
+        };
+        this.handleMenuClick = this.handleMenuClick.bind(this);
         this.updataCode = this.updataCode.bind(this);
         this.selectLanguage = this.selectLanguage.bind(this);
         this.checkPrivate = this.checkPrivate.bind(this);
@@ -83,8 +83,8 @@ class ProblemDetail extends React.Component {
     }
 
     combinObj() {
-        const {source_code, language}=this.state
-        let obj = {source_code, language}
+        const {source_code, language}=this.state;
+        let obj = {source_code, language};
         obj = Object.assign({
             private: this.state.private
         }, obj);
@@ -92,22 +92,25 @@ class ProblemDetail extends React.Component {
     };
 
     submit() {
-        const obj = this.combinObj()
+        const obj = this.combinObj();
         if (obj.source_code.length < 3) {
             message.error('请输入有效代码')
         } else {
-            message.success('提交成功')
+            message.success('提交成功');
             this.setState({
                 unsubmit: true,
                 errorinfo: ''
-            })
+            });
             this.submitProblem(this.props.data.id, obj)
         }
     }
 
-    submitProblem(id, body) {
+    submitProblem(body) {
         const token = localStorage.getItem('neuq_oj.token');
-        return token&&fetch(API.problem + id + '/submit', {
+        const {params}=this.props;
+
+        const url= params.pnum?API.host+'contest/'+params.cid+'/problem/'+ params.pnum:API.host+'problem/'+params.id;
+        return token&&fetch(url+ '/submit', {
                 method: 'POST',
                 headers: {
                     "Accept": "application/json",
@@ -124,17 +127,19 @@ class ProblemDetail extends React.Component {
                     codeHelper(json.code)
                 }
             }).then((solution_id) => {
-                this.timer = setInterval(() => {
-                    this.getResultData(solution_id);
-                    let result = this.state.result;
-                    console.log(result)
-                    if (result > 3) {
-                        if (result>9) {
-                            this.getErrorInfo(solution_id,result)
+                if (solution_id) {
+                    this.timer = setInterval(() => {
+                        this.getResultData(solution_id);
+                        let result = this.state.result;
+                        console.log(result);
+                        if (result > 3) {
+                            if (result>9) {
+                                this.getErrorInfo(solution_id,result)
+                            }
+                            clearInterval(this.timer);
                         }
-                        clearInterval(this.timer);
-                    }
-                }, 1000)
+                    }, 1000)
+                }
             }).catch((e) => {
                 console.log(e.message)
             })
@@ -167,7 +172,7 @@ class ProblemDetail extends React.Component {
     }
     async getErrorInfo(solution_id,result) {
         try {
-            const errormode=(result===10?'/runtime-info/':'/compile-info/')
+            const errormode=(result===10?'/runtime-info/':'/compile-info/');
             const res = await fetch(API.status + errormode+ solution_id);
             const json = await res.json();
             if (json.code === 0) {
@@ -191,20 +196,22 @@ class ProblemDetail extends React.Component {
             'text/x-c++src',
             '',
             'text/x-java'
-        ]
+        ];
+
         const options = {
             indentUnit: 4,
             lineNumbers: true,
             matchBrackets: true,
             mode: mode[this.state.language]
-        }
+        };
+        const {params}=this.props;
         return (
             <Card className="problem-detail-wrap" bodyStyle={{padding: 0}}>
                 <QueueAnim type='left' delay={100}>
                     <div className='problem-detail-breadcrumb' key='problem-detail-1'>
-                        <Link to={'/problems'}>
+                        <Link to={params.pnum?'/contests/'+params.cid:'/problems'}>
                             <Icon type="left"/>
-                            <span>问题列表</span>
+                            <span>{params.pnum?'竞赛列表':'问题列表'}</span>
                         </Link>
                         <div className="problem-detail-breadcrumb-detail">
                             <span className='problem-detail-breadcrumb-detail-tags'><Icon

@@ -2,54 +2,76 @@
  * Created by out_xu on 17/3/5.
  */
 import React from "react";
-import {Card, Table, Icon, Col, Row, Tabs, Spin} from "antd";
+import {Card, Table, Icon, Tabs, Spin} from "antd";
 import QueueAnim from "rc-queue-anim";
 import {Link} from "react-router";
-import ContestProgress from './contestprogress'
+import ContestProgress from "./contestprogress";
+import ContestInfoTabs from "./contestinfotabs";
 import "./index.less";
-import newDate from '../../../../utils/newDate';
-const TabPane = Tabs.TabPane;
+import newDate from "../../../../utils/newDate";
+import API from "../../../../api";
 
+const TabPane = Tabs.TabPane;
 class ContestInfo extends React.Component {
     constructor(props) {
         super(props);
-        this.state= {
-            time :new Date(),
-        }
+        this.state = {
+            time: new Date(),
+            rankData: []
+        };
+        this.getRank = this.getRank.bind(this)
     }
 
 
     componentDidMount() {
         this.timer = setInterval(() => {
-            this.setStateAsync({time:new Date()});
+            this.setStateAsync({time: new Date()});
             let end_time = newDate(this.props.data.contest_info.end_time);
-            if (this.state.time>end_time) {
+            if (this.state.time > end_time) {
                 clearInterval(this.timer);
             }
         }, 1000)
     }
+
     componentWillUnmount() {
         // 如果存在this.timer，则使用clearTimeout清空。
         // 如果你使用多个timer，那么用多个变量，或者用个数组来保存引用，然后逐个clear
         this.timer && clearInterval(this.timer);
     }
 
-    createMarkup=(html)=>{
+    createMarkup = (html) => {
         return {__html: html};
     };
 
-    setStateAsync(state) {
+    setStateAsync=(state)=> {
         return new Promise((resolve) => {
             this.setState(state, resolve);
         });
-    }
+    };
 
+    getRank(id) {
+        fetch(API.contest + id + '/ranklist', {
+            method: 'GET',
+        }).then((res) => {
+            return res.json()
+        }).then((json) => {
+            if (json.code === 0) {
+                this.setStateAsync({
+                    rankData: json.data,
+                });
+            } else {
+                codeHelper(json.code)
+            }
+        }).catch((e) => {
+            console.log(e.message)
+        })
+    }
 
     render() {
         const {contest_info, problem_info}= this.props.data;
-        const accepted={
-            Y: <Icon className="status-yes" type="check-circle" />,
-            N: <Icon className="status-no" type="close-circle" />
+        const accepted = {
+            Y: <Icon className="status-yes" type="check-circle"/>,
+            N: <Icon className="status-no" type="close-circle"/>
         };
         const columns = [{
             title: '',
@@ -58,11 +80,11 @@ class ContestInfo extends React.Component {
             className: 'contest-info-none'
         }, {
             title: '状态',
-            render: (record)=> {
-                let status=record.user_status;
-                if (status==='Y')
+            render: (record) => {
+                let status = record.user_status;
+                if (status === 'Y')
                     return accepted.Y;
-                else if (status==='N')
+                else if (status === 'N')
                     return accepted.N;
                 else
                     return null
@@ -75,7 +97,7 @@ class ContestInfo extends React.Component {
             render: (record) => {
                 return (
                     <span>
-                         <Link to={'404'}> Problem {String.fromCharCode(parseInt(record.pnum) + 65)} {record.pid}</Link>
+                         <Link to={'contests/'+this.props.id +'/problem/'+record.pnum}> Problem {String.fromCharCode(parseInt(record.pnum) + 65)} {record.pid}</Link>
                     </span>
                 )
             },
@@ -130,38 +152,37 @@ class ContestInfo extends React.Component {
                                 {contest_info.id}
                                 <span className="contest-info-header-title-sub">{contest_info.title}</span>
                             </h1>
-                            {ContestProgress(this.state.time,contest_info.start_time,contest_info.end_time)}
+                            {ContestProgress(this.state.time, contest_info.start_time, contest_info.end_time)}
                             <p dangerouslySetInnerHTML={this.createMarkup(contest_info.description)}/>
                         </div>
 
-                        <Tabs defaultActiveKey="1" tabPosition="right" >
-                            <TabPane tab="题目列表" key="1">
+                        <Tabs defaultActiveKey="contest-info-table"
+                              tabPosition="right"
+                              className='contest-info-content'
+                              key="contest-info-content"
+                        >
+                            <TabPane tab="题目列表" key="contest-info-table">
                                 <Table columns={columns}
                                        rowKey={record => `contest-${record.pid}`}
                                        dataSource={problem_info}
                                        scroll={{x: 680}}
                                     //size='small'
                                        pagination={false}
-                                       key="result-1"
+                                       key="contest-info-content-table"
                                        className="contest-info-content-table"
                                 />
                             </TabPane>
-                            <TabPane tab="排行榜" key="2">Content of Tab Pane 2</TabPane>
-                            <TabPane tab="Tab 3" key="3">Content of Tab Pane 3</TabPane>
+                            <TabPane tab="排行榜" key="contest-info-rank">
+                                <ContestInfoTabs
+                                    getRank={this.getRank}
+                                    time={this.state.time}
+                                    end_time={contest_info.end_time}
+                                    rankData={this.state.rankData}
+                                    id={contest_info.id}
+                                />
+
+                            </TabPane>
                         </Tabs>
-
-                        <Row className="contest-info-content"
-                             type="flex"
-                             gutter={12}
-                             key='contest-info-content'
-                        >
-                            <Col className="contest-info-content-left" xs={{span: 24}} sm={{span: 16}}>
-
-                            </Col>
-                            <Col className="contest-info-content-right" xs={{span: 24}} sm={{span: 8}}>
-                            </Col>
-
-                        </Row>
 
                     </QueueAnim>
                 </Card>

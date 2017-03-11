@@ -24,19 +24,21 @@ const RouterApp = (
         <Route path="/" component={AppComponent} >
             <IndexRoute component={HomePageContainer} />
             <Route path="homepage" component={HomePageContainer} />
-            <Route path="problems" components={ProblemsContainer}>
-                <Route path=":id" components={ProblemDetailContainer} />
+            <Route path="problems" component={ProblemsContainer}>
+                <Route path=":id" component={ProblemDetailContainer} />
             </Route>
 
             <Route path="userpage/:id" component={UserPageContainer} />
 
             <Route path="register" component={Register} />
             <Route path="status" components={StatusContainer}>
-                <Route path=":id" components={StatusContainer} />
+                <Route path=":id" component={StatusContainer} />
             </Route>
-            <Route path="ranklist" components={NotFoundPage}/>
-            <Route path="contests" components={ContestsContainer}>
-                <Route path=":id" components={ContestInfoContainer} />
+            <Route path="ranklist" component={NotFoundPage}/>
+            <Route path="contests" component={ContestsContainer}>
+                <Route path=":cid" component={ContestInfoContainer} >
+                    <Route path="problem/:pnum" component={ProblemDetailContainer} />
+                </Route>
             </Route>
 
             <Route path="test" component={Test} />

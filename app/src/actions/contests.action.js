@@ -5,6 +5,7 @@ import {SET_CONTESTS_TABLE, SET_CONTEST} from "./type";
 import API from "../api";
 import codeHelper from "../utils/codeHelper";
 import goto from "../utils/goto";
+import jumpTo from '../utils/windowScroll'
 
 /**
  * 获取竞赛列表
@@ -23,7 +24,8 @@ export function getContestsTable(page = 1, size = 20) {
         }).then((json) => {
             if (json.code === 0) {
                 sessionStorage.setItem("neuq_oj.contestspagecount", json.total_count);
-                dispatch(setContestsList(json.data))
+                dispatch(setContestsList(json.data));
+                jumpTo('navigation')
             } else {
                 codeHelper(json.code)
             }
@@ -63,6 +65,7 @@ export function searchContests(value, page = 1, size = 20) {
             if (json.code === 0) {
                 sessionStorage.setItem("neuq_oj.contestspagecount", json.total_count);
                 dispatch(setContestsList(json.data))
+                jumpTo('navigation')
             } else {
                 codeHelper(json.code)
             }
@@ -86,7 +89,7 @@ const setContest = (data) => {
 
 
 /**
- * 获取竞赛内容
+ * 获取竞赛问题
  * @param body
  */
 export function getContest(id) {
@@ -102,6 +105,7 @@ export function getContest(id) {
         }).then((json) => {
             if (json.code === 0) {
                 dispatch(setContest(json.data))
+                jumpTo('navigation')
             } else {
                 goto('/contests');
                 codeHelper(json.code)
@@ -113,8 +117,9 @@ export function getContest(id) {
 }
 
 
+
 /**
- * 获取竞赛内容
+ * 加入竞赛
  * @param body
  */
 export function joinContest(id, body) {

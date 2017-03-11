@@ -8,12 +8,16 @@ class Test extends React.Component {
     constructor(props){
         super(props);
     }
-    render (){
 
-    return (
-        <div>{data}</div>
-        )
+    componentWillMount() {
+        console.log(this.props.params.id)
     }
+
+    render (){
+        return (
+            <div></div>
+            )
+        }
 }
 
 

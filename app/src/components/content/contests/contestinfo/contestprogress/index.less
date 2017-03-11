@@ -1,8 +1,14 @@
 .contest-info-progress{
+    display: flex;
+    display: -webkit-flex; /* Safari */
+
     line-height: 30px;
-    &-progress {
+    &-item {
+        flex-grow: 1;
     }
     &-time {
+        text-align: right;
+        margin: 0 10px;
         span {
             font-size: 20px;
             font-weight: 300;
