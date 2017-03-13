@@ -3,7 +3,7 @@
  */
 
 // const __APIHOST__ = "http://192.168.1.189:3000"
-const __APIHOST__ = "http://oj.marklux.cn"
+const __APIHOST__ = "http://oj.marklux.cn";
 
 // const __APIHOST__ = "http://rap.taobao.org/mockjsdata/12142"
 const apiMaker = (path)=> {
@@ -38,6 +38,8 @@ export default {
     contestssearch: apiMaker('contest/search'),
     contest: apiMaker('contest/'), //contest/{id}
 
+    //ranklist
+    ranklist: apiMaker('user/ranklist'),
     test: apiMaker('test')
 
 }

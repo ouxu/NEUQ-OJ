@@ -59,3 +59,23 @@ export class ResultSelect extends React.Component{
         )
     }
 }
+
+export class TimeSelect extends React.Component{
+    render(){
+        return (
+            <Select
+                style={{ width: 80 }}
+                placeholder="总榜"
+                optionFilterProp="children"
+                onChange={this.props.handleChange}
+                allowClear={!this.props.allowClear}
+                defaultValue={this.props.defaultvalue}
+            >
+                <Option value="total">总榜</Option>
+                <Option value="d">天</Option>
+                <Option value="w">周</Option>
+                <Option value="m">月</Option>
+            </Select>
+        )
+    }
+}

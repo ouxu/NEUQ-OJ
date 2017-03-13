@@ -1,10 +1,7 @@
-var webpack = require('webpack');
-var path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin'); //抽取CSS文件插件
-var OpenBrowserPlugin = require('open-browser-webpack-plugin'); //自动打开浏览器插件
-var Dashboard = require('webpack-dashboard');
-var DashboardPlugin = require('webpack-dashboard/plugin');
-var dashboard = new Dashboard();
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin'); //抽取CSS文件插件
+const OpenBrowserPlugin = require('open-browser-webpack-plugin'); //自动打开浏览器插件
+
 
 module.exports = {
     // 配置服务器
@@ -45,6 +42,6 @@ module.exports = {
         // new webpack.ProvidePlugin({ $: "jquery" }),
         new webpack.HotModuleReplacementPlugin(),
         new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
-        // new DashboardPlugin(dashboard.setData)
+        // new DashboardPlugin(dashboard.setData),
     ]
 };

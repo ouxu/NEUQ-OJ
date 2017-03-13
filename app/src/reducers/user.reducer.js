@@ -1,9 +1,6 @@
 /**
  * Created by out_xu on 16/12/20.
  */
-/**
- * Created by out_xu on 16/12/20.
- */
 import {SET_USERINFO, CLEAR_USERINFO} from "../actions/type";
 
 export default function user(state = {}, action){

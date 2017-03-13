@@ -101,7 +101,7 @@ class ProblemDetail extends React.Component {
                 unsubmit: true,
                 errorinfo: ''
             });
-            this.submitProblem(this.props.data.id, obj)
+            this.submitProblem(obj)
         }
     }
 
@@ -131,7 +131,6 @@ class ProblemDetail extends React.Component {
                     this.timer = setInterval(() => {
                         this.getResultData(solution_id);
                         let result = this.state.result;
-                        console.log(result);
                         if (result > 3) {
                             if (result>9) {
                                 this.getErrorInfo(solution_id,result)
@@ -291,8 +290,9 @@ class ProblemDetail extends React.Component {
                                                 checked={this.state.private}
                                             >
                                                 <Tooltip title="他人答对后是否可以查看你的代码">
-                                                    <span className="user-should-know">隐藏代码  <Icon
-                                                        type="question-circle"/></span>
+                                                    <span className="user-should-know">
+                                                        隐藏代码 <Icon type="question-circle"/>
+                                                    </span>
                                                 </Tooltip>
                                             </Checkbox>
                                         </Col>

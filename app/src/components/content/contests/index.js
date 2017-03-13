@@ -56,7 +56,6 @@ class ContestPage extends React.Component {
     }
 
     showModal(id, pri) {
-        console.log(id,pri);
         if (pri === 1) {
             this.setState({
                 visible: true,
@@ -158,7 +157,7 @@ class ContestPage extends React.Component {
                 const start_status = (this.state.presentTime > start_time);
                 return start_status ?
                     (<span onClick={this.showModal = this.showModal.bind(this, record.id, record.private)}>
-                            <Link> {record.title}</Link>
+                            <a> {record.title}</a>
                      </span>
                     ) : (<span>{record.title}</span>)
             },

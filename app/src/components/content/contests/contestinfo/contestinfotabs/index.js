@@ -13,7 +13,7 @@ class ContestInfoTabs extends React.Component {
         super(props);
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.props.getRank(this.props.id);
 
         this.timer = setInterval(() => {
@@ -23,6 +23,11 @@ class ContestInfoTabs extends React.Component {
                 clearInterval(this.timer);
             }
         }, 10000)
+    }
+    componentWillUnmount() {
+        // 如果存在this.timer，则使用clearTimeout清空。
+        // 如果你使用多个timer，那么用多个变量，或者用个数组来保存引用，然后逐个clear
+        this.timer && clearInterval(this.timer);
     }
 
     render() {
@@ -104,19 +109,17 @@ class ContestInfoTabs extends React.Component {
         }];
 
         return (
-            <div>
-                <Table columns={columns}
-                       rowKey={record => {
-                           return `contest-info-${record.id}`
-                       }}
-                       dataSource={rankData}
-                       scroll={{x: 680}}
-                    //size='small'
-                       pagination={false}
-                       key="contest-info-content-rank"
-                       className="contest-info-content-table"
-                />
-            </div>
+            <Table columns={columns}
+                   rowKey={record => {
+                       return `contest-info-${record.id}`
+                   }}
+                   dataSource={rankData}
+                   scroll={{x: 680}}
+                //size='small'
+                   pagination={false}
+                   key="contest-info-content-rank"
+                   className="contest-info-content-table"
+            />
         );
     }
 

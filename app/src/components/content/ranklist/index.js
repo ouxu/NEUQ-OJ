@@ -1,16 +1,147 @@
 /**
  * Created by out_xu on 17/2/21.
  */
-import React from 'react';
+import React, {
+    Component,
+} from 'react';
+import {Link} from "react-router";
 
-class ContentPage extends React.Component{
-    render(){
-        return(
+import QueueAnim from 'rc-queue-anim';
+import {Table} from "antd";
+import './index.less';
+import {TimeSelect} from '../../../utils/selectBox'
+
+class RankList extends Component {
+    constructor(props){
+        super(props);
+        this.state= {
+           scope: null
+        };
+        this.handleChange=this.handleChange.bind(this)
+    }
+    componentDidMount() {
+        let page=sessionStorage.getItem("neuq_oj.ranklistpagecurr")||1;
+        let size= sessionStorage.getItem("neuq_oj.ranklistpagesize")||20;
+        this.props.getRankTable(page,size);
+    }
+    handleChange(value){
+        this.setState({
+            scope: value
+        });
+        let page=sessionStorage.getItem("neuq_oj.ranklistpagecurr")||1;
+        let size= sessionStorage.getItem("neuq_oj.ranklistpagesize")||20;
+        this.props.getRankTable(value,page,size);
+    }
+    render() {
+        let {data = []}= this.props;
+        data = data.map((t = {}, i) => {
+            return {
+                ...t,
+                num: i + 1
+            }
+        });
+        const pagination = {
+            pageSize: Number(sessionStorage.getItem('neuq_oj.ranklistpagesize')),
+            current: Number(sessionStorage.getItem('neuq_oj.ranklistpagecurr')),
+            total: 10000,
+            showSizeChanger: true,
+            onShowSizeChange: (current, pageSize) => {
+                const scope=this.state;
+                if (scope.length<1){
+                    this.props.getRankTable(current,pageSize)
+                }else{
+                    this.props.getRankTable(scope,current,pageSize)
+                }
+            },
+            onChange: (current) => {
+                const scope=this.state;
+                sessionStorage.setItem("neuq_oj.ranklistpagecurr",current);
+                const pageSize=sessionStorage.getItem("neuq_oj.ranklistpagesize",pageSize);
+                if (scope.length<1){
+                    this.props.getRankTable(current,pageSize)
+                }else{
+                    this.props.getRankTable(scope,current,pageSize)
+                }
+            }
+        };
+
+        const columns = [{
+            title: '',
+            width: '1%',
+            key: 'ranklist',
+            className: 'ranklist-none'
+        }, {
+            title: '排名',
+            dataIndex: 'num',
+            width: '19%',
+            key: 'ranklist-rank',
+            className: 'ranklist-rank'
+        }, {
+            title: '用户',
+            render: (record) => {
+                return (
+                    <span>
+                        <Link to={`userpage/${record.id}`}> {record.name}</Link>
+                    </span>
+                )
+            },
+            width: '20%',
+            key: 'ranklist-user',
+            className: 'ranklist-user'
+        }, {
+            title: 'ID',
+            render: (record) => {
+                return (
+                    <span>
+                        <Link to={`userpage/${record.id}`}> {record.id}</Link>
+                    </span>
+                )
+            },
+            width: '20%',
+            key: 'ranklist-id',
+            className: 'ranklist-id'
+        }, {
+            title: '解决',
+            dataIndex: 'solved',
+            width: '20%',
+            key: 'ranklist-solved',
+            className: 'ranklist-solved'
+        }, {
+            title: '提交',
+            dataIndex: 'submit',
+            width: '20%',
+            key: 'ranklist-submit',
+            className: 'ranklist-submit'
+        }];
+
+        return (
             <div>
-                {this.props.children}
+                <QueueAnim className="rank-table-warp" delay={100}>
+                    <div className="rank-table-header" key="status-2">
+                        <span className="rank-table-header-title">最近提交</span>
+
+                        <div className="rank-table-header-other">
+                            <TimeSelect handleChange={this.handleChange}/>
+                        </div>
+                    </div>
+                    <Table columns={columns}
+                           rowKey={record => {
+                               return `rank-table-${record.id}`
+                           }}
+                           dataSource={data}
+                           scroll={{x: 680}}
+                           pagination = {pagination}
+                           key="rank-table-table"
+                           className="rank-table-table"
+                    />
+                </QueueAnim>
+
             </div>
-        )
+        );
     }
 }
 
-export default ContentPage;
+RankList.propTypes = {};
+RankList.defaultProps = {};
+
+export default RankList;

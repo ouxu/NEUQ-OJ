@@ -10,7 +10,6 @@ class Test extends React.Component {
     }
 
     componentWillMount() {
-        console.log(this.props.params.id)
     }
 
     render (){

@@ -23,7 +23,7 @@ class ContestInfo extends React.Component {
     }
 
 
-    componentDidMount() {
+    componentWillMount() {
         this.timer = setInterval(() => {
             this.setStateAsync({time: new Date()});
             let end_time = newDate(this.props.data.contest_info.end_time);
