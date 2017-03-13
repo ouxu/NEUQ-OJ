@@ -8,8 +8,8 @@ module.exports = {
     devServer: {
         historyApiFallback: true,
         hot: true,
-        contentBase: "./app",
-        port: 8080
+        contentBase: './app',
+        port: 8081
     },
 
     // 配置入口
@@ -20,7 +20,7 @@ module.exports = {
     output: {
         path: 'dist',  //不写居然也没事，由于有服务器，生成不了静态文件，这也是一个坑
         publicPath: 'dist/',
-        filename: 'js/bundle.js',
+        filename: 'js/bundle.js'
     },
     module: {
         loaders: [
@@ -29,19 +29,19 @@ module.exports = {
             { test: /\.js[x]?$/, exclude: /node_modules/, loader: 'babel' },
             { test: /\.(png|jpg)$/, loader: 'url?limit=8192&name=img/[name].[ext]' },
             { test: /\.(woff|woff2|eot|ttf|svg)(\?.*$|$)/, loader: 'url' },
-            { test: /\.json$/, loader: "json-loader"},
+            { test: /\.json$/, loader: 'json-loader'}
         ]
     },
     resolve: {
-        extensions: ['', '.js', '.jsx'],
+        extensions: ['', '.js', '.jsx']
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin('vendors','js/vendors.js'),
-        new ExtractTextPlugin("css/bundle.css"),
+        new ExtractTextPlugin('css/bundle.css'),
         // 如需jquery请解锁
         // new webpack.ProvidePlugin({ $: "jquery" }),
         new webpack.HotModuleReplacementPlugin(),
-        new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
+        new OpenBrowserPlugin({ url: 'http://localhost:8080' })
         // new DashboardPlugin(dashboard.setData),
     ]
 };

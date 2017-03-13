@@ -1,25 +1,24 @@
 /**
  * Created by out_xu on 16/12/21.
  */
-import React from "react";
-import {Icon} from "antd";
-import Navigation from "../components/plugins/navigation";
-import Sider from "./plugins/sider";
-import Footer from "./plugins/footer";
-import "whatwg-fetch";
-import "es6-promise/dist/es6-promise.min.js";
-import "fetch-ie8/fetch.js";
-import "./index.less";
+import React from 'react';
+import {Icon} from 'antd';
+import Navigation from '../components/plugins/navigation';
+import Sider from './plugins/sider';
+import Footer from './plugins/footer';
+import 'whatwg-fetch';
+import 'fetch-ie8/fetch.js';
+import './index.less';
 //连接redux
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {setTimeStamp, getUserMe, logout, tokenVerify} from "../actions";
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {setTimeStamp, getUserMe, logout, tokenVerify} from '../actions';
 
 // 引入垫片兼容IE
 require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
-
+require('es6-promise');
 
 // 配置整体组件
 class AppComponent extends React.Component {
@@ -28,26 +27,25 @@ class AppComponent extends React.Component {
         this.state = {
             collapse: true
         };
-        this.onCollapseChange = this.onCollapseChange.bind(this)
+        this.onCollapseChange = this.onCollapseChange.bind(this);
 
     }
 
     componentDidMount() {
-        this.props.action.getUserMe()
+        this.props.action.getUserMe();
     }
 
     onCollapseChange() {
         this.setState({
-            collapse: !this.state.collapse,
-        })
-
-    };
+            collapse: !this.state.collapse
+        });
+    }
 
     render() {
         const collapse = this.state.collapse;
         const {user}= this.props;
         return (
-            <div className={ collapse ? "ant-layout-aside ant-layout-aside-collapse" : "ant-layout-aside"}>
+            <div className={collapse ? 'ant-layout-aside ant-layout-aside-collapse' : 'ant-layout-aside'}>
                 <aside className="ant-layout-sider">
                     <Sider collapse={collapse}/>
                     <div className="ant-aside-action" onClick={this.onCollapseChange}>
@@ -72,7 +70,7 @@ class AppComponent extends React.Component {
 const mapStateToProps = (state) => {
     return {
         user: state.user
-    }
+    };
 };
 
 
@@ -80,8 +78,8 @@ const mapDispatchToProps = (dispatch) => {
     const actions = {setTimeStamp, getUserMe, logout, tokenVerify};
     return {
         action: bindActionCreators(actions, dispatch)
-    }
+    };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppComponent)
+export default connect(mapStateToProps, mapDispatchToProps)(AppComponent);
 

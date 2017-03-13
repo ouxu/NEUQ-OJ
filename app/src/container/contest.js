@@ -8,15 +8,20 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getContestsTable,searchContests,joinContest} from '../actions';
 
+
+@connect(
+    state => state.conteststable,
+    dispatch => bindActionCreators({getContestsTable,searchContests,joinContest}, dispatch)
+)
 class ContestsContainer extends React.Component{
     render (){
-        const {conteststable}=this.props;
+        const {data}=this.props;
         return(
             <div>
                 {
                     this.props.children
                     ||
-                    <ContestPage data={conteststable.data}
+                    <ContestPage data={data}
                                  getContestsTable={this.props.action.getContestsTable}
                                  searchContests={this.props.action.searchContests}
                                  joinContest={this.props.action.joinContest}
@@ -26,17 +31,5 @@ class ContestsContainer extends React.Component{
         )
     }
 }
-const mapStateToProps=(state)=>{
-    return {
-        conteststable: state.conteststable
-    }
-}
 
-const mapDispatchToProps=(dispatch)=>{
-    const actions = {getContestsTable,searchContests,joinContest};
-    const actionMap = {action: bindActionCreators(actions ,dispatch)};
-    return actionMap;
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContestsContainer);
+export default ContestsContainer

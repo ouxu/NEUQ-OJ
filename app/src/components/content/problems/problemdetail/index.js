@@ -1,23 +1,21 @@
 /**
  * Created by out_xu on 17/1/3.
  */
-import React from "react";
-import {Link} from "react-router";
-import {Collapse, Card, Button, Checkbox, Tooltip, Row, Col, message, Table, Icon,Alert} from "antd";
-import "./index.less";
-import QueueAnim from "rc-queue-anim";
-import {LanguageSelect} from "../../../../utils/selectBox";
-import {columns} from "../../../../utils/tableData";
+import React from 'react';
+import {Link} from 'react-router';
+import {Collapse, Card, Button, Checkbox, Tooltip, Row, Col, message, Table, Icon,Alert} from 'antd';
+import './index.less';
+import QueueAnim from 'rc-queue-anim';
+import {LanguageSelect} from '../../../../utils/selectBox';
+import {columns} from '../../../../utils/tableData';
 //TODO https://zhuanlan.zhihu.com/p/24781259 如何实时刷新
-import CodeMirror from "react-codemirror";
-import "codemirror/mode/clike/clike";
-import ProblemDes from "./problemdes";
-import API from "../../../../api";
-import codeHelper from "../../../../utils/codeHelper";
+import CodeMirror from 'react-codemirror';
+import 'codemirror/mode/clike/clike';
+import ProblemDes from './problemdes';
+import API from '../../../../api';
+import codeHelper from '../../../../utils/codeHelper';
 const ButtonGroup = Button.Group;
 const Panel = Collapse.Panel;
-
-import 'es6-promise/dist/es6-promise.min.js';
 
 class ProblemDetail extends React.Component {
     constructor(props) {
@@ -61,15 +59,15 @@ class ProblemDetail extends React.Component {
         this.setState({
             source_code: newCode,
             result: null,
-            unsubmit: false,
+            unsubmit: false
         })
-    };
+    }
 
     selectLanguage(value) {
         this.setState({
             language: parseInt(value),
             result: null,
-            unsubmit: false,
+            unsubmit: false
         })
     }
 
@@ -77,7 +75,7 @@ class ProblemDetail extends React.Component {
         this.setState({
             private: e.target.checked,
             result: null,
-            unsubmit: false,
+            unsubmit: false
         });
 
     }
@@ -89,7 +87,7 @@ class ProblemDetail extends React.Component {
             private: this.state.private
         }, obj);
         return obj
-    };
+    }
 
     submit() {
         const obj = this.combinObj();
@@ -113,9 +111,9 @@ class ProblemDetail extends React.Component {
         return token&&fetch(url+ '/submit', {
                 method: 'POST',
                 headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    "token": token
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'token': token
                 },
                 body: JSON.stringify(body)
             }).then((res) => {
@@ -309,7 +307,7 @@ class ProblemDetail extends React.Component {
                                     />
                                     {
                                         this.state.errorinfo&&
-                                        <Alert message={`Error:`}
+                                        <Alert message={'Error:'}
                                                description={this.state.errorinfo}
                                                banner closable
                                         />
