@@ -7,13 +7,17 @@ import {bindActionCreators} from "redux";
 import {getContest} from "../actions";
 import ContestInfo from "../components/content/contests/contestinfo";
 
+@connect(
+    state => state.contests,
+    dispatch => bindActionCreators({getContest}, dispatch)
+)
 class ContestInfoContainer extends React.Component {
     constructor(props) {
         super(props);
     }
 
     componentDidMount() {
-        this.props.action.getContest(this.props.params.cid)
+        this.props.getContest(this.props.params.cid)
     }
 
     render() {
@@ -34,17 +38,5 @@ class ContestInfoContainer extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        contest: state.contest
-    }
-};
 
-const mapDispatchToProps = (dispatch) => {
-    const actions = {getContest};
-    const actionMap = {action: bindActionCreators(actions, dispatch)};
-    return actionMap;
-};
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContestInfoContainer);
+export default ContestInfoContainer;

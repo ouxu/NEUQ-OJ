@@ -6,22 +6,19 @@ import {combineReducers} from 'redux';
 import timeStamp from './utils.reducer';
 import user from './user.reducer';
 import home from './home.reducer'
-import {problemtable,problemdetail} from './problem.reducer'
+import problems from './problem.reducer'
 import status from './status.reducer';
-import {conteststable,contest} from './contests.reducer'
-import {ranklist} from './ranklist.reducer'
+import contests from './contests.reducer'
+import ranklist from './ranklist.reducer'
 
 const rootReducer = combineReducers({
-    contest,
-    conteststable,
+    contests,
     home,
-    problemtable,
-    problemdetail,
+    problems,
     ranklist,
     status,
     timeStamp,
     user
-
 });
 
 export default rootReducer;

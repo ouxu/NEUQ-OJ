@@ -8,13 +8,17 @@ import {bindActionCreators} from "redux";
 import {getProblemInfo} from "../actions";
 import ProblemDetail from "../components/content/problems/problemdetail";
 
+@connect(
+    state => state.problems,
+    dispatch => bindActionCreators({getProblemInfo}, dispatch)
+)
 class ProblemDetailContainer extends React.Component {
     constructor(props) {
         super(props);
     }
 
     componentWillMount() {
-        this.props.action.getProblemInfo(this.props.params)
+        this.props.getProblemInfo(this.props.params)
     }
 
     render() {
@@ -28,17 +32,6 @@ class ProblemDetailContainer extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        problemdetail: state.problemdetail
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    const actions = {getProblemInfo};
-    const actionMap = {action: bindActionCreators(actions, dispatch)}
-    return actionMap;
-}
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(ProblemDetailContainer);
+export default ProblemDetailContainer;

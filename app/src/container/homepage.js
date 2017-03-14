@@ -16,18 +16,22 @@ import HomeItem from '../components/content/homepage/notice';
 import Introduce from '../components/content/homepage/introduce';
 import HomeRank from '../components/content/homepage/homerank'
 
+@connect(
+    state => state.home,
+    dispatch => bindActionCreators({fetchHomePageData}, dispatch)
+)
 class HomepageContainer extends React.Component {
     constructor(props){
         super(props);
     }
 
     componentWillMount() {
-        this.props.action.fetchHomePageData();
+        this.props.fetchHomePageData();
     }
 
     render() {
         const {home} = this.props;
-        const {notice=[],introduce=[],home_rank=[]}=home
+        const {notice=[],introduce=[],home_rank=[]}=home;
         return (
             <Row gutter={12} type="flex" className="homepage">
                 <Col className="left-content" xs={{span: 24}} sm={{span:16}}>
@@ -50,16 +54,5 @@ class HomepageContainer extends React.Component {
     }
 }
 
-const mapStateToProps=(state)=>{
-    return{
-        home: state.home
-    }
-};
 
-const mapDispatchToProps=(dispatch)=>{
-    const actions= {fetchHomePageData};
-    const actionMap = {action: bindActionCreators(actions, dispatch)}
-    return actionMap;
-};
-
-export default connect(mapStateToProps,mapDispatchToProps)(HomepageContainer);
+export default HomepageContainer;

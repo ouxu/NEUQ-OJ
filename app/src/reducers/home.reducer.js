@@ -3,12 +3,15 @@
  */
 import {SET_HOMEPAGE_INFO} from "../actions/type";
 
-export default function home(state = {}, action){
-    switch (action.type){
+const init_home = {
+    home: {}
+};
+export default function home(state = init_home, action) {
+    switch (action.type) {
         case SET_HOMEPAGE_INFO:
-            return  {
+            return {
                 ...state,
-                ...action.payload
+                home: action.payload
             };
         default:
             return state

@@ -9,6 +9,11 @@ import {bindActionCreators} from "redux";
 import {getRankTable} from "../actions";
 
 import RankList from '../components/content/ranklist';
+
+@connect(
+    state => state.ranklist,
+    dispatch => bindActionCreators({getRankTable}, dispatch)
+)
 class RanklistContainer extends Component {
 
     render() {
@@ -16,7 +21,7 @@ class RanklistContainer extends Component {
         return (
             <div>
                <RankList
-                   getRankTable = {this.props.action.getRankTable}
+                   getRankTable = {this.props.getRankTable}
                    data = {ranklist.data}
                />
             </div>

@@ -3,17 +3,21 @@
  */
 import {SET_USERINFO, CLEAR_USERINFO} from "../actions/type";
 
-export default function user(state = {}, action){
-    switch (action.type){
+const init_user = {
+    userinfo: {}
+};
+export default function user(state = init_user, action) {
+    switch (action.type) {
         case SET_USERINFO:
-            return  {
+            return {
                 ...state,
-                ...action.payload
+                userinfo: action.payload
             };
         case CLEAR_USERINFO:
-            return  {
+            return {
+                ...state,
+                userinfo: {}
             };
-        //    清除state的user
         default:
             return state
     }

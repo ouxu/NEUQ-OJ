@@ -7,40 +7,29 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {getProblemTable, searchProblems} from "../actions";
 
+@connect(
+    state => state.problems,
+    dispatch => bindActionCreators({getProblemTable, searchProblems}, dispatch)
+)
 class ProblemsContainer extends React.Component {
     constructor(props) {
         super(props);
     }
 
     render() {
-        const {user, problemtable} =this.props;
+        const {problemtable} =this.props;
         return (
             <div>
                 {this.props.children
                 ||
                 <ProblemsTable data={problemtable.data}
-                               getProblemTable={this.props.action.getProblemTable}
-                               searchProblems={this.props.action.searchProblems}
-                               key={'problem-table-' + user.id}
+                               getProblemTable={this.props.getProblemTable}
+                               searchProblems={this.props.searchProblems}
+                               key={'problem-table-table'}
 
                 />}
             </div>
         )
     }
 }
-
-const mapStateToProps = (state) => {
-    return {
-        problemtable: state.problemtable,
-        user: state.user
-    }
-};
-
-const mapDispatchToProps = (dispatch) => {
-    const actions = {getProblemTable, searchProblems};
-    return {
-        action: bindActionCreators(actions, dispatch)
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProblemsContainer);
+export default ProblemsContainer;

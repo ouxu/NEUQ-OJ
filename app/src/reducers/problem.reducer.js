@@ -3,26 +3,26 @@
  */
 import {SET_PROBLEM_TABLE, SET_PROBLEM_DETAIL} from "../actions/type";
 
-export function problemtable(state = {}, action) {
+const init_problem = {
+    problemtable: {},
+    problemdetail: {}
+};
+
+
+export default function problems(state = init_problem, action) {
     switch (action.type) {
         case SET_PROBLEM_TABLE:
             return {
                 ...state,
-                ...action.payload
+                problemtable: action.payload
+            };
+        case SET_PROBLEM_DETAIL:
+            return {
+                ...state,
+                problemdetail: action.payload
             };
         default:
             return state
     }
 }
 
-export function problemdetail(state = {}, action) {
-    switch (action.type) {
-        case SET_PROBLEM_DETAIL:
-            return {
-                ...state,
-                ...action.payload
-            };
-        default:
-            return state
-    }
-}

@@ -9,33 +9,26 @@ import {getStatusTable,searchStatus} from '../actions';
 
 import StatusTable from '../components/content/status'
 
+@connect(
+    state => state.status,
+    dispatch => bindActionCreators({getStatusTable,searchStatus}, dispatch)
+)
 class StatusContainer extends React.Component {
     constructor(props){
         super(props);
     }
     render(){
-        const {status} = this.props;
+        const {statustable} = this.props;
         return (
             <div>
-                <StatusTable data={status.data}
-                             getStatusTable={this.props.action.getStatusTable}
-                             searchStatus={this.props.action.searchStatus}
+                <StatusTable data={statustable.data}
+                             getStatusTable={this.props.getStatusTable}
+                             searchStatus={this.props.searchStatus}
                 />
             </div>
         )
     }
 }
 
-const mapStateToProps= (state) =>{
-    return {
-        status: state.status
-    }
-}
 
-const mapDispatchToProps=(dispatch) =>{
-    const actions = {getStatusTable,searchStatus};
-    const actionMap = {action: bindActionCreators(actions,dispatch)}
-    return actionMap;
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(StatusContainer)
+export default StatusContainer;

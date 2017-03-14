@@ -10,21 +10,22 @@ import {getContestsTable,searchContests,joinContest} from '../actions';
 
 
 @connect(
-    state => state.conteststable,
+    state => state.contests,
     dispatch => bindActionCreators({getContestsTable,searchContests,joinContest}, dispatch)
 )
 class ContestsContainer extends React.Component{
     render (){
-        const {data}=this.props;
+        const {conteststable}=this.props;
         return(
             <div>
                 {
                     this.props.children
                     ||
-                    <ContestPage data={data}
-                                 getContestsTable={this.props.getContestsTable}
-                                 searchContests={this.props.searchContests}
-                                 joinContest={this.props.joinContest}
+                    <ContestPage
+                        data={conteststable.data}
+                        getContestsTable={this.props.getContestsTable}
+                        searchContests={this.props.searchContests}
+                        joinContest={this.props.joinContest}
                     />
                 }
             </div>
@@ -32,4 +33,7 @@ class ContestsContainer extends React.Component{
     }
 }
 
+
 export default ContestsContainer
+
+
