@@ -18,7 +18,7 @@ class ContestPage extends React.Component {
             presentTime: '',
             visible: false,
             contestId: null,
-            password: '',
+            password: ''
         };
         this.onInputChange = this.onInputChange.bind(this);
         this.onPasswordChange = this.onPasswordChange.bind(this);
@@ -71,7 +71,7 @@ class ContestPage extends React.Component {
 
     handleCancel() {
         this.setState({
-            visible: false,
+            visible: false
         })
     }
 
@@ -83,7 +83,7 @@ class ContestPage extends React.Component {
         const body = {password: this.state.password};
         this.props.joinContest(this.state.contestId, body);
         this.setState({
-            visible: false,
+            visible: false
         })
     }
 
@@ -230,7 +230,7 @@ class ContestPage extends React.Component {
                 } else {
                     this.props.searchContests(searchText, current, pageSize)
                 }
-            },
+            }
 
         };
         return (

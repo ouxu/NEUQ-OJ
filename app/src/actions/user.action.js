@@ -21,7 +21,7 @@ export function tokenVerify() {
             method: 'GET',
             headers: {
                 'token': token
-            },
+            }
         }).then((res) => {
             return res.json()
         }).then((json) => {
@@ -112,7 +112,7 @@ export function getUserMe() {
             method: 'GET',
             headers: {
                 'token': token
-            },
+            }
         }).then((res) => {
             return res.json()
         }).then((json) => {

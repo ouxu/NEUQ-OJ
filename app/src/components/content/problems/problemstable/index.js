@@ -88,11 +88,11 @@ class ProblemsTable extends React.Component {
             filters: [
                 { text: '简单', value: 1 },
                 { text: '中等', value: 2 },
-                { text: '困难', value: 3 },
+                { text: '困难', value: 3 }
             ],
             onFilter: (value, record) => record.difficulty===Number(value),
             width: '10%',
-            key: 'problem-diff',
+            key: 'problem-diff'
         }, {
             title: '标题',
             render: (record)=>
@@ -151,7 +151,7 @@ class ProblemsTable extends React.Component {
                 }else{
                     this.props.searchProblems(searchText,current,pageSize)
                 }
-            },
+            }
         };
         return (
             <QueueAnim className="problem-table-warp" delay={100}>

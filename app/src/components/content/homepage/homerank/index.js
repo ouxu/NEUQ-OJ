@@ -4,7 +4,7 @@
 import React from "react";
 import "./index.less";
 
-import { Tabs,Card, Row, Col} from 'antd';
+import {Card, Row, Col} from 'antd';
 
 class HomeRank extends React.Component {
     render() {
@@ -22,7 +22,7 @@ class HomeRank extends React.Component {
                         </Row>
                     )}
                 </div>
-        )
+        );
         return (
             <div className="home-rank">
                 {

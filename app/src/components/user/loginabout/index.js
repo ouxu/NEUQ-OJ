@@ -18,7 +18,7 @@ class LoginAbout extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            visible: false,
+            visible: false
         };
         this.showModal = this.showModal.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,7 +34,7 @@ class LoginAbout extends React.Component {
                 const body = {identifier,password};
                 this.props.action.login(body);
                 this.setState({
-                    visible: false,
+                    visible: false
                 });
             }
         });
@@ -43,19 +43,19 @@ class LoginAbout extends React.Component {
 
     showModal() {
         this.setState({
-            visible: true,
+            visible: true
         });
     }
 
     handleCancel() {
         this.setState({
-            visible: false,
+            visible: false
         })
     }
 
     gotoRegister(){
         this.setState({
-            visible: false,
+            visible: false
         });
         goto('/register')
     }
@@ -84,8 +84,8 @@ class LoginAbout extends React.Component {
                             <FormItem>
                                 {getFieldDecorator('identifier', {
                                     rules: [{
-                                        required: true, message: '请输入UserName/手机号/邮箱',
-                                    }],
+                                        required: true, message: '请输入UserName/手机号/邮箱'
+                                    }]
                                 })(
                                     <Input addonBefore={<Icon type="user" />} placeholder="UserName/手机号/邮箱" />
                                 )}
@@ -93,10 +93,10 @@ class LoginAbout extends React.Component {
                             <FormItem>
                                 {getFieldDecorator('password', {
                                     rules: [{
-                                        pattern: verify.password, message: '请输入有效的密码(6-18位)',
+                                        pattern: verify.password, message: '请输入有效的密码(6-18位)'
                                     }, {
-                                        required: true, message: '请输入密码！',
-                                    }],
+                                        required: true, message: '请输入密码！'
+                                    }]
                                 })(
                                     <Input addonBefore={<Icon type="lock" />} type="password" placeholder="Password" />
                                 )}

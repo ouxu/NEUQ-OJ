@@ -8,7 +8,7 @@ export default function urlEncode(param, key, encode){
         return '';
     let paramStr='';
     let t = typeof (param);
-    let i=false;
+    let i = false;
     if (t == 'string' || t == 'number' || t == 'boolean') {
         paramStr += key + '=' + ((encode==null||encode) ? encodeURIComponent(param) : param)+'&' ;
     } else {

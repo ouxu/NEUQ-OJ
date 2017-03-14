@@ -4,14 +4,15 @@
 import {SET_STATUS_TABLE} from "./type";
 import API from "../api";
 import codeHelper from "../utils/codeHelper";
-import urlEncode from '../utils/urlEncode'
-import jumpTo from '../utils/windowScroll'
+import jumpTo from "../utils/windowScroll";
 
 /**
  * 获取当前提交状态
- * @param body
+ * @param page 页码
+ * @param size 条数
+ * @returns {function(*)} dispatch action
  */
-export function getStatusTable(page=1, size=20) {
+export function getStatusTable(page = 1, size = 20) {
     return (dispatch) => {
         sessionStorage.setItem("neuq_oj.statuspagecurr", page);
         sessionStorage.setItem("neuq_oj.statuspagesize", size);
@@ -37,7 +38,7 @@ export function getStatusTable(page=1, size=20) {
 
 /**
  * 设置当前提交状态
- * @param body
+ * @param data
  */
 const setStatusList = (data) => {
     return {
@@ -50,13 +51,16 @@ const setStatusList = (data) => {
 
 /**
  * 筛选状态
- * @param body
+ * @param str 筛选条件
+ * @param page 页码
+ * @param size 条数
+ * @returns {function(*)} dispatch action
  */
-export function searchStatus(str, page=1, size=20) {
+export function searchStatus(str, page = 1, size = 20) {
     return (dispatch) => {
         sessionStorage.setItem("neuq_oj.statuspagecurr", page);
         sessionStorage.setItem("neuq_oj.statuspagesize", size);
-        return fetch(API.status+'?'+str+'&page='+page+'&size='+size, {
+        return fetch(API.status + '?' + str + '&page=' + page + '&size=' + size, {
             method: 'GET'
         }).then((res) => {
             return res.json()

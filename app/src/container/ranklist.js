@@ -2,8 +2,7 @@
  * Created by out_xu on 17/2/21.
  */
 import React, {
-    Component,
-    PropTypes,
+    Component
 } from 'react';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";

@@ -10,7 +10,7 @@ import ContestInfoTabs from "./contestinfotabs";
 import "./index.less";
 import newDate from "../../../../utils/newDate";
 import API from "../../../../api";
-
+import codeHelper from ".././../../../utils/codeHelper";
 const TabPane = Tabs.TabPane;
 class ContestInfo extends React.Component {
     constructor(props) {
@@ -43,7 +43,7 @@ class ContestInfo extends React.Component {
         return {__html: html};
     };
 
-    setStateAsync=(state)=> {
+    setStateAsync = (state) => {
         return new Promise((resolve) => {
             this.setState(state, resolve);
         });
@@ -51,13 +51,13 @@ class ContestInfo extends React.Component {
 
     getRank(id) {
         fetch(API.contest + id + '/ranklist', {
-            method: 'GET',
+            method: 'GET'
         }).then((res) => {
             return res.json()
         }).then((json) => {
             if (json.code === 0) {
                 this.setStateAsync({
-                    rankData: json.data,
+                    rankData: json.data
                 });
             } else {
                 codeHelper(json.code)
@@ -97,7 +97,8 @@ class ContestInfo extends React.Component {
             render: (record) => {
                 return (
                     <span>
-                         <Link to={'contests/'+this.props.id +'/problem/'+record.pnum}> Problem {String.fromCharCode(parseInt(record.pnum) + 65)} {record.pid}</Link>
+                         <Link
+                             to={'contests/' + this.props.id + '/problem/' + record.pnum}> Problem {String.fromCharCode(parseInt(record.pnum) + 65)} {record.pid}</Link>
                     </span>
                 )
             },

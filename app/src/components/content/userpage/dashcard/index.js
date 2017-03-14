@@ -2,13 +2,12 @@
  * Created by out_xu on 17/2/20.
  */
 import React from "react";
-import {Row, Col, Card,Icon} from "antd";
-import {Link} from 'react-router'
+import {Row, Col, Card} from "antd";
 import "./index.less";
 
 class DashCard extends React.Component {
     render() {
-        const cardstyle={marginBottom: 15, fontSize: 14,height: 200}
+        const cardstyle={marginBottom: 15, fontSize: 14,height: 200};
         let mockdata={
             person: 0,
             system: 0,
@@ -111,7 +110,7 @@ class DashCard extends React.Component {
                 user_status: 'Y'
             }
         ]
-        }
+        };
         const collectedlist= (
             <div className="userpage-dashcard-collected-content">
             {
@@ -126,7 +125,7 @@ class DashCard extends React.Component {
                         </Row>
                 )}
             </div>
-        )
+        );
         return (
             <Row gutter={12} type="flex" className="userpage-dashcard-wrap">
                 <Col className="userpage-dashcard-message" xs={{span: 24}} sm={{span: 8}}>

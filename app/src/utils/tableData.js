@@ -17,7 +17,7 @@ const result=[
     <Badge status="error" text="内存错误" />,
     <Badge status="error" text="输出错误" />,
     <Badge status="error" text="运行错误" />,
-    <Badge status="error" text="编译错误" />,
+    <Badge status="error" text="编译错误" />
 ]
 const language=[
     'C',

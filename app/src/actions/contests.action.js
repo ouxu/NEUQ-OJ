@@ -1,12 +1,12 @@
 /**
  * Created by out_xu on 17/2/21.
  */
-import {SET_CONTESTS_TABLE, SET_CONTEST} from "./type";
-import API from "../api";
-import codeHelper from "../utils/codeHelper";
-import goto from "../utils/goto";
-import jumpTo from "../utils/windowScroll";
-import getToken from "../utils/getToken";
+import { SET_CONTESTS_TABLE, SET_CONTEST } from './type';
+import API from '../api';
+import codeHelper from '../utils/codeHelper';
+import goto from '../utils/goto';
+import jumpTo from '../utils/windowScroll';
+import getToken from '../utils/getToken';
 
 /**
  * 获取竞赛列表
@@ -16,40 +16,36 @@ import getToken from "../utils/getToken";
  */
 export function getContestsTable(page = 1, size = 20) {
     return (dispatch) => {
-        //将当前输入的页码存入sessionStorage
-        sessionStorage.setItem("neuq_oj.contestspagecurr", page);
-        sessionStorage.setItem("neuq_oj.contestspagesize", size);
+        // 将当前输入的页码存入sessionStorage
+        sessionStorage.setItem('neuq_oj.contestspagecurr', page);
+        sessionStorage.setItem('neuq_oj.contestspagesize', size);
 
-        return fetch(API.contests + '?page=' + page + '&size=' + size, {
-            method: 'GET',
-        }).then((res) => {
-            return res.json()
-        }).then((json) => {
+        return fetch(`${API.contests}?page=${page}&size=${size}`, {
+            method: 'GET'
+        }).then(res => res.json()).then((json) => {
             if (json.code === 0) {
-                sessionStorage.setItem("neuq_oj.contestspagecount", json.total_count);
+                sessionStorage.setItem('neuq_oj.contestspagecount', json.total_count);
                 dispatch(setContestsList(json.data));
-                jumpTo('navigation')
+                jumpTo('navigation');
             } else {
-                codeHelper(json.code)
+                codeHelper(json.code);
             }
         }).catch((e) => {
-            console.log(e.message)
-        })
-    }
+            console.log(e.message);
+        });
+    };
 }
 
 /**
  * 设置竞赛列表
  * @param data
  */
-const setContestsList = (data) => {
-    return {
-        type: SET_CONTESTS_TABLE,
-        payload: {
-            data
-        }
+const setContestsList = data => ({
+    type: SET_CONTESTS_TABLE,
+    payload: {
+        data
     }
-};
+});
 
 /**
  * 搜索竞赛
@@ -60,38 +56,34 @@ const setContestsList = (data) => {
  */
 export function searchContests(value, page = 1, size = 20) {
     return (dispatch) => {
-        sessionStorage.setItem("neuq_oj.contestspagecurr", page);
-        sessionStorage.setItem("neuq_oj.contestspagesize", size);
+        sessionStorage.setItem('neuq_oj.contestspagecurr', page);
+        sessionStorage.setItem('neuq_oj.contestspagesize', size);
 
         return fetch(`${API.contestssearch}?keyword=${value}&page=${page}&size=${size}`, {
             method: 'GET'
-        }).then((res) => {
-            return res.json()
-        }).then((json) => {
+        }).then(res => res.json()).then((json) => {
             if (json.code === 0) {
-                sessionStorage.setItem("neuq_oj.contestspagecount", json.total_count);
+                sessionStorage.setItem('neuq_oj.contestspagecount', json.total_count);
                 dispatch(setContestsList(json.data));
-                jumpTo('navigation')
+                jumpTo('navigation');
             } else {
-                codeHelper(json.code)
+                codeHelper(json.code);
             }
         }).catch((e) => {
-            console.log(e.message)
-        })
-    }
+            console.log(e.message);
+        });
+    };
 }
 /**
  * 设置当前竞赛详情
  * @param data
  */
-const setContest = (data) => {
-    return {
-        type: SET_CONTEST,
-        payload: {
-            data
-        }
+const setContest = data => ({
+    type: SET_CONTEST,
+    payload: {
+        data
     }
-};
+});
 
 
 /**
@@ -105,22 +97,20 @@ export function getContest(id) {
         return fetch(API.contest + id, {
             method: 'GET',
             headers: {
-                "token": token
+                token
             }
-        }).then((res) => {
-            return res.json()
-        }).then((json) => {
+        }).then(res => res.json()).then((json) => {
             if (json.code === 0) {
                 dispatch(setContest(json.data));
-                jumpTo('navigation')
+                jumpTo('navigation');
             } else {
                 goto('/contests');
-                codeHelper(json.code)
+                codeHelper(json.code);
             }
         }).catch((e) => {
-            console.log(e.message)
-        })
-    }
+            console.log(e.message);
+        });
+    };
 }
 
 
@@ -133,25 +123,23 @@ export function getContest(id) {
 export function joinContest(id, body) {
     return () => {
         const token = getToken();
-        fetch(API.contest + id + '/join', {
+        fetch(`${API.contest + id}/join`, {
             method: 'POST',
             headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                "token": token
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                token
             },
             body: JSON.stringify(body)
-        }).then((res) => {
-            return res.json()
-        }).then((json) => {
+        }).then(res => res.json()).then((json) => {
             if (json.code === 0) {
-                goto('contests/' + id);
+                goto(`contests/${id}`);
             } else {
                 goto('/contests');
-                codeHelper(json.code)
+                codeHelper(json.code);
             }
         }).catch((e) => {
-            console.log(e.message)
-        })
-    }
+            console.log(e.message);
+        });
+    };
 }

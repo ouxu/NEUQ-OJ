@@ -3,7 +3,7 @@
  */
 import React from "react";
 import {Link} from "react-router";
-import {Table, Icon} from "antd";
+import {Table} from "antd";
 import "./index.less";
 import newDate from "../../../../../utils/newDate";
 
@@ -39,10 +39,7 @@ class ContestInfoTabs extends React.Component {
                 id: i + 1
             }
         });
-        const accepted = {
-            Y: <Icon className="status-yes" type="check-circle"/>,
-            N: <Icon className="status-no" type="close-circle"/>
-        };
+
         const columns = [{
             title: '',
             width: '1%',

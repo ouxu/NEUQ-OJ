@@ -13,7 +13,7 @@ export function setTimeStamp() {
             return {
                 type: SET_TIME_STAMP,
                 payload: {
-                    timeStamp: new Data()
+                    timeStamp: new Date()
                 }
             }
         })

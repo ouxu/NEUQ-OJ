@@ -2,7 +2,7 @@
  * Created by out_xu on 17/2/21.
  */
 import React, {
-    Component,
+    Component
 } from 'react';
 import {Link} from "react-router";
 

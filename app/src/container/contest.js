@@ -22,9 +22,9 @@ class ContestsContainer extends React.Component{
                     this.props.children
                     ||
                     <ContestPage data={data}
-                                 getContestsTable={this.props.action.getContestsTable}
-                                 searchContests={this.props.action.searchContests}
-                                 joinContest={this.props.action.joinContest}
+                                 getContestsTable={this.props.getContestsTable}
+                                 searchContests={this.props.searchContests}
+                                 joinContest={this.props.joinContest}
                     />
                 }
             </div>

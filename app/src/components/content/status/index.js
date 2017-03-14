@@ -37,12 +37,12 @@ class StatusTable extends React.Component {
         this.setState({
             result: value
         })
-    };
+    }
     SelectLanguage(value) {
         this.setState({
             language: value
         })
-    };
+    }
 
     onInputUser(e){
         const { value } = e.target;
@@ -51,14 +51,14 @@ class StatusTable extends React.Component {
             this.setState({user_id: value==''?null:value})
         }
 
-    };
+    }
     onInputId(e) {
         const {value} = e.target;
         const reg = /^\d+$/;
         if ((!isNaN(value) && reg.test(value)) || value === '') {
             this.setState({problem_id: value == '' ? null : value})
         }
-    };
+    }
 
     onSeacrch(){
         const searchobj=this.state;
@@ -70,14 +70,14 @@ class StatusTable extends React.Component {
         }else{
             this.props.searchStatus(searchText);
         }
-    };
+    }
 
     Cancel(){
         this.setState({
             problem_id: null,
             user_id: null
         })
-    };
+    }
 
 
 

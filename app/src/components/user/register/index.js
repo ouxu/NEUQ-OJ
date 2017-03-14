@@ -41,7 +41,7 @@ class LoginAbout extends React.Component {
             return res.json()
         }).then((json) => {
             this.setState({
-                captcha: json.url,
+                captcha: json.url
                 // captchatoken: json.captcha_token
             });
             if (json.code === 0) {
@@ -52,7 +52,7 @@ class LoginAbout extends React.Component {
 
     refreshCaptcha() {
         this.setState({
-            captchastamp: new Date(),
+            captchastamp: new Date()
         })
 
     }
@@ -118,7 +118,7 @@ class LoginAbout extends React.Component {
                             key="register-2"
                         >
                             {getFieldDecorator('name', {
-                                rules: [{required: true, message: '请输入用户名'}],
+                                rules: [{required: true, message: '请输入用户名'}]
                             })(
                                 <Input />
                             )}
@@ -131,10 +131,10 @@ class LoginAbout extends React.Component {
                         >
                             {getFieldDecorator('email', {
                                 rules: [{
-                                    pattern: verify.mail, message: '输入的不是有效的邮箱！',
+                                    pattern: verify.mail, message: '输入的不是有效的邮箱！'
                                 }, {
-                                    required: true, message: '请输入邮箱!',
-                                }],
+                                    required: true, message: '请输入邮箱!'
+                                }]
                             })(
                                 <Input />
                             )}
@@ -148,12 +148,12 @@ class LoginAbout extends React.Component {
                         >
                             {getFieldDecorator('password', {
                                 rules: [{
-                                    pattern: verify.password, message: '请输入6-18位有效密码！',
+                                    pattern: verify.password, message: '请输入6-18位有效密码！'
                                 }, {
-                                    required: true, message: '请输入你的密码',
+                                    required: true, message: '请输入你的密码'
                                 }, {
                                     validator: this.checkConfirm
-                                }],
+                                }]
                             })(
                                 <Input type="password" onBlur={this.handlePasswordBlur}/>
                             )}
@@ -166,10 +166,10 @@ class LoginAbout extends React.Component {
                         >
                             {getFieldDecorator('password_confirmation', {
                                 rules: [{
-                                    required: true, message: '与上一次密码不一致',
+                                    required: true, message: '与上一次密码不一致'
                                 }, {
                                     validator: this.checkPassword
-                                }],
+                                }]
                             })(
                                 <Input type="password"/>
                             )}
@@ -183,10 +183,10 @@ class LoginAbout extends React.Component {
                         >
                             {getFieldDecorator('mobile', {
                                 rules: [{
-                                    pattern: verify.mobile, message: '请输入正确的手机号码',
+                                    pattern: verify.mobile, message: '请输入正确的手机号码'
                                 }, {
-                                    required: true, message: '请输入你的手机号码',
-                                }],
+                                    required: true, message: '请输入你的手机号码'
+                                }]
                             })(
                                 <Input />
                             )}
@@ -198,8 +198,8 @@ class LoginAbout extends React.Component {
                         >
                             {getFieldDecorator('school', {
                                 rules: [{
-                                    required: false, message: '请输入你所在的学校',
-                                }],
+                                    required: false, message: '请输入你所在的学校'
+                                }]
                             })(
                                 <Input />
                             )}
@@ -213,7 +213,7 @@ class LoginAbout extends React.Component {
                             <Row type="flex">
                                 <Col>
                                     {getFieldDecorator('captcha', {
-                                        rules: [{required: false, message: '请输入验证码！'}],
+                                        rules: [{required: false, message: '请输入验证码！'}]
                                     })(
                                         <Input size="large"/>
                                     )}

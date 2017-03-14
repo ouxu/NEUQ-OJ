@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
     ranklist,
     status,
     timeStamp,
-    user,
+    user
 
 });
 

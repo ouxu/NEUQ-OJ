@@ -11,7 +11,7 @@ class Navigation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            visible: false,
+            visible: false
         };
         this.showModal = this.showModal.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
@@ -22,13 +22,13 @@ class Navigation extends React.Component {
     }
     showModal() {
         this.setState({
-            visible: true,
+            visible: true
         });
     }
 
     handleCancel() {
         this.setState({
-            visible: false,
+            visible: false
         })
     }
     render() {
