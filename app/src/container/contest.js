@@ -35,5 +35,3 @@ class ContestsContainer extends React.Component{
 
 
 export default ContestsContainer
-
-

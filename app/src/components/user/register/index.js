@@ -73,7 +73,7 @@ class LoginAbout extends React.Component {
         this.setState({passwordDirty: this.state.passwordDirty || !!value});
     }
 
-    checkConfirm(value, callback) {
+    checkConfirm(rule,value, callback) {
         const form = this.props.form;
         if (value && this.state.passwordDirty) {
             form.validateFields(['password_confirmation'], {force: true});
@@ -81,7 +81,7 @@ class LoginAbout extends React.Component {
         callback();
     }
 
-    checkPassword(value, callback) {
+    checkPassword(rule,value, callback) {
         const form = this.props.form;
         if (value && value !== form.getFieldValue('password')) {
             callback('两次输入的密码不一致！');

@@ -1,26 +1,32 @@
 /**
  * Created by out_xu on 16/12/21.
  */
-import React from 'react';
-import {Icon} from 'antd';
-import Navigation from '../components/plugins/navigation';
-import Sider from './plugins/sider';
-import Footer from './plugins/footer';
-import 'whatwg-fetch';
-import 'fetch-ie8/fetch.js';
-import './index.less';
-//连接redux
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {setTimeStamp, getUserMe, logout, tokenVerify} from '../actions';
+import React from "react";
+import {Icon} from "antd";
+import Navigation from "../components/plugins/navigation";
+import Sider from "./plugins/sider";
+import Footer from "./plugins/footer";
+import "whatwg-fetch";
+import "fetch-ie8/fetch.js";
+import "./index.less";
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {setTimeStamp, getUserMe, logout, tokenVerify} from "../actions";
+import pureRender from "../utils/pureRender";
 
 // 引入垫片兼容IE
-require('es5-shim');
-require('es5-shim/es5-sham');
+
 require('console-polyfill');
 require('es6-promise');
 
+
 // 配置整体组件
+
+@pureRender
+@connect(
+    state => state.user,
+    mapDispatchToProps
+)
 class AppComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -43,7 +49,7 @@ class AppComponent extends React.Component {
 
     render() {
         const collapse = this.state.collapse;
-        const {user}= this.props;
+        const {userinfo}= this.props;
         return (
             <div className={collapse ? 'ant-layout-aside ant-layout-aside-collapse' : 'ant-layout-aside'}>
                 <aside className="ant-layout-sider">
@@ -54,7 +60,7 @@ class AppComponent extends React.Component {
                 </aside>
                 <div className="ant-layout-main">
                     <Navigation
-                        user={user}
+                        user={userinfo}
                         logout={this.props.action.logout}
                         tokenVerify={this.props.action.tokenVerify}
                     />

@@ -3,6 +3,8 @@
  */
 import {SET_USERINFO, CLEAR_USERINFO} from "./type";
 import {message} from "antd";
+
+import * as requestService from "../utils/request";
 //引入自定义工具
 import API from "../api";
 import codeHelper from "../utils/codeHelper";
@@ -46,24 +48,14 @@ export function tokenVerify() {
  */
 export function login(body) {
     return (dispatch) => {
-        return fetch(API.login, {
-            method: 'POST',
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(body)
-        }).then((res) => {
-            return res.json()
-        }).then((json) => {
+        requestService.post(API.login,body).then((json)=>{
             if (json.code === 0) {
                 localStorage.setItem("neuq_oj.token", json.data.token);
                 localStorage.setItem("neuq_oj.name", json.data.user.name);
                 localStorage.setItem("neuq_oj.id", json.data.user.id);
+
                 dispatch(setUserinfo(json.data.user));
                 message.success('登录成功')
-            } else {
-                codeHelper(json.code)
             }
         }).catch((e) => {
             console.log(e.message)

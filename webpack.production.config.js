@@ -1,50 +1,100 @@
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin'); //抽取CSS文件插件
+const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin'); //打包 css
+const autoprefixer = require('autoprefixer');               //自动处理浏览器前缀
+const HtmlWebpackPlugin = require('html-webpack-plugin');    //生成 html
+const CleanWebpackPlugin = require('clean-webpack-plugin');  //用于清除上次打包文件
 
 module.exports = {
     entry: {
-        pages: __dirname +'/app/src/main.js',
-        vendors:['react','react-dom','react-router','redux']
-        //第三方库和框架
+        bundle: __dirname + '/app/src/main.js',
+        vendors: ['react', 'react-dom', 'react-router', 'redux']  //第三方库和框架另外打包
     },
     output: {
-        path: __dirname + '/app/dist',
-        publicPath:'http://ohtk9ocqw.bkt.clouddn.com/oj/',  //事实上，这个配置直接影响了图片的输出路径
-        filename: 'js/bundle.[hash:6].js'
-        // 添加 chunkFilename
-        // chunkFilename: '[name].[chunkhash:5].chunk.js',
-
+        path: './dist/build/',
+        publicPath:'http://ohtk9ocqw.bkt.clouddn.com/oj/',  //表示 index.html 中引入资源的前缀path
+        filename: 'js/bundle.[chunkhash:8].js',
+        chunkFilename: 'js/[name].[chunkhash:8].js'
     },
-    devtool:false,
+    cache: true,
+    devtool: false,
     module: {
-        loaders: [
-            { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css') }, //坑：不能用叹号链接，必须写成这种格式
-            { test: /\.less$/, loader: ExtractTextPlugin.extract('css!less') },
-            { test: /\.js[x]?$/, exclude: /node_modules/, loader: 'babel' },
-            { test: /\.(png|jpg)$/, loader: 'url?limit=8192&name=img/[name].[ext]' },
-            { test: /\.(woff|woff2|eot|ttf|svg)(\?.*$|$)/, loader: 'url' },
-            { test: /\.json$/, loader: 'json-loader'}
+        rules: [
+            {
+                test: /\.jsx?$/,
+                loaders: 'react-hot-loader!babel-loader',
+                exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                loaders: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader?minimize', 'postcss-loader']
+                })
+            },
+            {
+                test: /\.less/,
+                loaders: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader?minimize', 'postcss-loader', 'less-loader']
+                })
+            },
+            {
+                test: /\.(png|jpg|gif|woff|woff2|svg)$/,
+                loaders: [
+                    'url-loader?limit=10000&name=img/[hash:8].[name].[ext]',
+                ],
+            }
         ]
     },
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: [' ', '.js', '.jsx'],
     },
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin('vendors','js/vendors.[hash:6].js'),
-        new ExtractTextPlugin('css/bundle.[contenthash:6].css'),
-        // jquery配置
-        // new webpack.ProvidePlugin({ $: "jquery" }),
-        // 压缩配置
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
+        new webpack.NoEmitOnErrorsPlugin(),
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                postcss: function () {
+                    return [autoprefixer];
+                }
             }
         }),
-        // 配置环境变量到Production，防止控制台警告
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendors',
+            filename: 'js/vendors.[chunkhash:8].js',
+        }),
+        new ExtractTextPlugin({
+            filename: 'css/style.[contenthash:8].css',
+            allChunks: true
+        }),
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify('production')
             }
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            output: {
+                comments: false,  // remove all comments
+            },
+            compress: {
+                warnings: false,
+                drop_debugger: true,
+                drop_console: true
+            }
+        }),
+
+        new webpack.optimize.LimitChunkCountPlugin({maxChunks: 15}),
+        new webpack.optimize.MinChunkSizePlugin({minChunkSize: 1000}),
+        new HtmlWebpackPlugin({
+            template: './dist/template.ejs',
+            title: 'NEUQ OJ',
+            favicon: './app/favicon.ico',
+            chunks: ['bundle', 'vendors']
+        }),
+        new CleanWebpackPlugin(['dist/build'], {
+
+            verbose: true,
+            dry: false
         })
     ]
 };
