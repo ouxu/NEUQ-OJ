@@ -15,7 +15,6 @@ import RankList from '../components/content/ranklist';
     dispatch => bindActionCreators({getRankTable}, dispatch)
 )
 class RanklistContainer extends Component {
-
     render() {
         const {ranklist}=this.props;
         return (

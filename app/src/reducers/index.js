@@ -16,9 +16,9 @@ const rootReducer = combineReducers({
     home,
     problems,
     ranklist,
+    user,
     status,
     timeStamp,
-    user
 });
 
 export default rootReducer;

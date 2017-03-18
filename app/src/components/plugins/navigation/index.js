@@ -18,7 +18,7 @@ class Navigation extends React.Component {
     }
 
     componentWillMount() {
-        this.props.tokenVerify()
+
     }
     showModal() {
         this.setState({
@@ -32,24 +32,24 @@ class Navigation extends React.Component {
         })
     }
     render() {
-        const {user}=this.props;
+        const {islogined}=this.props;
         return (
             <div id="navigation">
                 <nav role='navigation'>
-                    <ul key={'navigation-'+ user.id}>
+                    <ul key={'navigation-ul'}>
                         <li className="othernav"><a href="#">OJ首页</a></li>
                         <li className="othernav"><a href="http://geek.acmclub.cn">极客社区</a></li>
                         <li className="othernav"><a href="http://www.acmclub.cn">ACM俱乐部</a></li>
                         {/*根据用户登录状况返回*/}
-                        {(user.name &&
+                        { islogined &&
                             <li className="userinfo">
-                                <a><div className = "userinfo-name"> <Icon type="user"/> {user.name}</div></a>
+                                <a><div className = "userinfo-name"> <Icon type="user"/> {localStorage["neuq_oj.name"]}</div></a>
                                 <ul>
-                                    <li><Link to={`/userpage/${user.id}`}><Icon type="solution"/> 个人信息</Link></li>
+                                    <li><Link to={`/userpage/${localStorage["neuq_oj.id"]}`}><Icon type="solution"/> 个人信息</Link></li>
                                     <li><a onClick={this.props.logout}><Icon type="export"/> 登出</a></li>
                                 </ul>
                             </li> || <Login/>
-                        )}
+                        }
                     </ul>
                 </nav>
             </div>

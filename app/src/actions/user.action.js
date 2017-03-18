@@ -1,42 +1,70 @@
 /**
  * Created by out_xu on 16/12/23.
  */
-import {SET_USERINFO, CLEAR_USERINFO} from "./type";
+import {SET_USERINFO,SET_USERME,CLEAN_USERME,IS_LOGINED} from "./type";
 import {message} from "antd";
-
 import * as requestService from "../utils/request";
 //引入自定义工具
 import API from "../api";
 import codeHelper from "../utils/codeHelper";
 import urlEncode from "../utils/urlEncode";
-import getToken from "../utils/getToken";
 
+
+/**
+ * 设置用户信息
+ * @param data
+ */
+const setUserInfo = (data) => {
+    return {
+        type: SET_USERINFO,
+        payload: {
+            ...data
+        }
+    }
+};
+/**
+ * 设置用户信息
+ * @param data
+ */
+const setUserMe = (data) => {
+    return {
+        type: SET_USERME,
+        payload: {
+            ...data
+        }
+    }
+};
+
+/**
+ * 设置用户信息
+ * @param
+ */
+const cleanUserMe = () => {
+    return {
+        type: CLEAN_USERME
+    }
+};
+
+const isLogined = () => {
+    return {
+        type: IS_LOGINED
+    }
+};
 
 /**
  * 登录验证
  * @header token
  */
 export function tokenVerify() {
-    return (dispatch) => {
-        const token = localStorage.getItem('neuq_oj.token');
-        return fetch(API.tokenverify, {
-            method: 'GET',
-            headers: {
-                'token': token
-            }
-        }).then((res) => {
-            return res.json()
-        }).then((json) => {
-            if (json.code === 0) {
-
-            } else {
-                localStorage.clear('neuq_oj.token');
-                localStorage.clear('neuq_oj.id');
-                dispatch(clearUserinfo());
-            }
-        }).catch((e) => {
-            console.log(e.message)
-        });
+    return async(dispatch) => {
+        try {
+            await requestService.tget(API.tokenverify);
+            await dispatch(isLogined());
+        } catch (e) {
+            dispatch(cleanUserMe());
+            localStorage.clear('neuq_oj.token');
+            localStorage.clear('neuq_oj.id');
+        }
 
     }
 }
@@ -47,19 +75,19 @@ export function tokenVerify() {
  * @param body
  */
 export function login(body) {
-    return (dispatch) => {
-        requestService.post(API.login,body).then((json)=>{
-            if (json.code === 0) {
-                localStorage.setItem("neuq_oj.token", json.data.token);
-                localStorage.setItem("neuq_oj.name", json.data.user.name);
-                localStorage.setItem("neuq_oj.id", json.data.user.id);
+    return async(dispatch) => {
+        try {
+            const json = await requestService.post(API.login, body);
+            localStorage.setItem("neuq_oj.token", json.data.token);
+            localStorage.setItem("neuq_oj.name", json.data.user.name);
+            localStorage.setItem("neuq_oj.id", json.data.user.id);
+            await dispatch(setUserMe(json.data.user));
+            message.success('登录成功');
 
-                dispatch(setUserinfo(json.data.user));
-                message.success('登录成功')
-            }
-        }).catch((e) => {
-            console.log(e.message)
-        })
+        } catch (e) {
+
+            console.error(e)
+        }
     }
 
 }
@@ -70,25 +98,19 @@ export function login(body) {
  * @returns {function(*)}
  */
 export function logout() {
-    return (dispatch) => {
-        const token = getToken();
-        return fetch(API.logout, {
-            method: 'GET',
-            headers: {
-                'token': token
-            }
-        }).then((res) => {
-            return res.json()
-        }).then((json) => {
-            if (json.code === 0) {
-                dispatch(clearUserinfo());
-                message.success('登出成功')
-            } else {
-                codeHelper(json.code)
-            }
-        }).catch((e) => {
-            console.log(e.message)
-        })
+    return async(dispatch) => {
+        try {
+            await requestService.tget(API.logout);
+            await dispatch(cleanUserMe());
+
+            localStorage.clear('neuq_oj.token');
+            localStorage.clear('neuq_oj.name');
+            localStorage.clear('neuq_oj.id');
+            message.success('登出成功')
+
+        } catch (e) {
+            console.error(e)
+        }
     }
 }
 
@@ -98,25 +120,17 @@ export function logout() {
  * @returns {function(*)}
  */
 export function getUserMe() {
-    return (dispatch) => {
-        const token = getToken();
-        return fetch(API.userme, {
-            method: 'GET',
-            headers: {
-                'token': token
-            }
-        }).then((res) => {
-            return res.json()
-        }).then((json) => {
-            if (json.code === 0) {
-                dispatch(setUserinfo(json.data))
-            } else {
-                localStorage.clear('neuq_oj.token')
-            }
-        }).catch((e) => {
-            console.log(e.message)
-        });
-
+    return async(dispatch) => {
+        try {
+            const json = await requestService.tget(API.userme);
+            await dispatch(setUserMe(json.data));
+        } catch (e) {
+            localStorage.clear('neuq_oj.token');
+            localStorage.clear('neuq_oj.name');
+            localStorage.clear('neuq_oj.id');
+            dispatch(cleanUserMe());
+            console.error(e)
+        }
     }
 }
 
@@ -133,43 +147,16 @@ export function getUserInfo(id) {
             return res.json()
         }).then((json) => {
             if (json.code === 0) {
-                dispatch(setUserinfo(json.data))
+                dispatch(setUserInfo(json.data))
             } else {
                 codeHelper(json.code)
             }
         }).catch((e) => {
-            console.log(e.message)
+            console.error(e)
         })
     }
 }
 
-
-/**
- * 清除用户信息
- * @returns {{type, payload: {}}}
- */
-export const clearUserinfo = () => {
-    localStorage.clear('neuq_oj.token');
-    localStorage.clear('neuq_oj.name');
-    localStorage.clear('neuq_oj.id');
-    return {
-        type: CLEAR_USERINFO,
-        payload: {}
-    }
-};
-
-/**
- * 设置用户信息
- * @param data
- */
-const setUserinfo = (data) => {
-    return {
-        type: SET_USERINFO,
-        payload: {
-            ...data
-        }
-    }
-};
 
 /**
  * 用户注册
@@ -200,7 +187,7 @@ export function userRegister(body) {
                 codeHelper(json.code)
             }
         }).catch((e) => {
-            console.log(e.message)
+            console.error(e)
         })
     }
 

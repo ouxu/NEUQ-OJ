@@ -3,38 +3,9 @@
  */
 import {SET_STATUS_TABLE} from "./type";
 import API from "../api";
-import codeHelper from "../utils/codeHelper";
 import jumpTo from "../utils/windowScroll";
+import * as requestService from "../utils/request";
 
-/**
- * 获取当前提交状态
- * @param page 页码
- * @param size 条数
- * @returns {function(*)} dispatch action
- */
-export function getStatusTable(page = 1, size = 20) {
-    return (dispatch) => {
-        sessionStorage.setItem("neuq_oj.statuspagecurr", page);
-        sessionStorage.setItem("neuq_oj.statuspagesize", size);
-
-        return fetch(API.status + '?page=' + page + '&size=' + size, {
-            method: 'GET'
-        }).then((res) => {
-            return res.json()
-        }).then((json) => {
-            if (json.code === 0) {
-                dispatch(setStatusList(json.data));
-                jumpTo('navigation')
-
-            } else {
-                codeHelper(json.code)
-            }
-        }).catch((e) => {
-            console.log(e.message)
-        })
-
-    }
-}
 
 /**
  * 设置当前提交状态
@@ -50,31 +21,30 @@ const setStatusList = (data) => {
 };
 
 /**
- * 筛选状态
- * @param str 筛选条件
+ * 获取当前提交状态
  * @param page 页码
  * @param size 条数
+ * @param searchobj 筛选条件
  * @returns {function(*)} dispatch action
  */
-export function searchStatus(str, page = 1, size = 20) {
-    return (dispatch) => {
-        sessionStorage.setItem("neuq_oj.statuspagecurr", page);
-        sessionStorage.setItem("neuq_oj.statuspagesize", size);
-        return fetch(API.status + '?' + str + '&page=' + page + '&size=' + size, {
-            method: 'GET'
-        }).then((res) => {
-            return res.json()
-        }).then((json) => {
-            if (json.code === 0) {
-                sessionStorage.setItem("neuq_oj.statuspagecount", json.total_count);
-                dispatch(setStatusList(json.data));
-                jumpTo('navigation')
+export function getStatusTable(page = 1, size = 20,searchobj) {
+    return async(dispatch) => {
+        try {
+            let params = {
+                ...searchobj,
+                page: page,
+                size: size
+            };
+            const json = await requestService.get(API.status, params);
 
-            } else {
-                codeHelper(json.code)
-            }
-        }).catch((e) => {
-            console.log(e.message)
-        })
+            sessionStorage.setItem("neuq_oj.statuspagecurr", page);
+            sessionStorage.setItem("neuq_oj.statuspagesize", size);
+
+            await dispatch(setStatusList(json.data));
+            jumpTo('navigation');
+        } catch (e) {
+            console.error(e)
+        }
+
     }
 }

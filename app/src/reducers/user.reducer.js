@@ -1,10 +1,12 @@
 /**
  * Created by out_xu on 16/12/20.
  */
-import {SET_USERINFO, CLEAR_USERINFO} from "../actions/type";
+import {SET_USERINFO,SET_USERME,IS_LOGINED,CLEAN_USERME} from "../actions/type";
 
 const init_user = {
-    userinfo: {}
+    userinfo: {},
+    userme: {},
+    islogined: false
 };
 export default function user(state = init_user, action) {
     switch (action.type) {
@@ -13,10 +15,22 @@ export default function user(state = init_user, action) {
                 ...state,
                 userinfo: action.payload
             };
-        case CLEAR_USERINFO:
+        case SET_USERME:
             return {
                 ...state,
-                userinfo: {}
+                userme: action.payload,
+                islogined: true
+            };
+        case CLEAN_USERME:
+            return {
+                ...state,
+                userme: {},
+                islogined: false
+            };
+        case IS_LOGINED:
+            return {
+                ...state,
+                islogined: true
             };
         default:
             return state

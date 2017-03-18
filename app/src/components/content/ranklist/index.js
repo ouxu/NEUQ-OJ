@@ -1,37 +1,39 @@
 /**
  * Created by out_xu on 17/2/21.
  */
-import React, {
-    Component
-} from 'react';
+import React, {Component} from "react";
 import {Link} from "react-router";
-
-import QueueAnim from 'rc-queue-anim';
+import QueueAnim from "rc-queue-anim";
 import {Table} from "antd";
-import './index.less';
-import {TimeSelect} from '../../../utils/selectBox'
+import "./index.less";
+import {TimeSelect} from "../../../utils/selectBox";
+
+//TODO 去除分页
 
 class RankList extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state= {
-           scope: null
+        this.state = {
+            scope: null
         };
-        this.handleChange=this.handleChange.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
+
     componentDidMount() {
-        let page=sessionStorage.getItem("neuq_oj.ranklistpagecurr")||1;
-        let size= sessionStorage.getItem("neuq_oj.ranklistpagesize")||20;
-        this.props.getRankTable(page,size);
+        let page = sessionStorage.getItem("neuq_oj.ranklistpagecurr") || 1;
+        let size = sessionStorage.getItem("neuq_oj.ranklistpagesize") || 20;
+        this.props.getRankTable(page, size);
     }
-    handleChange(value){
+
+    handleChange(value) {
         this.setState({
             scope: value
         });
-        let page=sessionStorage.getItem("neuq_oj.ranklistpagecurr")||1;
-        let size= sessionStorage.getItem("neuq_oj.ranklistpagesize")||20;
-        this.props.getRankTable(value,page,size);
+        let page = 1;
+        let size = sessionStorage.getItem("neuq_oj.ranklistpagesize") || 20;
+        this.props.getRankTable(value, page, size);
     }
+
     render() {
         let {data = []}= this.props;
         data = data.map((t = {}, i) => {
@@ -46,21 +48,21 @@ class RankList extends Component {
             total: 10000,
             showSizeChanger: true,
             onShowSizeChange: (current, pageSize) => {
-                const scope=this.state;
-                if (scope.length<1){
-                    this.props.getRankTable(current,pageSize)
-                }else{
-                    this.props.getRankTable(scope,current,pageSize)
+                const scope = this.state;
+                if (scope.length < 1) {
+                    this.props.getRankTable(current, pageSize)
+                } else {
+                    this.props.getRankTable(scope, current, pageSize)
                 }
             },
             onChange: (current) => {
-                const scope=this.state;
-                sessionStorage.setItem("neuq_oj.ranklistpagecurr",current);
-                const pageSize=sessionStorage.getItem("neuq_oj.ranklistpagesize",pageSize);
-                if (scope.length<1){
-                    this.props.getRankTable(current,pageSize)
-                }else{
-                    this.props.getRankTable(scope,current,pageSize)
+                const scope = this.state;
+                sessionStorage.setItem("neuq_oj.ranklistpagecurr", current);
+                const pageSize = sessionStorage.getItem("neuq_oj.ranklistpagesize", pageSize);
+                if (scope.length < 1) {
+                    this.props.getRankTable(current, pageSize)
+                } else {
+                    this.props.getRankTable(scope, current, pageSize)
                 }
             }
         };
@@ -130,7 +132,7 @@ class RankList extends Component {
                            }}
                            dataSource={data}
                            scroll={{x: 680}}
-                           pagination = {pagination}
+                           pagination={pagination}
                            key="rank-table-table"
                            className="rank-table-table"
                     />

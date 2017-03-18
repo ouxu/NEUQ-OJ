@@ -1,7 +1,7 @@
 /**
  * Created by out_xu on 17/2/21.
  */
-import {SET_CONTESTS_TABLE, SET_CONTEST} from "../actions/type";
+import {SET_CONTESTS_TABLE, GET_CONTEST_SUCC,GET_CONTEST_ERR} from "../actions/type";
 
 
 const init_contests = {
@@ -16,7 +16,12 @@ export default function contests(state = init_contests, action) {
                 ...state,
                 conteststable: action.payload
             };
-        case SET_CONTEST :
+        case GET_CONTEST_SUCC :
+            return {
+                ...state,
+                contest: action.payload
+            };
+        case GET_CONTEST_ERR :
             return {
                 ...state,
                 contest: action.payload

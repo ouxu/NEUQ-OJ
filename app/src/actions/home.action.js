@@ -9,7 +9,6 @@ import API from "../api";
 import * as requestService from "../utils/request";
 import {SET_HOMEPAGE_INFO} from "./type";
 
-
 const setHomepageInfo = (data) => {
     return {
         type: SET_HOMEPAGE_INFO,
@@ -23,9 +22,9 @@ export function fetchHomePageData() {
     return async(dispatch) => {
         try {
             const json = await requestService.get(API.homedata);
-            dispatch(setHomepageInfo(json.data))
+            await dispatch(setHomepageInfo(json.data))
         } catch (e) {
-            throw new Error(e)
+            console.error(e);
         }
     };
 }

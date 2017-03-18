@@ -199,7 +199,8 @@ class ProblemDetail extends React.Component {
             indentUnit: 4,
             lineNumbers: true,
             matchBrackets: true,
-            mode: mode[this.state.language]
+            mode: mode[this.state.language],
+            extraKeys: {"Ctrl": "autocomplete"}//输入s然后ctrl就可以弹出选择项
         };
         const {params}=this.props;
         return (

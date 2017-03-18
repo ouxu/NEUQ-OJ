@@ -5,14 +5,22 @@
 require('es6-promise');
 
 import codeHelper from "./codeHelper";
+import getToken from "./getToken";
 const timeout = 15000;
+
 
 //TODO 后端返回结构
 function filterStatus(json) {
+
     if (json.code === 0) {
         return json;
+    } else if (json.code=== 1004) {
+        localStorage.clear('neuq_oj.token');
+        localStorage.clear('neuq_oj.name');
+        localStorage.clear('neuq_oj.id');
+        throw new Error('Did not Login')
     } else {
-        throw codeHelper(json.code);
+        throw new Error('Response Unexpected',codeHelper(json.code));
     }
 }
 
@@ -24,7 +32,7 @@ function filterStatus(json) {
  */
 function parseParams(uri, params) {
     let paramsArray = [];
-    Object.keys(params).forEach(key => paramsArray.push(key + '=' + params[key]));
+    Object.keys(params).forEach(key => params[key] && paramsArray.push(key + '=' + params[key]));
     if (uri.search(/\?/) === -1) {
         uri += '?' + paramsArray.join('&')
     } else {
@@ -66,6 +74,17 @@ export function get(uri, params, headers) {
     return request(uri, "GET", headers);
 }
 
+export function tget(uri, params, headers) {
+    if (params) {
+        uri = parseParams(uri, params);
+    }
+    headers = {
+        ...headers,
+        token: getToken()
+    };
+    return request(uri, "GET", headers);
+}
+
 
 /**
  * post 请求
@@ -82,4 +101,14 @@ export function post(uri, body, headers = {}) {
 }
 
 
+export function tpost(uri, body, headers = {}) {
+    if (!headers["Content-type"]) {
+        headers["Content-type"] = 'application/json';
+    }
+    headers = {
+        ...headers,
+        token: getToken()
+    };
+    return request(uri, "POST", headers, body);
+}
 

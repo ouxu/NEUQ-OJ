@@ -8,7 +8,10 @@ import {bindActionCreators} from "redux";
 import {getProblemTable, searchProblems} from "../actions";
 
 @connect(
-    state => state.problems,
+    state => ({
+        problems:state.problems,
+        user: state.user
+    }),
     dispatch => bindActionCreators({getProblemTable, searchProblems}, dispatch)
 )
 class ProblemsContainer extends React.Component {
@@ -17,17 +20,18 @@ class ProblemsContainer extends React.Component {
     }
 
     render() {
-        const {problemtable} =this.props;
+        const {problems:{problemtable},user:{islogined}} =this.props;
         return (
             <div>
-                {this.props.children
-                ||
-                <ProblemsTable data={problemtable.data}
-                               getProblemTable={this.props.getProblemTable}
-                               searchProblems={this.props.searchProblems}
-                               key={'problem-table-table'}
-
-                />}
+                {
+                    this.props.children
+                    ||
+                    <ProblemsTable
+                        data={problemtable.data}
+                        getProblemTable={this.props.getProblemTable}
+                        searchProblems={this.props.searchProblems}
+                        key={'problem-table-table'+islogined}
+                    />}
             </div>
         )
     }

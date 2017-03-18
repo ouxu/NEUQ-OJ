@@ -62,14 +62,9 @@ class StatusTable extends React.Component {
 
     onSeacrch(){
         const searchobj=this.state;
-        let searchText= urlEncode(searchobj);
-        if (searchText.length<1){
-            let page = 1;
-            let size= sessionStorage.getItem("neuq_oj.statuspagesize");
-            this.props.getStatusTable(page,size);
-        }else{
-            this.props.searchStatus(searchText);
-        }
+        let page = 1;
+        let size= sessionStorage.getItem("neuq_oj.statuspagesize");
+        this.props.getStatusTable(page,size,searchobj);
     }
 
     Cancel(){
@@ -83,7 +78,6 @@ class StatusTable extends React.Component {
 
     render (){
         const {data}=this.props;
-
         const pagination = {
             pageSize: Number(sessionStorage.getItem('neuq_oj.statuspagesize')),
             current: Number(sessionStorage.getItem('neuq_oj.statuspagecurr')),
@@ -91,23 +85,12 @@ class StatusTable extends React.Component {
             showSizeChanger: true,
             onShowSizeChange: (current, pageSize) => {
                 const searchobj=this.state;
-                let searchText= urlEncode(searchobj);
-                if (searchText.length<1){
-                    this.props.getStatusTable(current,pageSize)
-                }else{
-                    this.props.searchStatus(searchText,current,pageSize)
-                }
+                this.props.getStatusTable(current,pageSize,searchobj)
             },
             onChange: (current) => {
                 const searchobj=this.state;
-                let searchText= urlEncode(searchobj);
-                sessionStorage.setItem("neuq_oj.statuspagecurr",current);
                 const pageSize=sessionStorage.getItem("neuq_oj.statuspagesize",pageSize);
-                if (searchText.length<1){
-                    this.props.getStatusTable(current,pageSize)
-                }else{
-                    this.props.searchStatus(searchText,current,pageSize)
-                }
+                this.props.getStatusTable(current,pageSize,searchobj)
             }
         };
 

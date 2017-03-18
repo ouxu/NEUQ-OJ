@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
-
+const proxy = require('http-proxy-middleware')
 
 const dflPort=8080;  //配置端口
 
@@ -14,9 +14,21 @@ module.exports = {
         inline: true,
         noInfo: false,
         open: true,
-        stats: { colors: true }
+        stats: { colors: true },
+        proxy: {
+            '/api': {
+                target: 'http://192.168.1.189:3000',
+                secure: false
+            }
+        },
+        overlay: {
+            warnings: true,
+            errors: true
+        }
+
     },
-    devtool: 'eval',
+    devtool: 'cheap-module-eval-source-map',
+
     entry: [
         'webpack-dev-server/client?http://127.0.0.1:' + dflPort,
         'webpack/hot/only-dev-server',

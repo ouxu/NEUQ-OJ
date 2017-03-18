@@ -3,18 +3,13 @@
  */
 import React from "react";
 import {Icon} from "antd";
-import Navigation from "../components/plugins/navigation";
+import Navigation from "../container/navigation";
 import Sider from "./plugins/sider";
 import Footer from "./plugins/footer";
 import "whatwg-fetch";
 import "fetch-ie8/fetch.js";
 import "./index.less";
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {setTimeStamp, getUserMe, logout, tokenVerify} from "../actions";
 import pureRender from "../utils/pureRender";
-
-// 引入垫片兼容IE
 
 require('console-polyfill');
 require('es6-promise');
@@ -22,11 +17,8 @@ require('es6-promise');
 
 // 配置整体组件
 
-@pureRender
-@connect(
-    state => state.user,
-    mapDispatchToProps
-)
+
+
 class AppComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -38,7 +30,6 @@ class AppComponent extends React.Component {
     }
 
     componentDidMount() {
-        this.props.action.getUserMe();
     }
 
     onCollapseChange() {
@@ -49,7 +40,6 @@ class AppComponent extends React.Component {
 
     render() {
         const collapse = this.state.collapse;
-        const {userinfo}= this.props;
         return (
             <div className={collapse ? 'ant-layout-aside ant-layout-aside-collapse' : 'ant-layout-aside'}>
                 <aside className="ant-layout-sider">
@@ -59,11 +49,7 @@ class AppComponent extends React.Component {
                     </div>
                 </aside>
                 <div className="ant-layout-main">
-                    <Navigation
-                        user={userinfo}
-                        logout={this.props.action.logout}
-                        tokenVerify={this.props.action.tokenVerify}
-                    />
+                    <Navigation/>
                     <div className="main-content">
                         {this.props.children}
                     </div>
@@ -73,19 +59,7 @@ class AppComponent extends React.Component {
         );
     }
 }
-const mapStateToProps = (state) => {
-    return {
-        user: state.user
-    };
-};
 
 
-const mapDispatchToProps = (dispatch) => {
-    const actions = {setTimeStamp, getUserMe, logout, tokenVerify};
-    return {
-        action: bindActionCreators(actions, dispatch)
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AppComponent);
+export default AppComponent;
 

@@ -8,7 +8,9 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');  //用于清除上�
 module.exports = {
     entry: {
         bundle: __dirname + '/app/src/main.js',
-        vendors: ['react', 'react-dom', 'react-router', 'redux']  //第三方库和框架另外打包
+        vendor1: ['react', 'react-dom'],  //第三方库和框架另外打包
+        vendor2:['react-router','redux','react-redux']
+
     },
     output: {
         path: './dist/build/',
@@ -42,13 +44,13 @@ module.exports = {
             {
                 test: /\.(png|jpg|gif|woff|woff2|svg)$/,
                 loaders: [
-                    'url-loader?limit=10000&name=img/[hash:8].[name].[ext]',
-                ],
+                    'url-loader?limit=10000&name=img/[hash:8].[name].[ext]'
+                ]
             }
         ]
     },
     resolve: {
-        extensions: [' ', '.js', '.jsx'],
+        extensions: [' ', '.js', '.jsx']
     },
     plugins: [
         new webpack.NoEmitOnErrorsPlugin(),
@@ -60,8 +62,8 @@ module.exports = {
             }
         }),
         new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendors',
-            filename: 'js/vendors.[chunkhash:8].js',
+            name:['vendor1','vendor2'],
+            filename:'js/[name].[chunkhash:8].js'
         }),
         new ExtractTextPlugin({
             filename: 'css/style.[contenthash:8].css',
@@ -74,7 +76,7 @@ module.exports = {
         }),
         new webpack.optimize.UglifyJsPlugin({
             output: {
-                comments: false,  // remove all comments
+                comments: false  // remove all comments
             },
             compress: {
                 warnings: false,
@@ -89,10 +91,9 @@ module.exports = {
             template: './dist/template.ejs',
             title: 'NEUQ OJ',
             favicon: './app/favicon.ico',
-            chunks: ['bundle', 'vendors']
+            chunks: ['vendor1','vendor2','bundle']
         }),
         new CleanWebpackPlugin(['dist/build'], {
-
             verbose: true,
             dry: false
         })
