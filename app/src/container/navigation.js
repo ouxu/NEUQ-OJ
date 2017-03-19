@@ -2,14 +2,13 @@
  * Created by out_xu on 17/2/28.
  */
 import React from "react";
-import Navigation from '../components/plugins/navigation';
-
+import Navigation from "../components/plugins/navigation";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {setTimeStamp, getUserMe, logout, tokenVerify} from "../actions";
+import {logout, tokenVerify} from "../actions";
 
 const mapDispatchToProps = (dispatch) => {
-    const actions = {setTimeStamp, getUserMe, logout, tokenVerify};
+    const actions = {logout, tokenVerify};
     return {
         action: bindActionCreators(actions, dispatch)
     };
@@ -23,6 +22,7 @@ class NavigationContainer extends React.Component {
     constructor(props) {
         super(props);
     }
+
     componentDidMount() {
         this.props.action.tokenVerify();
     }
@@ -33,6 +33,7 @@ class NavigationContainer extends React.Component {
                 islogined={islogined}
                 logout={this.props.action.logout}
                 tokenVerify={this.props.action.tokenVerify}
+                admin={this.props.admin}
             />
         )
     }

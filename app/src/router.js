@@ -12,16 +12,25 @@ import StatusContainer from "./container/status";
 import ContestsContainer from "./container/contest";
 import ContestInfoContainer from "./container/contestinfo";
 import RanklistContainer from "./container/ranklist";
-import Test from "./components/plugins/test";
 
+import AdminComponent from './components/admin';
 
 // 配置路由，并将路由注入到id为app的DOM元素中，后期需要React-router-ensure
-const RouterApp = (
+//TODO onEnter
+const checkdata = (store) => {
+    return (location, replaceWith) => {
+
+    }
+};
+
+const RouterApp = (store) => (
     <Router history={hashHistory}>
         <Route path="/" component={AppComponent}>
             <IndexRoute component={HomePageContainer}/>
             <Route path="homepage" component={HomePageContainer}/>
-            <Route path="problems" component={ProblemsContainer}>
+            <Route path="problems">
+                <IndexRoute component={ProblemsContainer}/>
+
                 <Route path=":id" component={ProblemDetailContainer}/>
             </Route>
 
@@ -32,18 +41,27 @@ const RouterApp = (
                 <Route path=":id" component={StatusContainer}/>
             </Route>
             <Route path="ranklist" component={RanklistContainer}/>
-            <Route path="contests" component={ContestsContainer}>
-                <Route path=":cid" component={ContestInfoContainer}>
+
+            <Route path="contests">
+                <IndexRoute component={ContestsContainer}/>
+
+                <Route path=":cid">
+                    <IndexRoute component={ContestInfoContainer}/>
                     <Route path="problem/:pnum" component={ProblemDetailContainer}/>
                 </Route>
             </Route>
 
-            <Route path="test" component={Test}/>
             <Route path='404' component={NotFoundPage}/>
+
+        </Route>
+
+        <Route path="/admin" component={AdminComponent} onEnter={checkdata(store)}>
+
 
         </Route>
 
     </Router>
 );
+
 
 export default RouterApp;

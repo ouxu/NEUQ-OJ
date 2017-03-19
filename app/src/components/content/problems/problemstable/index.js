@@ -63,7 +63,7 @@ class ProblemsTable extends React.Component {
                 else
                     return null
             },
-            width: '7%',
+            width: 40,
             key: 'problem-status',
             className: 'problem-status'
 
@@ -74,8 +74,8 @@ class ProblemsTable extends React.Component {
                     <Link to={`problems/${record.id}`} > {record.id}</Link>
                 </span>)
             ,
-            width: '10%',
             key: 'problem-id',
+            width: 60,
             className: 'problem-id'
         }, {
             title: '难度',
@@ -91,7 +91,7 @@ class ProblemsTable extends React.Component {
                 { text: '困难', value: 3 }
             ],
             onFilter: (value, record) => record.difficulty===Number(value),
-            width: '10%',
+            width: 60,
             key: 'problem-diff'
         }, {
             title: '标题',
@@ -107,25 +107,23 @@ class ProblemsTable extends React.Component {
                 </span>)
             ,
 
-            width: '32%',
             key: 'problem-title',
             className: 'problem-title'
         }, {
             title: '来源',
             dataIndex: 'source',
-            width: '20%',
             key: 'problem-source'
         }, {
             title: '提交',
             dataIndex: 'submit',
-            width: '10%',
             sorter: (a, b) => a.submit - b.submit,
+            width: 80,
             key: 'problem-problemsubmit'
         }, {
             title: '正确',
             dataIndex: 'accepted',
             sorter: (a, b) => a.accept - b.accept,
-            width: '10%',
+            width: 60,
             key: 'problem-accept'
         }];
         const pagination = {

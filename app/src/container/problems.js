@@ -9,7 +9,7 @@ import {getProblemTable, searchProblems} from "../actions";
 
 @connect(
     state => ({
-        problems:state.problems,
+        problems: state.problems,
         user: state.user
     }),
     dispatch => bindActionCreators({getProblemTable, searchProblems}, dispatch)
@@ -20,19 +20,15 @@ class ProblemsContainer extends React.Component {
     }
 
     render() {
-        const {problems:{problemtable},user:{islogined}} =this.props;
+        const {problems:{problemtable}, user:{islogined}} =this.props;
         return (
-            <div>
-                {
-                    this.props.children
-                    ||
-                    <ProblemsTable
-                        data={problemtable.data}
-                        getProblemTable={this.props.getProblemTable}
-                        searchProblems={this.props.searchProblems}
-                        key={'problem-table-table'+islogined}
-                    />}
-            </div>
+
+            <ProblemsTable
+                data={problemtable.data}
+                getProblemTable={this.props.getProblemTable}
+                searchProblems={this.props.searchProblems}
+                key={'problem-table-table' + islogined}
+            />
         )
     }
 }

@@ -37,7 +37,6 @@ const setUserMe = (data) => {
 
 /**
  * 设置用户信息
- * @param
  */
 const cleanUserMe = () => {
     return {
@@ -124,12 +123,16 @@ export function getUserMe() {
         try {
             const json = await requestService.tget(API.userme);
             await dispatch(setUserMe(json.data));
+
         } catch (e) {
             localStorage.clear('neuq_oj.token');
             localStorage.clear('neuq_oj.name');
             localStorage.clear('neuq_oj.id');
-            dispatch(cleanUserMe());
-            console.error(e)
+            await dispatch(cleanUserMe());
+            window.history.go(-1);
+
+            message.error('请登录')
+
         }
     }
 }

@@ -9,7 +9,7 @@ const store = configStore();
 import RouterApp from './router';
 ReactDOM.render(
     <Provider store={store}>
-       {RouterApp}
+       {RouterApp(store)}
     </Provider>,
     document.getElementById('app')
 

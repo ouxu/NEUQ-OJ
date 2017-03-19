@@ -75,7 +75,6 @@ class RankList extends Component {
         }, {
             title: '排名',
             dataIndex: 'num',
-            width: '19%',
             key: 'ranklist-rank',
             className: 'ranklist-rank'
         }, {
@@ -87,7 +86,6 @@ class RankList extends Component {
                     </span>
                 )
             },
-            width: '20%',
             key: 'ranklist-user',
             className: 'ranklist-user'
         }, {
@@ -99,19 +97,17 @@ class RankList extends Component {
                     </span>
                 )
             },
-            width: '20%',
             key: 'ranklist-id',
             className: 'ranklist-id'
         }, {
             title: '解决',
             dataIndex: 'solved',
-            width: '20%',
             key: 'ranklist-solved',
             className: 'ranklist-solved'
         }, {
             title: '提交',
             dataIndex: 'submit',
-            width: '20%',
+            width: 80,
             key: 'ranklist-submit',
             className: 'ranklist-submit'
         }];
@@ -120,7 +116,7 @@ class RankList extends Component {
             <div>
                 <QueueAnim className="rank-table-warp" delay={100}>
                     <div className="rank-table-header" key="status-2">
-                        <span className="rank-table-header-title">最近提交</span>
+                        <span className="rank-table-header-title">排行榜</span>
 
                         <div className="rank-table-header-other">
                             <TimeSelect handleChange={this.handleChange}/>

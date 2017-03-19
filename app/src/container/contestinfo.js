@@ -24,16 +24,11 @@ class ContestInfoContainer extends React.Component {
         const {data}=this.props.contest;
 
         return (
-            <div>
-                {
-                    this.props.children
-                    ||
-                    <ContestInfo
-                        data={ data || {contest_info: {}, problem_info: []}}
-                        id={this.props.params.cid}
-                    />
-                }
-            </div>
+            <ContestInfo
+                data={ data || {contest_info: {}, problem_info: []}}
+                id={this.props.params.cid}
+
+            />
         )
     }
 }
