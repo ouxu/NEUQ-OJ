@@ -5,20 +5,19 @@ import React from 'react';
 import './index.less';
 
 class Test extends React.Component {
-    constructor(props){
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    componentWillMount() {
-    }
+  componentWillMount() {
+  }
 
-    render (){
-        return (
-            <div></div>
-            )
-        }
+  render() {
+    return (
+      <div />
+    );
+  }
 }
 
 
-
-export default Test
+export default Test;

@@ -1,42 +1,41 @@
 /**
  * Created by out_xu on 17/2/28.
  */
-import React from "react";
-import Navigation from "../components/plugins/navigation";
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {logout, tokenVerify} from "../actions";
+import React from 'react';
+import Navigation from '../components/plugins/navigation';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { logout, tokenVerify } from '../actions';
 
 const mapDispatchToProps = (dispatch) => {
-    const actions = {logout, tokenVerify};
-    return {
-        action: bindActionCreators(actions, dispatch)
-    };
+  const actions = { logout, tokenVerify };
+  return {
+    action: bindActionCreators(actions, dispatch)
+  };
 };
 
 @connect(
     state => state.user,
-    mapDispatchToProps
+    mapDispatchToProps,
 )
 class NavigationContainer extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    componentDidMount() {
-        this.props.action.tokenVerify();
-    }
-    render() {
-        const {islogined}= this.props;
-        return (
-            <Navigation
-                islogined={islogined}
-                logout={this.props.action.logout}
-                tokenVerify={this.props.action.tokenVerify}
-                admin={this.props.admin}
-            />
-        )
-    }
+  componentDidMount() {
+    this.props.action.tokenVerify();
+  }
+  render() {
+    const { islogined } = this.props;
+    return (
+      <Navigation
+        islogined={islogined}
+        logout={this.props.action.logout}
+        tokenVerify={this.props.action.tokenVerify}
+      />
+    );
+  }
 }
 
 

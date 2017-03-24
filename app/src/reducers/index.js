@@ -1,24 +1,24 @@
 /**
  * Created by out_xu on 16/12/20.
  */
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 
 import timeStamp from './utils.reducer';
 import user from './user.reducer';
-import home from './home.reducer'
-import problems from './problem.reducer'
+import home from './home.reducer';
+import problems from './problem.reducer';
 import status from './status.reducer';
-import contests from './contests.reducer'
-import ranklist from './ranklist.reducer'
+import contests from './contests.reducer';
+import ranklist from './ranklist.reducer';
 
 const rootReducer = combineReducers({
-    contests,
-    home,
-    problems,
-    ranklist,
-    user,
-    status,
-    timeStamp,
+  contests,
+  home,
+  problems,
+  ranklist,
+  user,
+  status,
+  timeStamp
 });
 
 export default rootReducer;

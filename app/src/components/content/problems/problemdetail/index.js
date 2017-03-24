@@ -1,43 +1,37 @@
 /**
  * Created by out_xu on 17/1/3.
  */
-import React from 'react';
-import {Link} from 'react-router';
-import {Collapse, Card, Button, Checkbox, Tooltip, Row, Col, message, Table, Icon,Alert} from 'antd';
-import './index.less';
-import QueueAnim from 'rc-queue-anim';
-import {LanguageSelect} from '../../../../utils/selectBox';
-import {columns} from '../../../../utils/tableData';
-//TODO https://zhuanlan.zhihu.com/p/24781259 如何实时刷新
-import CodeMirror from 'react-codemirror';
-import 'codemirror/mode/clike/clike';
-import ProblemDes from './problemdes';
-import API from '../../../../api';
-import codeHelper from '../../../../utils/codeHelper';
+import React from "react";
+import {Link} from "react-router";
+import {Card, Button, message, Icon} from "antd";
+import "./index.less";
+import QueueAnim from "rc-queue-anim";
+import ProblemDes from "./problemdes";
+import ProblemSub from "./problemsub";
+import * as requestService from "../../../../utils/request";
+import API from "../../../../api";
 const ButtonGroup = Button.Group;
-const Panel = Collapse.Panel;
 
 class ProblemDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            submit: this.props.submit||false,
+            submit: this.props.submit || false,
             unsubmit: false,
             source_code: '',
             language: 1,
-            private: false,
+            privated: false,
             resultdata: [],
             result: null,
-            errorinfo:''
+            errorinfo: ''
         };
         this.handleMenuClick = this.handleMenuClick.bind(this);
-        this.updataCode = this.updataCode.bind(this);
+        this.updateCode = this.updateCode.bind(this);
         this.selectLanguage = this.selectLanguage.bind(this);
         this.checkPrivate = this.checkPrivate.bind(this);
         this.combinObj = this.combinObj.bind(this);
         this.submitProblem = this.submitProblem.bind(this);
         this.submit = this.submit.bind(this);
-
     }
 
 
@@ -47,20 +41,18 @@ class ProblemDetail extends React.Component {
         this.timer && clearInterval(this.timer);
     }
 
-    createMarkup = (html) => {
-        return {__html: html};
-    };
+    createMarkup = html => ({__html: html});
 
     handleMenuClick() {
-        this.setState({submit: !this.state.submit})
+        this.setState({submit: !this.state.submit});
     }
 
-    updataCode(newCode) {
+    updateCode(newCode) {
         this.setState({
             source_code: newCode,
             result: null,
             unsubmit: false
-        })
+        });
     }
 
     selectLanguage(value) {
@@ -68,80 +60,62 @@ class ProblemDetail extends React.Component {
             language: parseInt(value),
             result: null,
             unsubmit: false
-        })
+        });
     }
 
     checkPrivate(e) {
         this.setState({
-            private: e.target.checked,
+            privated: e.target.checked,
             result: null,
             unsubmit: false
         });
-
     }
 
     combinObj() {
-        const {source_code, language}=this.state;
+        const {source_code, language} = this.state;
         let obj = {source_code, language};
         obj = Object.assign({
-            private: this.state.private
+            private: this.state.privated
         }, obj);
-        return obj
+        return obj;
     }
 
     submit() {
         const obj = this.combinObj();
         if (obj.source_code.length < 3) {
-            message.error('请输入有效代码')
+            message.error('请输入有效代码');
         } else {
-            message.success('提交成功');
             this.setState({
                 unsubmit: true,
                 errorinfo: ''
             });
-            this.submitProblem(obj)
+            this.submitProblem(obj);
         }
     }
 
-    submitProblem(body) {
-        const token = localStorage.getItem('neuq_oj.token');
-        const {params}=this.props;
+    async submitProblem(body) {
+        try {
+            const {params} = this.props;
+            const url = params.pnum ? `${API.host}contest/${params.cid}/problem/${params.pnum}` : `${API.host}problem/${params.id}/submit`;
 
-        const url= params.pnum?API.host+'contest/'+params.cid+'/problem/'+ params.pnum:API.host+'problem/'+params.id;
-        return token&&fetch(url+ '/submit', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'token': token
-                },
-                body: JSON.stringify(body)
-            }).then((res) => {
-                return res.json()
-            }).then((json) => {
-                if (json.code === 0) {
-                    return json.data.solution_id
-                } else {
-                    codeHelper(json.code)
+            const json = await requestService.tpost(url, body);
+            message.success('提交成功');
+
+            const solution_id = await json.data.solution_id;
+            this.timer = setInterval(() => {
+                this.getResultData(solution_id);
+                const result = this.state.result;
+                if (result > 3) {
+                    if (result > 9) {
+                        this.getErrorInfo(solution_id, result);
+                    }
+                    clearInterval(this.timer);
                 }
-            }).then((solution_id) => {
-                if (solution_id) {
-                    this.timer = setInterval(() => {
-                        this.getResultData(solution_id);
-                        let result = this.state.result;
-                        if (result > 3) {
-                            if (result>9) {
-                                this.getErrorInfo(solution_id,result)
-                            }
-                            clearInterval(this.timer);
-                        }
-                    }, 1000)
-                }
-            }).catch((e) => {
-                console.log(e.message)
-            })
+            }, 1000);
+        } catch (e) {
+            message.error('未登录');
+        }
     }
-
 
     setStateAsync(state) {
         return new Promise((resolve) => {
@@ -151,184 +125,101 @@ class ProblemDetail extends React.Component {
 
     async getResultData(solution_id) {
         try {
-            const res = await fetch(API.solution + solution_id);
-            const json = await res.json();
-            if (json.code === 0) {
-                const data = json.data;
-                await this.setStateAsync({
-                    resultdata: [data],
-                    result: data.result
-                })
-            } else {
-                codeHelper(json.code)
-            }
-        }
-        catch (e) {
-            console.log(e.message)
+            const json = await requestService.get(API.solution + solution_id);
+
+            const data = json.data;
+            await this.setStateAsync({
+                resultdata: [data],
+                result: data.result
+            });
+        } catch (e) {
+            console.error(e.message);
         }
     }
-    async getErrorInfo(solution_id,result) {
+
+    async getErrorInfo(solution_id, result) {
         try {
-            const errormode=(result===10?'/runtime-info/':'/compile-info/');
-            const res = await fetch(API.status + errormode+ solution_id);
-            const json = await res.json();
-            if (json.code === 0) {
-                const data = json.data;
-                await this.setStateAsync({
-                    errorinfo: data.error
-                })
-            } else {
-                codeHelper(json.code)
-            }
-        }
-        catch (e) {
-            console.log(e.message)
+            const errormode = (result === 10 ? '/runtime-info/' : '/compile-info/');
+            const json = await requestService.get(API.status + errormode + solution_id);
+            await this.setStateAsync({
+                errorinfo: json.data.error
+            });
+        } catch (e) {
+            console.error(e.message);
         }
     }
 
     render() {
         const data = this.props.data || {};
-        const mode = [
-            'text/x-csrc',
-            'text/x-c++src',
-            '',
-            'text/x-java'
-        ];
 
-        const options = {
-            indentUnit: 4,
-            lineNumbers: true,
-            matchBrackets: true,
-            mode: mode[this.state.language],
-            extraKeys: {"Ctrl": "autocomplete"}//输入s然后ctrl就可以弹出选择项
-        };
-        const {params}=this.props;
+        const {params} = this.props;
         return (
             <Card className="problem-detail-wrap" bodyStyle={{padding: 0}}>
-                <QueueAnim type='left' delay={100}>
-                    <div className='problem-detail-breadcrumb' key='problem-detail-1'>
-                        <Link to={params.pnum?'/contests/'+params.cid:'/problems'}>
+                <QueueAnim type="left" delay={100}>
+                    <div className="problem-detail-breadcrumb" key="problem-detail-1">
+                        <Link to={params.pnum ? `/contests/${params.cid}` : '/problems'}>
                             <Icon type="left"/>
-                            <span>{params.pnum?'竞赛列表':'问题列表'}</span>
+                            <span>{params.pnum ? '竞赛列表' : '问题列表'}</span>
                         </Link>
                         <div className="problem-detail-breadcrumb-detail">
-                            <span className='problem-detail-breadcrumb-detail-tags'><Icon
-                                type="edit"/><span>{data.creator_name}</span></span>
-                            <span className='problem-detail-breadcrumb-detail-tags'><Icon
-                                type="exception"/><span>{data.submit}</span></span>
-                            <span className='problem-detail-breadcrumb-detail-tags'><Icon
-                                type="check"/><span>{data.accepted}</span></span>
-                            <span className='problem-detail-breadcrumb-detail-tags'><Icon
-                                type="clock-circle"/><span>{data.time_limit} Sec</span></span>
-                            <span className='problem-detail-breadcrumb-detail-tags'><Icon
-                                type="save"/><span>{data.memory_limit} MB</span></span>
+              <span className="problem-detail-breadcrumb-detail-tags"><Icon
+                  type="edit"
+              /><span>{data.creator_name}</span></span>
+                            <span className="problem-detail-breadcrumb-detail-tags"><Icon
+                                type="exception"
+                            /><span>{data.submit}</span></span>
+                            <span className="problem-detail-breadcrumb-detail-tags"><Icon
+                                type="check"
+                            /><span>{data.accepted}</span></span>
+                            <span className="problem-detail-breadcrumb-detail-tags"><Icon
+                                type="clock-circle"
+                            /><span>{data.time_limit} Sec</span></span>
+                            <span className="problem-detail-breadcrumb-detail-tags"><Icon
+                                type="save"
+                            /><span>{data.memory_limit} MB</span></span>
                         </div>
-
                     </div>
-                    <div className="problem-detail-header" key='problem-detail-2'>
+                    <div className="problem-detail-header" key="problem-detail-2">
                         <h2 className="problem-detail-header-title">{data.id} : {data.title}</h2>
                         <ButtonGroup className="problem-detail-buttongroup">
                             <Button
-                                size='small'
+                                size="small"
                                 type={this.state.submit ? 'primary' : 'dashed'}
                                 onClick={this.handleMenuClick}
                             >
                                 {this.state.submit ? '描述' : '提交'}
                             </Button>
 
-                            <Button size='small' type='dashed'>讨论版</Button>
-                            <Button size='small' type='dashed'>状态</Button>
+                            <Button size="small" type="dashed">讨论版</Button>
+                            <Button size="small" type="dashed">状态</Button>
                         </ButtonGroup>
                     </div>
-                    <div key='problem-detail-3'>
+                    <div key="problem-detail-3">
                         {this.state.submit ?
-                            <Collapse
-                                defaultActiveKey={['submit-code', 'submit-des', 'submit-result']}
-                                bordered={false}
-                                className="problem-detail-main"
-                            >
-
-                                <Panel header="描述" key="submit-des">
-                                    <Card bodyStyle={{fontSize: 14}} className="problem-detail-main-desc">
-                                        <h4>题目描述：</h4>
-                                        <p dangerouslySetInnerHTML={this.createMarkup(data.description)}/>
-                                        <h4>输入：</h4>
-                                        <p dangerouslySetInnerHTML={this.createMarkup(data.input)}/>
-                                        <h4>输出：</h4>
-                                        <p dangerouslySetInnerHTML={this.createMarkup(data.output)}/>
-                                    </Card>
-                                </Panel>
-                                <Panel header="提交" key="submit-code" className='problem-detail-main-code'>
-                                    <CodeMirror
-                                        value={this.state.source_code}
-                                        onChange={this.updataCode}
-                                        options={options}
-                                        className='codemirror-area'
-                                    />
-
-                                    <Row type="flex" align="bottom" key="register-9"
-                                         className="problem-detail-main-code">
-                                        <Col >
-                                            <LanguageSelect
-                                                handleChange={this.selectLanguage}
-                                                defaultvalue={String(this.state.language)}
-                                                allowClear
-                                            />
-                                        </Col>
-                                        <Col >
-                                            <Button type='primary'
-                                                    onClick={this.submit}
-                                                    className='problem-detail-main-submitbutton'
-                                                    disabled={this.state.unsubmit}
-                                            > 提交
-                                            </Button>
-                                        </Col>
-                                        <Col >
-                                            <Checkbox
-                                                onChange={this.checkPrivate}
-                                                checked={this.state.private}
-                                            >
-                                                <Tooltip title="他人答对后是否可以查看你的代码">
-                                                    <span className="user-should-know">
-                                                        隐藏代码 <Icon type="question-circle"/>
-                                                    </span>
-                                                </Tooltip>
-                                            </Checkbox>
-                                        </Col>
-                                    </Row>
-                                </Panel>
-                                <Panel header="运行结果" key="submit-result">
-                                    <Table columns={columns}
-                                           rowKey={record => `result-${record.id}`}
-                                           dataSource={this.state.resultdata}
-                                           scroll={{x: 960}}
-                                           size='small'
-                                           pagination={false}
-                                           key="result-1"
-                                    />
-                                    {
-                                        this.state.errorinfo&&
-                                        <Alert message={'Error:'}
-                                               description={this.state.errorinfo}
-                                               banner closable
-                                        />
-                                    }
-                                </Panel>
-                            </Collapse>
+                            <ProblemSub
+                                updataCode={this.updateCode}
+                                submit={this.submit}
+                                selectLanguage={this.selectLanguage}
+                                checkPrivate={this.checkPrivate}
+                                params={this.state}
+                                data={data}
+                            />
                             :
                             <ProblemDes data={data}/>}
                     </div>
 
 
                     <ButtonGroup className="problem-detail-buttongroup">
-                        <Button type={this.state.submit ? 'primary' : 'dashed'}
-                                onClick={this.handleMenuClick}>{this.state.submit ? '描述' : '提交'}</Button>
-                        <Button type='dashed'>讨论版</Button>
-                        <Button type='dashed'>状态</Button>
+                        <Button
+                            type={this.state.submit ? 'primary' : 'dashed'}
+                            onClick={this.handleMenuClick}
+                        >{this.state.submit ? '描述' : '提交'}</Button>
+                        <Button type="dashed">讨论版</Button>
+                        <Button type="dashed">状态</Button>
                     </ButtonGroup>
                 </QueueAnim>
             </Card>
-        )
+        );
     }
 }
 

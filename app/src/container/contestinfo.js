@@ -9,7 +9,7 @@ import ContestInfo from "../components/content/contests/contestinfo";
 
 @connect(
     state => state.contests,
-    dispatch => bindActionCreators({getContest}, dispatch)
+    dispatch => bindActionCreators({getContest}, dispatch),
 )
 class ContestInfoContainer extends React.Component {
     constructor(props) {
@@ -17,19 +17,18 @@ class ContestInfoContainer extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getContest(this.props.params.cid)
+        this.props.getContest(this.props.params.cid);
     }
 
     render() {
-        const {data}=this.props.contest;
+        const {data} = this.props.contest;
 
         return (
             <ContestInfo
-                data={ data || {contest_info: {}, problem_info: []}}
+                data={data || {contest_info: {}, problem_info: []}}
                 id={this.props.params.cid}
-
             />
-        )
+        );
     }
 }
 

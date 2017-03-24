@@ -22,8 +22,9 @@ class ContestInfoTabs extends React.Component {
             if (this.props.time > end) {
                 clearInterval(this.timer);
             }
-        }, 10000)
+        }, 10000);
     }
+
     componentWillUnmount() {
         // 如果存在this.timer，则使用clearTimeout清空。
         // 如果你使用多个timer，那么用多个变量，或者用个数组来保存引用，然后逐个clear
@@ -31,14 +32,12 @@ class ContestInfoTabs extends React.Component {
     }
 
     render() {
-        let {rankData = []}= this.props;
-        //给rankData添加索引
-        rankData = rankData.map((t = {}, i) => {
-            return {
-                ...t,
-                id: i + 1
-            }
-        });
+        let {rankData = []} = this.props;
+        // 给rankData添加索引
+        rankData = rankData.map((t = {}, i) => ({
+            ...t,
+            id: i + 1
+        }));
 
         const columns = [{
             title: '',
@@ -53,25 +52,21 @@ class ContestInfoTabs extends React.Component {
             className: 'contest-info-rank'
         }, {
             title: '用户',
-            render: (record) => {
-                return (
-                    <span>
-                        <Link to={`userpage/${record.user_id}`}> {record.user_name}</Link>
-                    </span>
-                )
-            },
+            render: record => (
+                <span>
+          <Link to={`userpage/${record.user_id}`}> {record.user_name}</Link>
+        </span>
+            ),
             width: '20%',
             key: 'contest-info-user',
             className: 'contest-info-user'
         }, {
             title: 'ID',
-            render: (record) => {
-                return (
-                    <span>
-                        <Link to={`userpage/${record.user_id}`}> {record.user_id}</Link>
-                    </span>
-                )
-            },
+            render: record => (
+                <span>
+          <Link to={`userpage/${record.user_id}`}> {record.user_id}</Link>
+        </span>
+            ),
             width: '20%',
             key: 'contest-info-id',
             className: 'contest-info-id'
@@ -84,15 +79,15 @@ class ContestInfoTabs extends React.Component {
         }, {
             title: '用时',
             render: (record) => {
-                const addZore = (t) => t ; //> 9 && t || t + '0'
-                let h = addZore(Math.floor(record.time / 60 / 60));
-                let m = addZore(Math.floor((record.time - h * 60 * 60) / 60));
-                let s = addZore(Math.floor((record.time - h * 60 * 60 - m * 60)));
+                const addZore = t => t; // > 9 && t || t + '0'
+                const h = addZore(Math.floor(record.time / 60 / 60));
+                const m = addZore(Math.floor((record.time - h * 60 * 60) / 60));
+                const s = addZore(Math.floor((record.time - h * 60 * 60 - m * 60)));
                 return (
                     <span>
-                        {h} : {m} : {s}
-                    </span>
-                )
+            {h} : {m} : {s}
+          </span>
+                );
             },
             width: '10%',
             key: 'contest-info-time',
@@ -106,16 +101,15 @@ class ContestInfoTabs extends React.Component {
         }];
 
         return (
-            <Table columns={columns}
-                   rowKey={record => {
-                       return `contest-info-${record.id}`
-                   }}
-                   dataSource={rankData}
-                   scroll={{x: 680}}
-                //size='small'
-                   pagination={false}
-                   key="contest-info-content-rank"
-                   className="contest-info-content-table"
+            <Table
+                columns={columns}
+                rowKey={record => `contest-info-${record.id}`}
+                dataSource={rankData}
+                scroll={{x: 680}}
+                // size='small'
+                pagination={false}
+                key="contest-info-content-rank"
+                className="contest-info-content-table"
             />
         );
     }

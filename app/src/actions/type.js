@@ -1,9 +1,9 @@
 /**
  * Created by out_xu on 16/12/20.
  */
-export const SET_TIME_STAMP= 'SET_TIME_STAMP';
+export const SET_TIME_STAMP = 'SET_TIME_STAMP';
 
-export const SET_HOMEPAGE_INFO= 'SET_HOMEPAGE_INFO';
+export const SET_HOMEPAGE_INFO = 'SET_HOMEPAGE_INFO';
 export const SET_USERME = 'SET_USERME';
 export const CLEAN_USERME = 'CLEAN_USERME';
 export const SET_USERINFO = 'SET_USERINFO';
@@ -23,6 +23,4 @@ export const SET_RANK_TABLE = 'SET_RANK_TABLE';
 export const SET_CONTESTS_TABLE = 'SET_CONTESTS_TABLE';
 export const GET_CONTEST_SUCC = 'GET_CONTEST_SUCC';
 export const GET_CONTEST_ERR = 'GET_CONTEST_ERR';
-
-
 

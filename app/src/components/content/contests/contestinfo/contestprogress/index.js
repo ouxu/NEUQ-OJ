@@ -9,9 +9,9 @@ const ContestProgress = (time, start_time, end_time) => {
     const start = newDate(start_time);
     const end = newDate(end_time);
 
-    let h = Math.floor((end - time) / 1000 / 60 / 60);
-    let m = Math.floor(((end - time) / 1000 - h * 60 * 60) / 60);
-    let s = Math.floor(((end - time) / 1000 - h * 60 * 60 - m * 60));
+    const h = Math.floor((end - time) / 1000 / 60 / 60);
+    const m = Math.floor(((end - time) / 1000 - h * 60 * 60) / 60);
+    const s = Math.floor(((end - time) / 1000 - h * 60 * 60 - m * 60));
     const end_status = time > end;
 
     return (
@@ -28,7 +28,7 @@ const ContestProgress = (time, start_time, end_time) => {
                 {
                     end_status ? <span className="contest-info-progress-time-over">已结束</span> :
                         <span>
-                            <span> {h} </span> h
+                      <span> {h} </span> h
                             <span> {m} </span> m
                             <span> {s} </span> s
                         </span>
@@ -37,8 +37,7 @@ const ContestProgress = (time, start_time, end_time) => {
 
 
         </div>
-    )
-
+    );
 };
 
 export default ContestProgress;
