@@ -228,7 +228,7 @@ class ContestPage extends React.Component {
         return (
             <QueueAnim className="contests-table-wrap" delay={100}>
                 <div className="contests-table-header" key="contests-1">
-          <span className="contests-table-header-title">
+                    <span className="contests-table-header-title">
                        竞赛列表
                     </span>
                     <div>

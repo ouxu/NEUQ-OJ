@@ -5,7 +5,8 @@ import React from "react";
 import {Progress} from "antd";
 import "./index.less";
 import newDate from "../../../../../utils/newDate";
-const ContestProgress = (time, start_time, end_time) => {
+const ContestProgress = (props) => {
+    const {time, start_time, end_time} = props;
     const start = newDate(start_time);
     const end = newDate(end_time);
 

@@ -1,7 +1,7 @@
 /**
  * Created by out_xu on 16/12/20.
  */
-import { hashHistory } from 'react-router';
+import { hashHistory,browserHistory } from 'react-router';
 export default (path) => {
-  hashHistory.push(path);
+    process.env.NODE_ENV === 'development' ? hashHistory.push(path) : browserHistory.push(path)
 };
