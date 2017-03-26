@@ -1,24 +1,11 @@
+/**
+ * Created by out_xu on 17/3/26.
+ */
 import React, {Component} from "react";
-import {Table,Icon} from "antd";
-import "./index.less";
-class HomeManage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
 
+class ContestList extends Component {
     render() {
-        let {data:{introduce, notice = []}} = this.props;
-        notice = notice.map((t = {}, i) => ({
-            ...t,
-            num: i + 1
-        }));
-        const title = () => (
-            <span className="home-manage-table-title">
-                <span>公告列表</span>
-                <span className="home-manage-table-title-icon">发布公告 <Icon type="plus-square-o" /></span>
-            </span>
-        );
+
         const columns = [{
             title: '',
             width: '1%',
@@ -63,26 +50,13 @@ class HomeManage extends Component {
             key: 'home-manage-action',
             className: 'home-manage-action'
         }];
-
         return (
-            <div className="home-manage">
-                <div className="h-1">
-                    主页公告
-                </div>
-                <Table
-                    columns={columns}
-                    rowKey={record => `home-manage-${record.id}`}
-                    dataSource={notice}
-                    pagination={false}
-                    size="small"
-                    key="home-manage-table"
-                    className="home-manage-table"
-                    expandedRowRender={record => <p>{record.content}</p>}
-                    title={title}
-                />
+            <div className="title">
+                竞赛列表
             </div>
         );
     }
 }
 
-export default HomeManage;
+
+export default ContestList;

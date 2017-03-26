@@ -1,11 +1,11 @@
 /**
  * Created by out_xu on 17/2/21.
  */
-import { SET_CONTESTS_TABLE, GET_CONTEST_SUCC, GET_CONTEST_ERR } from './type';
-import API from '../api';
-import goto from '../utils/goto';
-import * as requestService from '../utils/request';
-import jumpTo from '../utils/windowScroll';
+import {SET_CONTESTS_TABLE, GET_CONTEST_SUCC, GET_CONTEST_ERR} from "./type";
+import API from "../api";
+import goto from "../utils/goto";
+import * as requestService from "../utils/request";
+import jumpTo from "../utils/windowScroll";
 
 
 /**
@@ -13,10 +13,8 @@ import jumpTo from '../utils/windowScroll';
  * @param data
  */
 const setContestsList = data => ({
-  type: SET_CONTESTS_TABLE,
-  payload: {
-    data
-  }
+    type: SET_CONTESTS_TABLE,
+    payload: data
 });
 
 /**
@@ -24,15 +22,13 @@ const setContestsList = data => ({
  * @param data
  */
 const getContestSucc = data => ({
-  type: GET_CONTEST_SUCC,
-  payload: {
-    data
-  }
+    type: GET_CONTEST_SUCC,
+    payload: data
 });
 
 const getContestErr = () => ({
-  type: GET_CONTEST_ERR,
-  payload: {}
+    type: GET_CONTEST_ERR,
+    payload: {}
 });
 
 /**
@@ -42,25 +38,25 @@ const getContestErr = () => ({
  * @returns {function(*)} dispatch action
  */
 export function getContestsTable(page = 1, size = 20) {
-  return async (dispatch) => {
-    try {
-      const params = {
-        page,
-        size
-      };
-      const json = await requestService.get(API.contests, params);
+    return async(dispatch) => {
+        try {
+            const params = {
+                page,
+                size
+            };
+            const data = await requestService.get(API.contests, params);
             // 将当前输入的页码存入sessionStorage
-      sessionStorage.setItem('neuq_oj.contestspagecurr', page);
-      sessionStorage.setItem('neuq_oj.contestspagesize', size);
-      sessionStorage.setItem('neuq_oj.contestspagecount', json.total_count);
+            sessionStorage.setItem('neuq_oj.contestspagecurr', page);
+            sessionStorage.setItem('neuq_oj.contestspagesize', size);
+            sessionStorage.setItem('neuq_oj.contestspagecount', data.total_count);
 
-      await dispatch(setContestsList(json.data));
+            await dispatch(setContestsList(data));
 
-      jumpTo('navigation');
-    } catch (e) {
-      console.error(e);
-    }
-  };
+            jumpTo('navigation');
+        } catch (e) {
+            console.error(e);
+        }
+    };
 }
 
 
@@ -72,26 +68,26 @@ export function getContestsTable(page = 1, size = 20) {
  * @returns {function(*)} dispatch action
  */
 export function searchContests(value, page = 1, size = 20) {
-  return async (dispatch) => {
-    try {
-      const params = {
-        keyword: value,
-        page,
-        size
-      };
-      const json = await requestService.get(API.contestssearch, params);
+    return async(dispatch) => {
+        try {
+            const params = {
+                keyword: value,
+                page,
+                size
+            };
+            const data = await requestService.get(API.contestssearch, params);
 
-      sessionStorage.setItem('neuq_oj.contestspagecurr', page);
-      sessionStorage.setItem('neuq_oj.contestspagesize', size);
-      sessionStorage.setItem('neuq_oj.contestspagecount', json.total_count);
+            sessionStorage.setItem('neuq_oj.contestspagecurr', page);
+            sessionStorage.setItem('neuq_oj.contestspagesize', size);
+            sessionStorage.setItem('neuq_oj.contestspagecount', data.total_count);
 
-      await dispatch(setContestsList(json.data));
+            await dispatch(setContestsList(data));
 
-      jumpTo('navigation');
-    } catch (e) {
-      console.error(e);
-    }
-  };
+            jumpTo('navigation');
+        } catch (e) {
+            console.error(e);
+        }
+    };
 }
 
 
@@ -101,17 +97,17 @@ export function searchContests(value, page = 1, size = 20) {
  * @returns {function(*)} dispatch action
  */
 export function getContest(id) {
-  return async (dispatch) => {
-    try {
-      const json = await requestService.tget(API.contest + id);
-      await dispatch(getContestSucc(json.data));
-      jumpTo('navigation');
-    } catch (e) {
-      dispatch(getContestErr());
-      goto('/contests');
-      console.error(e);
-    }
-  };
+    return async(dispatch) => {
+        try {
+            const data = await requestService.tget(API.contest + id);
+            await dispatch(getContestSucc(data));
+            jumpTo('navigation');
+        } catch (e) {
+            dispatch(getContestErr());
+            goto('/contests');
+            console.error(e);
+        }
+    };
 }
 
 
@@ -122,14 +118,14 @@ export function getContest(id) {
  * @returns {function()}
  */
 export function joinContest(id, body) {
-  return async () => {
-    try {
-      const url = `${API.contest + id}/join`;
-      await requestService.tpost(url, body);
-      await getContest(id);
-      await goto(`contests/${id}`);
-    } catch (e) {
-      goto('/contests');
-    }
-  };
+    return async() => {
+        try {
+            const url = `${API.contest + id}/join`;
+            await requestService.tpost(url, body);
+            await getContest(id);
+            await goto(`contests/${id}`);
+        } catch (e) {
+            goto('/contests');
+        }
+    };
 }

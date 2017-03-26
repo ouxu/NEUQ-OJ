@@ -3,9 +3,9 @@
  */
 import React from "react";
 import {Icon} from "antd";
-import "./index.less";
 import Login from "../../user/loginabout";
 import {Link} from "react-router";
+import "./index.less";
 
 class Navigation extends React.Component {
     constructor(props) {

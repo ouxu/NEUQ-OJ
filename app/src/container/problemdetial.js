@@ -26,7 +26,7 @@ class ProblemDetailContainer extends React.Component {
     return (
       <ProblemDetail
         params={this.props.params}
-        data={problemdetail.data}
+        data={problemdetail}
       />
     );
   }

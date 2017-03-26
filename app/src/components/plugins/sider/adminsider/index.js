@@ -27,7 +27,7 @@ const AdminSider = () => (
             <Menu.Item key="4">Option 4</Menu.Item>
         </SubMenu>
         <SubMenu key="contest" title={<span>竞赛管理</span>}>
-            <Menu.Item key="5">Option 5</Menu.Item>
+            <Menu.Item key="contest/list">竞赛列表</Menu.Item>
             <Menu.Item key="6">Option 6</Menu.Item>
             <SubMenu key="sub3" title="Submenu">
                 <Menu.Item key="7">Option 7</Menu.Item>

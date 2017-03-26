@@ -18,7 +18,7 @@ class RanklistContainer extends Component {
     return (
       <RankList
         getRankTable={this.props.getRankTable}
-        data={ranklist.data}
+        data={ranklist}
       />
     );
   }

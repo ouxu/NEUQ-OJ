@@ -23,7 +23,7 @@ class ProblemsContainer extends React.Component {
     const { problems: { problemtable }, user: { islogined } } = this.props;
     return (
       <ProblemsTable
-        data={problemtable.data}
+        data={problemtable.problems}
         getProblemTable={this.props.getProblemTable}
         searchProblems={this.props.searchProblems}
         key={`problem-table-table${islogined}`}

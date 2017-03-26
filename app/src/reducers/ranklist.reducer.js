@@ -4,7 +4,7 @@
 import { SET_RANK_TABLE } from '../actions/type';
 
 const init_ranklist = {
-  ranklist: {}
+  ranklist: []
 };
 export default function ranklist(state = init_ranklist, action) {
   switch (action.type) {

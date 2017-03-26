@@ -13,9 +13,7 @@ import * as requestService from '../utils/request';
  */
 const setStatusList = data => ({
   type: SET_STATUS_TABLE,
-  payload: {
-    data
-  }
+  payload: data
 });
 
 /**
@@ -33,12 +31,12 @@ export function getStatusTable(page = 1, size = 20, searchobj) {
         page,
         size
       };
-      const json = await requestService.get(API.status, params);
+      const data = await requestService.get(API.status, params);
 
       sessionStorage.setItem('neuq_oj.statuspagecurr', page);
       sessionStorage.setItem('neuq_oj.statuspagesize', size);
 
-      await dispatch(setStatusList(json.data));
+      await dispatch(setStatusList(data));
       jumpTo('navigation');
     } catch (e) {
       console.error(e);

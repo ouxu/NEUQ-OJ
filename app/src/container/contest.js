@@ -16,7 +16,7 @@ class ContestsContainer extends React.Component {
     const { conteststable } = this.props;
     return (
       <ContestPage
-        data={conteststable.data}
+        data={conteststable.contests}
         getContestsTable={this.props.getContestsTable}
         searchContests={this.props.searchContests}
         joinContest={this.props.joinContest}

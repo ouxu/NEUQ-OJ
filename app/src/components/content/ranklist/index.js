@@ -50,7 +50,7 @@ class RankList extends Component {
                 if (scope.length < 1) {
                     this.props.getRankTable(current, pageSize);
                 } else {
-                    this.props.getRankTable(scope, current, pageSize);
+                    this.props.getRankTable(current, pageSize, scope);
                 }
             },
             onChange: (current) => {
@@ -60,7 +60,7 @@ class RankList extends Component {
                 if (scope.length < 1) {
                     this.props.getRankTable(current, pageSize);
                 } else {
-                    this.props.getRankTable(scope, current, pageSize);
+                    this.props.getRankTable(current, pageSize, scope);
                 }
             }
         };

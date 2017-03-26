@@ -62,7 +62,7 @@ class ContestInfo extends React.Component {
     }
 
     render() {
-        const {contest_info, problem_info} = this.props.data;
+        const {contest_info={}, problem_info=[]} = this.props.data;
         const accepted = {
             Y: <Icon className="status-yes" type="check-circle"/>,
             N: <Icon className="status-no" type="close-circle"/>

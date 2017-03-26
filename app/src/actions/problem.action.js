@@ -1,11 +1,11 @@
 /**
  * Created by out_xu on 16/12/30.
  */
-import { SET_PROBLEM_TABLE, SET_PROBLEM_DETAIL } from './type';
-import API from '../api';
-import goto from '../utils/goto';
-import jumpTo from '../utils/windowScroll';
-import * as requestService from '../utils/request';
+import {SET_PROBLEM_TABLE, SET_PROBLEM_DETAIL} from "./type";
+import API from "../api";
+import goto from "../utils/goto";
+import jumpTo from "../utils/windowScroll";
+import * as requestService from "../utils/request";
 
 /**
  * 设置当前问题列表
@@ -13,10 +13,8 @@ import * as requestService from '../utils/request';
  * @returns {{type, payload: {data: *}}}
  */
 const setProblemList = data => ({
-  type: SET_PROBLEM_TABLE,
-  payload: {
-    data
-  }
+    type: SET_PROBLEM_TABLE,
+    payload: data
 });
 
 
@@ -26,10 +24,8 @@ const setProblemList = data => ({
  * @returns {{type, payload: {data: *}}}
  */
 const setProblemDetail = data => ({
-  type: SET_PROBLEM_DETAIL,
-  payload: {
-    data
-  }
+    type: SET_PROBLEM_DETAIL,
+    payload: data
 });
 
 
@@ -40,24 +36,24 @@ const setProblemDetail = data => ({
  * @returns {function(*)}
  */
 export function getProblemTable(page = 1, size = 20) {
-  return async (dispatch) => {
-    try {
-      const params = {
-        page,
-        size
-      };
+    return async(dispatch) => {
+        try {
+            const params = {
+                page,
+                size
+            };
 
-      const json = await requestService.tget(API.problems, params);
-      sessionStorage.setItem('neuq_oj.problempagecurr', page);
-      sessionStorage.setItem('neuq_oj.problempagesize', size);
-      sessionStorage.setItem('neuq_oj.problempagecount', json.total_count);
+            const data = await requestService.tget(API.problems, params);
+            sessionStorage.setItem('neuq_oj.problempagecurr', page);
+            sessionStorage.setItem('neuq_oj.problempagesize', size);
+            sessionStorage.setItem('neuq_oj.problempagecount', data.total_count);
 
-      await dispatch(setProblemList(json.data));
-      jumpTo('navigation');
-    } catch (e) {
-      console.error(e);
-    }
-  };
+            await dispatch(setProblemList(data));
+            jumpTo('navigation');
+        } catch (e) {
+            console.error(e);
+        }
+    };
 }
 
 
@@ -67,15 +63,15 @@ export function getProblemTable(page = 1, size = 20) {
  * @returns {function(*)}
  */
 export function getProblemInfo(params) {
-  return async (dispatch) => {
-    try {
-      const url = params.pnum ? `${API.host}contest/${params.cid}/problem/${params.pnum}` : `${API.host}problem/${params.id}`;
-      const json = await requestService.tget(url);
-      await dispatch(setProblemDetail(json.data));
-    } catch (e) {
-      goto(params.cid ? 'contests' : 'problems');
-    }
-  };
+    return async(dispatch) => {
+        try {
+            const url = params.pnum ? `${API.host}contest/${params.cid}/problem/${params.pnum}` : `${API.host}problem/${params.id}`;
+            const data = await requestService.tget(url);
+            await dispatch(setProblemDetail(data));
+        } catch (e) {
+            goto(params.cid ? 'contests' : 'problems');
+        }
+    };
 }
 
 /**
@@ -86,25 +82,25 @@ export function getProblemInfo(params) {
  * @returns {function(*)}
  */
 export function searchProblems(value, page = 1, size = 20) {
-  return async (dispatch) => {
-    try {
-      const params = {
-        keyword: value,
-        page,
-        size
-      };
-      const json = await requestService.tget(API.problemssearch, params);
-      sessionStorage.setItem('neuq_oj.problempagecurr', page);
-      sessionStorage.setItem('neuq_oj.problempagesize', size);
-      sessionStorage.setItem('neuq_oj.problempagecount', json.total_count);
+    return async(dispatch) => {
+        try {
+            const params = {
+                keyword: value,
+                page,
+                size
+            };
+            const data = await requestService.tget(API.problemssearch, params);
+            sessionStorage.setItem('neuq_oj.problempagecurr', page);
+            sessionStorage.setItem('neuq_oj.problempagesize', size);
+            sessionStorage.setItem('neuq_oj.problempagecount', data.total_count);
 
-      await dispatch(setProblemList(json.data));
+            await dispatch(setProblemList(data));
 
-      jumpTo('navigation');
-    } catch (e) {
-      console.error(e);
-    }
-  };
+            jumpTo('navigation');
+        } catch (e) {
+            console.error(e);
+        }
+    };
 }
 
 /**

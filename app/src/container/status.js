@@ -20,7 +20,7 @@ class StatusContainer extends React.Component {
     const { statustable } = this.props;
     return (
       <StatusTable
-        data={statustable.data}
+        data={statustable}
         getStatusTable={this.props.getStatusTable}
         searchStatus={this.props.searchStatus}
       />

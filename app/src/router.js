@@ -13,7 +13,9 @@ import ContestsContainer from "./container/contest";
 import ContestInfoContainer from "./container/contestinfo";
 import RanklistContainer from "./container/ranklist";
 import AdminComponent from "./components/admin";
-import HomeManageContainer from "./container/homemanage"
+import HomeManageContainer from "./container/admin/home"
+import ContestManageContainer from "./container/admin/contest"
+
 
 // 配置路由，并将路由注入到id为app的DOM元素中，后期需要React-router-ensure
 // TODO onEnter
@@ -55,6 +57,11 @@ const RouterApp = store => (
         <Route path="admin" component={AdminComponent} onEnter={checkdata(store)}>
             <IndexRoute component={HomeManageContainer}/>
             <Route path="home" component={HomeManageContainer}/>
+
+            <Route path="contest">
+                <Route path="list" component={ContestManageContainer}/>
+
+            </Route>
 
         </Route>
     </Router>

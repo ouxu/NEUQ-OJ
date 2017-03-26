@@ -4,9 +4,9 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {fetchHomePageData} from "../actions";
+import {fetchHomePageData} from "../../actions";
 
-import HomeManage from '../components/admin/home';
+import HomeManage from '../../components/admin/home';
 
 @connect(
     state => ({
@@ -15,6 +15,10 @@ import HomeManage from '../components/admin/home';
     dispatch => bindActionCreators({fetchHomePageData}, dispatch),
 )
 class HomeManageContainer extends Component {
+
+    componentDidMount() {
+        this.props.fetchHomePageData()
+    }
 
     render() {
         const {home} = this.props;

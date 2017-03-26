@@ -4,7 +4,7 @@
 import { SET_STATUS_TABLE } from '../actions/type';
 
 const init_status = {
-  statustable: {}
+  statustable: []
 };
 
 export default function status(state = init_status, action) {
