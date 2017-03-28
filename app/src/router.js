@@ -1,20 +1,22 @@
 import React from "react";
-import {Router, Route, IndexRoute, hashHistory, browserHistory} from "react-router";
+import {browserHistory, hashHistory, IndexRoute, Route, Router} from "react-router";
 // 引入单个页面（包括嵌套的子页面）
 import AppComponent from "./components";
 import NotFoundPage from "./components/plugins/nofind/nofind.js";
 import Register from "./components/user/register";
-import HomePageContainer from "./container/homepage";
-import ProblemsContainer from "./container/problems";
-import ProblemDetailContainer from "./container/problemdetial";
-import UserPageContainer from "./container/userpage";
-import StatusContainer from "./container/status";
-import ContestsContainer from "./container/contest";
-import ContestInfoContainer from "./container/contestinfo";
-import RanklistContainer from "./container/ranklist";
+import HomePageContainer from "./containers/homepage";
+import ProblemsContainer from "./containers/problems";
+import ProblemDetailContainer from "./containers/problemdetial";
+import UserPageContainer from "./containers/userpage";
+import StatusContainer from "./containers/status";
+import ContestsContainer from "./containers/contest";
+import ContestInfoContainer from "./containers/contestinfo";
+import RanklistContainer from "./containers/ranklist";
 import AdminComponent from "./components/admin";
-import HomeManageContainer from "./container/admin/home"
-import ContestManageContainer from "./container/admin/contest"
+import HomeManageContainer from "./containers/admin/home";
+
+import ContestManageContainer from "./containers/admin/contestlist";
+import ContestEditContainer from "./containers/admin/contestedit";
 
 
 // 配置路由，并将路由注入到id为app的DOM元素中，后期需要React-router-ensure
@@ -57,10 +59,9 @@ const RouterApp = store => (
         <Route path="admin" component={AdminComponent} onEnter={checkdata(store)}>
             <IndexRoute component={HomeManageContainer}/>
             <Route path="home" component={HomeManageContainer}/>
-
-            <Route path="contest">
-                <Route path="list" component={ContestManageContainer}/>
-
+            <Route path="contest-list" component={ContestManageContainer}/>
+            <Route path="contest-edit" component={ContestEditContainer}>
+                <Route path=":cid" component={ContestEditContainer} />
             </Route>
 
         </Route>

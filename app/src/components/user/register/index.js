@@ -12,6 +12,7 @@ import API from "../../../api";
 import "./index.less";
 // TODO flex引起的字段显示不全
 const FormItem = Form.Item;
+import * as requestService from "../../../utils/request";
 
 
 const mapStateToProps = () => ({});
@@ -48,20 +49,21 @@ class Login extends React.Component {
         this.getCaptcha();
     }
 
-    getCaptcha() {
-        fetch(API.register,
-        ).then(res => res.json()).then((json) => {
-            this.setState({
-                captcha: json.url
+    async getCaptcha() {
+        try {
+            const data = await requestService.get(API.register);
+            await this.setState({
+                captcha: data.url
             });
-        }).catch((e) => {
+        }
+        catch (e) {
             console.error(e);
-        });
+        }
     }
 
     refreshCaptcha() {
         this.setState({
-            captchastamp: new Date()
+            captchastamp: + new Date()
         });
     }
 

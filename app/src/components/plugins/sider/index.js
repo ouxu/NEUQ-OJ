@@ -17,14 +17,13 @@ class Sider extends React.Component {
   }
 
   handleClick(e) {
-    sessionStorage.setItem('neuq_oj.navselect', e.key);
-    goto(e.key);
+    goto('\/'+e.key);
   }
 
   render() {
-    const navselect = sessionStorage.getItem('neuq_oj.navselect') ? sessionStorage.getItem('neuq_oj.navselect') : '/homepage';
+    const {navselect,collapse} =this.props;
     return (
-      <div id={this.props.collapse ? 'sidercollapse' : 'sidernormal'}>
+      <div id={collapse ? 'sidercollapse' : 'sidernormal'}>
         <div className="ant-layout-logo">
           <img src={this.props.collapse ? ACMLogo1 : ACMLogo2} className="brand-logo" height="30px" />
         </div>

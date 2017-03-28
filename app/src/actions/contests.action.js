@@ -125,7 +125,18 @@ export function joinContest(id, body) {
             await getContest(id);
             await goto(`contests/${id}`);
         } catch (e) {
-            goto('/contests');
+            // goto('/contests');
         }
     };
+}
+
+
+export function delContest(id,body) {
+    return async ()=>{
+        try {
+            await requestService.tpost(API.contest+id+'/delete',body)
+        } catch (e){
+            console.error(e)
+        }
+    }
 }

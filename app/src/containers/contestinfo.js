@@ -17,11 +17,11 @@ class ContestInfoContainer extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getContest(this.props.params.cid);
+        this.props.params.cid && this.props.getContest(this.props.params.cid);
     }
 
     render() {
-        const {contest={contest_info: {}, problem_info: []}} = this.props;
+        const {contest = {contest_info: {}, problem_info: []}} = this.props;
         return (
             <ContestInfo
                 data={contest}

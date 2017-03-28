@@ -5,7 +5,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {getContestsTable} from "../../actions";
-import ContestList from '../../components/admin/contest/contestlist'
+import ContestList from "../../components/admin/contest/contestlist";
 
 @connect(
     state => ({
@@ -13,7 +13,7 @@ import ContestList from '../../components/admin/contest/contestlist'
     }),
     dispatch => bindActionCreators({getContestsTable}, dispatch),
 )
-class ContestManageContainer extends Component {
+class ContestListManageContainer extends Component {
     componentDidMount() {
         const page = sessionStorage.getItem('neuq_oj.contestspagecurr') || 1;
         const size = sessionStorage.getItem('neuq_oj.contestspagesize') || 20;
@@ -21,13 +21,15 @@ class ContestManageContainer extends Component {
     }
 
     render() {
-        const {contest} = this.props;
-        console.log(contest)
+        const {contest: {conteststable}} = this.props;
         return (
-            <ContestList />
+            <ContestList
+                data={conteststable}
+            />
+
         );
     }
 }
 
 
-export default ContestManageContainer;
+export default ContestListManageContainer;

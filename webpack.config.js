@@ -1,9 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
-const proxy = require('http-proxy-middleware')
 
-const dflPort=8081;  //配置端口
+const dflPort=8080;  //配置端口
 
 module.exports = {
     // 配置服务器
@@ -15,12 +14,6 @@ module.exports = {
         noInfo: false,
         open: true,
         stats: { colors: true },
-        proxy: {
-            '/api': {
-                target: 'http://192.168.1.189:3000',
-                secure: false
-            }
-        },
         overlay: {
             warnings: true,
             errors: true

@@ -34,7 +34,7 @@ class HomepageContainer extends React.Component {
   }
 
   render() {
-    const { home:{home}} = this.props;
+    const { home:{home},home:{homenews}} = this.props;
     const { ranklist:{ranklist = []}} = this.props;
     const { notice = [], introduce = []} = home;
     return (

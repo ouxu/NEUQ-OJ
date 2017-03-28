@@ -7,7 +7,7 @@ import { Menu, Icon, Tooltip } from 'antd';
 
 const MenuItem = {
   normal: [
-    <Menu.Item key={'/homepage'}>
+    <Menu.Item key={'homepage'}>
       <div className="showitem">
         <span className="nav-text"><Icon type="home" /> 首页</span>
       </div>
@@ -17,7 +17,7 @@ const MenuItem = {
         </Tooltip>
       </div>
     </Menu.Item>,
-    <Menu.Item key={'/problems'}>
+    <Menu.Item key={'problems'}>
       <span className="showitem">
         <span className="nav-text"><Icon type="bars" /> 问题</span>
       </span>
@@ -28,7 +28,7 @@ const MenuItem = {
       </span>
 
     </Menu.Item>,
-    <Menu.Item key={'/contests'}>
+    <Menu.Item key={'contests'}>
       <span className="showitem">
         <span className="nav-text"><Icon type="smile" /> 竞赛&作业</span>
       </span>
@@ -38,7 +38,7 @@ const MenuItem = {
         </Tooltip>
       </span>
     </Menu.Item>,
-    <Menu.Item key={'/status'}>
+    <Menu.Item key={'status'}>
       <span className="showitem">
         <span className="nav-text"><Icon type="clock-circle" /> 状态</span>
       </span>
@@ -48,7 +48,7 @@ const MenuItem = {
         </Tooltip>
       </span>
     </Menu.Item>,
-    <Menu.Item key={'/ranklist'}>
+    <Menu.Item key={'ranklist'}>
       <span className="showitem">
         <span className="nav-text"><Icon type="area-chart" /> 排名</span>
       </span>

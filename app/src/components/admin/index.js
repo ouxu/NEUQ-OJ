@@ -11,11 +11,16 @@ import "./index.less";
 class AdminComponent extends Component {
 
     render() {
+        const {path = 'home'} = this.props.routes[1];
         return (
             <QueueAnim id="admin" type={['left', 'right']} delay={100}>
                 <Navigation />
                 <div className="admin-wrap" key="admin-wrap">
-                    <AdminSider />
+                    <div className="admin-sider">
+                        <AdminSider
+                            select={path}
+                        />
+                    </div>
                     <div className="admin-main">
                         {this.props.children}
                     </div>

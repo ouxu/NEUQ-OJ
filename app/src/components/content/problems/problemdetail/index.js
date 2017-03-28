@@ -98,10 +98,10 @@ class ProblemDetail extends React.Component {
             const {params} = this.props;
             const url = params.pnum ? `${API.host}contest/${params.cid}/problem/${params.pnum}` : `${API.host}problem/${params.id}/submit`;
 
-            const json = await requestService.tpost(url, body);
+            const data = await requestService.tpost(url, body);
             message.success('提交成功');
 
-            const solution_id = await json.data.solution_id;
+            const solution_id = await data.solution_id;
             this.timer = setInterval(() => {
                 this.getResultData(solution_id);
                 const result = this.state.result;
@@ -125,9 +125,8 @@ class ProblemDetail extends React.Component {
 
     async getResultData(solution_id) {
         try {
-            const json = await requestService.get(API.solution + solution_id);
+            const data = await requestService.get(API.solution + solution_id);
 
-            const data = json.data;
             await this.setStateAsync({
                 resultdata: [data],
                 result: data.result

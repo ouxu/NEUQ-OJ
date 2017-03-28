@@ -11,12 +11,12 @@ const handleClick = (e) => {
     goto(`admin/${e.key}`);
 };
 
-const AdminSider = () => (
+const AdminSider = (props) => (
     <Menu
         mode="inline"
         style={{width: 200}}
         defaultOpenKeys={['group', 'contest', 'problem']}
-        defaultSelectedKeys={['home']}
+        defaultSelectedKeys={[props.select]}
         onClick={handleClick}
     >
         <Menu.Item key="home">主页管理</Menu.Item>
@@ -27,8 +27,8 @@ const AdminSider = () => (
             <Menu.Item key="4">Option 4</Menu.Item>
         </SubMenu>
         <SubMenu key="contest" title={<span>竞赛管理</span>}>
-            <Menu.Item key="contest/list">竞赛列表</Menu.Item>
-            <Menu.Item key="6">Option 6</Menu.Item>
+            <Menu.Item key="contest-list">竞赛列表</Menu.Item>
+            <Menu.Item key="contest-edit">竞赛修改</Menu.Item>
             <SubMenu key="sub3" title="Submenu">
                 <Menu.Item key="7">Option 7</Menu.Item>
                 <Menu.Item key="8">Option 8</Menu.Item>

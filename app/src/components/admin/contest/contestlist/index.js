@@ -2,39 +2,99 @@
  * Created by out_xu on 17/3/26.
  */
 import React, {Component} from "react";
-
+import newDate from "../../../../utils/newDate";
+import './index.less'
+import {Table,Icon,Progress} from 'antd';
 class ContestList extends Component {
+    constructor(props) {
+        super(props);
+        this.state={
+            presentTime: new Date()
+        }
+    }
     render() {
-
+        const {data} = this.props;
+        console.log(data);
+        const privatestatus = [
+            '公开',
+            '加密',
+            '私有'
+        ];
+        const progress = {
+            unstart: time => (
+                <div>
+                    <Progress
+                        percent={0}
+                        status="active"
+                        strokeWidth={5}
+                        className="contests-status-progress"
+                    />
+                    未开始 @ {time}
+                </div>
+            ),
+            running: (time, start_time, end_time) => (
+                <div>
+                    <Progress
+                        status="active"
+                        percent={parseInt(100 * (this.state.presentTime - start_time) / (end_time - start_time))}
+                        strokeWidth={5}
+                        className="contests-status-progress"
+                        format={percent => percent}
+                    />
+                    进行中 @ {time}
+                </div>
+            ),
+            ended: time => (
+                <div>
+                    <Progress
+                        percent={100}
+                        status="success"
+                        strokeWidth={5}
+                        className="contests-status-progress"
+                    />
+                    已结束 @ {time}
+                </div>
+            )
+        };
         const columns = [{
             title: '',
             width: '1%',
             key: 'home-manage',
             className: 'home-manage-none'
         }, {
-            title: 'No.',
-            dataIndex: 'num',
-            key: 'home-manage-num',
+            title: '#',
+            dataIndex: 'id',
+            key: 'contest-manage-id',
             className: 'home-manage-num'
         }, {
             title: '标题',
             dataIndex: 'title',
             key: 'home-manage-title',
-            width: 300,
+            width: 200,
             className: 'home-manage-title'
         }, {
-            title: '创建者',
-            dataIndex: 'author',
-            key: 'home-manage-author',
-            className: 'home-manage-author'
-        }, {
-            title: '修改时间',
-            dataIndex: 'date',
+            title: '状态',
+            render: (record) => {
+                const start_time = newDate(record.start_time);
+                const end_time = newDate(record.end_time);
+                const start_status = (this.state.presentTime < start_time);
+                const end_status = (this.state.presentTime > end_time);
+                return (
+                    <div>
+                        {start_status ? progress.unstart(record.start_time) : ''}
+                        {(start_status === false && end_status === false) ? progress.running(record.end_time, start_time, end_time) : ''}
+                        {end_status ? progress.ended(record.end_time) : ''}
+                    </div>
+                );
+            },
             key: 'home-manage-update',
             className: 'home-manage-update'
         }, {
-            title: '创建时间',
-            dataIndex: 'date',
+            title: '权限',
+            render: record =>
+                (<span>
+                  {privatestatus[record.private]}
+                </span>),
             key: 'home-manage-date',
             className: 'home-manage-date'
         }, {
@@ -50,9 +110,27 @@ class ContestList extends Component {
             key: 'home-manage-action',
             className: 'home-manage-action'
         }];
+        const title = () => (
+            <span className="contest-manage-table-title">
+                <span>我有权限管理的竞赛</span>
+                <span className="contest-manage-table-title-icon">创建竞赛 <Icon type="plus-square-o" onClick={this.showModal}/></span>
+            </span>
+        );
         return (
-            <div className="title">
-                竞赛列表
+            <div>
+                <div className="h-1" >
+                    竞赛列表
+                </div>
+                <Table
+                    columns={columns}
+                    rowKey={record => `contest-manage-${record.id}`}
+                    dataSource={data.contests}
+                    pagination={false}
+                    size="small"
+                    key="contest-manage-table"
+                    className="contest-manage-table"
+                    title={title}
+                />
             </div>
         );
     }

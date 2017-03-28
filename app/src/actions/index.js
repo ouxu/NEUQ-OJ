@@ -7,4 +7,4 @@ export { login, logout, getUserMe, getUserInfo, userRegister, tokenVerify } from
 export { getProblemTable, searchProblems, getProblemInfo } from './problem.action';
 export { getStatusTable } from './status.action';
 export { getRankTable } from './ranklist.action';
-export { getContestsTable, searchContests, getContest, joinContest } from './contests.action';
+export { getContestsTable, searchContests, getContest, joinContest, delContest } from './contests.action';
