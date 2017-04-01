@@ -21,10 +21,10 @@ const setHomepageNews = data => ({
 export function fetchHomePageData() {
     return async(dispatch) => {
         try {
-            const homedata = await requestService.get(API.homedata);
-            // const homenews = await requestService.get(API.newslatest);
-            await dispatch(setHomepageInfo(homedata));
-            // await dispatch(setHomepageNews(homenews));
+            // const homedata = await requestService.get(API.homedata);
+            const homenews = await requestService.get(API.newslatest);
+            // await dispatch(setHomepageInfo(homedata));
+            await dispatch(setHomepageNews(homenews));
         } catch (e) {
             console.error(e);
         }

@@ -12,7 +12,7 @@ import { bindActionCreators } from 'redux';
 import { fetchHomePageData, getRankTable } from '../actions';
 
 // 导入子组件
-import HomeItem from '../components/content/homepage/notice';
+import HomeNews from '../components/content/homepage/notice';
 import Introduce from '../components/content/homepage/introduce';
 import HomeRank from '../components/content/homepage/homerank';
 
@@ -34,18 +34,15 @@ class HomepageContainer extends React.Component {
   }
 
   render() {
-    const { home:{home},home:{homenews}} = this.props;
+    const { home:{home},home:{news}} = this.props;
     const { ranklist:{ranklist = []}} = this.props;
-    const { notice = [], introduce = []} = home;
+    const { introduce = []} = home;
     return (
       <Row gutter={12} type="flex" className="homepage">
         <Col className="left-content" xs={{ span: 24 }} sm={{ span: 16 }}>
           <QueueAnim delay={100} interval={200}>
             <div key="homepage-1" >
-              <HomeItem
-                notice={notice}
-                type={{ item: 'notice', title: '通知' }}
-              />
+              <HomeNews notice={news}/>
             </div>
             <Introduce introduce={introduce} key="homepage-2" />
           </QueueAnim>

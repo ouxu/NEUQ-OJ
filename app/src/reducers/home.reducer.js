@@ -17,7 +17,7 @@ export default function home(state = init_home, action) {
         case SET_HOME_NEWS:
             return {
                 ...state,
-                homenews: action.payload
+                news: action.payload
             };
         default:
             return state;

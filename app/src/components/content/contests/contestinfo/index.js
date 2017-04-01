@@ -2,7 +2,7 @@
  * Created by out_xu on 17/3/5.
  */
 import React from "react";
-import {Card, Table, Icon, Tabs, Spin} from "antd";
+import {Card, Icon, Spin, Table, Tabs} from "antd";
 import QueueAnim from "rc-queue-anim";
 import {Link} from "react-router";
 import ContestProgress from "./contestprogress";
@@ -26,7 +26,7 @@ class ContestInfo extends React.Component {
     componentWillMount() {
         this.timer = setInterval(() => {
             this.setStateAsync({time: new Date()});
-            const end_time = newDate(this.props.data.contest_info.end_time);
+            const end_time = this.props.data.contest_info && newDate(this.props.data.contest_info.end_time);
             if (this.state.time > end_time) {
                 clearInterval(this.timer);
             }
@@ -62,7 +62,7 @@ class ContestInfo extends React.Component {
     }
 
     render() {
-        const {contest_info={}, problem_info=[]} = this.props.data;
+        const {contest_info = {}, problem_info = []} = this.props.data;
         const accepted = {
             Y: <Icon className="status-yes" type="check-circle"/>,
             N: <Icon className="status-no" type="close-circle"/>
@@ -90,9 +90,9 @@ class ContestInfo extends React.Component {
             title: '#',
             render: record => (
                 <span>
-                  <Link to={`contests/${this.props.id}/problem/${record.pnum}`}>
-                      Problem {String.fromCharCode(parseInt(record.pnum) + 65)} {record.pid}
-                  </Link>
+                    <Link to={`contests/${this.props.id}/problem/${record.pnum}`}>
+                        Problem {String.fromCharCode(parseInt(record.pnum) + 65)} {record.pid}
+                    </Link>
                 </span>
             ),
             width: '20%',
@@ -102,8 +102,8 @@ class ContestInfo extends React.Component {
             title: '标题',
             render: record => (
                 <span>
-          <Link to={'404'}> {record.title}</Link>
-        </span>
+                    <Link to={`contests/${this.props.id}/problem/${record.pnum}`}> {record.title}</Link>
+                </span>
             ),
             width: '35%',
             key: 'contest-info-title',
@@ -173,10 +173,12 @@ class ContestInfo extends React.Component {
                             <TabPane tab="排行榜" key="contest-info-rank">
                                 <ContestInfoTabs
                                     getRank={this.getRank}
+                                    count_num={problem_info.length}
                                     time={this.state.time}
                                     end_time={contest_info.end_time}
                                     rankData={this.state.rankData}
                                     id={contest_info.id}
+                                    scroll={{x: 960}}
                                 />
 
                             </TabPane>

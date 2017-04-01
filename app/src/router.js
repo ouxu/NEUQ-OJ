@@ -13,7 +13,7 @@ import ContestsContainer from "./containers/contest";
 import ContestInfoContainer from "./containers/contestinfo";
 import RanklistContainer from "./containers/ranklist";
 import AdminComponent from "./components/admin";
-import HomeManageContainer from "./containers/admin/home";
+import NewsManageContainer from "./containers/admin/news";
 
 import ContestManageContainer from "./containers/admin/contestlist";
 import ContestEditContainer from "./containers/admin/contestedit";
@@ -57,8 +57,8 @@ const RouterApp = store => (
         </Route>
 
         <Route path="admin" component={AdminComponent} onEnter={checkdata(store)}>
-            <IndexRoute component={HomeManageContainer}/>
-            <Route path="home" component={HomeManageContainer}/>
+            <IndexRoute component={NewsManageContainer}/>
+            <Route path="home" component={NewsManageContainer}/>
             <Route path="contest-list" component={ContestManageContainer}/>
             <Route path="contest-edit" component={ContestEditContainer}>
                 <Route path=":cid" component={ContestEditContainer} />

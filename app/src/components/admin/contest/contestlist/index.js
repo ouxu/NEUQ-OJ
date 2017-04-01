@@ -59,19 +59,19 @@ class ContestList extends Component {
         const columns = [{
             title: '',
             width: '1%',
-            key: 'home-manage',
-            className: 'home-manage-none'
+            key: 'news-manage',
+            className: 'news-manage-none'
         }, {
             title: '#',
             dataIndex: 'id',
             key: 'contest-manage-id',
-            className: 'home-manage-num'
+            className: 'news-manage-num'
         }, {
             title: '标题',
             dataIndex: 'title',
-            key: 'home-manage-title',
+            key: 'news-manage-title',
             width: 200,
-            className: 'home-manage-title'
+            className: 'news-manage-title'
         }, {
             title: '状态',
             render: (record) => {
@@ -87,16 +87,16 @@ class ContestList extends Component {
                     </div>
                 );
             },
-            key: 'home-manage-update',
-            className: 'home-manage-update'
+            key: 'news-manage-update',
+            className: 'news-manage-update'
         }, {
             title: '权限',
             render: record =>
                 (<span>
                   {privatestatus[record.private]}
                 </span>),
-            key: 'home-manage-date',
-            className: 'home-manage-date'
+            key: 'news-manage-date',
+            className: 'news-manage-date'
         }, {
             title: '操作',
             render: (text, record) => (
@@ -107,8 +107,8 @@ class ContestList extends Component {
                 </span>
             ),
             width: 100,
-            key: 'home-manage-action',
-            className: 'home-manage-action'
+            key: 'news-manage-action',
+            className: 'news-manage-action'
         }];
         const title = () => (
             <span className="contest-manage-table-title">

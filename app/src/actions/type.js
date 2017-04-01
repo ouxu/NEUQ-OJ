@@ -25,3 +25,6 @@ export const GET_CONTEST_SUCC = 'GET_CONTEST_SUCC';
 export const GET_CONTEST_ERR = 'GET_CONTEST_ERR';
 
 export const SET_HOME_NEWS='SET_HOME_NEWS';
+
+export const SET_NEWS_LIST='SET_NEWS_LIST';
+export const SET_NEWS='SET_NEWS';

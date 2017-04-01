@@ -117,17 +117,11 @@ class ProblemDetail extends React.Component {
         }
     }
 
-    setStateAsync(state) {
-        return new Promise((resolve) => {
-            this.setState(state, resolve);
-        });
-    }
 
     async getResultData(solution_id) {
         try {
             const data = await requestService.get(API.solution + solution_id);
-
-            await this.setStateAsync({
+            await this.setState({
                 resultdata: [data],
                 result: data.result
             });

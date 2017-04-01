@@ -19,8 +19,8 @@ export default {
     userme: apiMaker('user/me'),
     userinfo: apiMaker('user/'),  // '/{id}/info'
 
-    // homedata: apiMaker('home/data'),
-    homedata: 'http://rap.taobao.org/mockjsdata/12142/home/data',
+    // homedata: apiMaker('news/data'),
+    homedata: 'http://rap.taobao.org/mockjsdata/12142/news/data',
 
     // problems
     problems: apiMaker('problems'),
@@ -42,5 +42,6 @@ export default {
 
     //news
     news: apiMaker('news'),
+    createnews: apiMaker('news/create'),
     newslatest: apiMaker('news/latest')
 };

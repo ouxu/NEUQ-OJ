@@ -16,7 +16,7 @@ function filterStatus(json) {
         localStorage.clear('neuq_oj.token');
         localStorage.clear('neuq_oj.name');
         localStorage.clear('neuq_oj.id');
-        throw new Error('Did not Login');
+        throw new Error('Did not Login')
     } else {
         throw new Error('Response Unexpected', codeHelper(json.code));
     }

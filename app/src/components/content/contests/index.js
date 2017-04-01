@@ -4,11 +4,12 @@
 import React from "react";
 import {Link} from "react-router";
 import QueueAnim from "rc-queue-anim";
-import {Table, Progress, Input, Icon, Modal} from "antd";
+import {Icon, Input, Modal, Progress, Table,message} from "antd";
 import "./index.less";
 import goto from "../../../utils/goto";
 import newDate from "../../../utils/newDate";
 
+//TODO 搜索竞赛创建者
 const Search = Input.Search;
 class ContestPage extends React.Component {
     constructor(props) {
@@ -24,8 +25,8 @@ class ContestPage extends React.Component {
         this.onPasswordChange = this.onPasswordChange.bind(this);
         this.onSeacrch = this.onSeacrch.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
-        this.showModal = this.showModal.bind(this);
         this.handleok = this.handleok.bind(this);
+        this.verifyermission = this.verifyermission.bind(this);
     }
 
     componentDidMount() {
@@ -38,7 +39,6 @@ class ContestPage extends React.Component {
         this.setState({searchText: e.target.value});
     }
 
-
     onSeacrch() {
         const searchText = encodeURIComponent(this.state.searchText);
         if (searchText.length < 1) {
@@ -50,18 +50,17 @@ class ContestPage extends React.Component {
         }
     }
 
-    showModal(id, pri) {
-        if (pri === 1) {
-            this.setState({
-                visible: true,
-                contestId: id
-            });
-        } else {
-            this.setState({
-                contestId: id
-            });
-            goto(`contests/${id}`);
-        }
+    async verifyermission(record) {
+       try {
+           if (record.private === 1) {
+               await this.props.getContest(record.id);
+           }
+           goto(`contests/${record.id}`);
+       } catch (e){
+           this.setState({
+               visible: true
+           });
+       }
     }
 
     handleCancel() {
@@ -136,35 +135,31 @@ class ContestPage extends React.Component {
             render: (record) => {
                 const start_time = newDate(record.start_time);
                 const start_status = (this.state.presentTime > start_time);
-                return start_status ?
-                    (<span>
-                      <Link to={`contests/${record.id}`}> {record.id}</Link>
-                    </span>
-                    ) : (<span>{record.id}</span>);
+                return start_status ? <a>{record.id}</a>
+                    : <span>{record.id}</span>;
             },
             width: '7%',
             key: 'contests-id',
+            onCellClick: this.verifyermission,
             className: 'contests-id'
         }, {
             title: '标题',
             render: (record) => {
                 const start_time = newDate(record.start_time);
                 const start_status = (this.state.presentTime > start_time);
-                return start_status ?
-                    (<span onClick={this.showModal = this.showModal.bind(this, record.id, record.private)}>
-                      <a> {record.title}</a>
-                    </span>
-                    ) : (<span>{record.title}</span>);
+                return start_status ? <a> {record.title}</a>
+                    : <span>{record.title}</span>;
             },
             width: '30%',
             key: 'contests-title',
+            onCellClick: this.verifyermission,
             className: 'contests-title'
         }, {
             title: '创建者',
             render: record => (
                 <span>
-          <Link to={`userpage/${record.creator_id}`}> {record.creator_name}</Link>
-        </span>
+                    <Link to={`userpage/${record.creator_id}`}> {record.creator_name}</Link>
+                </span>
             ),
             width: '10%',
             key: 'contests-creator-name'
@@ -183,7 +178,6 @@ class ContestPage extends React.Component {
                     </div>
                 );
             },
-
             width: '45%',
             key: 'contests-status',
             className: 'contests-status'

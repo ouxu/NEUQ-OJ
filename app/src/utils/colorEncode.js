@@ -1,0 +1,32 @@
+/**
+ * Created by out_xu on 17/4/1.
+ */
+import sec2Str from "./sec2Str";
+import React from "react";
+
+export default (record, i) => {
+    let bg_color = 'eeeeee';
+    let aa;
+    if (record.problem_ac_sec[i] && record.problem_ac_sec[i] > 0) {
+        aa = record.problem_wa_num[i] ? 0x33 + (record.problem_wa_num[i] * 32) : '00';
+        aa = aa > 0xaa ? 0xaa : aa;
+        aa = aa.toString(16);
+        bg_color = aa + 'ff' + aa;
+        // if(){
+        //     bg_color="aaaaff";
+        // }
+        return <div style={{height: '100%', backgroundColor: '#' + bg_color}}>
+            <span style={{padding: 5}}>{sec2Str(record.problem_ac_sec[i])}</span>
+        </div>
+    } else if (record.problem_wa_num[i] && record.problem_wa_num[i] > 0) {
+        aa = 0xaa - record.problem_wa_num[i] * 10;
+        aa = aa > 16 ? aa : 16;
+        aa = aa.toString(16);
+
+        bg_color = 'ff' + aa + aa;
+        return <div style={{height: '100%', backgroundColor: '#' + bg_color}}>
+            <span>{'-' + record.problem_wa_num[i]}</span>
+        </div>
+    }
+
+}

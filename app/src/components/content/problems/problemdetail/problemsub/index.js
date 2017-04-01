@@ -4,13 +4,20 @@
 import React, {Component} from "react";
 import CodeMirror from "react-codemirror";
 import "codemirror/mode/clike/clike";
-import {Collapse, Card, Button, Checkbox, Tooltip, Row, Col, Table, Icon, Alert} from "antd";
+import {Alert, Button, Card, Checkbox, Col, Collapse, Icon, Row, Table, Tooltip} from "antd";
 import {columns} from "../../../../../utils/tableData";
 import {LanguageSelect} from "../../../../../utils/selectBox";
 
 const Panel = Collapse.Panel;
 
 class ProblemSub extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: false
+        }
+    }
 
     createMarkup = html => ({__html: html});
 
@@ -73,6 +80,7 @@ class ProblemSub extends Component {
                                 onClick={this.props.submit}
                                 className="problem-detail-main-submitbutton"
                                 disabled={unsubmit}
+                                loading={this.state.loading}
                             > 提交
                             </Button>
                         </Col>

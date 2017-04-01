@@ -6,14 +6,20 @@ import {Link} from "react-router";
 import {Table} from "antd";
 import "./index.less";
 import newDate from "../../../../../utils/newDate";
+import sec2Str from "../../../../../utils/sec2Str";
+import colorEncode from "../../../../../utils/colorEncode";
 
 
 class ContestInfoTabs extends React.Component {
     constructor(props) {
         super(props);
+        this.state={
+            loading: false
+        }
     }
 
     componentWillMount() {
+        this.setState({loading: true});
         this.props.getRank(this.props.id);
 
         this.timer = setInterval(() => {
@@ -22,7 +28,10 @@ class ContestInfoTabs extends React.Component {
             if (this.props.time > end) {
                 clearInterval(this.timer);
             }
-        }, 10000);
+        }, 30000);
+        setTimeout(() => {
+            this.setState({loading: false});
+        }, 1000);
     }
 
     componentWillUnmount() {
@@ -32,7 +41,7 @@ class ContestInfoTabs extends React.Component {
     }
 
     render() {
-        let {rankData = []} = this.props;
+        let {rankData = [], count_num} = this.props;
         // 给rankData添加索引
         rankData = rankData.map((t = {}, i) => ({
             ...t,
@@ -47,17 +56,15 @@ class ContestInfoTabs extends React.Component {
         }, {
             title: '排名',
             dataIndex: 'id',
-            width: '10%',
             key: 'contest-info-rank',
             className: 'contest-info-rank'
         }, {
             title: '用户',
             render: record => (
                 <span>
-          <Link to={`userpage/${record.user_id}`}> {record.user_name}</Link>
-        </span>
+                  <Link to={`userpage/${record.user_id}`}> {record.user_name}</Link>
+                </span>
             ),
-            width: '20%',
             key: 'contest-info-user',
             className: 'contest-info-user'
         }, {
@@ -67,39 +74,31 @@ class ContestInfoTabs extends React.Component {
           <Link to={`userpage/${record.user_id}`}> {record.user_id}</Link>
         </span>
             ),
-            width: '20%',
             key: 'contest-info-id',
             className: 'contest-info-id'
         }, {
             title: '解决',
             dataIndex: 'solved',
-            width: '15%',
             key: 'contest-info-solved',
             className: 'contest-info-solved'
         }, {
             title: '用时',
             render: (record) => {
-                const addZore = t => t; // > 9 && t || t + '0'
-                const h = addZore(Math.floor(record.time / 60 / 60));
-                const m = addZore(Math.floor((record.time - h * 60 * 60) / 60));
-                const s = addZore(Math.floor((record.time - h * 60 * 60 - m * 60)));
-                return (
-                    <span>
-            {h} : {m} : {s}
-          </span>
-                );
+                return <span>{sec2Str(record.time)}</span>
             },
-            width: '10%',
             key: 'contest-info-time',
             className: 'contest-info-time'
-        }, {
-            title: '正确',
-            // dataIndex: 'accepted',
-            width: '10%',
-            key: 'contest-info-accepted',
-            className: 'contest-info-accepted'
         }];
-
+        for (let i = 0; i < count_num; i++) {
+            columns.push({
+                title: String.fromCharCode(parseInt(i) + 65),
+                render: (record) => {
+                    return colorEncode(record,i)
+                },
+                key: 'contest-info-problem-' + i,
+                className: 'contest-info-problem'
+            })
+        }
         return (
             <Table
                 columns={columns}
@@ -107,6 +106,7 @@ class ContestInfoTabs extends React.Component {
                 dataSource={rankData}
                 scroll={{x: 680}}
                 // size='small'
+                loading={this.state.loading}
                 pagination={false}
                 key="contest-info-content-rank"
                 className="contest-info-content-table"

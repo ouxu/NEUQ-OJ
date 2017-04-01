@@ -4,7 +4,7 @@
 import React from "react";
 import {Link} from "react-router";
 import QueueAnim from "rc-queue-anim";
-import {Table, Tag, Input, Icon} from "antd";
+import {Icon, Input, Table, Tag} from "antd";
 import "./index.less";
 const Search = Input.Search;
 class ProblemsTable extends React.Component {
@@ -65,7 +65,6 @@ class ProblemsTable extends React.Component {
             width: 40,
             key: 'problem-status',
             className: 'problem-status'
-
         }, {
             title: '#',
             render: record =>
