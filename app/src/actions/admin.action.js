@@ -9,17 +9,7 @@
  */
 import API from "../api";
 import * as requestService from "../utils/request";
-import {SET_NEWS_LIST,SET_NEWS} from "./type";
-
-const setNewsList = data => ({
-    type: SET_NEWS_LIST,
-    payload: data
-});
-const setNews = data => ({
-    type: SET_NEWS,
-    payload: data
-});
-
+import {SET_NEWS_LIST,SET_NEWS,actionCreater} from "./type";
 
 export function getNewsList() {
     return async(dispatch) => {
@@ -29,7 +19,7 @@ export function getNewsList() {
                 size: 1000
             };
             const data = await requestService.get(API.news,param);
-            await dispatch(setNewsList(data));
+            await dispatch(actionCreater(SET_NEWS_LIST,data));
         } catch (e) {
             console.error(e);
         }
@@ -40,7 +30,7 @@ export function getNews(id) {
     return async(dispatch) => {
         try {
             const data = await requestService.get(API.news+'/'+id,param);
-            await dispatch(setNews(data));
+            await dispatch(actionCreater(SET_NEWS,data));
         } catch (e) {
             console.error(e);
         }

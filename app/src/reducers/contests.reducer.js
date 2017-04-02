@@ -1,7 +1,7 @@
 /**
  * Created by out_xu on 17/2/21.
  */
-import { SET_CONTESTS_TABLE, GET_CONTEST_SUCC, GET_CONTEST_ERR } from '../actions/type';
+import { SET_CONTESTS_LIST, GET_CONTEST_SUCC, GET_CONTEST_ERR } from '../actions/type';
 
 
 const init_contests = {
@@ -11,7 +11,7 @@ const init_contests = {
 
 export default function contests(state = init_contests, action) {
   switch (action.type) {
-    case SET_CONTESTS_TABLE:
+    case SET_CONTESTS_LIST:
       return {
         ...state,
         conteststable: action.payload

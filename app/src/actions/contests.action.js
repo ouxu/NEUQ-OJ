@@ -1,35 +1,12 @@
 /**
  * Created by out_xu on 17/2/21.
  */
-import {SET_CONTESTS_TABLE, GET_CONTEST_SUCC, GET_CONTEST_ERR} from "./type";
+import {SET_CONTESTS_LIST, GET_CONTEST_SUCC, GET_CONTEST_ERR,actionCreater} from "./type";
 import API from "../api";
 import goto from "../utils/goto";
 import * as requestService from "../utils/request";
 import jumpTo from "../utils/windowScroll";
 
-
-/**
- * 设置竞赛列表
- * @param data
- */
-const setContestsList = data => ({
-    type: SET_CONTESTS_TABLE,
-    payload: data
-});
-
-/**
- * 设置当前竞赛详情
- * @param data
- */
-const getContestSucc = data => ({
-    type: GET_CONTEST_SUCC,
-    payload: data
-});
-
-const getContestErr = () => ({
-    type: GET_CONTEST_ERR,
-    payload: {}
-});
 
 /**
  * 获取竞赛列表
@@ -50,7 +27,7 @@ export function getContestsTable(page = 1, size = 20) {
             sessionStorage.setItem('neuq_oj.contestspagesize', size);
             sessionStorage.setItem('neuq_oj.contestspagecount', data.total_count);
 
-            await dispatch(setContestsList(data));
+            await dispatch(actionCreater(SET_CONTESTS_LIST,data));
 
             jumpTo('navigation');
         } catch (e) {
@@ -81,7 +58,7 @@ export function searchContests(value, page = 1, size = 20) {
             sessionStorage.setItem('neuq_oj.contestspagesize', size);
             sessionStorage.setItem('neuq_oj.contestspagecount', data.total_count);
 
-            await dispatch(setContestsList(data));
+            await dispatch(actionCreater(SET_CONTESTS_LIST,data));
 
             jumpTo('navigation');
         } catch (e) {
@@ -100,10 +77,10 @@ export function getContest(id) {
     return async(dispatch) => {
         try {
             const data = await requestService.tget(API.contest + id);
-            await dispatch(getContestSucc(data));
+            await dispatch(actionCreater(GET_CONTEST_SUCC,data));
             jumpTo('navigation');
         } catch (e) {
-            dispatch(getContestErr());
+            dispatch(actionCreater(GET_CONTEST_ERR));
             goto('/contests');
             console.error(e);
         }
@@ -112,7 +89,7 @@ export function getContest(id) {
 
 
 /**
- * 加入竞赛
+ * 加入竞赛 TODO 完善加入竞赛
  * @param id 竞赛ID
  * @param body 验证密码
  * @returns {function()}

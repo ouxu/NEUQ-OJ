@@ -20,11 +20,16 @@ export const SET_STATUS_TABLE = 'SET_STATUS_TABLE';
 export const SET_RANK_TABLE = 'SET_RANK_TABLE';
 
 
-export const SET_CONTESTS_TABLE = 'SET_CONTESTS_TABLE';
+export const SET_CONTESTS_LIST = 'SET_CONTESTS_LIST';
 export const GET_CONTEST_SUCC = 'GET_CONTEST_SUCC';
 export const GET_CONTEST_ERR = 'GET_CONTEST_ERR';
 
-export const SET_HOME_NEWS='SET_HOME_NEWS';
+export const SET_HOME_NEWS = 'SET_HOME_NEWS';
 
-export const SET_NEWS_LIST='SET_NEWS_LIST';
-export const SET_NEWS='SET_NEWS';
+export const SET_NEWS_LIST = 'SET_NEWS_LIST';
+export const SET_NEWS = 'SET_NEWS';
+
+export const actionCreater = (type, payload={}) => ({
+    type: type,
+    payload: payload
+});

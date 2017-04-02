@@ -1,33 +1,11 @@
 /**
  * Created by out_xu on 16/12/30.
  */
-import {SET_PROBLEM_TABLE, SET_PROBLEM_DETAIL} from "./type";
+import {SET_PROBLEM_TABLE, SET_PROBLEM_DETAIL,actionCreater} from "./type";
 import API from "../api";
 import goto from "../utils/goto";
 import jumpTo from "../utils/windowScroll";
 import * as requestService from "../utils/request";
-
-/**
- * 设置当前问题列表
- * @param data
- * @returns {{type, payload: {data: *}}}
- */
-const setProblemList = data => ({
-    type: SET_PROBLEM_TABLE,
-    payload: data
-});
-
-
-/**
- * 设置当前问题详情
- * @param data
- * @returns {{type, payload: {data: *}}}
- */
-const setProblemDetail = data => ({
-    type: SET_PROBLEM_DETAIL,
-    payload: data
-});
-
 
 /**
  * 获取问题列表数据
@@ -48,7 +26,7 @@ export function getProblemTable(page = 1, size = 20) {
             sessionStorage.setItem('neuq_oj.problempagesize', size);
             sessionStorage.setItem('neuq_oj.problempagecount', data.total_count);
 
-            await dispatch(setProblemList(data));
+            await dispatch(actionCreater(SET_PROBLEM_TABLE,data));
             jumpTo('navigation');
         } catch (e) {
             console.error(e);
@@ -67,7 +45,7 @@ export function getProblemInfo(params) {
         try {
             const url = params.pnum ? `${API.host}contest/${params.cid}/problem/${params.pnum}` : `${API.host}problem/${params.id}`;
             const data = await requestService.tget(url);
-            await dispatch(setProblemDetail(data));
+            await dispatch(actionCreater(SET_PROBLEM_DETAIL,data));
         } catch (e) {
             goto(params.cid ? 'contests' : 'problems');
         }
@@ -94,7 +72,7 @@ export function searchProblems(value, page = 1, size = 20) {
             sessionStorage.setItem('neuq_oj.problempagesize', size);
             sessionStorage.setItem('neuq_oj.problempagecount', data.total_count);
 
-            await dispatch(setProblemList(data));
+            await dispatch(actionCreater(SET_PROBLEM_TABLE,data));
 
             jumpTo('navigation');
         } catch (e) {
