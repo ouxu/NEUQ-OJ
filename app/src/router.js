@@ -58,12 +58,17 @@ const RouterApp = store => (
 
         <Route path="admin" component={AdminComponent} onEnter={checkdata(store)}>
             <IndexRoute component={NewsManageContainer}/>
-            <Route path="home" component={NewsManageContainer}/>
+            <Route path="news" component={NewsManageContainer}/>
+
             <Route path="contest-list" component={ContestManageContainer}/>
             <Route path="contest-edit" component={ContestEditContainer}>
                 <Route path=":cid" component={ContestEditContainer} />
             </Route>
 
+            <Route path="problem-list" component={ContestManageContainer}/>
+            <Route path="problem-edit" component={ContestEditContainer}>
+                <Route path=":pid" component={ContestEditContainer} />
+            </Route>
         </Route>
     </Router>
 );

@@ -4,7 +4,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {delNews, editNews, getNewsList} from "../../actions";
+import {delNews, editNews, getNews, getNewsList} from "../../actions";
 
 import NewsManage from "../../components/admin/news";
 
@@ -12,7 +12,7 @@ import NewsManage from "../../components/admin/news";
     state => ({
         admin: state.admin
     }),
-    dispatch => bindActionCreators({getNewsList, editNews, delNews}, dispatch),
+    dispatch => bindActionCreators({getNewsList, editNews, delNews, getNews}, dispatch),
 )
 class NewsManageContainer extends Component {
 
@@ -21,13 +21,15 @@ class NewsManageContainer extends Component {
     }
 
     render() {
-        const {admin: {newslist}, editNews, getNewsList, delNews} = this.props;
+        const {admin: {newslist,news}, editNews, getNewsList, delNews, getNews} = this.props;
         return (
             <NewsManage
-                news={newslist.news || []}
+                newslist={newslist.news || []}
+                news={news}
                 editNews={editNews}
                 getNewsList={getNewsList}
                 delNews={delNews}
+                getNews={getNews}
             />
         );
     }

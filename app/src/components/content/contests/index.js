@@ -4,7 +4,7 @@
 import React from "react";
 import {Link} from "react-router";
 import QueueAnim from "rc-queue-anim";
-import {Icon, Input, Modal, Progress, Table,message} from "antd";
+import {Icon, Input, message, Modal, Progress, Table} from "antd";
 import "./index.less";
 import goto from "../../../utils/goto";
 import newDate from "../../../utils/newDate";
@@ -51,16 +51,30 @@ class ContestPage extends React.Component {
     }
 
     async verifyermission(record) {
-       try {
-           if (record.private === 1) {
-               await this.props.getContest(record.id);
-           }
-           goto(`contests/${record.id}`);
-       } catch (e){
-           this.setState({
-               visible: true
-           });
-       }
+        try {
+            const start_time = newDate(record.start_time);
+            const start_status = (this.state.presentTime > start_time);
+            if (start_status) {
+                if (record.private === 1) {
+                    await this.props.tokenVerify();
+                    await this.props.getContest(record.id);
+                } else if (record.private === 2) {
+                    await this.props.getContest(record.id);
+                }
+                goto(`contests/${record.id}`);
+            } else {
+                message.warn('未开始')
+            }
+        } catch (e) {
+            if (e.message === '未登录') {
+                message.error(e.message)
+            } else if (e.message === '权限不足' && record.private === 1) {
+                this.setState({
+                    contestId: record.id,
+                    visible: true
+                })
+            }
+        }
     }
 
     handleCancel() {
@@ -79,6 +93,8 @@ class ContestPage extends React.Component {
         this.setState({
             visible: false
         });
+        goto(`contests/${this.state.contestId}`);
+
     }
 
     render() {
@@ -132,24 +148,14 @@ class ContestPage extends React.Component {
             className: 'status-none'
         }, {
             title: '#',
-            render: (record) => {
-                const start_time = newDate(record.start_time);
-                const start_status = (this.state.presentTime > start_time);
-                return start_status ? <a>{record.id}</a>
-                    : <span>{record.id}</span>;
-            },
+            dataIndex: 'id',
             width: '7%',
             key: 'contests-id',
             onCellClick: this.verifyermission,
             className: 'contests-id'
         }, {
             title: '标题',
-            render: (record) => {
-                const start_time = newDate(record.start_time);
-                const start_status = (this.state.presentTime > start_time);
-                return start_status ? <a> {record.title}</a>
-                    : <span>{record.title}</span>;
-            },
+            dataIndex: 'title',
             width: '30%',
             key: 'contests-title',
             onCellClick: this.verifyermission,

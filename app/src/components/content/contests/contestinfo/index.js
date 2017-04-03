@@ -180,7 +180,6 @@ class ContestInfo extends React.Component {
                                     id={contest_info.id}
                                     scroll={{x: 960}}
                                 />
-
                             </TabPane>
                         </Tabs>
 

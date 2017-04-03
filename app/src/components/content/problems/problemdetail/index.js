@@ -96,7 +96,7 @@ class ProblemDetail extends React.Component {
     async submitProblem(body) {
         try {
             const {params} = this.props;
-            const url = params.pnum ? `${API.host}contest/${params.cid}/problem/${params.pnum}` : `${API.host}problem/${params.id}/submit`;
+            const url = params.pnum ? `${API.host}contest/${params.cid}/problem/${params.pnum}/submit` : `${API.host}problem/${params.id}/submit`;
 
             const data = await requestService.tpost(url, body);
             message.success('提交成功');

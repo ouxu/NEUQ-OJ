@@ -6,13 +6,10 @@ import {Icon} from "antd";
 import Navigation from "../containers/navigation";
 import Sider from "./plugins/sider";
 import Footer from "./plugins/footer";
-import "whatwg-fetch";
-import "fetch-ie8/fetch.js";
+
 import "./index.less";
 import pureRender from "../utils/pureRender";
 
-require('console-polyfill');
-require('es6-promise');
 // 配置整体组件
 @pureRender
 class AppComponent extends React.Component {

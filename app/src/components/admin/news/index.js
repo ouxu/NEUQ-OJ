@@ -22,18 +22,21 @@ class NewsManage extends Component {
         this.delNew = this.delNew.bind(this);
         this.handleOk = this.handleOk.bind(this);
         this.showModal = this.showModal.bind(this);
-        this.handleCancel = this.handleCancel.bind(this)
+        this.handleCancel = this.handleCancel.bind(this);
         this.onConfirm = this.onConfirm.bind(this)
     }
 
-    showModal() {
-        this.setState({
+    async showModal() {
+        await this.setState({
             title: null,
             content: null,
             importance: null,
-            id: NaN,
+            id: NaN
+        });
+        await this.setState({
             visible: true
         });
+
     }
 
     handleOk(e) {
@@ -42,11 +45,17 @@ class NewsManage extends Component {
 
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
-                await this.props.editNews(values,this.state.id);
+                await this.props.editNews(values, this.state.id);
                 await this.setState({
                     visible: false
                 });
-                await this.props.getNewsList()
+                await this.props.getNewsList();
+                await this.setState({
+                    title: null,
+                    content: null,
+                    importance: null,
+                    id: NaN
+                });
             }
         });
         setTimeout(() => {
@@ -60,27 +69,30 @@ class NewsManage extends Component {
 
     createMarkup = html => ({__html: html});
 
-    editNew(record) {
-        this.setState({
+    async editNew(record) {
+        await this.props.getNews(record.id)
+        await this.setState({
             visible: true,
-            title: record.title,
-            content: record.content,
-            importance: record.importance,
+            title: this.props.news.title,
+            content: this.props.news.content,
+            importance: this.props.news.importance,
             id: record.id
         })
     }
-    delNew(record){
+
+    async delNew(record) {
         this.setState({
             id: record.id
         })
     }
-    async onConfirm(){
+
+    async onConfirm() {
         await this.props.delNews(this.state.id);
         await this.props.getNewsList()
-
     }
+
     render() {
-        let {news = []} = this.props;
+        let {newslist = []} = this.props;
         const title = () => (
             <span className="news-manage-table-title">
                 <span>公告列表</span>
@@ -146,7 +158,7 @@ class NewsManage extends Component {
                 <Table
                     columns={columns}
                     rowKey={record => `news-manage-${record.id}`}
-                    dataSource={news}
+                    dataSource={newslist}
                     pagination={false}
                     size="small"
                     key="news-manage-table"
@@ -177,7 +189,7 @@ class NewsManage extends Component {
                         <FormItem>
                             {getFieldDecorator('title', {
                                 rules: [{required: true, message: '请输入标题'}],
-                                initialValue: this.state.title && this.state.title
+                                initialValue: !!this.state.title ? this.state.title : ''
                             })(
                                 <Input type="textarea" placeholder="请输入标题" autosize={{maxRows: 6}}/>
                             )}
@@ -185,16 +197,17 @@ class NewsManage extends Component {
                         <FormItem>
                             {getFieldDecorator('content', {
                                 rules: [{required: true, message: '请输入内容！'}],
-                                initialValue: this.state.content && this.state.content
+                                initialValue: !!this.state.content ? this.state.content : ''
                             })(
-                                <Input type="textarea" placeholder="请输入内容" autosize={{minRows: 2, maxRows: 6}}/>
+                                <Input type="textarea" placeholder="请输入内容，支持 arkdown 语法，请在 Markdown 编辑器中编辑后粘贴"
+                                       autosize={{minRows: 2, maxRows: 6}}/>
                             )}
                         </FormItem>
                         <FormItem>
                             <span style={{marginRight: '10px'}}>请选择重要程度，会根据程度展示不同样式</span>
                             {getFieldDecorator('importance', {
                                 rules: [{required: true, message: '请选择！'}],
-                                initialValue: this.state.importance && this.state.importance
+                                initialValue: !!this.state.importance ? this.state.importance : ''
                             })(
                                 <RadioGroup onChange={this.onChange}>
                                     <Radio value={1}>普通</Radio>

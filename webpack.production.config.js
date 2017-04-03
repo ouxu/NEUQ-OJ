@@ -8,7 +8,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');  //用于清除上�
 module.exports = {
     entry: {
         bundle: __dirname + '/app/src/main.js',
-        vendor1: ['react', 'react-dom','react-router','redux','react-redux'],  //第三方库和框架另外打包
+        vendor1: ['whatwg-fetch','es6-promise','react', 'react-dom','react-router','redux','react-redux'],  //第三方库和框架另外打包
         vendor2: ['codemirror','react-codemirror']
 
     },
@@ -18,7 +18,6 @@ module.exports = {
         filename: 'js/bundle.[chunkhash:8].js',
         chunkFilename: 'js/[name].[chunkhash:8].js'
     },
-    cache: true,
     devtool: false,
     module: {
         rules: [
@@ -62,7 +61,7 @@ module.exports = {
             }
         }),
         new webpack.optimize.CommonsChunkPlugin({
-            name:['vendor1','vendor2'],
+            name:['minifast','vendor1','vendor2'],
             filename:'js/[name].[chunkhash:8].js'
         }),
         new ExtractTextPlugin({

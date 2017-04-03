@@ -15,16 +15,16 @@ class AdminComponent extends Component {
         return (
             <QueueAnim id="admin" type={['left', 'right']} delay={100}>
                 <Navigation />
-                <div className="admin-wrap" key="admin-wrap">
-                    <div className="admin-sider">
+                <QueueAnim className="admin-wrap" key="admin-wrap" type={['left', 'right']} delay={100}>
+                    <div className="admin-sider" key="admin-sider">
                         <AdminSider
                             select={path}
                         />
                     </div>
-                    <div className="admin-main">
+                    <div className="admin-main" key="admin-main">
                         {this.props.children}
                     </div>
-                </div>
+                </QueueAnim>
                 <Footer />
             </QueueAnim>
         );

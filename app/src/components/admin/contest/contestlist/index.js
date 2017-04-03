@@ -2,19 +2,20 @@
  * Created by out_xu on 17/3/26.
  */
 import React, {Component} from "react";
+import {Link} from "react-router";
 import newDate from "../../../../utils/newDate";
-import './index.less'
-import {Table,Icon,Progress} from 'antd';
+import "./index.less";
+import {Icon, Progress, Table} from "antd";
 class ContestList extends Component {
     constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             presentTime: new Date()
         }
     }
+
     render() {
         const {data} = this.props;
-        console.log(data);
         const privatestatus = [
             '公开',
             '加密',
@@ -99,26 +100,20 @@ class ContestList extends Component {
             className: 'news-manage-date'
         }, {
             title: '操作',
-            render: (text, record) => (
-                <span>
-                  <a href="#">修改</a>
-                  <span className="ant-divider"/>
-                  <a href="#">删除</a>
-                </span>
-            ),
-            width: 100,
+            render: (record) => <Link to={'admin/contest-edit/'+record.id}>修改</Link>,
+            width: 40,
             key: 'news-manage-action',
             className: 'news-manage-action'
         }];
         const title = () => (
             <span className="contest-manage-table-title">
                 <span>我有权限管理的竞赛</span>
-                <span className="contest-manage-table-title-icon">创建竞赛 <Icon type="plus-square-o" onClick={this.showModal}/></span>
+                <span className="contest-manage-table-title-icon">创建竞赛 <Link to="admin/contest-edit"><Icon type="plus-square-o"/></Link></span>
             </span>
         );
         return (
             <div>
-                <div className="h-1" >
+                <div className="h-1">
                     竞赛列表
                 </div>
                 <Table

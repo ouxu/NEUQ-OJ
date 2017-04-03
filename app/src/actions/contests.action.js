@@ -1,12 +1,12 @@
 /**
  * Created by out_xu on 17/2/21.
  */
-import {SET_CONTESTS_LIST, GET_CONTEST_SUCC, GET_CONTEST_ERR,actionCreater} from "./type";
+import {actionCreater, GET_CONTEST_ERR, GET_CONTEST_SUCC, SET_CONTESTS_LIST} from "./type";
 import API from "../api";
 import goto from "../utils/goto";
 import * as requestService from "../utils/request";
 import jumpTo from "../utils/windowScroll";
-
+import {message} from "antd";
 
 /**
  * 获取竞赛列表
@@ -15,7 +15,7 @@ import jumpTo from "../utils/windowScroll";
  * @returns {function(*)} dispatch action
  */
 export function getContestsTable(page = 1, size = 20) {
-    return async(dispatch) => {
+    return async (dispatch) => {
         try {
             const params = {
                 page,
@@ -27,7 +27,7 @@ export function getContestsTable(page = 1, size = 20) {
             sessionStorage.setItem('neuq_oj.contestspagesize', size);
             sessionStorage.setItem('neuq_oj.contestspagecount', data.total_count);
 
-            await dispatch(actionCreater(SET_CONTESTS_LIST,data));
+            await dispatch(actionCreater(SET_CONTESTS_LIST, data));
 
             jumpTo('navigation');
         } catch (e) {
@@ -45,7 +45,7 @@ export function getContestsTable(page = 1, size = 20) {
  * @returns {function(*)} dispatch action
  */
 export function searchContests(value, page = 1, size = 20) {
-    return async(dispatch) => {
+    return async (dispatch) => {
         try {
             const params = {
                 keyword: value,
@@ -58,7 +58,7 @@ export function searchContests(value, page = 1, size = 20) {
             sessionStorage.setItem('neuq_oj.contestspagesize', size);
             sessionStorage.setItem('neuq_oj.contestspagecount', data.total_count);
 
-            await dispatch(actionCreater(SET_CONTESTS_LIST,data));
+            await dispatch(actionCreater(SET_CONTESTS_LIST, data));
 
             jumpTo('navigation');
         } catch (e) {
@@ -74,15 +74,18 @@ export function searchContests(value, page = 1, size = 20) {
  * @returns {function(*)} dispatch action
  */
 export function getContest(id) {
-    return async(dispatch) => {
+    return async (dispatch) => {
         try {
-            const data = await requestService.tget(API.contest + id);
-            await dispatch(actionCreater(GET_CONTEST_SUCC,data));
-            jumpTo('navigation');
+            if (id) {
+                const data = await requestService.tget(API.contest + id);
+                await dispatch(actionCreater(GET_CONTEST_SUCC, data));
+                jumpTo('navigation');
+            } else {
+                dispatch(actionCreater(GET_CONTEST_ERR));
+            }
         } catch (e) {
             dispatch(actionCreater(GET_CONTEST_ERR));
-            goto('/contests');
-            console.error(e);
+            throw new Error('权限不足')
         }
     };
 }
@@ -95,24 +98,38 @@ export function getContest(id) {
  * @returns {function()}
  */
 export function joinContest(id, body) {
-    return async() => {
+    return async () => {
         try {
-            const url = `${API.contest + id}/join`;
+            const url = API.contest + id + '/join';
             await requestService.tpost(url, body);
             await getContest(id);
-            await goto(`contests/${id}`);
+            await goto('contests/' + id);
         } catch (e) {
-            // goto('/contests');
+            goto('/contests');
         }
     };
 }
 
 
-export function delContest(id,body) {
-    return async ()=>{
+export function delContest(id, body) {
+    return async () => {
         try {
-            await requestService.tpost(API.contest+id+'/delete',body)
-        } catch (e){
+            await requestService.tpost(API.contest + id + '/delete', body)
+            message.success('删除成功')
+        } catch (e) {
+            console.error(e)
+        }
+    }
+}
+
+export function editContest(body, id) {
+    return async () => {
+        try {
+            let url = id ? API.contest + id + '/update/info' : API.createcontest;
+            await requestService.tpost(url, body)
+            message.success('发布成功')
+
+        } catch (e) {
             console.error(e)
         }
     }

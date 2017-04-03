@@ -35,6 +35,7 @@ export default {
     contests: apiMaker('contests'),
     contestssearch: apiMaker('contest/search'),
     contest: apiMaker('contest/'), // contest/{id}
+    createcontest: apiMaker('contest/create'), // contest/{id}
 
     // ranklist
     ranklist: apiMaker('user/ranklist'),

@@ -11,34 +11,6 @@ import urlEncode from "../utils/urlEncode";
 
 
 /**
- * 设置用户信息
- * @param data
- */
-const setUserInfo = data => ({
-    type: SET_USERINFO,
-    payload: data
-});
-/**
- * 设置用户信息
- * @param data
- */
-const setUserMe = data => ({
-    type: SET_USERME,
-    payload: data
-});
-
-/**
- * 设置用户信息
- */
-const cleanUserMe = () => ({
-    type: CLEAN_USERME
-});
-
-const isLogined = () => ({
-    type: IS_LOGINED
-});
-
-/**
  * 登录验证
  * @header token
  */
@@ -48,9 +20,7 @@ export function tokenVerify() {
             await requestService.tget(API.tokenverify);
             await dispatch(actionCreater(IS_LOGINED));
         } catch (e) {
-            dispatch(actionCreater(CLEAN_USERME));
-            localStorage.clear('neuq_oj.token');
-            localStorage.clear('neuq_oj.id');
+            throw new Error('未登录',dispatch(actionCreater(CLEAN_USERME)))
         }
     };
 }

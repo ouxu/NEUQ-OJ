@@ -17,7 +17,12 @@ class ContestInfoContainer extends React.Component {
     }
 
     componentDidMount() {
-        this.props.params.cid && this.props.getContest(this.props.params.cid);
+        try {
+            this.props.params.cid && this.props.getContest(this.props.params.cid);
+        } catch (e){
+            goto('/contests');
+            console.error(e);
+        }
     }
     render() {
         const {contest = {contest_info: {}, problem_info: []}} = this.props;

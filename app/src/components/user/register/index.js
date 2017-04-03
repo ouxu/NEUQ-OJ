@@ -2,7 +2,7 @@
  * Created by out_xu on 16/12/26.
  */
 import React from "react";
-import {Form, Input, Tooltip, Card, Row, Col, Checkbox, Button} from "antd";
+import {Button, Card, Checkbox, Col, Form, Input, Row, Tooltip} from "antd";
 import QueueAnim from "rc-queue-anim";
 import verify from "../../../utils/regx";
 import {bindActionCreators} from "redux";
@@ -10,9 +10,9 @@ import {connect} from "react-redux";
 import {userRegister} from "../../../actions";
 import API from "../../../api";
 import "./index.less";
+import * as requestService from "../../../utils/request";
 // TODO flex引起的字段显示不全
 const FormItem = Form.Item;
-import * as requestService from "../../../utils/request";
 
 
 const mapStateToProps = () => ({});
@@ -63,7 +63,7 @@ class Login extends React.Component {
 
     refreshCaptcha() {
         this.setState({
-            captchastamp: + new Date()
+            captchastamp: +new Date()
         });
     }
 
