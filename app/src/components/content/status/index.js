@@ -1,111 +1,110 @@
 /**
  * Created by out_xu on 17/1/5.
  */
-import React from 'react';
+import React from 'react'
 
-import QueueAnim from 'rc-queue-anim';
-import { Table, Input, Button } from 'antd';
-import { LanguageSelect, ResultSelect } from '../../../utils/selectBox';
-import './index.less';
-import { columns } from '../../../utils/tableData';
+import QueueAnim from 'rc-queue-anim'
+import { Table, Input, Button } from 'antd'
+import { LanguageSelect, ResultSelect } from '../../../utils/selectBox'
+import './index.less'
+import { columns } from '../../../utils/tableData'
 
 class StatusTable extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       problem_id: null,
       result: null,
       language: null,
       user_id: null
-    };
-    this.onInputUser = this.onInputUser.bind(this);
-    this.onInputId = this.onInputId.bind(this);
-    this.onSeacrch = this.onSeacrch.bind(this);
-    this.SelectResult = this.SelectResult.bind(this);
-    this.SelectLanguage = this.SelectLanguage.bind(this);
-    this.Cancel = this.Cancel.bind(this);
+    }
+    this.onInputUser = this.onInputUser.bind(this)
+    this.onInputId = this.onInputId.bind(this)
+    this.onSeacrch = this.onSeacrch.bind(this)
+    this.SelectResult = this.SelectResult.bind(this)
+    this.SelectLanguage = this.SelectLanguage.bind(this)
+    this.Cancel = this.Cancel.bind(this)
   }
 
-  componentWillMount() {
-    const page = sessionStorage.getItem('neuq_oj.statuspagecurr') || 1;
-    const size = sessionStorage.getItem('neuq_oj.statuspagesize') || 20;
-    this.props.getStatusTable(page, size);
+  componentWillMount () {
+    const page = window.sessionStorage.getItem('neuq_oj.statuspagecurr') || 1
+    const size = window.sessionStorage.getItem('neuq_oj.statuspagesize') || 20
+    this.props.getStatusTable(page, size)
   }
 
-  SelectResult(value) {
+  SelectResult (value) {
     this.setState({
       result: value
-    });
+    })
   }
-  SelectLanguage(value) {
+  SelectLanguage (value) {
     this.setState({
       language: value
-    });
+    })
   }
 
-  onInputUser(e) {
-    const { value } = e.target;
-    const reg = /^\d+$/;
+  onInputUser (e) {
+    const { value } = e.target
+    const reg = /^\d+$/
     if ((!isNaN(value) && reg.test(value)) || value === '') {
-      this.setState({ user_id: value == '' ? null : value });
+      this.setState({ user_id: value === '' ? null : value })
     }
   }
-  onInputId(e) {
-    const { value } = e.target;
-    const reg = /^\d+$/;
+  onInputId (e) {
+    const { value } = e.target
+    const reg = /^\d+$/
     if ((!isNaN(value) && reg.test(value)) || value === '') {
-      this.setState({ problem_id: value == '' ? null : value });
+      this.setState({ problem_id: value === '' ? null : value })
     }
   }
 
-  onSeacrch() {
-    const searchobj = this.state;
-    const page = 1;
-    const size = sessionStorage.getItem('neuq_oj.statuspagesize');
-    this.props.getStatusTable(page, size, searchobj);
+  onSeacrch () {
+    const searchobj = this.state
+    const page = 1
+    const size = window.sessionStorage.getItem('neuq_oj.statuspagesize')
+    this.props.getStatusTable(page, size, searchobj)
   }
 
-  Cancel() {
+  Cancel () {
     this.setState({
       problem_id: null,
       user_id: null
-    });
+    })
   }
 
-
-  render() {
-    const { data } = this.props;
+  render () {
+    const { data } = this.props
     const pagination = {
-      pageSize: Number(sessionStorage.getItem('neuq_oj.statuspagesize')),
-      current: Number(sessionStorage.getItem('neuq_oj.statuspagecurr')),
+      pageSize: Number(window.sessionStorage.getItem('neuq_oj.statuspagesize')),
+      current: Number(window.sessionStorage.getItem('neuq_oj.statuspagecurr')),
       total: 10000,
       showSizeChanger: true,
       onShowSizeChange: (current, pageSize) => {
-        const searchobj = this.state;
-        this.props.getStatusTable(current, pageSize, searchobj);
+        const searchobj = this.state
+        this.props.getStatusTable(current, pageSize, searchobj)
       },
       onChange: (current) => {
-        const searchobj = this.state;
-        const pageSize = sessionStorage.getItem('neuq_oj.statuspagesize', pageSize);
-        this.props.getStatusTable(current, pageSize, searchobj);
+        const searchobj = this.state
+        const pageSize = window.sessionStorage.getItem('neuq_oj.statuspagesize')
+        this.props.getStatusTable(current, pageSize, searchobj)
       }
-    };
+    }
 
     return (
-      <QueueAnim className="status-table-warp" delay={100}>
-        <div className="status-table-header" key="status-2">
-          <span className="status-table-header-title">最近提交</span>
+      <QueueAnim className='status-table-warp' delay={100}>
+        <div className='status-table-header' key='status-2'>
+          <span className='status-table-header-title'>最近提交</span>
 
-          <div className="status-table-header-other">
+          <div className='status-table-header-other'>
             <Input
-              placeholder="题号"
+              placeholder='题号'
               value={this.state.problem_id}
               onChange={this.onInputId}
               onPressEnter={this.onSeacrch}
               style={{ width: '120px' }}
             />
             <Input
-              placeholder="用户ID"
+              placeholder='用户ID'
               value={this.state.user_id}
               onChange={this.onInputUser}
               onPressEnter={this.onSeacrch}
@@ -114,14 +113,14 @@ class StatusTable extends React.Component {
 
             <ResultSelect handleChange={this.SelectResult} />
             <LanguageSelect handleChange={this.SelectLanguage} />
-            <Button type="primary" onClick={this.onSeacrch}>搜索</Button>
+            <Button type='primary' onClick={this.onSeacrch}>搜索</Button>
 
-            {/* <ButtonGroup>*/}
-            {/* <Button type="primary" onClick={this.onSeacrch}>搜索</Button>*/}
-            {/* <Tooltip title="结果状态和语言选择不清除!" placement='bottom'>*/}
-            {/* <Button type="primary" icon="close-circle" onClick={this.Cancel}/>*/}
-            {/* </Tooltip>*/}
-            {/* </ButtonGroup>*/}
+            {/* <ButtonGroup> */}
+            {/* <Button type="primary" onClick={this.onSeacrch}>搜索</Button> */}
+            {/* <Tooltip title="结果状态和语言选择不清除!" placement='bottom'> */}
+            {/* <Button type="primary" icon="close-circle" onClick={this.Cancel}/> */}
+            {/* </Tooltip> */}
+            {/* </ButtonGroup> */}
           </div>
         </div>
         <Table
@@ -132,12 +131,11 @@ class StatusTable extends React.Component {
                     // bordered
                     // 分页
           pagination={pagination}
-          key="status-1"
+          key='status-1'
         />
       </QueueAnim>
-    );
+    )
   }
-
 }
 
-export default StatusTable;
+export default StatusTable

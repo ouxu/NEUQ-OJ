@@ -1,25 +1,26 @@
+/* eslint-disable no-undef */
 /**
  * Created by out_xu on 17/3/15.
  */
 // 引入垫片兼容IE
-require('es6-promise');
+require('es6-promise')
 
-import codeHelper from "./codeHelper";
-import getToken from "./getToken";
-const timeout = 15000;
+import codeHelper from './codeHelper'
+import getToken from './getToken'
+const timeout = 15000
 
 // TODO 后端返回结构
-function filterStatus(json) {
-    if (json.code === 0) {
-        return json.data;
-    } else if (json.code === 1004) {
-        localStorage.clear('neuq_oj.token');
-        localStorage.clear('neuq_oj.name');
-        localStorage.clear('neuq_oj.id');
-        throw new Error('Did not Login')
-    } else {
-        throw new Error('Response Unexpected', codeHelper(json.code));
-    }
+function filterStatus (json) {
+  if (json.code === 0) {
+    return json.data
+  } else if (json.code === 1004) {
+    window.localStorage.clear('neuq_oj.token')
+    window.localStorage.clear('neuq_oj.name')
+    window.localStorage.clear('neuq_oj.id')
+    throw new Error('Did not Login')
+  } else {
+    throw new Error('Response Unexpected', codeHelper(json.code))
+  }
 }
 
 /**
@@ -28,34 +29,34 @@ function filterStatus(json) {
  * @param params
  * @returns {*}
  */
-function parseParams(uri, params) {
-    const paramsArray = [];
-    Object.keys(params).forEach(key => params[key] && paramsArray.push(`${key}=${params[key]}`));
-    if (uri.search(/\?/) === -1) {
-        uri += `?${paramsArray.join('&')}`;
-    } else {
-        uri += `&${paramsArray.join('&')}`;
-    }
-    return uri;
+function parseParams (uri, params) {
+  const paramsArray = []
+  Object.keys(params).forEach(key => params[key] && paramsArray.push(`${key}=${params[key]}`))
+  if (uri.search(/\?/) === -1) {
+    uri += `?${paramsArray.join('&')}`
+  } else {
+    uri += `&${paramsArray.join('&')}`
+  }
+  return uri
 }
 
-export async function request(uri, type = 'GET', headers = {}, body = {}) {
-    const timer = await setTimeout(() => {
-        throw new Error('fetch time out');
-    }, timeout);
-    const fetchOption = {
-        method: type,
-        headers
-    };
-    if (type === 'POST') {
-        fetchOption.body = JSON.stringify(body);
-    }
+export async function request (uri, type = 'GET', headers = {}, body = {}) {
+  const timer = await setTimeout(() => {
+    throw new Error('fetch time out')
+  }, timeout)
+  const fetchOption = {
+    method: type,
+    headers
+  }
+  if (type === 'POST') {
+    fetchOption.body = JSON.stringify(body)
+  }
 
-    const res = await fetch(uri, fetchOption);
-    const json = await res.json();
+  const res = await fetch(uri, fetchOption)
+  const json = await res.json()
 
-    clearTimeout(timer);
-    return await filterStatus(json);
+  clearTimeout(timer)
+  return await filterStatus(json)
 }
 
 /**
@@ -65,24 +66,23 @@ export async function request(uri, type = 'GET', headers = {}, body = {}) {
  * @param headers 请求头部
  * @returns {*}
  */
-export function get(uri, params, headers) {
-    if (params) {
-        uri = parseParams(uri, params);
-    }
-    return request(uri, 'GET', headers);
+export function get (uri, params, headers) {
+  if (params) {
+    uri = parseParams(uri, params)
+  }
+  return request(uri, 'GET', headers)
 }
 
-export function tget(uri, params, headers) {
-    if (params) {
-        uri = parseParams(uri, params);
-    }
-    headers = {
-        ...headers,
-        token: getToken()
-    };
-    return request(uri, 'GET', headers);
+export function tget (uri, params, headers) {
+  if (params) {
+    uri = parseParams(uri, params)
+  }
+  headers = {
+    ...headers,
+    token: getToken()
+  }
+  return request(uri, 'GET', headers)
 }
-
 
 /**
  * post 请求
@@ -91,22 +91,20 @@ export function tget(uri, params, headers) {
  * @param headers 请求头部
  * @returns {*}
  */
-export function post(uri, body, headers = {}) {
-    if (!headers['Content-type']) {
-        headers['Content-type'] = 'application/json';
-    }
-    return request(uri, 'POST', headers, body);
+export function post (uri, body, headers = {}) {
+  if (!headers['Content-type']) {
+    headers['Content-type'] = 'application/json'
+  }
+  return request(uri, 'POST', headers, body)
 }
 
-
-export function tpost(uri, body, headers = {}) {
-    if (!headers['Content-type']) {
-        headers['Content-type'] = 'application/json';
-    }
-    headers = {
-        ...headers,
-        token: getToken()
-    };
-    return request(uri, 'POST', headers, body);
+export function tpost (uri, body, headers = {}) {
+  if (!headers['Content-type']) {
+    headers['Content-type'] = 'application/json'
+  }
+  headers = {
+    ...headers,
+    token: getToken()
+  }
+  return request(uri, 'POST', headers, body)
 }
-

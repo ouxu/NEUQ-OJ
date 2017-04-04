@@ -1,24 +1,24 @@
 /**
  * Created by out_xu on 17/2/28.
  */
-import React from 'react';
-import { Link } from 'react-router';
-import { Badge } from 'antd';
+import React from 'react'
+import { Link } from 'react-router'
+import { Badge } from 'antd'
 
 const result = [
-  <Badge status="processing" text="等待中" />,
-  <Badge status="processing" text="等待中" />,
-  <Badge status="processing" text="编译中" />,
-  <Badge status="processing" text="运行中" />,
-  <Badge status="success" text="正确" />,
-  <Badge status="error" text="格式错误" />,
-  <Badge status="error" text="答案错误" />,
-  <Badge status="warning" text="时间超限" />,
-  <Badge status="error" text="内存错误" />,
-  <Badge status="error" text="输出错误" />,
-  <Badge status="error" text="运行错误" />,
-  <Badge status="error" text="编译错误" />
-];
+  <Badge status='processing' text='等待中' />,
+  <Badge status='processing' text='等待中' />,
+  <Badge status='processing' text='编译中' />,
+  <Badge status='processing' text='运行中' />,
+  <Badge status='success' text='正确' />,
+  <Badge status='error' text='格式错误' />,
+  <Badge status='error' text='答案错误' />,
+  <Badge status='warning' text='时间超限' />,
+  <Badge status='error' text='内存错误' />,
+  <Badge status='error' text='输出错误' />,
+  <Badge status='error' text='运行错误' />,
+  <Badge status='error' text='编译错误' />
+]
 const language = [
   'C',
   'C++',
@@ -29,7 +29,7 @@ const language = [
   'Python',
   'php',
   'perl'
-];
+]
 
 export const columns = [{
   title: '',
@@ -43,38 +43,34 @@ export const columns = [{
   className: 'status-id'
 }, {
   title: '问题',
-  render: (record =>
+  render: record =>
     <span>
       <Link to={`problems/${record.problem_id}`} > {record.problem_id}</Link>
-    </span>
-        ),
+    </span>,
   key: 'status-problem-id',
   className: 'status-problem-id'
 }, {
   title: '用户ID',
-  render: (record =>
+  render: record =>
     <span>
       <Link to={`userpage/${record.user_id}`} > {record.user_id}</Link>
-    </span>
-        ),
+    </span>,
   key: 'status-user-id',
   className: 'status—user-id'
 }, {
   title: '用户名',
-  render: (record =>
+  render: record =>
     <span>
       <Link to={`userpage/${record.user_id}`} > {record.name}</Link>
-    </span>
-        ),
+    </span>,
   key: 'status-user-name',
   className: 'status—user-name'
 }, {
   title: '运行结果',
-  render: (record =>
+  render: record =>
     <span>
       {result[record.result]}
-    </span>
-        ),
+    </span>,
   key: 'status-result',
   className: 'status-result'
 }, {
@@ -89,11 +85,10 @@ export const columns = [{
   className: 'status-time'
 }, {
   title: '语言',
-  render: (record =>
+  render: record =>
     <span>
       {language[record.language]}
-    </span>
-        ),
+    </span>,
   key: 'status-language',
   className: 'status-language'
 }, {
@@ -107,4 +102,4 @@ export const columns = [{
   width: 160,
   key: 'status-created-at',
   className: 'status-created-at'
-}];
+}]
