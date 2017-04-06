@@ -199,7 +199,7 @@ class NewsManage extends Component {
                                 rules: [{required: true, message: '请输入内容！'}],
                                 initialValue: !!this.state.content ? this.state.content : ''
                             })(
-                                <Input type="textarea" placeholder="请输入内容，支持 arkdown 语法，请在 Markdown 编辑器中编辑后粘贴"
+                                <Input type="textarea" placeholder="请输入内容，支持 Markdown 语法，请在 Markdown 编辑器中编辑后粘贴"
                                        autosize={{minRows: 2, maxRows: 6}}/>
                             )}
                         </FormItem>

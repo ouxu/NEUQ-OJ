@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getContest } from '../actions'
 import ContestInfo from '../components/content/contests/contestinfo'
+import { goto } from '../utils'
 
 @connect(
   state => state.contests,

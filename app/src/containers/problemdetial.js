@@ -5,12 +5,12 @@ import React from 'react'
 // 连接redux
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getProblemInfo } from '../actions'
+import { getProblemInfo,tokenVerify } from '../actions'
 import ProblemDetail from '../components/content/problems/problemdetail'
 
 @connect(
   state => state.problems,
-  dispatch => bindActionCreators({getProblemInfo}, dispatch),
+  dispatch => bindActionCreators({getProblemInfo,tokenVerify}, dispatch),
 )
 class ProblemDetailContainer extends React.Component {
   constructor (props) {
@@ -22,11 +22,12 @@ class ProblemDetailContainer extends React.Component {
   }
 
   render () {
-    const {problemdetail} = this.props
+    const {problemdetail,tokenVerify} = this.props
     return (
       <ProblemDetail
         params={this.props.params}
         data={problemdetail}
+        tokenVerify={tokenVerify}
       />
     )
   }

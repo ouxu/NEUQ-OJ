@@ -1,12 +1,12 @@
 /**
  * Created by out_xu on 17/2/21.
  */
-import React, {Component} from 'react'
-import {Link} from 'react-router'
+import React, { Component } from 'react'
+import { Link } from 'react-router'
 import QueueAnim from 'rc-queue-anim'
-import {Table} from 'antd'
+import { Table } from 'antd'
 import './index.less'
-import {TimeSelect} from '../../../utils/selectBox'
+import { TimeSelect } from '../../plugins/selectBox'
 
 // TODO 去除分页
 
@@ -81,7 +81,7 @@ class RankList extends Component {
         <span>
           <Link to={`userpage/${record.id}`}> {record.name}</Link>
         </span>
-            ),
+      ),
       key: 'ranklist-user',
       className: 'ranklist-user'
     }, {
@@ -90,7 +90,7 @@ class RankList extends Component {
         <span>
           <Link to={`userpage/${record.id}`}> {record.id}</Link>
         </span>
-            ),
+      ),
       key: 'ranklist-id',
       className: 'ranklist-id'
     }, {
@@ -124,7 +124,7 @@ class RankList extends Component {
             pagination={pagination}
             key='rank-table-table'
             className='rank-table-table'
-                    />
+          />
         </QueueAnim>
 
       </div>

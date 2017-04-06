@@ -19,7 +19,7 @@ const HomeNews = (props) => {
             extra={t.created_at}
           >
             <div>
-              <p dangerouslySetInnerHTML={createMarkup(t.content)}/>
+              <p dangerouslySetInnerHTML={createMarkup(t.content)} />
             </div>
           </Card>,
         )}

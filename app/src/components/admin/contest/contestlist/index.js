@@ -1,17 +1,48 @@
 /**
  * Created by out_xu on 17/3/26.
  */
-import React, {Component} from 'react'
-import {Link} from 'react-router'
-import newDate from '../../../../utils/newDate'
+import React, { Component } from 'react'
+import { Link } from 'react-router'
+import {newDate,openInNewTab} from '../../../../utils'
 import './index.less'
-import {Icon, Progress, Table} from 'antd'
+import { Icon, Input, Progress, Table } from 'antd'
+const Search = Input.Search
+
+//更新竞赛描述字段，题目
 class ContestList extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      searchText: '',
       presentTime: new Date()
     }
+    this.onInputChange = this.onInputChange.bind(this)
+    this.onSeacrch = this.onSeacrch.bind(this)
+    this.openProblem = this.openProblem.bind(this)
+  }
+
+  componentDidMount () {
+    const page = window.sessionStorage.getItem('neuq_oj.contestspagecurr') || 1
+    const size = window.sessionStorage.getItem('neuq_oj.contestspagesize') || 20
+    this.props.getContestsTable(page, size)
+  }
+
+  onInputChange (e) {
+    this.setState({searchText: e.target.value})
+  }
+
+  onSeacrch () {
+    const searchText = encodeURIComponent(this.state.searchText)
+    if (searchText.length < 1) {
+      const page = 1
+      const size = window.sessionStorage.getItem('neuq_oj.contestspagesize')
+      this.props.getContestsTable(page, size)
+    } else {
+      this.props.searchContests(searchText)
+    }
+  }
+  openProblem = (record) => {
+    openInNewTab('contests/' + record.id)
   }
 
   render () {
@@ -29,10 +60,10 @@ class ContestList extends Component {
             status='active'
             strokeWidth={5}
             className='contests-status-progress'
-                    />
-                    未开始 @ {time}
+          />
+          未开始 @ {time}
         </div>
-            ),
+      ),
       running: (time, startTime, endTime) => (
         <div>
           <Progress
@@ -41,10 +72,10 @@ class ContestList extends Component {
             strokeWidth={5}
             className='contests-status-progress'
             format={percent => percent}
-                    />
-                    进行中 @ {time}
+          />
+          进行中 @ {time}
         </div>
-            ),
+      ),
       ended: time => (
         <div>
           <Progress
@@ -52,10 +83,10 @@ class ContestList extends Component {
             status='success'
             strokeWidth={5}
             className='contests-status-progress'
-                    />
-                    已结束 @ {time}
+          />
+          已结束 @ {time}
         </div>
-            )
+      )
     }
     const columns = [{
       title: '',
@@ -66,66 +97,99 @@ class ContestList extends Component {
       title: '#',
       dataIndex: 'id',
       key: 'contest-manage-id',
-      className: 'news-manage-num'
+      onCellClick: this.openProblem,
+      className: 'news-manage-num mock-a'
     }, {
       title: '标题',
       dataIndex: 'title',
-      key: 'news-manage-title',
+      key: 'contest-manage-title',
       width: 200,
-      className: 'news-manage-title'
+      onCellClick: this.openProblem,
+      className: 'contest-manage-title mock-a'
     }, {
       title: '状态',
       render: (record) => {
         const startTime = newDate(record.start_time)
         const endTime = newDate(record.end_time)
-        const start_status = (this.state.presentTime < startTime)
-        const end_status = (this.state.presentTime > endTime)
+        const startStatus = (this.state.presentTime < startTime)
+        const endStatus = (this.state.presentTime > endTime)
         return (
           <div>
-            {start_status ? progress.unstart(record.start_time) : ''}
-            {(start_status === false && end_status === false) ? progress.running(record.end_time, startTime, endTime) : ''}
-            {end_status ? progress.ended(record.end_time) : ''}
+            {startStatus ? progress.unstart(record.start_time) : ''}
+            {(startStatus === false && endStatus === false) ? progress.running(record.end_time, startTime, endTime) : ''}
+            {endStatus ? progress.ended(record.end_time) : ''}
           </div>
         )
       },
-      key: 'news-manage-update',
-      className: 'news-manage-update'
+      key: 'contest-manage-update',
+      className: 'contest-manage-update'
     }, {
       title: '权限',
-      render: record =>
-                (<span>
-                  {privatestatus[record.private]}
-                </span>),
-      key: 'news-manage-date',
-      className: 'news-manage-date'
-    }, {
+      render: record => <span>{privatestatus[record.private]}</span>,
+      key: 'contest-manage-date',
+      className: 'contest-manage-date'
+    },{
       title: '操作',
       render: (record) => <Link to={'admin/contest-edit/' + record.id}>修改</Link>,
       width: 40,
-      key: 'news-manage-action',
-      className: 'news-manage-action'
+      key: 'contest-manage-action',
+      className: 'contest-manage-action'
     }]
+    const pagination = {
+      pageSize: Number(window.sessionStorage.getItem('neuq_oj.contestspagesize')),
+      current: Number(window.sessionStorage.getItem('neuq_oj.contestspagecurr')),
+      total: Number(window.sessionStorage.getItem('neuq_oj.contestspagecount')),
+      showSizeChanger: true,
+      onShowSizeChange: (current, pageSize) => {
+        const searchText = encodeURIComponent(this.state.searchText)
+        if (searchText.length < 1) {
+          this.props.getContestsTable(current, pageSize)
+        } else {
+          this.props.searchContests(searchText, current, pageSize)
+        }
+      },
+      onChange: (current) => {
+        window.sessionStorage.setItem('neuq_oj.contestspagecurr', current)
+        const searchText = encodeURIComponent(this.state.searchText)
+        const pageSize = window.sessionStorage.getItem('neuq_oj.contestspagesize')
+        if (searchText.length < 1) {
+          this.props.getContestsTable(current, pageSize)
+        } else {
+          this.props.searchContests(searchText, current, pageSize)
+        }
+      }
+    }
     const title = () => (
       <span className='contest-manage-table-title'>
-        <span>我有权限管理的竞赛</span>
-        <span className='contest-manage-table-title-icon'>创建竞赛 <Link to='admin/contest-edit'><Icon type='plus-square-o' /></Link></span>
+        <span className='contest-manage-table-title-icon'>
+          创建竞赛 <Link to='admin/contest-edit'><Icon type='plus-square-o' /></Link></span>
+        <span>
+          <Search
+            placeholder='标题'
+            size='small'
+            value={this.state.searchText}
+            onChange={this.onInputChange}
+            onPressEnter={this.onSeacrch}
+            onSearch={this.onSeacrch}
+          /></span>
       </span>
-        )
+    )
+
     return (
       <div>
         <div className='h-1'>
-                    竞赛列表
-                </div>
+          竞赛列表
+        </div>
         <Table
           columns={columns}
           rowKey={record => `contest-manage-${record.id}`}
           dataSource={data.contests}
-          pagination={false}
           size='small'
           key='contest-manage-table'
           className='contest-manage-table'
           title={title}
-                />
+          pagination={pagination}
+        />
       </div>
     )
   }

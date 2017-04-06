@@ -6,7 +6,7 @@ import { message } from 'antd'
 import * as requestService from '../utils/request'
 // 引入自定义工具
 import API from '../api'
-import urlEncode from '../utils/urlEncode'
+import {urlEncode} from '../utils'
 
 /**
  * 登录验证

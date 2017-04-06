@@ -2,9 +2,9 @@
  * Created by out_xu on 17/1/3.
  */
 import React from 'react'
-import {Link} from 'react-router'
+import { Link } from 'react-router'
 import QueueAnim from 'rc-queue-anim'
-import {Icon, Input, Table, Tag} from 'antd'
+import { Icon, Input, Table, Tag } from 'antd'
 import './index.less'
 const Search = Input.Search
 class ProblemsTable extends React.Component {
@@ -14,10 +14,10 @@ class ProblemsTable extends React.Component {
       searchText: ''
     }
     this.onInputChange = this.onInputChange.bind(this)
-    this.onSeacrch = this.onSeacrch.bind(this)
+    this.onSearch = this.onSearch.bind(this)
   }
 
-  componentWillMount () {
+  componentDidMount () {
     const page = window.sessionStorage.getItem('neuq_oj.problempagecurr') || 1
     const size = window.sessionStorage.getItem('neuq_oj.problempagesize') || 20
     this.props.getProblemTable(page, size)
@@ -27,7 +27,7 @@ class ProblemsTable extends React.Component {
     this.setState({searchText: e.target.value})
   }
 
-  onSeacrch () {
+  onSearch () {
     const searchText = encodeURIComponent(this.state.searchText)
     if (searchText.length < 1) {
       const page = 1
@@ -38,7 +38,7 @@ class ProblemsTable extends React.Component {
     }
   }
 
-    // 正确率
+  // 正确率
   render () {
     const {data} = this.props
     const difficultyArr = ['简单', '中等', '困难']
@@ -68,9 +68,9 @@ class ProblemsTable extends React.Component {
     }, {
       title: '#',
       render: record =>
-                (<span>
-                  <Link to={`problems/${record.id}`}> {record.id}</Link>
-                </span>),
+        (<span>
+          <Link to={`problems/${record.id}`}> {record.id}</Link>
+        </span>),
       key: 'problem-id',
       width: 60,
       className: 'problem-id'
@@ -80,12 +80,12 @@ class ProblemsTable extends React.Component {
         <span >
           {difficultyArr[record.difficulty - 1]}
         </span>
-                // new Array(record.difficulty).fill(<Icon type="star-o" />)
-            ),
+        // new Array(record.difficulty).fill(<Icon type="star-o" />)
+      ),
       filters: [
-                {text: '简单', value: 1},
-                {text: '中等', value: 2},
-                {text: '困难', value: 3}
+        {text: '简单', value: 1},
+        {text: '中等', value: 2},
+        {text: '困难', value: 3}
       ],
       onFilter: (value, record) => record.difficulty === Number(value),
       width: 60,
@@ -93,16 +93,15 @@ class ProblemsTable extends React.Component {
     }, {
       title: '标题',
       render: record =>
-                (<span>
-                  <span >{// 标签渲染
-                      record.tags ? (record.tags.map((value, index) => <Tag color='#87d068' style={{Padding: 0}}
-                        key={index + 400}
-                        className='problem-title-tags'>{value.tag_title}</Tag>)) : null}</span>
-                  <div className='problem-title-content'>
-                    <Link to={`problems/${record.id}`}> {record.title}</Link>
-                  </div>
-                </span>),
-
+        (<span>
+          <span >{// 标签渲染
+            record.tags ? (record.tags.map((value, index) => <Tag color='#87d068' style={{Padding: 0}}
+              key={index + 400}
+              className='problem-title-tags'>{value.tag_title}</Tag>)) : null}</span>
+          <div className='problem-title-content'>
+            <Link to={`problems/${record.id}`}> {record.title}</Link>
+          </div>
+        </span>),
       key: 'problem-title',
       className: 'problem-title'
     }, {
@@ -155,21 +154,21 @@ class ProblemsTable extends React.Component {
               placeholder='题号/标题/作者/标签'
               value={this.state.searchText}
               onChange={this.onInputChange}
-              onPressEnter={this.onSeacrch}
-              onSearch={this.onSeacrch}
-                        />
+              onPressEnter={this.onSearch}
+              onSearch={this.onSearch}
+            />
           </div>
         </div>
         <Table
           columns={columns}
           rowKey={record => `problem-${record.id}`}
           dataSource={data}
-                    // bordered
-                    // 分页
+          // bordered
+          // 分页
           pagination={pagination}
           scroll={{x: 768}}
           key='problem-2'
-                />
+        />
       </QueueAnim>
     )
   }

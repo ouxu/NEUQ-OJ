@@ -3,7 +3,7 @@
  */
 import { SET_STATUS_TABLE, actionCreater } from './type'
 import API from '../api'
-import jumpTo from '../utils/windowScroll'
+import {jumpTo} from '../utils'
 import * as requestService from '../utils/request'
 
 /**

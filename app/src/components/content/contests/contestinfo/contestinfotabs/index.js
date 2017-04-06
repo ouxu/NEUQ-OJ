@@ -5,9 +5,7 @@ import React from 'react'
 import { Link } from 'react-router'
 import { Table } from 'antd'
 import './index.less'
-import newDate from '../../../../../utils/newDate'
-import sec2Str from '../../../../../utils/sec2Str'
-import colorEncode from '../../../../../utils/colorEncode'
+import { colorEncode, newDate, sec2Str } from '../../../../../utils'
 
 class ContestInfoTabs extends React.Component {
   constructor (props) {
@@ -51,12 +49,12 @@ class ContestInfoTabs extends React.Component {
       title: '',
       width: '1%',
       key: 'contest-info-none',
-      className: 'contest-info-none',
+      className: 'contest-info-none'
     }, {
       title: '排名',
       dataIndex: 'id',
       key: 'contest-info-rank',
-      className: 'contest-info-rank',
+      className: 'contest-info-rank'
     }, {
       title: '用户',
       render: record => (
@@ -65,7 +63,7 @@ class ContestInfoTabs extends React.Component {
         </span>
       ),
       key: 'contest-info-user',
-      className: 'contest-info-user',
+      className: 'contest-info-user'
     }, {
       title: 'ID',
       render: record => (
@@ -74,19 +72,19 @@ class ContestInfoTabs extends React.Component {
         </span>
       ),
       key: 'contest-info-id',
-      className: 'contest-info-id',
+      className: 'contest-info-id'
     }, {
       title: '解决',
       dataIndex: 'solved',
       key: 'contest-info-solved',
-      className: 'contest-info-solved',
+      className: 'contest-info-solved'
     }, {
       title: '用时',
       render: (record) => {
         return <span>{sec2Str(record.time)}</span>
       },
       key: 'contest-info-time',
-      className: 'contest-info-time',
+      className: 'contest-info-time'
     }]
     for (let i = 0; i < countNum; i++) {
       columns.push({

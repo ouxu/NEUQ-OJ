@@ -3,8 +3,7 @@
  */
 import {SET_PROBLEM_TABLE, SET_PROBLEM_DETAIL, actionCreater} from './type'
 import API from '../api'
-import goto from '../utils/goto'
-import jumpTo from '../utils/windowScroll'
+import {goto ,jumpTo} from '../utils'
 import * as requestService from '../utils/request'
 
 /**
@@ -79,6 +78,7 @@ export function searchProblems (value, page = 1, size = 20) {
     }
   }
 }
+
 
 /**
  * 提交问题

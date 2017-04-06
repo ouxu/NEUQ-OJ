@@ -11,11 +11,10 @@ export default function urlEncode (param, key, encode) {
     paramStr += `${key}=${(encode === null || encode) ? encodeURIComponent(param) : param}&`
   } else {
     for (let i in param) {
-      if (object.hasOwnProperty(i)) {
+      if (hasOwnProperty(i)) {
         let k = key === null ? i : key + (param instanceof Array ? `[${i}]` : `.${i}`)
         paramStr += urlEncode(param[i], k, encode)
       }
-
     }
   }
   return paramStr

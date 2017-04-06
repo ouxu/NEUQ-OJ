@@ -4,7 +4,7 @@
 import React from 'react'
 import { Progress } from 'antd'
 import './index.less'
-import newDate from '../../../../../utils/newDate'
+import {newDate} from '../../../../../utils'
 const ContestProgress = (props) => {
   const {time, start_time, end_time} = props
   const start = newDate(start_time)
@@ -30,7 +30,7 @@ const ContestProgress = (props) => {
           endStatus
             ? <span className='contest-info-progress-time-over'>已结束</span>
             : <span>
-                <span> {h} </span> h
+              <span> {h} </span> h
                 <span> {m} </span> m
                 <span> {s} </span> s
               </span>

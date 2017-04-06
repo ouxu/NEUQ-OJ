@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-space-before-closing */
 /**
  * Created by out_xu on 17/2/21.
  */
@@ -6,8 +7,7 @@ import { Link } from 'react-router'
 import QueueAnim from 'rc-queue-anim'
 import { Icon, Input, message, Modal, Progress, Table } from 'antd'
 import './index.less'
-import goto from '../../../utils/goto'
-import newDate from '../../../utils/newDate'
+import { goto, newDate } from '../../../utils'
 
 // TODO 搜索竞赛创建者
 const Search = Input.Search
@@ -26,7 +26,7 @@ class ContestPage extends React.Component {
     this.onSeacrch = this.onSeacrch.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
     this.handleok = this.handleok.bind(this)
-    this.verifyermission = this.verifyermission.bind(this)
+    this.verifyPermission = this.verifyPermission.bind(this)
   }
 
   componentDidMount () {
@@ -50,7 +50,7 @@ class ContestPage extends React.Component {
     }
   }
 
-  async verifyermission (record) {
+  async verifyPermission (record) {
     try {
       const startTime = newDate(record.start_time)
       const startStatus = (this.state.presentTime > startTime)
@@ -150,14 +150,14 @@ class ContestPage extends React.Component {
       dataIndex: 'id',
       width: '7%',
       key: 'contests-id',
-      onCellClick: this.verifyermission,
+      onCellClick: this.verifyPermission,
       className: 'contests-id'
     }, {
       title: '标题',
       dataIndex: 'title',
       width: '30%',
       key: 'contests-title',
-      onCellClick: this.verifyermission,
+      onCellClick: this.verifyPermission,
       className: 'contests-title'
     }, {
       title: '创建者',
@@ -190,10 +190,7 @@ class ContestPage extends React.Component {
     }, {
       title: '权限',
       // TODO private解释
-      render: record =>
-        (<span>
-                  {privatestatus[record.private]}
-                </span>),
+      render: record => <span>{privatestatus[record.private]}</span>,
       width: '8%',
       key: 'contests-private',
       className: 'contests-private'

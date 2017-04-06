@@ -3,9 +3,8 @@
  */
 import { actionCreater, GET_CONTEST_ERR, GET_CONTEST_SUCC, SET_CONTESTS_LIST } from './type'
 import API from '../api'
-import goto from '../utils/goto'
+import { goto, jumpTo, newDate } from '../utils'
 import * as requestService from '../utils/request'
-import jumpTo from '../utils/windowScroll'
 import { message } from 'antd'
 
 /**
@@ -75,7 +74,7 @@ export function getContest (id) {
   return async (dispatch) => {
     try {
       if (id) {
-        const data = await requestService.tget(API.contest + id)
+        let data = await requestService.tget(API.contest + id)
         await dispatch(actionCreater(GET_CONTEST_SUCC, data))
         jumpTo('navigation')
       } else {
@@ -89,7 +88,40 @@ export function getContest (id) {
 }
 
 /**
- * 加入竞赛 TODO 完善加入竞赛
+ * 获取竞赛信息（管理）
+ * @param id
+ * @returns {function(*)}
+ */
+export function getContestDetail (id) {
+  return async dispatch => {
+    try {
+      let data = await requestService.tget(API.contest + id + '/update')
+      let {contest_info: {start_time, end_time}} = data
+      let start = newDate(start_time)
+      let end = newDate(end_time)
+      let time = new Date()
+      let progress = NaN
+      if (time < start) {
+        progress = 'unStart'
+      } else if (time < end) {
+        progress = 'running'
+      } else {
+        progress = 'ended'
+      }
+      data = {
+        progress: progress,
+        ...data
+      }
+      console.log(data)
+
+      await dispatch(actionCreater(GET_CONTEST_SUCC, data))
+    } catch (e) {
+      console.error(e)
+    }
+  }
+}
+/**
+ * 加入竞赛
  * @param id 竞赛ID
  * @param body 验证密码
  * @returns {function()}
@@ -107,6 +139,12 @@ export function joinContest (id, body) {
   }
 }
 
+/**
+ * 删除竞赛
+ * @param id 竞赛 ID
+ * @param body
+ * @returns {function()}
+ */
 export function delContest (id, body) {
   return async () => {
     try {
@@ -118,14 +156,28 @@ export function delContest (id, body) {
   }
 }
 
+/**
+ * 编辑竞赛
+ * @param body 参数
+ * @param id 竞赛 ID
+ * @returns {function(*)}
+ */
 export function editContest (body, id) {
-  return async () => {
+  return async dispatch => {
     try {
       let url = id ? API.contest + id + '/update/info' : API.createcontest
       await requestService.tpost(url, body)
+      await dispatch(actionCreater(GET_CONTEST_ERR))
       message.success('发布成功')
     } catch (e) {
       console.error(e)
     }
   }
 }
+
+export function createContest (data) {
+  return dispatch => {
+    dispatch(actionCreater(GET_CONTEST_SUCC, data))
+  }
+}
+

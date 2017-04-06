@@ -5,9 +5,9 @@ import React from 'react'
 
 import QueueAnim from 'rc-queue-anim'
 import { Table, Input, Button } from 'antd'
-import { LanguageSelect, ResultSelect } from '../../../utils/selectBox'
+import { LanguageSelect, ResultSelect } from '../../plugins/selectBox'
 import './index.less'
-import { columns } from '../../../utils/tableData'
+import { columns } from '../../plugins/tableData'
 
 class StatusTable extends React.Component {
   constructor (props) {

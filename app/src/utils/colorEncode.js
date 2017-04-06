@@ -1,8 +1,9 @@
 /**
  * Created by out_xu on 17/4/1.
  */
-import sec2Str from './sec2Str'
 import React from 'react'
+
+import {sec2Str} from './'
 
 export default (record, i) => {
   let bgColor = 'eeeeee'

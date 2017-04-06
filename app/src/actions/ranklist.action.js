@@ -1,10 +1,10 @@
 /**
  * Created by out_xu on 17/3/11.
  */
-import {actionCreater, SET_RANK_TABLE} from './type'
+import { actionCreater, SET_RANK_TABLE } from './type'
 import API from '../api'
 import * as requestService from '../utils/request'
-import jumpTo from '../utils/windowScroll'
+import { jumpTo } from '../utils'
 
 /**
  * 获取排行榜
@@ -14,7 +14,7 @@ import jumpTo from '../utils/windowScroll'
  * @returns {function(*)}
  */
 export function getRankTable (page = 1, size = 20, scope = 'total') {
-  return async(dispatch) => {
+  return async (dispatch) => {
     try {
       const params = {
         scope,

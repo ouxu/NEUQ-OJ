@@ -1,6 +1,9 @@
 /**
  * Created by out_xu on 16/12/20.
  */
+export const LOADED = 'LOADED'
+export const LOADING= 'LOADING'
+
 export const SET_TIME_STAMP = 'SET_TIME_STAMP'
 
 export const SET_HOMEPAGE_INFO = 'SET_HOMEPAGE_INFO'

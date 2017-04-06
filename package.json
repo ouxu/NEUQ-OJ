@@ -15,6 +15,7 @@
     "console-polyfill": "^0.2.2",
     "gulp": "^3.9.1",
     "gulp-rev-collector": "^1.0.5",
+    "moment": "^2.18.1",
     "rc-queue-anim": "^0.13.0",
     "react": "^15.3.2",
     "react-addons-pure-render-mixin": "^15.4.1",

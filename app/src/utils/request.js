@@ -5,11 +5,9 @@
 // 引入垫片兼容IE
 require('es6-promise')
 
-import codeHelper from './codeHelper'
-import getToken from './getToken'
-const timeout = 15000
+import {codeHelper,getToken} from './'
+const TIMEOUT = 15000
 
-// TODO 后端返回结构
 function filterStatus (json) {
   if (json.code === 0) {
     return json.data
@@ -19,7 +17,7 @@ function filterStatus (json) {
     window.localStorage.clear('neuq_oj.id')
     throw new Error('Did not Login')
   } else {
-    throw new Error('Response Unexpected', codeHelper(json.code))
+    throw new Error('ResponseUnexpected', codeHelper(json.code))
   }
 }
 
@@ -43,7 +41,7 @@ function parseParams (uri, params) {
 export async function request (uri, type = 'GET', headers = {}, body = {}) {
   const timer = await setTimeout(() => {
     throw new Error('fetch time out')
-  }, timeout)
+  }, TIMEOUT)
   const fetchOption = {
     method: type,
     headers
