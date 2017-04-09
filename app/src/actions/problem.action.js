@@ -1,9 +1,9 @@
 /**
  * Created by out_xu on 16/12/30.
  */
-import {SET_PROBLEM_TABLE, SET_PROBLEM_DETAIL, actionCreater} from './type'
+import { actionCreater, LOADED, LOADING, SET_PROBLEM_DETAIL, SET_PROBLEM_TABLE ,REMOVE_PROBLEM_DETAIL} from './type'
 import API from '../api'
-import {goto ,jumpTo} from '../utils'
+import { goto, jumpTo } from '../utils'
 import * as requestService from '../utils/request'
 
 /**
@@ -13,8 +13,10 @@ import * as requestService from '../utils/request'
  * @returns {function(*)}
  */
 export function getProblemTable (page = 1, size = 20) {
-  return async(dispatch) => {
+  return async (dispatch) => {
     try {
+      await dispatch(actionCreater(LOADING))
+
       const params = {
         page,
         size
@@ -30,6 +32,7 @@ export function getProblemTable (page = 1, size = 20) {
     } catch (e) {
       console.error(e)
     }
+    await dispatch(actionCreater(LOADED))
   }
 }
 
@@ -39,7 +42,7 @@ export function getProblemTable (page = 1, size = 20) {
  * @returns {function(*)}
  */
 export function getProblemInfo (params) {
-  return async(dispatch) => {
+  return async (dispatch) => {
     try {
       const url = params.pnum ? `${API.host}contest/${params.cid}/problem/${params.pnum}` : `${API.host}problem/${params.id}`
       const data = await requestService.tget(url)
@@ -51,6 +54,22 @@ export function getProblemInfo (params) {
 }
 
 /**
+ * 获取某个题目
+ * @param params 浏览器地址参数
+ * @returns {function(*)}
+ */
+export function clearProblem () {
+  return async (dispatch) => {
+    try {
+      await dispatch(actionCreater(REMOVE_PROBLEM_DETAIL))
+    } catch (e) {
+      console.err(e.message)
+    }
+  }
+}
+
+
+/**
  * 搜索问题
  * @param value 搜索字段
  * @param page 页码
@@ -58,8 +77,10 @@ export function getProblemInfo (params) {
  * @returns {function(*)}
  */
 export function searchProblems (value, page = 1, size = 20) {
-  return async(dispatch) => {
+  return async (dispatch) => {
     try {
+      await dispatch(actionCreater(LOADING))
+
       const params = {
         keyword: value,
         page,
@@ -76,10 +97,48 @@ export function searchProblems (value, page = 1, size = 20) {
     } catch (e) {
       console.error(e)
     }
+    await dispatch(actionCreater(LOADED))
   }
 }
 
+/**
+ * 删除题目
+ * @param id 题目 id
+ * @param body 密码等
+ * @returns {function()}
+ */
+export function deleteProblem (id, body) {
+  return async () => {
+    try {
+      await requestService.tpost(API.problem + id + '/delete', body)
+      await message.success('删除成功')
 
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+}
+
+/**
+ * 编辑问题、创建问题
+ * @param body
+ * @param id
+ * @returns {function()}
+ */
+export function editProblem (body, id) {
+  return async () => {
+    try {
+      let url = !!id ? API.problem + id + '/update' : API.problem + 'create'
+      console.log(url)
+      requestService.tpost(url, body)
+      message.success('发布成功')
+
+    } catch (e) {
+      console.error(e)
+    }
+  }
+}
 /**
  * 提交问题
  *

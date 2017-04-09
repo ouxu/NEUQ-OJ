@@ -1,7 +1,7 @@
 /**
  * Created by out_xu on 16/12/30.
  */
-import { SET_PROBLEM_TABLE, SET_PROBLEM_DETAIL } from '../actions/type'
+import { REMOVE_PROBLEM_DETAIL, SET_PROBLEM_DETAIL, SET_PROBLEM_TABLE } from '../actions/type'
 
 const initProblem = {
   problemtable: {},
@@ -19,6 +19,11 @@ export default function problems (state = initProblem, action) {
       return {
         ...state,
         problemdetail: action.payload
+      }
+    case REMOVE_PROBLEM_DETAIL:
+      return {
+        ...state,
+        problemdetail: {}
       }
     default:
       return state

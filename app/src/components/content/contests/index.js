@@ -5,7 +5,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 import QueueAnim from 'rc-queue-anim'
-import { Icon, Input, message, Modal, Progress, Table } from 'antd'
+import { Icon, Input, message, Modal, Progress, Table,Spin } from 'antd'
 import './index.less'
 import { goto, newDate } from '../../../utils'
 
@@ -61,7 +61,7 @@ class ContestPage extends React.Component {
         } else if (record.private === 2) {
           await this.props.getContest(record.id)
         }
-        goto(`contests/${record.id}`)
+        goto(`/contests/${record.id}`)
       } else {
         message.warn('未开始')
       }
@@ -93,11 +93,11 @@ class ContestPage extends React.Component {
     this.setState({
       visible: false
     })
-    goto(`contests/${this.state.contestId}`)
+    goto(`/contests/${this.state.contestId}`)
   }
 
   render () {
-    const {data} = this.props
+    const {data,loading} = this.props
     const privatestatus = [
       '公开',
       '加密',
@@ -222,47 +222,48 @@ class ContestPage extends React.Component {
 
     }
     return (
-      <QueueAnim className='contests-table-wrap' delay={100}>
-        <div className='contests-table-header' key='contests-1'>
+      <Spin tip="Loading..." spinning={loading}>
+        <QueueAnim className='contests-table-wrap' delay={100}>
+          <div className='contests-table-header' key='contests-1'>
           <span className='contests-table-header-title'>
-                       竞赛列表
-                    </span>
-          <div>
-            <Search
-              placeholder='标题'
-              value={this.state.searchText}
-              onChange={this.onInputChange}
-              onPressEnter={this.onSeacrch}
-              onSearch={this.onSeacrch}
-            />
+            竞赛列表
+          </span>
+            <div>
+              <Search
+                placeholder='标题'
+                value={this.state.searchText}
+                onChange={this.onInputChange}
+                onPressEnter={this.onSeacrch}
+                onSearch={this.onSeacrch}
+              />
+            </div>
           </div>
-        </div>
-        <Table
-          columns={columns}
-          rowKey={record => `contests-${record.id}`}
-          dataSource={data}
-          scroll={{x: 768}}
-          pagination={pagination}
-          key='contests-2'
-        />
-        <Modal
-          title='请输入密码'
-          visible={this.state.visible}
-          onCancel={this.handleCancel}
-          width={300}
-          onOk={this.handleok}
-        >
-          <Input
-            addonBefore={<Icon type='lock'/>}
-            type='password'
-            placeholder='Password'
-            size='large'
-            onChange={this.onPasswordChange}
+          <Table
+            columns={columns}
+            rowKey={record => `contests-${record.id}`}
+            dataSource={data}
+            scroll={{x: 768}}
+            pagination={pagination}
+            key='contests-2'
           />
+          <Modal
+            title='请输入密码'
+            visible={this.state.visible}
+            onCancel={this.handleCancel}
+            width={300}
+            onOk={this.handleok}
+          >
+            <Input
+              addonBefore={<Icon type='lock'/>}
+              type='password'
+              placeholder='Password'
+              size='large'
+              onChange={this.onPasswordChange}
+            />
 
-        </Modal>
-
-      </QueueAnim>
+          </Modal>
+        </QueueAnim>
+      </Spin>
     )
   }
 }

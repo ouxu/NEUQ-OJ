@@ -41,7 +41,7 @@ class ProblemsTable extends React.Component {
   // 正确率
   render () {
     const {data} = this.props
-    const difficultyArr = ['简单', '中等', '困难']
+    const difficultyArr = ['简单', '一般', '困难']
     const accepted = {
       Y: <Icon className='status-yes' type='check-circle' />,
       N: <Icon className='status-no' type='close-circle' />
@@ -84,7 +84,7 @@ class ProblemsTable extends React.Component {
       ),
       filters: [
         {text: '简单', value: 1},
-        {text: '中等', value: 2},
+        {text: '一般', value: 2},
         {text: '困难', value: 3}
       ],
       onFilter: (value, record) => record.difficulty === Number(value),

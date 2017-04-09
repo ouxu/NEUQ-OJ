@@ -9,7 +9,7 @@ import jumpTo from '../../../../utils/windowScroll'
 const SubMenu = Menu.SubMenu
 
 const handleClick = (e) => {
-  goto(`admin/${e.key}`)
+  goto(`/admin/${e.key}`)
   jumpTo('navigation')
 }
 

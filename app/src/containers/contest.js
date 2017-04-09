@@ -8,15 +8,19 @@ import { bindActionCreators } from 'redux'
 import { getContest, getContestsTable, joinContest, searchContests, tokenVerify } from '../actions'
 
 @connect(
-  state => state.contests,
+  state => ({
+    contests:state.contests,
+    loading: state.loading
+  }),
   dispatch => bindActionCreators({getContestsTable, searchContests, joinContest, getContest, tokenVerify}, dispatch),
 )
 class ContestsContainer extends React.Component {
   render () {
-    const {conteststable, getContestsTable, searchContests, joinContest, getContest, tokenVerify} = this.props
+    const {contests:{conteststable},loading, getContestsTable, searchContests, joinContest, getContest, tokenVerify} = this.props
     return (
       <ContestPage
         data={conteststable.contests}
+        loading={loading}
         getContestsTable={getContestsTable}
         searchContests={searchContests}
         joinContest={joinContest}

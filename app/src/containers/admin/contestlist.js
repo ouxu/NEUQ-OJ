@@ -16,7 +16,7 @@ import ContestList from '../../components/admin/contest/contestlist'
 class ContestListManageContainer extends Component {
 
   render () {
-    const {contest: {conteststable}, getContestsTable, searchContests} = this.props
+    const {contest: {conteststable}, getContestsTable, searchContests,deleteProblem} = this.props
     return (
       <ContestList
         data={conteststable}

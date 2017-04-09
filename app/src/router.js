@@ -19,10 +19,12 @@ import ContestManageContainer from './containers/admin/contestlist'
 import ContestEditContainer from './containers/admin/contestedit'
 
 import ProblemManageContainer from './containers/admin/problemlist'
-// import ProblemEditContainer from './containers/admin/contestedit'
+import ProblemEditContainer from './containers/admin/problemedit'
+
 
 // 配置路由，并将路由注入到id为app的DOM元素中，后期需要React-router-ensure
 // TODO onEnter
+// TODO loading
 const checkdata = store => (location, replaceWith) => {
 }
 
@@ -68,8 +70,8 @@ const RouterApp = store => (
       </Route>
 
       <Route path='problem-list' component={ProblemManageContainer} />
-      <Route path='problem-edit' component={ContestEditContainer}>
-        <Route path=':pid' component={ContestEditContainer} />
+      <Route path='problem-edit' component={ProblemEditContainer}>
+        <Route path=':id' component={ProblemEditContainer} />
       </Route>
     </Route>
   </Router>

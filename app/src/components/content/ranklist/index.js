@@ -31,7 +31,7 @@ class RankList extends Component {
     })
     const page = 1
     const size = window.sessionStorage.getItem('neuq_oj.ranklistpagesize') || 20
-    this.props.getRankTable(value, page, size)
+    this.props.getRankTable(page, size, value)
   }
 
   render () {
@@ -113,7 +113,7 @@ class RankList extends Component {
             <span className='rank-table-header-title'>排行榜</span>
 
             <div className='rank-table-header-other'>
-              <TimeSelect handleChange={this.handleChange} />
+              <TimeSelect handleChange={this.handleChange}/>
             </div>
           </div>
           <Table

@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import {newDate,openInNewTab} from '../../../../utils'
+import { newDate, openInNewTab } from '../../../../utils'
 import './index.less'
 import { Icon, Input, Progress, Table } from 'antd'
 const Search = Input.Search
@@ -18,7 +18,7 @@ class ContestList extends Component {
     }
     this.onInputChange = this.onInputChange.bind(this)
     this.onSeacrch = this.onSeacrch.bind(this)
-    this.openProblem = this.openProblem.bind(this)
+    this.openContest = this.openContest.bind(this)
   }
 
   componentDidMount () {
@@ -41,7 +41,8 @@ class ContestList extends Component {
       this.props.searchContests(searchText)
     }
   }
-  openProblem = (record) => {
+
+  openContest = (record) => {
     openInNewTab('contests/' + record.id)
   }
 
@@ -97,14 +98,14 @@ class ContestList extends Component {
       title: '#',
       dataIndex: 'id',
       key: 'contest-manage-id',
-      onCellClick: this.openProblem,
+      onCellClick: this.openContest,
       className: 'news-manage-num mock-a'
     }, {
       title: '标题',
       dataIndex: 'title',
       key: 'contest-manage-title',
       width: 200,
-      onCellClick: this.openProblem,
+      onCellClick: this.openContest,
       className: 'contest-manage-title mock-a'
     }, {
       title: '状态',
@@ -128,7 +129,7 @@ class ContestList extends Component {
       render: record => <span>{privatestatus[record.private]}</span>,
       key: 'contest-manage-date',
       className: 'contest-manage-date'
-    },{
+    }, {
       title: '操作',
       render: (record) => <Link to={'admin/contest-edit/' + record.id}>修改</Link>,
       width: 40,
@@ -162,7 +163,7 @@ class ContestList extends Component {
     const title = () => (
       <span className='contest-manage-table-title'>
         <span className='contest-manage-table-title-icon'>
-          创建竞赛 <Link to='admin/contest-edit'><Icon type='plus-square-o' /></Link></span>
+          创建竞赛 <Link to='admin/contest-edit'><Icon type='plus-square-o'/></Link></span>
         <span>
           <Search
             placeholder='标题'

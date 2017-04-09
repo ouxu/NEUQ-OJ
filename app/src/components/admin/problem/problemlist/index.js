@@ -3,8 +3,8 @@
  */
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import { Button, Icon, Input, Popconfirm, Table, Tag } from 'antd'
-import { openInNewTab,goto } from '../../../../utils'
+import { Button, Icon, Input, Popconfirm, Spin, Table, Tag } from 'antd'
+import { goto, openInNewTab } from '../../../../utils'
 
 import './index.less'
 
@@ -16,7 +16,8 @@ class ProblemList extends Component {
     this.state = {
       searchText: '',
       selected: [],
-      password: ''
+      password: '',
+      id: NaN
     }
     this.onInputChange = this.onInputChange.bind(this)
     this.onSearch = this.onSearch.bind(this)
@@ -24,6 +25,7 @@ class ProblemList extends Component {
     this.popConfirm = this.popConfirm.bind(this)
     this.openProblem = this.openProblem.bind(this)
     this.createCon = this.createCon.bind(this)
+    this.delProblem = this.delProblem.bind(this)
   }
 
   componentDidMount () {
@@ -49,7 +51,7 @@ class ProblemList extends Component {
 
   createCon () {
     this.props.createContest({problems: this.state.selected})
-    goto ('admin/contest-edit')
+    goto('admin/contest-edit')
   }
 
   passwordChange (e) {
@@ -62,14 +64,27 @@ class ProblemList extends Component {
     openInNewTab('problems/' + record.id)
   }
 
-  popConfirm = (e) => {
-    e.preventDefault()
+  delProblem = async (record) => {
+    await this.setState({
+      id: record.id
+    })
+  }
 
+  popConfirm = async (e) => {
+    e.preventDefault()
+    let body = {
+      'password': this.state.password
+    }
+    await this.props.deleteProblem(this.state.id, body)
+
+    const page = window.sessionStorage.getItem('neuq_oj.problempagecurr') || 1
+    const size = window.sessionStorage.getItem('neuq_oj.problempagesize') || 20
+    await this.props.getProblemTable(page, size)
   }
 
   render () {
-    const {data} = this.props
-    const difficultyArr = ['简单', '中等', '困难']
+    const {data, loading} = this.props
+    const difficultyArr = ['简单', '一般', '困难']
     const popInput = <Input type="password" onChange={this.passwordChange} placeholder="请输入您的登录密码" size="small"/>
     const columns = [{
       title: '',
@@ -93,7 +108,7 @@ class ProblemList extends Component {
       ),
       filters: [
         {text: '简单', value: 1},
-        {text: '中等', value: 2},
+        {text: '一般', value: 2},
         {text: '困难', value: 3}
       ],
       onFilter: (value, record) => record.difficulty === Number(value),
@@ -122,17 +137,18 @@ class ProblemList extends Component {
       className: 'problem-title'
     }, {
       title: '操作',
-      render: (record) => <Link to={'admin/contest-edit/' + record.id}>修改</Link>,
+      render: (record) => <Link to={'admin/problem-edit/' + record.id}>修改</Link>,
       width: 40,
       key: 'problem-manage-action',
       className: 'problem-manage-action'
     }, {
       title: '删除',
       render: () => <Popconfirm title={popInput} onConfirm={this.popConfirm} okText="Yes" cancelText="No">
-        <span className="mock-a">删除</span>
+        <a>删除</a>
       </Popconfirm>,
       width: 40,
       key: 'problem-manage-del',
+      onCellClick: this.delProblem,
       className: 'problem-manage-action'
     }]
     const rowSelection = {
@@ -193,22 +209,22 @@ class ProblemList extends Component {
       </span>
     )
     return (
-      <div>
-        <div className='h-1'>
-          问题列表
-        </div>
-        <Table
-          columns={columns}
-          rowKey={record => record.id}
-          dataSource={data}
-          pagination={pagination}
-          size='small'
-          key='problem-manage-table'
-          className='problem-manage-table'
-          title={title}
-          rowSelection={rowSelection}
-        />
-      </div>
+      <Spin tip="Loading..." spinning={loading}>
+          <div className='h-1'>
+            问题列表
+          </div>
+          <Table
+            columns={columns}
+            rowKey={record => record.id}
+            dataSource={data}
+            pagination={pagination}
+            size='small'
+            key='problem-manage-table'
+            className='problem-manage-table'
+            title={title}
+            rowSelection={rowSelection}
+          />
+      </Spin>
     )
   }
 }

@@ -1,7 +1,7 @@
 /**
  * Created by out_xu on 17/3/11.
  */
-import { actionCreater, SET_RANK_TABLE } from './type'
+import { actionCreater, LOADED, LOADING, SET_RANK_TABLE } from './type'
 import API from '../api'
 import * as requestService from '../utils/request'
 import { jumpTo } from '../utils'
@@ -16,10 +16,12 @@ import { jumpTo } from '../utils'
 export function getRankTable (page = 1, size = 20, scope = 'total') {
   return async (dispatch) => {
     try {
+      await dispatch(actionCreater(LOADING))
+
       const params = {
-        scope,
-        page,
-        size
+        page: page,
+        size: size,
+        scope: scope
       }
       const data = await requestService.tget(API.ranklist, params)
       window.sessionStorage.setItem('neuq_oj.ranklistpagecurr', page)
@@ -27,7 +29,10 @@ export function getRankTable (page = 1, size = 20, scope = 'total') {
       await dispatch(actionCreater(SET_RANK_TABLE, data))
 
       jumpTo('navigation')
+      await dispatch(actionCreater(LOADED))
+
     } catch (e) {
+      await dispatch(actionCreater(LOADED))
       console.error(e)
     }
   }

@@ -1,7 +1,7 @@
 /**
  * Created by out_xu on 17/2/21.
  */
-import { actionCreater, GET_CONTEST_ERR, GET_CONTEST_SUCC, SET_CONTESTS_LIST } from './type'
+import { actionCreater, GET_CONTEST_ERR, GET_CONTEST_SUCC, LOADED, LOADING, SET_CONTESTS_LIST } from './type'
 import API from '../api'
 import { goto, jumpTo, newDate } from '../utils'
 import * as requestService from '../utils/request'
@@ -17,8 +17,8 @@ export function getContestsTable (page = 1, size = 20) {
   return async (dispatch) => {
     try {
       const params = {
-        page,
-        size
+        page: page,
+        size: size
       }
       const data = await requestService.get(API.contests, params)
       // 将当前输入的页码存入window.sessionStorage
@@ -27,7 +27,6 @@ export function getContestsTable (page = 1, size = 20) {
       window.sessionStorage.setItem('neuq_oj.contestspagecount', data.total_count)
 
       await dispatch(actionCreater(SET_CONTESTS_LIST, data))
-
       jumpTo('navigation')
     } catch (e) {
       console.error(e)
@@ -47,8 +46,8 @@ export function searchContests (value, page = 1, size = 20) {
     try {
       const params = {
         keyword: value,
-        page,
-        size
+        page: page,
+        size: size
       }
       const data = await requestService.get(API.contestssearch, params)
 
@@ -95,6 +94,8 @@ export function getContest (id) {
 export function getContestDetail (id) {
   return async dispatch => {
     try {
+      await dispatch(actionCreater(LOADING))
+
       let data = await requestService.tget(API.contest + id + '/update')
       let {contest_info: {start_time, end_time}} = data
       let start = newDate(start_time)
@@ -112,12 +113,11 @@ export function getContestDetail (id) {
         progress: progress,
         ...data
       }
-      console.log(data)
-
       await dispatch(actionCreater(GET_CONTEST_SUCC, data))
     } catch (e) {
       console.error(e)
     }
+    await dispatch(actionCreater(LOADED))
   }
 }
 /**
@@ -132,7 +132,7 @@ export function joinContest (id, body) {
       const url = API.contest + id + '/join'
       await requestService.tpost(url, body)
       await getContest(id)
-      await goto('contests/' + id)
+      await goto('/contests/' + id)
     } catch (e) {
       goto('/contests')
     }
@@ -175,6 +175,19 @@ export function editContest (body, id) {
   }
 }
 
+export function updateContestProblems (id, body) {
+  try {
+    requestService.tpost(API.contest + id + '/update/problem', body)
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+/**
+ * 从问题页面创建竞赛
+ * @param data 问题列表
+ * @returns {function(*)}
+ */
 export function createContest (data) {
   return dispatch => {
     dispatch(actionCreater(GET_CONTEST_SUCC, data))

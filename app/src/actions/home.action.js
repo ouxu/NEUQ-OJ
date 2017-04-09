@@ -7,17 +7,18 @@
  */
 import API from '../api'
 import * as requestService from '../utils/request'
-import { actionCreater, /** SET_HOMEPAGE_INFO,**/SET_HOME_NEWS } from './type'
+import { actionCreater, LOADED, LOADING, SET_HOME_NEWS } from './type'
 
 export function fetchHomePageData () {
   return async (dispatch) => {
     try {
-      // const homedata = await requestService.get(API.homedata);
+      await dispatch(actionCreater(LOADING))
       const homenews = await requestService.get(API.newslatest)
-      // await dispatch(actionCreater(SET_HOMEPAGE_INFO,homedata));
       await dispatch(actionCreater(SET_HOME_NEWS, homenews))
+
     } catch (e) {
       console.error(e)
     }
+    await dispatch(actionCreater(LOADED))
   }
 }

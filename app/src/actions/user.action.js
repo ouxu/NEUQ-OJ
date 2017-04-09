@@ -6,7 +6,7 @@ import { message } from 'antd'
 import * as requestService from '../utils/request'
 // 引入自定义工具
 import API from '../api'
-import {urlEncode} from '../utils'
+import { urlEncode } from '../utils'
 
 /**
  * 登录验证
@@ -18,6 +18,9 @@ export function tokenVerify () {
       await requestService.tget(API.tokenverify)
       await dispatch(actionCreater(IS_LOGINED))
     } catch (e) {
+      window.localStorage.removeItem('neuq_oj.token')
+      window.localStorage.removeItem('neuq_oj.name')
+      window.localStorage.removeItem('neuq_oj.id')
       throw new Error('未登录', dispatch(actionCreater(CLEAN_USERME)))
     }
   }

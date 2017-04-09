@@ -57,14 +57,19 @@ class ContestEdit extends Component {
           }
         }
         await this.props.editContest(values, this.props.cid)
-        await goto('admin/contest-list')
+        let problemParams = {
+          'password': this.state.password,
+          'problem_ids': fieldsValue.problems.map((t) => +t)
+        }
+        this.props.cid && await this.props.updateContestProblems(this.props.cid, problemParams)
+        await goto('/admin/contest-list')
       }
     })
   }
 
   async onConfirmDel () {
     await this.props.delContest(this.props.cid, {password: this.state.password})
-    await goto('admin/contest-list')
+    await goto('/admin/contest-list')
   }
 
   checkPrivate () {
@@ -74,7 +79,7 @@ class ContestEdit extends Component {
 
   render () {
     const {getFieldDecorator} = this.props.form
-    let {contest: {problems=[], progress, contest_info = {langmask: []}, problems_info = [], user_ids}, cid} = this.props
+    let {contest: {problems = [], progress, contest_info = {langmask: []}, problems_info = [], user_ids}, loading, cid} = this.props
     const title = <Input type="password" onChange={this.passwordChange} placeholder="请输入您的登录密码" size="small"/>
     const formItemLayout = {}
 
@@ -83,10 +88,10 @@ class ContestEdit extends Component {
       problems.push('' + t.problem_id)
     })
     return (
-      <Spin tip="Loading..." spinning={!!cid ? (+cid !== contest_info.id) : false}>
+      <Spin tip="Loading..." spinning={loading}>
         <div className="contest-edit">
           <div className="h-1">
-            {this.props.cid ? <span><Link to='admin/contest-list'>修改竞赛</Link> #{this.props.cid}</span> : '添加竞赛'}
+            {cid ? <span><Link to='admin/contest-list'>修改竞赛</Link> #{cid}</span> : '添加竞赛'}
           </div>
           <div className="contest-edit-content">
             <Form onSubmit={this.handleSubmit}>
@@ -217,7 +222,7 @@ class ContestEdit extends Component {
               }
               <FormItem>
                 {
-                  this.props.cid ?
+                  cid ?
                     <Popconfirm title={title}
                                 onConfirm={this.handleSubmit}
                                 okText="Yes"
@@ -237,7 +242,7 @@ class ContestEdit extends Component {
                     </Popconfirm>
                 }
                 {
-                  this.props.cid &&
+                  cid &&
                   <Popconfirm title={title}
                               onConfirm={this.onConfirmDel}
                               okText="Yes"

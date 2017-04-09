@@ -1,7 +1,7 @@
 /**
  * Created by out_xu on 16/12/20.
  */
-import {combineReducers} from 'redux'
+import { combineReducers } from 'redux'
 
 import timeStamp from './utils.reducer'
 import user from './user.reducer'
@@ -11,15 +11,17 @@ import status from './status.reducer'
 import contests from './contests.reducer'
 import ranklist from './ranklist.reducer'
 import admin from './admin.reducer'
+import loading from './loading.reducer'
 const rootReducer = combineReducers({
   admin,
   contests,
   home,
+  loading,
   problems,
   ranklist,
-  user,
   status,
-  timeStamp
+  timeStamp,
+  user
 })
 
 export default rootReducer
