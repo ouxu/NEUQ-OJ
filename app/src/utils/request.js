@@ -15,6 +15,8 @@ function filterStatus (json) {
     window.localStorage.removeItem('neuq_oj.token')
     window.localStorage.removeItem('neuq_oj.name')
     window.localStorage.removeItem('neuq_oj.id')
+    window.localStorage.removeItem('neuq_oj.role')
+
     throw new Error('Did not Login')
   } else {
     throw new Error('ResponseUnexpected', codeHelper(json.code))

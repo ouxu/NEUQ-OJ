@@ -38,28 +38,14 @@ class HomepageContainer extends React.Component {
 
   render () {
     const {home: {news}, ranklist: {ranklist = []}, status: {statustable}, contests: {conteststable}} = this.props
-    let {contests = []} = conteststable
-    contests = contests.map((t, i) => {
-      if (i < 3) {
-        return (
-          <Card title='最近提交'
-                key={'contest-item-' + i}
-                style={{marginBottom: 15}}
-                bodyStyle={{padding: 0}}
-            // extra={extra}
-          >
-            <div className='home-rank-ranklist-wrap'>
+    const {latest_news=[],fixed_news=[]} = news
 
-            </div>
-          </Card>
-        )
-      }
-    })
     return (
       <Row gutter={12} type="flex" className="homepage">
         <Col className="left-content" xs={{span: 24}} sm={{span: 16}}>
           <QueueAnim delay={100} interval={200}>
-            <div key="homepage-news"><HomeNews notice={news}/></div>
+            <div key="homepage-news"><HomeNews news={latest_news}/></div>
+            <div key="homepage-news-fixed"><HomeNews news={fixed_news}/></div>
           </QueueAnim>
         </Col>
         <Col className="right-content" xs={{span: 24}} sm={{span: 8}}>

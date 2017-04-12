@@ -1,7 +1,7 @@
 /**
  * Created by out_xu on 16/12/23.
  */
-import { actionCreater, CLEAN_USERME, IS_LOGINED, SET_USERINFO, SET_USERME } from './type'
+import { actionCreater, CLEAN_USERME, IS_LOGINED, SET_USERINFO, SET_USERME,SET_USER_ROLE } from './type'
 import { message } from 'antd'
 import * as requestService from '../utils/request'
 // 引入自定义工具
@@ -21,6 +21,8 @@ export function tokenVerify () {
       window.localStorage.removeItem('neuq_oj.token')
       window.localStorage.removeItem('neuq_oj.name')
       window.localStorage.removeItem('neuq_oj.id')
+      window.localStorage.removeItem('neuq_oj.role')
+
       throw new Error('未登录', dispatch(actionCreater(CLEAN_USERME)))
     }
   }
@@ -37,7 +39,10 @@ export function login (body) {
       window.localStorage.setItem('neuq_oj.token', data.token)
       window.localStorage.setItem('neuq_oj.name', data.user.name)
       window.localStorage.setItem('neuq_oj.id', data.user.id)
+      window.localStorage.setItem('neuq_oj.role', data.role)
+
       await dispatch(actionCreater(SET_USERME, data.user))
+      await dispatch(actionCreater(SET_USER_ROLE, data.role))
       message.success('登录成功')
     } catch (e) {
       console.error(e)
@@ -55,9 +60,10 @@ export function logout () {
       await requestService.tget(API.logout)
       await dispatch(actionCreater(CLEAN_USERME))
 
-      window.window.localStorage.removeItem('neuq_oj.token')
-      window.window.localStorage.removeItem('neuq_oj.name')
-      window.window.localStorage.removeItem('neuq_oj.id')
+      window.localStorage.removeItem('neuq_oj.token')
+      window.localStorage.removeItem('neuq_oj.name')
+      window.localStorage.removeItem('neuq_oj.id')
+      window.localStorage.removeItem('neuq_oj.role')
       message.success('登出成功')
     } catch (e) {
       console.error(e)
@@ -66,7 +72,7 @@ export function logout () {
 }
 
 /**
- * 获取用户信息
+ * 获取自己信息
  * @returns {function(*)}
  */
 export function getUserMe () {
@@ -78,9 +84,10 @@ export function getUserMe () {
       window.localStorage.removeItem('neuq_oj.token')
       window.localStorage.removeItem('neuq_oj.name')
       window.localStorage.removeItem('neuq_oj.id')
+      window.localStorage.removeItem('neuq_oj.role')
+
       await dispatch(actionCreater(CLEAN_USERME))
       window.history.go(-1)
-
       message.error('请登录')
     }
   }

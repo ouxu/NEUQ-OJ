@@ -2,8 +2,8 @@
  * Created by out_xu on 16/12/20.
  */
 
-// const __APIHOST__ = "http://192.168.1.190:3000"
-const __APIHOST__ = 'http://oj.marklux.cn'
+const __APIHOST__ = "http://192.168.1.189:3000"
+// const __APIHOST__ = 'http://oj.marklux.cn'
 
 // const __APIHOST__ = "http://rap.taobao.org/mockjsdata/12142"
 const apiMaker = path => `${__APIHOST__}/${path}`
@@ -43,5 +43,5 @@ export default {
   // news
   news: apiMaker('news'),
   createnews: apiMaker('news/create'),
-  newslatest: apiMaker('news/latest')
+  newsindex: apiMaker('news/index')
 }

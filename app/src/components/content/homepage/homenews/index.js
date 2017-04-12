@@ -7,11 +7,11 @@ import { Card } from 'antd'
 const createMarkup = html => ({__html: html})
 
 const HomeNews = (props) => {
-  const {notice = []} = props
+  const {news = []} = props
   return (
     <div className={`home-news`} key="home-news">
       {
-        notice.length >= 1 && notice.map((t) =>
+        news.length >= 1 && news.map((t) =>
           <Card
             key={'home-news-' + t.id}
             title={t.title}

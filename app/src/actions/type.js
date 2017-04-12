@@ -7,10 +7,12 @@ export const LOADING= 'LOADING'
 export const SET_TIME_STAMP = 'SET_TIME_STAMP'
 
 export const SET_HOMEPAGE_INFO = 'SET_HOMEPAGE_INFO'
+
 export const SET_USERME = 'SET_USERME'
 export const CLEAN_USERME = 'CLEAN_USERME'
 export const SET_USERINFO = 'SET_USERINFO'
 export const IS_LOGINED = 'IS_LOGINED'
+export const SET_USER_ROLE = 'SET_USER_ROLE'
 
 // export const USER_REGISTER = 'USER_REGISTER';
 

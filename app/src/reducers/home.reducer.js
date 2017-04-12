@@ -4,7 +4,6 @@
 import {SET_HOMEPAGE_INFO, SET_HOME_NEWS} from '../actions/type'
 
 const initHome = {
-  home: {},
   news: {}
 }
 export default function home (state = initHome, action) {

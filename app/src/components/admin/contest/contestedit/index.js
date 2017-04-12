@@ -41,7 +41,7 @@ class ContestEdit extends Component {
         const rangeTimeValue = fieldsValue['range-time-picker']
         let values = {
           'title': fieldsValue.title,
-          'private': +fieldsValue.privated,  //修改无效
+          'private': fieldsValue.privated,
           'password': fieldsValue.password,
           'langmask': fieldsValue.langmask.map((t) => +t),
           'problems': fieldsValue.problems.map((t) => +t),

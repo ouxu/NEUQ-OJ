@@ -1,5 +1,6 @@
 import React from 'react'
 import { browserHistory, hashHistory, IndexRoute, Route, Router } from 'react-router'
+import { message } from 'antd'
 // 引入单个页面（包括嵌套的子页面）
 import AppComponent from './components'
 import NotFoundPage from './components/plugins/nofind/nofind.js'
@@ -25,7 +26,12 @@ import ProblemUploadContainer from './containers/admin/problemupload'
 // 配置路由，并将路由注入到id为app的DOM元素中，后期需要React-router-ensure
 // TODO onEnter
 // TODO loading
-const checkdata = store => (location, replaceWith) => {
+const checkdata = (location, replace) => {
+  const userRole = window.localStorage.getItem('neuq_oj.role')
+  if (userRole === 'user' || !userRole) {
+    message.error('权限不足')
+    replace({pathname: '/'})
+  }
 }
 
 const history = process.env.NODE_ENV === 'development' ? hashHistory : browserHistory
@@ -60,7 +66,7 @@ const RouterApp = store => (
 
     </Route>
 
-    <Route path='admin' component={AdminComponent} onEnter={checkdata(store)}>
+    <Route path='admin' component={AdminComponent} onEnter={checkdata}>
       <IndexRoute component={NewsManageContainer}/>
       <Route path='news' component={NewsManageContainer}/>
 

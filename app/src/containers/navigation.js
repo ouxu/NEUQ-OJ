@@ -15,7 +15,9 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 @connect(
-  state => state.user,
+  state => ({
+    user: state.user
+  }),
   mapDispatchToProps,
 )
 class NavigationContainer extends React.Component {
@@ -23,16 +25,12 @@ class NavigationContainer extends React.Component {
     super(props)
   }
 
-  async componentDidMount () {
-    try {
-      await this.props.action.tokenVerify()
-    } catch (e) {
-
-    }
+  componentDidMount () {
+    this.props.action.tokenVerify()
   }
 
   render () {
-    const {islogined} = this.props
+    const {user: {islogined,role}} = this.props
     return (
       <Navigation
         islogined={islogined}

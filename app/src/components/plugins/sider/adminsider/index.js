@@ -2,7 +2,7 @@
  * Created by out_xu on 17/3/19.
  */
 import React from 'react'
-import {Menu} from 'antd'
+import { Menu } from 'antd'
 import goto from '../../../../utils/goto'
 import jumpTo from '../../../../utils/windowScroll'
 
@@ -13,6 +13,8 @@ const handleClick = (e) => {
   jumpTo('navigation')
 }
 
+const role = window.localStorage.getItem('neuq_oj.role')
+
 const AdminSider = (props) => (
   <Menu
     mode='inline'
@@ -20,10 +22,13 @@ const AdminSider = (props) => (
     defaultOpenKeys={['home', 'contest', 'problem']}
     defaultSelectedKeys={[props.select]}
     onClick={handleClick}
-    >
-    <SubMenu key='home' title={<span>主页管理</span>}>
-      <Menu.Item key='news'>通知管理</Menu.Item>
-    </SubMenu>
+  >
+    {
+      role === 'admin' &&
+      <SubMenu key='home' title={<span>主页管理</span>}>
+        <Menu.Item key='news'>通知管理</Menu.Item>
+      </SubMenu>
+    }
     <SubMenu key='group' title={<span>小组管理</span>}>
       <Menu.Item key='1'>Option 1</Menu.Item>
       <Menu.Item key='2'>Option 2</Menu.Item>
@@ -39,13 +44,13 @@ const AdminSider = (props) => (
       <Menu.Item key='problem-edit'>创建题目</Menu.Item>
       <Menu.Item key='problem-upload'>题目导入</Menu.Item>
     </SubMenu>
-    <SubMenu key='system' title={<span>系统管理</span>}>
+    {
+      role === 'admin' &&
+      <SubMenu key='system' title={<span>系统管理</span>}>
       <Menu.Item key='team-generator'>账号生成</Menu.Item>
-      <Menu.Item key='9'>Option 9</Menu.Item>
-      <Menu.Item key='10'>Option 10</Menu.Item>
-      <Menu.Item key='11'>Option 11</Menu.Item>
-      <Menu.Item key='12'>Option 12</Menu.Item>
     </SubMenu>
+    }
+
   </Menu>
 )
 
