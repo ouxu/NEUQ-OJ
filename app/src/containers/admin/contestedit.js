@@ -24,7 +24,7 @@ import ContestEdit from '../../components/admin/contest/contestedit'
 class ContestEditContainer extends Component {
   componentDidMount () {
     try {
-      this.props.params.cid ? this.props.getContestDetail(this.props.params.cid) : this.props.getContest();
+      !!this.props.params.cid && this.props.getContestDetail(this.props.params.cid);
     } catch (e) {
       console.error(e)
     }

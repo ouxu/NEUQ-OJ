@@ -44,18 +44,25 @@ class Navigation extends React.Component {
             <li className='othernav'><a href='http://www.acmclub.cn'>ACM俱乐部</a></li>
             {
               this.props.admin &&
-              <li><Link to={'/'}>返回主页 <Icon type='logout' /></Link></li>
+              <li><Link to={'/'}> 返回主页 <Icon type='logout'/></Link></li>
             }
             { islogined
               ? <li className='userinfo'>
                 <a>
-                  <div className='userinfo-name'><Icon type='user' /> {window.localStorage['neuq_oj.name']}</div>
+                  <div className='userinfo-name'><Icon type='user'/> {window.localStorage['neuq_oj.name']}</div>
                 </a>
                 <ul>
-                  <li><Link to={`/userpage/${window.localStorage['neuq_oj.id']}`}><Icon type='solution' />
-                    个人信息</Link></li>
-                  <li><Link to={'/admin'}><Icon type='login' /> 后台管理</Link></li>
-                  <li><a onClick={this.props.logout}><Icon type='export' /> 登出</a></li>
+                  <li>
+                    <Link to={`/userpage/${window.localStorage['neuq_oj.id']}`}>
+                      <Icon type='solution'/> 个人信息
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to={'/admin'}>
+                      <Icon type='login'/> 后台管理
+                    </Link>
+                  </li>
+                  <li><a onClick={this.props.logout}><Icon type='export'/> 登出</a></li>
                 </ul>
               </li>
               : <Login />

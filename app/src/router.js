@@ -20,7 +20,7 @@ import ContestEditContainer from './containers/admin/contestedit'
 
 import ProblemManageContainer from './containers/admin/problemlist'
 import ProblemEditContainer from './containers/admin/problemedit'
-
+import ProblemUploadContainer from './containers/admin/problemupload'
 
 // 配置路由，并将路由注入到id为app的DOM元素中，后期需要React-router-ensure
 // TODO onEnter
@@ -33,46 +33,47 @@ const history = process.env.NODE_ENV === 'development' ? hashHistory : browserHi
 const RouterApp = store => (
   <Router history={history}>
     <Route path='/' component={AppComponent}>
-      <IndexRoute component={HomePageContainer} />
-      <Route path='homepage' component={HomePageContainer} />
+      <IndexRoute component={HomePageContainer}/>
+      <Route path='homepage' component={HomePageContainer}/>
       <Route path='problems'>
-        <IndexRoute component={ProblemsContainer} />
-        <Route path=':id' component={ProblemDetailContainer} />
+        <IndexRoute component={ProblemsContainer}/>
+        <Route path=':id' component={ProblemDetailContainer}/>
       </Route>
-      <Route path='userpage/:id' component={UserPageContainer} />
+      <Route path='userpage/:id' component={UserPageContainer}/>
 
-      <Route path='register' component={Register} />
+      <Route path='register' component={Register}/>
       <Route path='status' components={StatusContainer}>
-        <Route path=':id' component={StatusContainer} />
+        <Route path=':id' component={StatusContainer}/>
       </Route>
-      <Route path='ranklist' component={RanklistContainer} />
+      <Route path='ranklist' component={RanklistContainer}/>
 
       <Route path='contests'>
-        <IndexRoute component={ContestsContainer} />
+        <IndexRoute component={ContestsContainer}/>
 
         <Route path=':cid'>
-          <IndexRoute component={ContestInfoContainer} />
-          <Route path='problem/:pnum' component={ProblemDetailContainer} />
+          <IndexRoute component={ContestInfoContainer}/>
+          <Route path='problem/:pnum' component={ProblemDetailContainer}/>
         </Route>
       </Route>
 
-      <Route path='404' component={NotFoundPage} />
+      <Route path='404' component={NotFoundPage}/>
 
     </Route>
 
     <Route path='admin' component={AdminComponent} onEnter={checkdata(store)}>
-      <IndexRoute component={NewsManageContainer} />
-      <Route path='news' component={NewsManageContainer} />
+      <IndexRoute component={NewsManageContainer}/>
+      <Route path='news' component={NewsManageContainer}/>
 
-      <Route path='contest-list' component={ContestManageContainer} />
+      <Route path='contest-list' component={ContestManageContainer}/>
       <Route path='contest-edit' component={ContestEditContainer}>
-        <Route path=':cid' component={ContestEditContainer} />
+        <Route path=':cid' component={ContestEditContainer}/>
       </Route>
 
-      <Route path='problem-list' component={ProblemManageContainer} />
+      <Route path='problem-list' component={ProblemManageContainer}/>
       <Route path='problem-edit' component={ProblemEditContainer}>
-        <Route path=':id' component={ProblemEditContainer} />
+        <Route path=':id' component={ProblemEditContainer}/>
       </Route>
+      <Route path='problem-upload' component={ProblemUploadContainer}/>
     </Route>
   </Router>
 )

@@ -101,9 +101,18 @@ class RankList extends Component {
     }, {
       title: '提交',
       dataIndex: 'submit',
-      width: 80,
       key: 'ranklist-submit',
       className: 'ranklist-submit'
+    }, {
+      title: 'AC 率',
+      render: record => (
+        <span>
+          {parseInt(100 * (record.solved / record.submit))}%
+        </span>
+      ),
+      width: 80,
+      key: 'ranklist-ac',
+      className: 'ranklist-ac'
     }]
 
     return (

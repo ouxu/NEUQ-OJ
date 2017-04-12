@@ -9,7 +9,7 @@ import './index.less'
 import moment from 'moment'
 import { Button, DatePicker, Form, Input, Popconfirm, Radio, Select, Spin } from 'antd'
 import { Link } from 'react-router'
-import { goto } from '../../../../utils'
+import { goto,verify } from '../../../../utils'
 const FormItem = Form.Item
 const Option = Select.Option
 const RadioGroup = Radio.Group
@@ -38,22 +38,35 @@ class ContestEdit extends Component {
     e.preventDefault()
     this.props.form.validateFields(async (err, fieldsValue) => {
       if (!err) {
-        const rangeTimeValue = await fieldsValue['range-time-picker']
+        const rangeTimeValue = fieldsValue['range-time-picker']
         let values = {
           'title': fieldsValue.title,
-          'private': +fieldsValue.privated,
+          'private': +fieldsValue.privated,  //修改无效
           'password': fieldsValue.password,
           'langmask': fieldsValue.langmask.map((t) => +t),
           'problems': fieldsValue.problems.map((t) => +t),
-          'users': fieldsValue.users ? fieldsValue.users.map((t) => +t) : null,
           'description': fieldsValue.description,
           'user_password': this.state.password
         }
-        if (!!rangeTimeValue) {
+        if (!!fieldsValue.users) {
           values = {
             ...values,
-            'start_time': rangeTimeValue[0].format('YYYY-MM-DD HH:mm:ss'),
-            'end_time': rangeTimeValue[1].format('YYYY-MM-DD HH:mm:ss'),
+            users: fieldsValue.users.map((t) => +t)
+          }
+        }
+        if (!!rangeTimeValue) {
+            console.log(typeof(rangeTimeValue))
+          if (rangeTimeValue.length>1) {
+            values = {
+              ...values,
+              'start_time': rangeTimeValue[0].format('YYYY-MM-DD HH:mm:ss'),
+              'end_time': rangeTimeValue[1].format('YYYY-MM-DD HH:mm:ss'),
+            }
+          } else {
+            values = {
+              ...values,
+              'end_time': rangeTimeValue.format('YYYY-MM-DD HH:mm:ss'),
+            }
           }
         }
         await this.props.editContest(values, this.props.cid)
@@ -136,6 +149,20 @@ class ContestEdit extends Component {
                   )}
                 </FormItem>
               }
+              {
+                progress && progress !== 'unStart' &&
+                <FormItem
+                  {...formItemLayout}
+                  label="结束时间"
+                >
+                  {getFieldDecorator('range-time-picker', {
+                    rules: [{required: true, message: '请选择时间'}],
+                    initialValue: cid ? moment(contest_info.end_time, 'YYYY-MM-DD HH:mm:ss') : null
+                  })(
+                    <DatePicker showTime format="YYYY-MM-DD HH:mm:ss"/>
+                  )}
+                </FormItem>
+              }
               <FormItem
                 {...formItemLayout}
                 label="权限"
@@ -158,7 +185,11 @@ class ContestEdit extends Component {
                   label="加密密码"
                 >
                   {getFieldDecorator('password', {
-                    rules: [{required: false, message: '请设置竞赛状态'}],
+                    rules: [{
+                      pattern: verify.password, message: '请输入有效的密码(6-18位)'
+                    },{
+                      required: true, message: '请输入加密密码'
+                    }],
                   })(
                     <Input placeholder="请输入加密密码"/>
                   )}

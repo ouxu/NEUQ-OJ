@@ -1,7 +1,7 @@
 /**
  * Created by out_xu on 16/12/30.
  */
-import { actionCreater, LOADED, LOADING, SET_PROBLEM_DETAIL, SET_PROBLEM_TABLE ,REMOVE_PROBLEM_DETAIL} from './type'
+import { actionCreater, LOADED, LOADING, REMOVE_PROBLEM_DETAIL, SET_PROBLEM_DETAIL, SET_PROBLEM_TABLE } from './type'
 import API from '../api'
 import { goto, jumpTo } from '../utils'
 import * as requestService from '../utils/request'
@@ -55,7 +55,6 @@ export function getProblemInfo (params) {
 
 /**
  * 获取某个题目
- * @param params 浏览器地址参数
  * @returns {function(*)}
  */
 export function clearProblem () {
@@ -67,7 +66,6 @@ export function clearProblem () {
     }
   }
 }
-
 
 /**
  * 搜索问题
@@ -133,7 +131,7 @@ export function editProblem (body, id) {
       console.log(url)
       requestService.tpost(url, body)
       message.success('发布成功')
-
+      await goto('/admin/problem-list')
     } catch (e) {
       console.error(e)
     }

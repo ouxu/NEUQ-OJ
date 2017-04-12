@@ -16,21 +16,21 @@ class UserPanel extends React.Component {
       <QueueAnim className='userpage-wrap' delay={100}>
         <div className='userpage-header' key='userpage-1'>
           <span className='userpage-header-title'>
-            <Icon type='user' />
+            <Icon type='user'/>
             <span> {user.name} / 个人资料</span>
 
           </span>
           <div className='userpage-header-other'>
-            <Tooltip placement='bottomRight' title={user.mobile ? user.mobile : ''} >
-              <Icon type='mobile' />
+            <Tooltip placement='bottomRight' title={user.mobile ? user.mobile : ''}>
+              <Icon type='mobile'/>
             </Tooltip>
             <Tooltip placement='bottomRight' title={user.email ? user.email : ''}>
-              <Icon type='mail' />
+              <Icon type='mail'/>
             </Tooltip>
           </div>
         </div>
-        <DashCard key='userpage-2' />
-        <StatusCard key='userpage-3' userdata={user} />
+        <DashCard  />
+        <StatusCard userdata={user}/>
       </QueueAnim>
 
     )

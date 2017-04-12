@@ -12,7 +12,7 @@ import {verify} from '../../../utils'
 
 import './index.less'
 import * as requestService from '../../../utils/request'
-// TODO flex引起的字段显示不全
+
 const FormItem = Form.Item
 
 const mapStateToProps = () => ({})

@@ -125,7 +125,7 @@ class ProblemDetail extends React.Component {
         result: data.result
       })
     } catch (e) {
-      console.error(e.message)
+      console.error(e)
     }
   }
 
@@ -138,7 +138,7 @@ class ProblemDetail extends React.Component {
         errorinfo: data.error
       })
     } catch (e) {
-      console.error(e.message)
+      console.error(e)
     }
   }
 

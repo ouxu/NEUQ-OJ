@@ -37,9 +37,10 @@ const AdminSider = (props) => (
     <SubMenu key='problem' title={<span>题目管理</span>}>
       <Menu.Item key='problem-list'>题目列表</Menu.Item>
       <Menu.Item key='problem-edit'>创建题目</Menu.Item>
-      <Menu.Item key='problem-import'>题目导入</Menu.Item>
+      <Menu.Item key='problem-upload'>题目导入</Menu.Item>
     </SubMenu>
     <SubMenu key='system' title={<span>系统管理</span>}>
+      <Menu.Item key='team-generator'>账号生成</Menu.Item>
       <Menu.Item key='9'>Option 9</Menu.Item>
       <Menu.Item key='10'>Option 10</Menu.Item>
       <Menu.Item key='11'>Option 11</Menu.Item>

@@ -26,6 +26,11 @@ export function getNewsList () {
   }
 }
 
+/**
+ * 获取新闻 TODO 固定公告
+ * @param id
+ * @returns {function(*)}
+ */
 export function getNews (id) {
   return async(dispatch) => {
     try {

@@ -24,7 +24,6 @@ class ProblemEdit extends Component {
     this.props.form.validateFields(async (err, value) => {
       if (!err) {
         await this.props.editProblem(value, this.props.id)
-        await goto('/admin/problem-list')
       }
     })
   }
@@ -261,7 +260,7 @@ class ProblemEdit extends Component {
                                 okText="Yes"
                                 cancelText="No"
                     >
-                      <Button type="primary" size="large">添加竞赛</Button>
+                      <Button type="primary" size="large">添加题目</Button>
                     </Popconfirm>
                 }
                 {
@@ -271,7 +270,7 @@ class ProblemEdit extends Component {
                               okText="Yes"
                               cancelText="No"
                   >
-                    <Button type="danger" size="large">删除竞赛</Button>
+                    <Button type="danger" size="large">删除题目</Button>
                   </Popconfirm>
                 }
               </FormItem>
@@ -280,7 +279,6 @@ class ProblemEdit extends Component {
         </div>
       </Spin>
     )
-      ;
   }
 }
 
