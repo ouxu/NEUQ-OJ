@@ -211,6 +211,7 @@ class NewsManage extends Component {
                       initialValue: !!this.state.importance ? this.state.importance : ''
                     })(
                       <RadioGroup onChange={this.onChange}>
+                          <Radio value={0}>固定</Radio>
                           <Radio value={1}>普通</Radio>
                           <Radio value={2}>重要</Radio>
                           <Radio value={3}>紧急</Radio>

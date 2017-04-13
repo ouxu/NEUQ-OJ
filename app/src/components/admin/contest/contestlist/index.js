@@ -24,7 +24,7 @@ class ContestList extends Component {
   componentDidMount () {
     const page = window.sessionStorage.getItem('neuq_oj.contestspagecurr') || 1
     const size = window.sessionStorage.getItem('neuq_oj.contestspagesize') || 20
-    this.props.getContestsTable(page, size)
+    this.props.getContestsMine(page, size)
   }
 
   onInputChange (e) {

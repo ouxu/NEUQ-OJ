@@ -1,8 +1,10 @@
 const webpack = require('webpack')
 const path = require('path')
 const autoprefixer = require('autoprefixer')
+const proxy = require('http-proxy-middleware')
 
 const dflPort = 8080  // 配置端口
+const context = [`/*`]
 
 module.exports = {
     // 配置服务器
@@ -17,8 +19,15 @@ module.exports = {
     overlay: {
       warnings: true,
       errors: true
-    }
-
+    },
+    // host: 'localhost',
+    // proxy: [
+    //   {
+    //     context: context,
+    //     target: 'http://192.168.1.189:3000',
+    //     secure: false
+    //   }
+    // ]
   },
   devtool: 'cheap-module-eval-source-map',
 

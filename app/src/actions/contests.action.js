@@ -65,6 +65,33 @@ export function searchContests (value, page = 1, size = 20) {
 }
 
 /**
+ * 获取自己所创建竞赛列表
+ * @param page 页码
+ * @param size 条数
+ * @returns {function(*)} dispatch action
+ */
+export function getContestsMine (page = 1, size = 20) {
+  return async (dispatch) => {
+    try {
+      const params = {
+        page: page,
+        size: size
+      }
+      const data = await requestService.tget(API.contestsmine, params)
+      // 将当前输入的页码存入window.sessionStorage
+      window.sessionStorage.setItem('neuq_oj.contestspagecurr', page)
+      window.sessionStorage.setItem('neuq_oj.contestspagesize', size)
+      window.sessionStorage.setItem('neuq_oj.contestspagecount', data.total_count)
+
+      await dispatch(actionCreater(SET_CONTESTS_LIST, data))
+      jumpTo('navigation')
+    } catch (e) {
+      console.error(e)
+    }
+  }
+}
+
+/**
  * 获取竞赛问题
  * @param id 问题ID
  * @returns {function(*)} dispatch action

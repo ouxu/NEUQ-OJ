@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux'
 import { createContest, deleteProblem, getProblemTable, searchProblems } from '../../actions'
 import ProblemList from '../../components/admin/problem/problemlist'
 
+// 问题添加到竞赛不够！！、
 @connect(
   state => ({
     problems: state.problems,

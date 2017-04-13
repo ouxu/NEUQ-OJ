@@ -22,8 +22,8 @@ export function tokenVerify () {
       window.localStorage.removeItem('neuq_oj.name')
       window.localStorage.removeItem('neuq_oj.id')
       window.localStorage.removeItem('neuq_oj.role')
-
-      throw new Error('未登录', dispatch(actionCreater(CLEAN_USERME)))
+      dispatch(actionCreater(CLEAN_USERME))
+      throw new Error('未登录')
     }
   }
 }

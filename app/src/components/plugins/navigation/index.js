@@ -34,7 +34,9 @@ class Navigation extends React.Component {
   }
 
   render () {
-    const {islogined} = this.props
+    const {user: {islogined}} = this.props
+    const role=window.localStorage.getItem('neuq_oj.role')
+
     return (
       <div id='navigation'>
         <nav role='navigation'>
@@ -57,11 +59,11 @@ class Navigation extends React.Component {
                       <Icon type='solution'/> 个人信息
                     </Link>
                   </li>
-                  <li>
+                  {(!!role && role !== 'user') && <li>
                     <Link to={'/admin'}>
                       <Icon type='login'/> 后台管理
                     </Link>
-                  </li>
+                  </li>}
                   <li><a onClick={this.props.logout}><Icon type='export'/> 登出</a></li>
                 </ul>
               </li>

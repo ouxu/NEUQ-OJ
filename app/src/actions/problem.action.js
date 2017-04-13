@@ -16,13 +16,39 @@ export function getProblemTable (page = 1, size = 20) {
   return async (dispatch) => {
     try {
       await dispatch(actionCreater(LOADING))
-
       const params = {
         page,
         size
       }
-
       const data = await requestService.tget(API.problems, params)
+      window.sessionStorage.setItem('neuq_oj.problempagecurr', page)
+      window.sessionStorage.setItem('neuq_oj.problempagesize', size)
+      window.sessionStorage.setItem('neuq_oj.problempagecount', data.total_count)
+
+      await dispatch(actionCreater(SET_PROBLEM_TABLE, data))
+      jumpTo('navigation')
+    } catch (e) {
+      console.error(e)
+    }
+    await dispatch(actionCreater(LOADED))
+  }
+}
+
+/**
+ * 获取自己所创建的问题列表
+ * @param page
+ * @param size
+ * @returns {function(*)}
+ */
+export function getProblemMine (page = 1, size = 20) {
+  return async (dispatch) => {
+    try {
+      await dispatch(actionCreater(LOADING))
+      const params = {
+        page,
+        size
+      }
+      const data = await requestService.tget(API.problemsmine, params)
       window.sessionStorage.setItem('neuq_oj.problempagecurr', page)
       window.sessionStorage.setItem('neuq_oj.problempagesize', size)
       window.sessionStorage.setItem('neuq_oj.problempagecount', data.total_count)

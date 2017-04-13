@@ -4,23 +4,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getContestsTable, searchContests } from '../../actions'
+import { getContestsMine, searchContests } from '../../actions'
 import ContestList from '../../components/admin/contest/contestlist'
 
 @connect(
   state => ({
     contest: state.contests
   }),
-  dispatch => bindActionCreators({getContestsTable, searchContests}, dispatch),
+  dispatch => bindActionCreators({getContestsMine, searchContests}, dispatch),
 )
 class ContestListManageContainer extends Component {
 
   render () {
-    const {contest: {conteststable}, getContestsTable, searchContests,deleteProblem} = this.props
+    const {contest: {conteststable}, getContestsMine, searchContests,deleteProblem} = this.props
     return (
       <ContestList
         data={conteststable}
-        getContestsTable={getContestsTable}
+        getContestsMine={getContestsMine}
         searchContests={searchContests}
       />
 

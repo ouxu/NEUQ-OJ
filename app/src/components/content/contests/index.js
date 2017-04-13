@@ -67,7 +67,7 @@ class ContestPage extends React.Component {
       }
     } catch (e) {
       if (e.message === '未登录') {
-        message.error(e.message)
+        // message.error(e.message)
       } else if (e.message === '权限不足' && record.private === 1) {
         this.setState({
           contestId: record.id,
