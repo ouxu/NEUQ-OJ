@@ -17,7 +17,7 @@ class Navigation extends React.Component {
     this.handleCancel = this.handleCancel.bind(this)
   }
 
-  componentWillMount () {
+  componentDidMount () {
 
   }
 
@@ -35,7 +35,7 @@ class Navigation extends React.Component {
 
   render () {
     const {user: {islogined}} = this.props
-    const role=window.localStorage.getItem('neuq_oj.role')
+    const role = window.localStorage.getItem('neuq_oj.role')
 
     return (
       <div id='navigation'>
@@ -69,7 +69,6 @@ class Navigation extends React.Component {
               </li>
               : <Login />
             }
-
           </ul>
         </nav>
       </div>

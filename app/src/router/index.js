@@ -5,6 +5,9 @@ import { message } from 'antd'
 import AppComponent from '../components'
 import NotFoundPage from '../components/plugins/nofind/nofind.js'
 import Register from '../components/user/register'
+import ForgetPassword from '../components/user/forgetpassword'
+import VerifyMail from '../components/user/verifyMail'
+
 import HomePageContainer from '../containers/homepage'
 import ProblemsContainer from '../containers/problems'
 import UserPageContainer from '../containers/userpage'
@@ -16,8 +19,6 @@ import AdminComponent from '../components/admin'
 import NewsManageContainer from '../containers/admin/news'
 
 import ContestManageContainer from '../containers/admin/contestlist'
-// import ContestEditContainer from '../containers/admin/contestedit'
-
 import ProblemManageContainer from '../containers/admin/problemlist'
 // import ProblemEditContainer from '../containers/admin/problemedit'
 import ProblemUploadContainer from '../containers/admin/problemupload'
@@ -25,13 +26,10 @@ import ProblemUploadContainer from '../containers/admin/problemupload'
 import ProblemDetail from './lazyload/problemDetail'
 import ContestEdit from './lazyload/admin/contestedit'
 import ProblemEdit from './lazyload/admin/problemedit'
-
-
+// import ContestEditContainer from '../containers/admin/contestedit'
 
 // 配置路由，并将路由注入到id为app的DOM元素中，后期需要React-router-ensure
-// TODO onEnter
-// TODO loading
-const checkdata = (location, replace) => {
+const CheckData = (location, replace) => {
   const userRole = window.localStorage.getItem('neuq_oj.role')
   if (userRole === 'user' || !userRole) {
     message.error('权限不足')
@@ -51,16 +49,18 @@ const RouterApp = store => (
         <Route path=':id' getComponent={ProblemDetail}/>
       </Route>
       <Route path='userpage/:id' component={UserPageContainer}/>
-
-      <Route path='register' component={Register}/>
+      <Route path='register'>
+        <IndexRoute component={Register} />
+        <Route path='verify' component={VerifyMail}/>
+        <Route path='active' component={VerifyMail}/>
+      </Route>
+      <Route path='forget' component={ForgetPassword}/>
       <Route path='status' components={StatusContainer}>
         <Route path=':id' component={StatusContainer}/>
       </Route>
       <Route path='ranklist' component={RanklistContainer}/>
-
       <Route path='contests'>
         <IndexRoute component={ContestsContainer}/>
-
         <Route path=':cid'>
           <IndexRoute component={ContestInfoContainer}/>
           <Route path='problem/:pnum' getComponent={ProblemDetail}/>
@@ -71,8 +71,8 @@ const RouterApp = store => (
 
     </Route>
 
-    <Route path='admin' component={AdminComponent} onEnter={checkdata}>
-      <IndexRoute component={NewsManageContainer}/>
+    <Route path='admin' component={AdminComponent} onEnter={CheckData}>
+      <IndexRoute component={ProblemManageContainer}/>
       <Route path='news' component={NewsManageContainer}/>
 
       <Route path='contest-list' component={ContestManageContainer}/>

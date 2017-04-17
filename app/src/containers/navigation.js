@@ -25,20 +25,19 @@ class NavigationContainer extends React.Component {
     super(props)
   }
 
-  componentDidMount () {
-      try {
-        this.props.action.tokenVerify()
-      } catch (e) {
-        console.error(e)
-      }
+  async componentDidMount () {
+    try {
+      await this.props.action.tokenVerify()
+    } catch (e) {
+      // console.error(e)
     }
+  }
 
   render () {
     return (
       <Navigation
         user={this.props.user}
         logout={this.props.action.logout}
-        tokenVerify={this.props.action.tokenVerify}
       />
     )
   }

@@ -1,12 +1,13 @@
 /**
  * Created by out_xu on 16/12/23.
  */
-import { actionCreater, CLEAN_USERME, IS_LOGINED, SET_USERINFO, SET_USERME,SET_USER_ROLE } from './type'
+import { actionCreater, CLEAN_USERME, IS_LOGINED, SET_USER_ROLE, SET_USERINFO, SET_USERME } from './type'
 import { message } from 'antd'
 import * as requestService from '../utils/request'
 // 引入自定义工具
 import API from '../api'
-import { urlEncode } from '../utils'
+
+import { goto } from '../utils'
 
 /**
  * 登录验证
@@ -18,11 +19,11 @@ export function tokenVerify () {
       await requestService.tget(API.tokenverify)
       await dispatch(actionCreater(IS_LOGINED))
     } catch (e) {
+      dispatch(actionCreater(CLEAN_USERME))
       window.localStorage.removeItem('neuq_oj.token')
       window.localStorage.removeItem('neuq_oj.name')
       window.localStorage.removeItem('neuq_oj.id')
       window.localStorage.removeItem('neuq_oj.role')
-      dispatch(actionCreater(CLEAN_USERME))
       throw new Error('未登录')
     }
   }
@@ -115,43 +116,56 @@ export function getUserInfo (id) {
  * @returns {function(*)}
  */
 export function userRegister (body) {
-  return async (dispatch) => {
+  return async dispatch => {
     try {
-      let headers = {
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        }
-      }
-      const data = requestService.post(API.register, urlEncode(body), headers)
-      window.localStorage.setItem('neuq_oj.token', data.token)
-      window.localStorage.setItem('neuq_oj.name', data.user.name)
-      dispatch(actionCreater(SET_USERME, data.user))
-      message.success('注册成功')
-      window.history.go(-1)
+      // let headers = {
+      //   credentials: 'include',
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      //   },
+      //   body: urlEncode(body)
+      // }
+      // const res = await fetch(API.register, headers)
+      // const res = await fetch(API.register, headers)
+      // if (json.code === 0) {
+      //   const data = await json.data
+      //   await dispatch(actionCreater(SET_USERME, data.user))
+      //   message.success('注册成功')
+      //   window.history.go(-1)
+      // } else {
+      //   codeHelper(json.code)
+      // }
+      // requestService.post(API.register, body)
+      const {email, mobile, name, school} = body
+      let userInfo = {email, mobile, name, school}
+      const data = await requestService.post(API.register, body)
+      dispatch(actionCreater(SET_USERINFO, {
+        ...userInfo,
+        user_id: data.user_id
+      }))
+      goto('/register/verify')
     } catch (e) {
       console.error(e)
     }
   }
-  // return dispatch => fetch(API.register, {
-  //         credentials: 'include',
-  //         method: 'POST',
-  //         headers: {
-  //             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-  //         },
-  //         body: urlEncode(body)
-  //         // body: `name=${body.name}&email=${body.email}&mobile=${body.mobile}&password=${body.password}&password_confirmation=${body.password_confirmation}&school=${body.school}&captcha=${body.captcha}`
-  //     }).then(res => res.json()).then((json) => {
-  //         if (json.code === 0) {
-  //             window.localStorage.setItem('neuq_oj.token', json.data.token);
-  //             window.localStorage.setItem('neuq_oj.name', json.data.user.name);
-  //             dispatch(setUserInfo(json.data.user));
-  //             message.success('注册成功');
-  //             window.history.go(-1);
-  //         } else {
-  //             codeHelper(json.code);
-  //         }
-  //     }).catch((e) => {
-  //         console.error(e);
-  //     });
+}
+
+export function ActiveUser (params) {
+  return async dispatch => {
+    try {
+      const data=await requestService.get(API.emailaActive,params)
+      dispatch(actionCreater(SET_USERME,data))
+      await dispatch(actionCreater(SET_USER_ROLE, data.role))
+
+      window.localStorage.setItem('neuq_oj.token', data.token)
+      window.localStorage.setItem('neuq_oj.name', data.user.name)
+      window.localStorage.setItem('neuq_oj.id', data.user.id)
+      window.localStorage.setItem('neuq_oj.role', data.role)
+      goto('/')
+      message.success('激活成功')
+    } catch (e) {
+      console.error(e.message)
+    }
+  }
 }

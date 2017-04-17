@@ -119,7 +119,6 @@ class ContestInfo extends React.Component {
         >
           <QueueAnim className="contest-info-wrap" delay={100}>
             <div className="contest-info-header" key="contest-info-header">
-
               <h1 className="contest-info-header-title">
                 <Link to={'/contests'}>
                   <span> # Contest-</span>

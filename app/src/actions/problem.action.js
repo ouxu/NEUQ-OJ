@@ -3,7 +3,7 @@
  */
 import { actionCreater, LOADED, LOADING, REMOVE_PROBLEM_DETAIL, SET_PROBLEM_DETAIL, SET_PROBLEM_TABLE } from './type'
 import API from '../api'
-import { goto, jumpTo } from '../utils'
+import { goto, jumpTo,getLocalStorage } from '../utils'
 import * as requestService from '../utils/request'
 
 /**
@@ -48,7 +48,6 @@ export function getProblemMine (page = 1, size = 20) {
         page,
         size
       }
-      const data = await requestService.tget(API.problemsmine, params)
       window.sessionStorage.setItem('neuq_oj.problempagecurr', page)
       window.sessionStorage.setItem('neuq_oj.problempagesize', size)
       window.sessionStorage.setItem('neuq_oj.problempagecount', data.total_count)

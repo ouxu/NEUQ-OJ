@@ -2,10 +2,9 @@
  * Created by out_xu on 16/12/20.
  */
 
-// const __APIHOST__ = "http://192.168.1.189:3000"
+// const __APIHOST__ = "http://192.168.1.191:3000"
 const __APIHOST__ = 'http://oj.marklux.cn'
 
-// const __APIHOST__ = "http://rap.taobao.org/mockjsdata/12142"
 const apiMaker = path => `${__APIHOST__}/${path}`
 
 export default {
@@ -13,6 +12,7 @@ export default {
   // user
   tokenverify: apiMaker('token-verify'),
   register: apiMaker('user/register'),
+  emailaActive: apiMaker('user/active'),
   login: apiMaker('user/login'),
   logout: apiMaker('user/logout'),
   userme: apiMaker('user/me'),
@@ -25,7 +25,7 @@ export default {
   problems: apiMaker('problems'),
   problem: apiMaker('problem/'),
   problemssearch: apiMaker('problems/search'),
-  problemsmine:apiMaker('problems/mine'),
+  problemsmine: apiMaker('problems/mine'),
 
 // submit: /problem/{id}/submit
   solution: apiMaker('solution/'),
@@ -37,7 +37,7 @@ export default {
   contestssearch: apiMaker('contest/search'),
   contest: apiMaker('contest/'), // contest/{id}
   createcontest: apiMaker('contest/create'), // contest/{id}
-  contestsmine:apiMaker('contests/mine'),
+  contestsmine: apiMaker('contests/mine'),
 
   // ranklist
   ranklist: apiMaker('user/ranklist'),

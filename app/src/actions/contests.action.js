@@ -3,7 +3,7 @@
  */
 import { actionCreater, GET_CONTEST_ERR, GET_CONTEST_SUCC, LOADED, LOADING, SET_CONTESTS_LIST } from './type'
 import API from '../api'
-import { goto, jumpTo, newDate } from '../utils'
+import { getLocalStorage, goto, jumpTo, newDate } from '../utils'
 import * as requestService from '../utils/request'
 import { message } from 'antd'
 
@@ -77,8 +77,14 @@ export function getContestsMine (page = 1, size = 20) {
         page: page,
         size: size
       }
-      const data = await requestService.tget(API.contestsmine, params)
-      // 将当前输入的页码存入window.sessionStorage
+      let data = {}
+
+      const role = getLocalStorage('neuq_oj.role')
+      if (role === 'admin') {
+        data = await requestService.tget(API.contests, params)
+      } else {
+        data = await requestService.tget(API.contestsmine, params)
+      }
       window.sessionStorage.setItem('neuq_oj.contestspagecurr', page)
       window.sessionStorage.setItem('neuq_oj.contestspagesize', size)
       window.sessionStorage.setItem('neuq_oj.contestspagecount', data.total_count)

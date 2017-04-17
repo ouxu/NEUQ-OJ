@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import { newDate, openInNewTab } from '../../../../utils'
+import { getLocalStorage, newDate, openInNewTab } from '../../../../utils'
 import './index.less'
 import { Icon, Input, Progress, Table } from 'antd'
 const Search = Input.Search
@@ -42,7 +42,7 @@ class ContestList extends Component {
     }
   }
 
-  openContest = (record) => {
+  openContest = record => {
     openInNewTab('contests/' + record.id)
   }
 
@@ -160,21 +160,34 @@ class ContestList extends Component {
         }
       }
     }
-    const title = () => (
-      <span className='contest-manage-table-title'>
-        <span className='contest-manage-table-title-icon'>
-          创建竞赛 <Link to='admin/contest-edit'><Icon type='plus-square-o'/></Link></span>
-        <span>
-          <Search
-            placeholder='标题'
-            size='small'
-            value={this.state.searchText}
-            onChange={this.onInputChange}
-            onPressEnter={this.onSeacrch}
-            onSearch={this.onSeacrch}
-          /></span>
-      </span>
-    )
+    const title = () => {
+      const role = getLocalStorage('neuq_oj.role')
+      if (role === 'admin') {
+        return (
+          <span className='contest-manage-table-title'>
+          <span className='contest-manage-table-title-icon'>
+            创建竞赛 <Link to='admin/contest-edit'><Icon type='plus-square-o'/></Link></span>
+          <span>
+            <Search
+              placeholder='标题'
+              size='small'
+              value={this.state.searchText}
+              onChange={this.onInputChange}
+              onPressEnter={this.onSeacrch}
+              onSearch={this.onSeacrch}
+            /></span>
+          </span>
+        )
+      } else {
+        return (
+          <span className='contest-manage-table-title'>
+          <span className='contest-manage-table-title-icon'>
+            创建竞赛 <Link to='admin/contest-edit'><Icon type='plus-square-o'/></Link></span>
+          <span />
+          </span>
+        )
+      }
+    }
 
     return (
       <div>

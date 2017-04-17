@@ -1,83 +1,111 @@
 body {
-    background: #edf4f5;
-    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  background: #edf4f5;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+
+//通用字体样式
+.h-3 {
+  font-size: 32pt;
+  margin-bottom: 10px;
+
+}
+
+.h-2 {
+  font-size: 24pt;
+  margin-bottom: 10px;
+}
+
+.h-1 {
+  font-size: 20pt;
+  margin-bottom: 10px;
+}
+
+.h-line {
+  font-size: 16pt;
+}
+
+.h-title {
+  font-size: 14pt;
+  margin-bottom: 10px;
+}
+
+.mock-a {
+  color: #108ee9;
 }
 
 .ant-layout-aside {
-    min-height: 100%;
-    .ant-layout-sider {
-        height: 100%;
-        width: 160px;
-        background: #404040;
+  min-height: 100%;
+  .ant-layout-sider {
+    height: 100%;
+    width: 160px;
+    background: #404040;
 
-        //position: fixed;
-        //left: 0;
+    //position: fixed;
+    //left: 0;
 
-        //other way
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        overflow: visible;
-        padding-bottom: 24px;
+    //other way
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow: visible;
+    padding-bottom: 24px;
 
-        transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
 
+  }
+  .ant-aside-action {
+    height: 42px;
+    width: 160px;
+    position: fixed;
+    bottom: 0;
+    background: #656565;
+    color: #fff;
+    text-align: center;
+    line-height: 42px;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+  }
+  .ant-layout-main {
+    box-sizing: border-box;
+
+    position: absolute;
+    top: 0;
+    left: 160px;
+    right: 0;
+    bottom: 0;
+
+    overflow-y: auto;
+
+    //margin-left: 160px;
+    transition: all 0.3s ease-out;
+    .main-content {
+      margin: 16px 16px 58px 16px;
     }
-    .ant-aside-action {
-        height: 42px;
-        width: 160px;
-        position: fixed;
-        bottom: 0;
-        background: #656565;
-        color: #fff;
-        text-align: center;
-        line-height: 42px;
-        cursor: pointer;
-        transition: all 0.3s ease-out;
-    }
-    .ant-layout-main {
-        box-sizing: border-box;
-
-        position: absolute;
-        top: 0;
-        left: 160px;
-        right: 0;
-        bottom: 0;
-
-        overflow-y: auto;
-
-        //margin-left: 160px;
-        transition: all 0.3s ease-out;
-        .main-content {
-            margin: 16px 16px 58px 16px;
-        }
-    }
+  }
 
 }
 
 .ant-layout-aside-collapse {
-    .ant-layout-sider {
-        width: 64px;
-    }
-    .ant-aside-action {
-        width: 64px;
-        transition: all 0.3s ease-out;
-    }
-    .ant-layout-main {
-        box-sizing: border-box;
-        position: absolute;
-        top: 0;
-        left: 64px;
-        right: 0;
-        bottom: 0;
-        overflow-y: auto;
-        //margin-left: 64px;
-        //transition: all 0.3s ease-out;
-    }
-    .main-content-navigation{
-        z-index: 9999;
-    }
+  .ant-layout-sider {
+    width: 64px;
+  }
+  .ant-aside-action {
+    width: 64px;
+    transition: all 0.3s ease-out;
+  }
+  .ant-layout-main {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 64px;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    //margin-left: 64px;
+    //transition: all 0.3s ease-out;
+  }
+  .main-content-navigation {
+    z-index: 9999;
+  }
 }
-
-
