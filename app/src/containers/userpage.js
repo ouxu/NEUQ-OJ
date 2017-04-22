@@ -6,7 +6,7 @@ import UserPanel from '../components/content/userpage'
 // 连接redux
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getUserInfo, getUserMe, checkMessage, getStatusTable } from '../actions'
+import { checkMessage, getStatusTable, getUserInfo, getUserMe } from '../actions'
 
 @connect(
   state => ({
@@ -16,10 +16,6 @@ import { getUserInfo, getUserMe, checkMessage, getStatusTable } from '../actions
   dispatch => bindActionCreators({getUserInfo, getUserMe, checkMessage, getStatusTable}, dispatch),
 )
 class UserpageContainer extends React.Component {
-  constructor (props) {
-    super(props)
-  }
-
   componentDidMount () {
     const id = window.localStorage.getItem('neuq_oj.id')
     this.props.params.id === id ? this.props.getUserMe() : this.props.getUserInfo(this.props.params.id)

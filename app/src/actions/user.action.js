@@ -135,7 +135,6 @@ export function userRegister (body) {
       // } else {
       //   codeHelper(json.code)
       // }
-      requestService.post(API.register, body)
       const {email, mobile, name, school} = body
       let userInfo = {email, mobile, name, school}
       const data = await requestService.post(API.register, body)
@@ -150,10 +149,17 @@ export function userRegister (body) {
   }
 }
 
-export function SendActiveMail (params) {
+/**
+ * 发送用户激活邮件
+ * @param params
+ * @returns {function()}
+ * @constructor
+ */
+export function sendActiveMail (params) {
   return async () => {
     try {
       await requestService.get(API.userMail, params)
+      goto('/register/verify')
     } catch (e) {
       console.error(e.message)
     }
@@ -162,27 +168,52 @@ export function SendActiveMail (params) {
 
 /**
  * 通过邮箱验证码激活用户
- * @param params 验证码
+ * @param param 验证码
  * @returns {function(*)}
  * @constructor
  */
-export function ActiveUser (params) {
-  return async dispatch => {
-    try {
-      const data = await requestService.get(API.userActive, params)
-      dispatch(actionCreater(SET_USERME, data))
-      await dispatch(actionCreater(SET_USER_ROLE, data.role))
+export function activeUser (param) {
+  return dispatch => {
+    setTimeout(async () => {
+      try {
+        const data = await requestService.get(API.userActive, param)
+        window.localStorage.setItem('neuq_oj.token', data.token)
+        window.localStorage.setItem('neuq_oj.name', data.user.name)
+        window.localStorage.setItem('neuq_oj.id', data.user.id)
+        window.localStorage.setItem('neuq_oj.role', data.role)
+        await dispatch(actionCreater(SET_USERME, data.user))
+        await dispatch(actionCreater(SET_USER_ROLE, data.role))
+        await goto('/register/actived')
+        message.success('激活成功')
+      } catch (e) {
+        message.error('验证链接超时')
+        goto('/register/active')
+        console.error(e.message)
+      }
+    }, 2000)
+  }
+}
 
-      window.localStorage.setItem('neuq_oj.token', data.token)
-      window.localStorage.setItem('neuq_oj.name', data.user.name)
-      window.localStorage.setItem('neuq_oj.id', data.user.id)
-      window.localStorage.setItem('neuq_oj.role', data.role)
-      goto('/register/actived')
-      message.success('激活成功')
+export function forgotPassword (param) {
+  return async () => {
+    try {
+      await requestService.get(API.forgotPassword, param)
+      goto('/forget/succ')
+      message.success('发送成功')
     } catch (e) {
-      message.error('验证链接超时')
-      goto('/register/active')
-      console.error(e.message)
+      message.success('发送失败')
     }
   }
+}
+
+export function findPassword (params) {
+  return setTimeout(async () => {
+    try {
+      await requestService.post(API.findPassword, params)
+      console.log('修改成功')
+      goto('/forget/done')
+    } catch (e) {
+      goto('/forget')
+    }
+  }, 2000)
 }

@@ -15,8 +15,8 @@ module.exports = {
     overlay: {
       warnings: true,
       errors: true
-    }
-    // host: 'localhost',
+    },
+    host: '0.0.0.0'
     // proxy: [
     //   {
     //     context: context,

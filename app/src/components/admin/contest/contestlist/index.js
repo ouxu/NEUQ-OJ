@@ -122,8 +122,8 @@ class ContestList extends Component {
           </div>
         )
       },
-      key: 'contest-manage-update',
-      className: 'contest-manage-update'
+      key: 'contest-manage-updatepassword',
+      className: 'contest-manage-updatepassword'
     }, {
       title: '权限',
       render: record => <span>{privatestatus[record.private]}</span>,

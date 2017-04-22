@@ -38,7 +38,6 @@ class Login extends React.Component {
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handlePasswordBlur = this.handlePasswordBlur.bind(this)
-    this.checkConfirm = this.checkConfirm.bind(this)
     this.checkPassword = this.checkPassword.bind(this)
     this.checkAgreement = this.checkAgreement.bind(this)
     this.getCaptcha = this.getCaptcha.bind(this)
@@ -84,14 +83,6 @@ class Login extends React.Component {
   handlePasswordBlur (e) {
     const value = e.target.value
     this.setState({passwordDirty: this.state.passwordDirty || !!value})
-  }
-
-  checkConfirm (rule, value, callback) {
-    const form = this.props.form
-    if (value && this.state.passwordDirty) {
-      form.validateFields(['password_confirmation'], {force: true})
-    }
-    callback()
   }
 
   checkPassword (rule, value, callback) {
@@ -180,8 +171,6 @@ class Login extends React.Component {
                   pattern: verify.password, message: '请输入6-18位有效密码！'
                 }, {
                   required: true, message: '请输入你的密码'
-                }, {
-                  validator: this.checkConfirm
                 }]
               })(
                 <Input type='password' onBlur={this.handlePasswordBlur} />,

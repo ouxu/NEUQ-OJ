@@ -131,9 +131,9 @@ class ProblemDetail extends React.Component {
 
   async getErrorInfo (solution_id, result) {
     try {
-      const errormode = (result === 10 ? '/runtime-info/' : '/compile-info/')
+      const errorMode = (result === 10 ? '/runtime-info/' : '/compile-info/')
 
-      const data = await requestService.get(API.status + errormode + solution_id)
+      const data = await requestService.get(API.status + errorMode + solution_id)
       await this.setState({
         errorinfo: data.error
       })

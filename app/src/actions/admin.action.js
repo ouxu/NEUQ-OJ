@@ -45,7 +45,7 @@ export function getNews (id) {
 export function editNews (body, id) {
   return async() => {
     try {
-      let url = id ? API.news + '/' + id + '/update' : API.createnews
+      let url = id ? API.news + '/' + id + '/updatepassword' : API.createnews
       await requestService.tpost(url, body)
       message.success('发布成功')
     } catch (e) {

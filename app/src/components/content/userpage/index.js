@@ -21,17 +21,16 @@ class UserPanel extends React.Component {
 
           </span>
           <div className='userpage-header-other'>
-            <Tooltip placement='bottomRight' title={user.email ? user.email : ''}>
+            <Tooltip placement='left' title={user.email ? user.email : ''}>
               <Icon type='mail' />
             </Tooltip>
-            <Tooltip placement='bottomRight' title={user.mobile ? user.mobile : ''}>
+            <Tooltip placement='left' title={user.mobile ? user.mobile : ''}>
               <Icon type='mobile' />
             </Tooltip>
-            <Tooltip placement='bottomRight' title={user.school ? user.school : ''}>
+            <Tooltip placement='left' title={user.school ? user.school : ''}>
               <Icon type='flag' />
-
             </Tooltip>
-            <Tooltip placement='bottomRight' title='编辑个人信息'>
+            <Tooltip placement='left' title='编辑个人信息'>
               <Icon type='edit' />
             </Tooltip>
           </div>

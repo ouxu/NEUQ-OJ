@@ -125,8 +125,8 @@ class NewsManage extends Component {
     }, {
       title: '修改时间',
       dataIndex: 'updated_at',
-      key: 'news-manage-update',
-      className: 'news-manage-update'
+      key: 'news-manage-updatepassword',
+      className: 'news-manage-updatepassword'
     }, {
       title: '创建时间',
       dataIndex: 'created_at',

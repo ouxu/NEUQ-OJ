@@ -152,9 +152,8 @@ export function deleteProblem (id, body) {
 export function editProblem (body, id) {
   return async () => {
     try {
-      let url = id ? API.problem + id + '/update' : API.problem + 'create'
-      console.log(url)
-      requestService.tpost(url, body)
+      let url = id ? API.problem + id + '/updatepassword' : API.problem + 'create'
+      await requestService.tpost(url, body)
       message.success('发布成功')
       await goto('/admin/problem-list')
     } catch (e) {

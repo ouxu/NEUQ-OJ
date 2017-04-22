@@ -21,10 +21,6 @@ const mapDispatchToProps = (dispatch) => {
   mapDispatchToProps,
 )
 class NavigationContainer extends React.Component {
-  constructor (props) {
-    super(props)
-  }
-
   async componentDidMount () {
     try {
       await this.props.action.tokenVerify()

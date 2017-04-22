@@ -2,7 +2,7 @@
  * Created by out_xu on 16/11/8.
  */
 import React from 'react'
-import { Icon, Badge } from 'antd'
+import { Badge, Icon } from 'antd'
 import Login from '../../user/loginabout'
 import { Link } from 'react-router'
 import './index.less'
@@ -50,25 +50,26 @@ class Navigation extends React.Component {
             }
             { islogined
               ? <li className='userinfo'>
-                <a>
-                  <div className='userinfo-name'>
-                    {message.count > 0 ? <Badge status='processing' /> : <Icon type='user' />} {window.localStorage['neuq_oj.name']}
-                  </div>
-                </a>
-                <ul>
-                  <li>
-                    <Link to={`/userpage/${window.localStorage['neuq_oj.id']}`}>
-                      {message.count > 0 ? <Badge status='processing' /> : <Icon type='solution' />} 个人信息
-                    </Link>
-                  </li>
-                  {(!!role && role !== 'user') && <li>
-                    <Link to={'/admin'}>
-                      <Icon type='login' /> 后台管理
-                    </Link>
-                  </li>}
-                  <li><a onClick={this.props.logout}><Icon type='export' /> 登出</a></li>
-                </ul>
-              </li>
+                  <a>
+                    <div className='userinfo-name'>
+                      {message.count > 0 ? <Badge status='processing' /> :
+                        <Icon type='user' />} {window.localStorage['neuq_oj.name']}
+                    </div>
+                  </a>
+                  <ul>
+                    <li>
+                      <Link to={`/userpage/${window.localStorage['neuq_oj.id']}`}>
+                        {message.count > 0 ? <Badge status='processing' /> : <Icon type='solution' />} 个人信息
+                      </Link>
+                    </li>
+                    {(role === 'teacher' || role === 'admin') && <li>
+                      <Link to={'/admin'}>
+                        <Icon type='login' /> 后台管理
+                      </Link>
+                    </li>}
+                    <li><a onClick={this.props.logout}><Icon type='export' /> 登出</a></li>
+                  </ul>
+                </li>
               : <Login />
             }
           </ul>

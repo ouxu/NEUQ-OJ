@@ -6,7 +6,7 @@ import { Card, message, Steps } from 'antd'
 import QueueAnim from 'rc-queue-anim'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { ActiveUser, SendActiveMail } from '../../../actions'
+import { activeUser, sendActiveMail } from '../../../actions'
 import { goto, verify } from '../../../utils'
 import './index.less'
 import Verify from './verify'
@@ -15,7 +15,7 @@ const Step = Steps.Step
 
 @connect(
   state => state.user,
-  dispatch => bindActionCreators({ActiveUser, SendActiveMail}, dispatch),
+  dispatch => bindActionCreators({activeUser, sendActiveMail}, dispatch),
 )
 class VerifyMail extends Component {
   constructor (props) {
@@ -33,7 +33,7 @@ class VerifyMail extends Component {
       const params = {
         verify_code: this.props.params.vcode
       }
-      this.props.ActiveUser(params)
+      this.props.activeUser(params)
     }
   }
 
@@ -51,7 +51,8 @@ class VerifyMail extends Component {
         verify_code: input,
         user_id: this.props.userinfo.id
       }
-      this.props.ActiveUser(params)
+      this.props.activeUser(params)
+      goto('')
     } else {
       message.error('请输入有效的验证码！')
     }
@@ -64,7 +65,7 @@ class VerifyMail extends Component {
       const params = {
         email: input
       }
-      this.props.SendActiveMail(params)
+      this.props.sendActiveMail(params)
     } else {
       message.error('请输入正确的邮箱！')
     }

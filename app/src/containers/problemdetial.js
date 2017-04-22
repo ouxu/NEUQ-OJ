@@ -2,7 +2,7 @@
  * Created by out_xu on 17/1/3.
  */
 import React from 'react'
-// 连接redux
+// 连接redux TODO 题目提示
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getProblemInfo, tokenVerify } from '../actions'

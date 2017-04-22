@@ -129,7 +129,7 @@ export function getContestDetail (id) {
     try {
       await dispatch(actionCreater(LOADING))
 
-      let data = await requestService.tget(API.contest + id + '/update')
+      let data = await requestService.tget(API.contest + id + '/updatepassword')
       let {contest_info: {start_time, end_time}} = data
       let start = newDate(start_time)
       let end = newDate(end_time)
@@ -198,7 +198,7 @@ export function delContest (id, body) {
 export function editContest (body, id) {
   return async dispatch => {
     try {
-      let url = id ? API.contest + id + '/update/info' : API.createcontest
+      let url = id ? API.contest + id + '/updatepassword/info' : API.createcontest
       await requestService.tpost(url, body)
       await dispatch(actionCreater(GET_CONTEST_ERR))
       message.success('发布成功')
@@ -210,7 +210,7 @@ export function editContest (body, id) {
 
 export function updateContestProblems (id, body) {
   try {
-    requestService.tpost(API.contest + id + '/update/problem', body)
+    requestService.tpost(API.contest + id + '/updatepassword/problem', body)
   } catch (e) {
     console.error(e)
   }

@@ -7,7 +7,7 @@ import NotFoundPage from '../components/plugins/nofind/nofind.js'
 import Register from '../components/user/register'
 import ForgetPassword from '../components/user/forgetpassword'
 import VerifyMail from '../components/user/verifyMail'
-import Actived from '../components/user/actived'
+import Actived from '../components/user/verifyMail/actived'
 
 import HomePageContainer from '../containers/homepage'
 import ProblemsContainer from '../containers/problems'
@@ -32,7 +32,7 @@ import ProblemEdit from './lazyload/admin/problemedit'
 // 配置路由，并将路由注入到id为app的DOM元素中，后期需要React-router-ensure
 const CheckData = (location, replace) => {
   const userRole = window.localStorage.getItem('neuq_oj.role')
-  if (userRole === 'user' || !userRole) {
+  if (userRole !== 'teacher' || userRole !== 'admin') {
     message.error('权限不足')
     replace({pathname: '/'})
   }
@@ -52,14 +52,16 @@ const RouterApp = store => (
       <Route path='userpage/:id' component={UserPageContainer} />
       <Route path='register'>
         <IndexRoute component={Register} />
-        <Route path='verify'>
-          <IndexRoute component={VerifyMail} />
+        <Route path='verify' component={VerifyMail}>
           <Route path=':vcode' component={VerifyMail} />
         </Route>
         <Route path='active' component={VerifyMail} />
         <Route path='actived' component={Actived} />
       </Route>
-      <Route path='forget' component={ForgetPassword} />
+      <Route path='forget'>
+        <IndexRoute component={ForgetPassword} />
+        <Route path=':type' component={ForgetPassword} />
+      </Route>
       <Route path='status' components={StatusContainer}>
         <Route path=':id' component={StatusContainer} />
       </Route>

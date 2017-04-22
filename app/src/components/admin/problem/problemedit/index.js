@@ -21,9 +21,9 @@ class ProblemEdit extends Component {
 
   handleSubmit (e) {
     e.preventDefault()
-    this.props.form.validateFields(async (err, value) => {
+    this.props.form.validateFieldsAndScroll((err, value) => {
       if (!err) {
-        await this.props.editProblem(value, this.props.id)
+        this.props.editProblem(value, this.props.id)
       }
     })
   }
@@ -95,8 +95,10 @@ class ProblemEdit extends Component {
                   rules: [{required: true, message: '请描述输出'}],
                   initialValue: data['title'] ? data.sample_output : ''
                 })(
-                  <Input placeholder='描述所需的输出格式和内容' type='textarea'
-                         autosize={{minRows: 2}} />
+                  <Input
+                    placeholder='描述所需的输出格式和内容' type='textarea'
+                    autosize={{minRows: 2}}
+                  />
                 )}
 
               </FormItem>
@@ -117,23 +119,23 @@ class ProblemEdit extends Component {
               <Row>
                 <Col xs={{span: 24}} sm={{span: 12}} style={{textAlign: 'left'}}>
                   <FormItem>
-                    <span className='ant-form-item-required span-label'>是否特判 </span>
-                    {getFieldDecorator('spj', {
-                      rules: [{required: true, message: '请选择是否特判'}],
-                      initialValue: data['spj'] ? data.spj : false
-                    })(
-                      <Switch />
-                    )}
-                  </FormItem>
-                </Col>
-                <Col xs={{span: 24}} sm={{span: 12}} style={{textAlign: 'left'}}>
-                  <FormItem>
                     <span className='ant-form-item-required span-label'>是否公开 </span>
                     {getFieldDecorator('is_public', {
                       rules: [{required: true, message: '请选择是否公开题目'}],
                       initialValue: data['is_public'] ? data.is_public : true
                     })(
-                      <Switch />
+                      <Switch defaultChecked={data['is_public'] ? data.is_public : true} />
+                    )}
+                  </FormItem>
+                </Col>
+                <Col xs={{span: 24}} sm={{span: 12}} style={{textAlign: 'left'}}>
+                  <FormItem>
+                    <span className='ant-form-item-required span-label'>是否特判 </span>
+                    {getFieldDecorator('spj', {
+                      rules: [{required: true, message: '请选择是否特判'}],
+                      initialValue: data['spj'] ? data.spj : false
+                    })(
+                      <Switch defaultChecked={data['spj'] ? data.spj : false} />
                     )}
                   </FormItem>
                 </Col>
@@ -212,7 +214,7 @@ class ProblemEdit extends Component {
                 label='测试输出'
               >
                 {getFieldDecorator('test_output', {
-                  rules: [{required: !id, message: '请输入测试输出'}],
+                  rules: [{required: true, message: '请输入测试输出'}],
                   initialValue: data['title'] ? data.test_output : ''
                 })(
                   <Input placeholder='用于判题的样例输出' type='textarea'
