@@ -9,7 +9,6 @@ export default (path) => {
       ? hashHistory.push(path)
       : browserHistory.push(path)
   } else {
-    throw new Error('Path cannot be null!');
+    throw new Error('Path cannot be null!')
   }
-
 }

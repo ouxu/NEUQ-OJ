@@ -9,8 +9,8 @@ class ProblemUpload extends Component {
       <div>
         开发中
       </div>
-    );
+    )
   }
 }
 
-export default ProblemUpload;
+export default ProblemUpload

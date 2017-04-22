@@ -85,7 +85,7 @@ class ProblemList extends Component {
   render () {
     const {data, loading} = this.props
     const difficultyArr = ['简单', '一般', '困难']
-    const popInput = <Input type="password" onChange={this.passwordChange} placeholder="请输入您的登录密码" size="small"/>
+    const popInput = <Input type='password' onChange={this.passwordChange} placeholder='请输入您的登录密码' size='small' />
     const columns = [{
       title: '',
       width: '1%',
@@ -122,12 +122,12 @@ class ProblemList extends Component {
             {// 标签渲染
               record.tags && (record.tags.map((value, index) =>
                 <Tag color='#87d068' style={{Padding: 0}}
-                     key={index + 400}
-                     className='problem-title-tags'>
+                  key={index + 400}
+                  className='problem-title-tags'>
                   {value.tag_title}
                 </Tag>))
             }
-            <span className="mock-a" onClick={() => openInNewTab('problems/' + record.id)}>
+            <span className='mock-a' onClick={() => openInNewTab('problems/' + record.id)}>
               {record.title}
             </span>
           </span>
@@ -143,7 +143,7 @@ class ProblemList extends Component {
       className: 'problem-manage-action'
     }, {
       title: '删除',
-      render: () => <Popconfirm title={popInput} onConfirm={this.popConfirm} okText="Yes" cancelText="No">
+      render: () => <Popconfirm title={popInput} onConfirm={this.popConfirm} okText='Yes' cancelText='No'>
         <a>删除</a>
       </Popconfirm>,
       width: 40,
@@ -156,8 +156,8 @@ class ProblemList extends Component {
         await this.setState({
           selected: selectedRowKeys
         })
-      },
-    };
+      }
+    }
 
     const pagination = {
       pageSize: Number(window.sessionStorage.getItem('neuq_oj.problempagesize')),
@@ -168,8 +168,8 @@ class ProblemList extends Component {
         let {selected} = this.state
         return (
           <div>
-            已选择 {selected.length} 道 <Button type="primary" size="small" onClick={this.createCon}
-                                            disabled={selected.length < 1}>发起竞赛</Button>
+            已选择 {selected.length} 道 <Button type='primary' size='small' onClick={this.createCon}
+              disabled={selected.length < 1}>发起竞赛</Button>
           </div>
         )
       },
@@ -195,7 +195,7 @@ class ProblemList extends Component {
     const title = () => (
       <span className='contest-manage-table-title'>
         <span className='contest-manage-table-title-icon'>
-          创建问题 <Link to='admin/contest-edit'><Icon type='plus-square-o'/></Link></span>
+          创建问题 <Link to='admin/contest-edit'><Icon type='plus-square-o' /></Link></span>
         <span>
           <Search
             placeholder='题号/标题/作者/标签'
@@ -203,26 +203,26 @@ class ProblemList extends Component {
             onChange={this.onInputChange}
             onPressEnter={this.onSearch}
             onSearch={this.onSearch}
-            size="small"
+            size='small'
           />
         </span>
       </span>
     )
     return (
-      <Spin tip="Loading..." spinning={loading}>
-          <div className='h-1'>
+      <Spin tip='Loading...' spinning={loading}>
+        <div className='h-1'>
             问题列表
           </div>
-          <Table
-            columns={columns}
-            rowKey={record => record.id}
-            dataSource={data}
-            pagination={pagination}
-            size='small'
-            key='problem-manage-table'
-            className='problem-manage-table'
-            title={title}
-            rowSelection={rowSelection}
+        <Table
+          columns={columns}
+          rowKey={record => record.id}
+          dataSource={data}
+          pagination={pagination}
+          size='small'
+          key='problem-manage-table'
+          className='problem-manage-table'
+          title={title}
+          rowSelection={rowSelection}
           />
       </Spin>
     )

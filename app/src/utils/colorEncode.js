@@ -3,7 +3,7 @@
  */
 import React from 'react'
 
-import {sec2Str} from './'
+import { sec2Str } from './'
 
 export default (record, i) => {
   let bgColor = 'eeeeee'
@@ -13,9 +13,9 @@ export default (record, i) => {
     aa = aa > 0xaa ? 0xaa : aa
     aa = aa.toString(16)
     bgColor = aa + 'ff' + aa
-        // if(){
-        //     bgColor="aaaaff";
-        // }
+    // if(){
+    //     bgColor="aaaaff";
+    // }
     return <div style={{height: '100%', backgroundColor: '#' + bgColor}}>
       <span style={{padding: 5}}>{sec2Str(record.problem_ac_sec[i])}</span>
     </div>

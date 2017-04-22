@@ -8,18 +8,18 @@ import { Badge, Card, Col, Row } from 'antd'
 
 const HomeStatus = (props) => {
   const result = [
-    <Badge status='processing' text='等待中'/>,
-    <Badge status='processing' text='等待中'/>,
-    <Badge status='processing' text='编译中'/>,
-    <Badge status='processing' text='运行中'/>,
-    <Badge status='success' text='正确'/>,
-    <Badge status='error' text='格式错误'/>,
-    <Badge status='error' text='答案错误'/>,
-    <Badge status='warning' text='时间超限'/>,
-    <Badge status='error' text='内存错误'/>,
-    <Badge status='error' text='输出错误'/>,
-    <Badge status='error' text='运行错误'/>,
-    <Badge status='error' text='编译错误'/>
+    <Badge status='processing' text='等待中' />,
+    <Badge status='processing' text='等待中' />,
+    <Badge status='processing' text='编译中' />,
+    <Badge status='processing' text='运行中' />,
+    <Badge status='success' text='正确' />,
+    <Badge status='error' text='格式错误' />,
+    <Badge status='error' text='答案错误' />,
+    <Badge status='warning' text='时间超限' />,
+    <Badge status='error' text='内存错误' />,
+    <Badge status='error' text='输出错误' />,
+    <Badge status='error' text='运行错误' />,
+    <Badge status='error' text='编译错误' />
   ]
   const {data} = props
   const homeStatus = (
@@ -36,17 +36,17 @@ const HomeStatus = (props) => {
         )}
     </div>
   )
-  const extra = <Link to="/status">More</Link>
+  const extra = <Link to='/status'>More</Link>
   return (
     <Card title='最近提交'
-          style={{marginBottom: 15}}
-          bodyStyle={{padding: 0}}
-          className='home-rank-ranklist'
-          extra={extra}
+      style={{marginBottom: 15}}
+      bodyStyle={{padding: 0}}
+      className='home-rank-ranklist'
+      extra={extra}
     >
       <div className='home-rank-ranklist-wrap'>
         <Row type='flex' justify='space-between' align='middle'
-             className='home-rank-ranklist-title home-rank-ranklist-content' key="home-status">
+          className='home-rank-ranklist-title home-rank-ranklist-content' key='home-status'>
           <Col span='4'> # </Col>
           <Col span='8'> 用户名</Col>
           <Col span='4'>问题</Col>

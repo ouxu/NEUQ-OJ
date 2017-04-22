@@ -1,85 +1,82 @@
 #navigation {
-    width: 100%;
-    height: 58px;
-    background: #fff;
-    box-shadow: 0 1px 1px -2px rgba(0, 0, 0, .1);
-    border: 1px solid rgba(0, 0, 0, .1);
+  width: 100%;
+  height: 58px;
+  background: #fff;
+  box-shadow: 0 1px 1px -2px rgba(0, 0, 0, .1);
+  border: 1px solid rgba(0, 0, 0, .1);
 
-    @media screen and (max-width: 680px) {
-        .othernav {
-            display: none;
-        }
+  @media screen and (max-width: 680px) {
+    .othernav {
+      display: none;
+    }
+  }
+
+  nav ul {
+    list-style: none;
+    position: relative;
+    float: right;
+    margin-left: 100px;
+    display: inline-table;
+    li {
+      float: left;
+      a {
+        display: block;
+        padding: 20px;
+        color: #222;
+        font-size: .9em;
+        letter-spacing: 1px;
+        text-decoration: none;
+
+      }
     }
 
+    li:hover {
+      background: #eee;
 
-    nav ul {
-        list-style: none;
+      > ul {
+        display: inline-block;
+        margin: 0 0 5px;
+      }
+    }
+
+    ul {
+      z-index: 10000;
+
+      display: none;
+      background: #fff;
+      position: absolute;
+      top: 100%;
+      box-shadow: -3px 3px 10px -2px rgba(0, 0, 0, .1);
+      border: 1px solid rgba(0, 0, 0, .1);
+      li {
+        display: block;
+        float: none;
         position: relative;
-        float: right;
-        margin-left: 100px;
-        display: inline-table;
-        li {
-            float: left;
-            a {
-                display: block;
-                padding: 20px;
-                color: #222;
-                font-size: .9em;
-                letter-spacing: 1px;
-                text-decoration: none;
-
-            }
+        a {
+          border-bottom: 1px solid rgba(0, 0, 0, .05);
         }
-
-        li:hover {
-            background: #eee;
-
-            > ul {
-                display: inline-block;
-                margin: 0 0 5px;
-            }
-        }
-
-
-        ul {
-            z-index: 10000;
-
-            display: none;
-            background: #fff;
-            position: absolute;
-            top: 100%;
-            box-shadow: -3px 3px 10px -2px rgba(0, 0, 0, .1);
-            border: 1px solid rgba(0, 0, 0, .1);
-            li {
-                display: block;
-                float: none;
-                position: relative;
-                a {
-                    border-bottom: 1px solid rgba(0, 0, 0, .05);
-                }
-            }
-        }
-
-        .userinfo {
-            width: 8em;
-            a {
-                padding: 20px 10px;
-            }
-            &-name {
-                width: 6em;
-                height: 18px;
-                line-height: 18px;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden
-            } //字符串超出处理
-            ul {
-                width: 120px;
-            }
-        }
+      }
     }
 
-
-
+    .userinfo {
+      width: 8em;
+      a {
+        padding: 20px 10px;
+      }
+      &-name {
+        width: 6em;
+        height: 18px;
+        line-height: 18px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        margin-right: 10px;
+      }
+      //字符串超出处理
+      ul {
+        width: 120px;
+      }
+    }
+  }
 
 }

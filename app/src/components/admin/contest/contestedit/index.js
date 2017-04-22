@@ -9,7 +9,7 @@ import './index.less'
 import moment from 'moment'
 import { Button, DatePicker, Form, Input, Popconfirm, Radio, Select, Spin } from 'antd'
 import { Link } from 'react-router'
-import { goto,verify } from '../../../../utils'
+import { goto, verify } from '../../../../utils'
 const FormItem = Form.Item
 const Option = Select.Option
 const RadioGroup = Radio.Group
@@ -48,24 +48,24 @@ class ContestEdit extends Component {
           'description': fieldsValue.description,
           'user_password': this.state.password
         }
-        if (!!fieldsValue.users) {
+        if (fieldsValue.users) {
           values = {
             ...values,
             users: fieldsValue.users.map((t) => +t)
           }
         }
-        if (!!rangeTimeValue) {
-            console.log(typeof(rangeTimeValue))
-          if (rangeTimeValue.length>1) {
+        if (rangeTimeValue) {
+          console.log(typeof (rangeTimeValue))
+          if (rangeTimeValue.length > 1) {
             values = {
               ...values,
               'start_time': rangeTimeValue[0].format('YYYY-MM-DD HH:mm:ss'),
-              'end_time': rangeTimeValue[1].format('YYYY-MM-DD HH:mm:ss'),
+              'end_time': rangeTimeValue[1].format('YYYY-MM-DD HH:mm:ss')
             }
           } else {
             values = {
               ...values,
-              'end_time': rangeTimeValue.format('YYYY-MM-DD HH:mm:ss'),
+              'end_time': rangeTimeValue.format('YYYY-MM-DD HH:mm:ss')
             }
           }
         }
@@ -93,7 +93,7 @@ class ContestEdit extends Component {
   render () {
     const {getFieldDecorator} = this.props.form
     let {contest: {problems = [], progress, contest_info = {langmask: []}, problems_info = [], user_ids}, loading, cid} = this.props
-    const title = <Input type="password" onChange={this.passwordChange} placeholder="请输入您的登录密码" size="small"/>
+    const title = <Input type='password' onChange={this.passwordChange} placeholder='请输入您的登录密码' size='small' />
     const formItemLayout = {}
 
     problems = problems.map((t) => '' + t)
@@ -101,34 +101,34 @@ class ContestEdit extends Component {
       problems.push('' + t.problem_id)
     })
     return (
-      <Spin tip="Loading..." spinning={loading}>
-        <div className="contest-edit">
-          <div className="h-1">
+      <Spin tip='Loading...' spinning={loading}>
+        <div className='contest-edit'>
+          <div className='h-1'>
             {cid ? <span><Link to='admin/contest-list'>修改竞赛</Link> #{cid}</span> : '添加竞赛'}
           </div>
-          <div className="contest-edit-content">
+          <div className='contest-edit-content'>
             <Form onSubmit={this.handleSubmit}>
               <FormItem
                 {...formItemLayout}
-                label="标题"
+                label='标题'
               >
                 {getFieldDecorator('title', {
                   rules: [{required: true, message: '请输入标题'}],
                   initialValue: problems.length > 0 ? contest_info.title : ''
                 })(
-                  <Input placeholder="请输入标题" type="textarea" autosize={{minRows: 1, maxRows: 6}}/>
+                  <Input placeholder='请输入标题' type='textarea' autosize={{minRows: 1, maxRows: 6}} />
                 )}
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label="描述"
+                label='描述'
               >
                 {getFieldDecorator('description', {
                   rules: [{required: true, message: '请输入描述'}],
                   initialValue: problems.length > 0 ? contest_info.description : ''
                 })(
-                  <Input placeholder="请输入描述，支持 Markdown 语法，请在 Markdown 编辑器中编辑后粘贴" type="textarea"
-                         autosize={{minRows: 2}}/>
+                  <Input placeholder='请输入描述，支持 Markdown 语法，请在 Markdown 编辑器中编辑后粘贴' type='textarea'
+                         autosize={{minRows: 2}} />
                 )}
 
               </FormItem>
@@ -136,7 +136,7 @@ class ContestEdit extends Component {
                 (progress === 'unStart' || !cid) &&
                 <FormItem
                   {...formItemLayout}
-                  label="时间"
+                  label='时间'
                 >
                   {getFieldDecorator('range-time-picker', {
                     rules: [{type: 'array', required: true, message: '请选择时间'}],
@@ -145,7 +145,7 @@ class ContestEdit extends Component {
                       moment(contest_info.end_time, 'YYYY-MM-DD HH:mm:ss')
                     ] : []
                   })(
-                    <RangePicker showTime format="YYYY-MM-DD HH:mm:ss"/>
+                    <RangePicker showTime format='YYYY-MM-DD HH:mm:ss' />
                   )}
                 </FormItem>
               }
@@ -153,28 +153,28 @@ class ContestEdit extends Component {
                 progress && progress !== 'unStart' &&
                 <FormItem
                   {...formItemLayout}
-                  label="结束时间"
+                  label='结束时间'
                 >
                   {getFieldDecorator('range-time-picker', {
                     rules: [{required: true, message: '请选择时间'}],
                     initialValue: cid ? moment(contest_info.end_time, 'YYYY-MM-DD HH:mm:ss') : null
                   })(
-                    <DatePicker showTime format="YYYY-MM-DD HH:mm:ss"/>
+                    <DatePicker showTime format='YYYY-MM-DD HH:mm:ss' />
                   )}
                 </FormItem>
               }
               <FormItem
                 {...formItemLayout}
-                label="权限"
+                label='权限'
               >
                 {getFieldDecorator('privated', {
                   rules: [{required: true, message: '请设置竞赛状态'}],
                   initialValue: contest_info.private + ''
                 })(
                   <RadioGroup>
-                    <Radio value="0">公开</Radio>
-                    <Radio value="1">加密</Radio>
-                    <Radio value="2">私有</Radio>
+                    <Radio value='0'>公开</Radio>
+                    <Radio value='1'>加密</Radio>
+                    <Radio value='2'>私有</Radio>
                   </RadioGroup>
                 )}
               </FormItem>
@@ -182,16 +182,16 @@ class ContestEdit extends Component {
                 this.checkPrivate() === 1 &&
                 <FormItem
                   {...formItemLayout}
-                  label="加密密码"
+                  label='加密密码'
                 >
                   {getFieldDecorator('password', {
                     rules: [{
                       pattern: verify.password, message: '请输入有效的密码(6-18位)'
-                    },{
+                    }, {
                       required: true, message: '请输入加密密码'
-                    }],
+                    }]
                   })(
-                    <Input placeholder="请输入加密密码"/>
+                    <Input placeholder='请输入加密密码' />
                   )}
 
                 </FormItem>
@@ -199,28 +199,28 @@ class ContestEdit extends Component {
 
               <FormItem
                 {...formItemLayout}
-                label="语言"
+                label='语言'
               >
                 {getFieldDecorator('langmask', {
                   rules: [{type: 'array'}],
                   initialValue: contest_info.langmask.map((t) => t + '') || []
                 })(
-                  <Select multiple placeholder="请选择支持语言">
-                    <Option value="0">C</Option>
-                    <Option value="1">C++</Option>
-                    <Option value="2">Pascal</Option>
-                    <Option value="3">Java</Option>
-                    <Option value="4">Ruby</Option>
-                    <Option value="5">Shell</Option>
-                    <Option value="6">Python</Option>
-                    <Option value="7">php</Option>
-                    <Option value="9">perl</Option>
+                  <Select multiple placeholder='请选择支持语言'>
+                    <Option value='0'>C</Option>
+                    <Option value='1'>C++</Option>
+                    <Option value='2'>Pascal</Option>
+                    <Option value='3'>Java</Option>
+                    <Option value='4'>Ruby</Option>
+                    <Option value='5'>Shell</Option>
+                    <Option value='6'>Python</Option>
+                    <Option value='7'>php</Option>
+                    <Option value='9'>perl</Option>
                   </Select>
                 )}
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label="题目"
+                label='题目'
               >
                 {getFieldDecorator('problems', {
                   rules: [{type: 'array'}],
@@ -237,11 +237,11 @@ class ContestEdit extends Component {
                 this.checkPrivate() === 2 &&
                 <FormItem
                   {...formItemLayout}
-                  label="用户"
+                  label='用户'
                 >
                   {getFieldDecorator('users', {
                     rules: [{type: 'array'}],
-                    initialValue: user_ids && user_ids.map((t) => t.user_id) || []
+                    initialValue: !!user_ids ? user_ids.map((t) => t.user_id) : []
                   })(
                     <Select
                       tags
@@ -253,33 +253,32 @@ class ContestEdit extends Component {
               }
               <FormItem>
                 {
-                  cid ?
-                    <Popconfirm title={title}
-                                onConfirm={this.handleSubmit}
-                                okText="Yes"
-                                cancelText="No"
-                    >
-                      <Button className="contest-edit-submit" size="large" type="primary">
+                  cid
+                    ? <Popconfirm title={title}
+                                  onConfirm={this.handleSubmit}
+                                  okText='Yes'
+                                  cancelText='No'
+                      >
+                      <Button className='contest-edit-submit' size='large' type='primary'>
                         修改竞赛
                       </Button>
                     </Popconfirm>
-                    :
-                    <Popconfirm title='请认真审核信息'
-                                onConfirm={this.handleSubmit}
-                                okText="Yes"
-                                cancelText="No"
-                    >
-                      <Button type="primary" size="large">添加竞赛</Button>
+                    : <Popconfirm title='请认真审核信息'
+                                  onConfirm={this.handleSubmit}
+                                  okText='Yes'
+                                  cancelText='No'
+                  >
+                      <Button type='primary' size='large'>添加竞赛</Button>
                     </Popconfirm>
                 }
                 {
                   cid &&
                   <Popconfirm title={title}
                               onConfirm={this.onConfirmDel}
-                              okText="Yes"
-                              cancelText="No"
+                              okText='Yes'
+                              cancelText='No'
                   >
-                    <Button type="danger" size="large">删除竞赛</Button>
+                    <Button type='danger' size='large'>删除竞赛</Button>
                   </Popconfirm>
                 }
               </FormItem>

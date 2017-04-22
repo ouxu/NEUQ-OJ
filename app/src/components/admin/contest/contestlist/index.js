@@ -8,7 +8,7 @@ import './index.less'
 import { Icon, Input, Progress, Table } from 'antd'
 const Search = Input.Search
 
-//更新竞赛描述字段，题目
+// 更新竞赛描述字段，题目
 class ContestList extends Component {
   constructor (props) {
     super(props)
@@ -165,25 +165,25 @@ class ContestList extends Component {
       if (role === 'admin') {
         return (
           <span className='contest-manage-table-title'>
-          <span className='contest-manage-table-title-icon'>
-            创建竞赛 <Link to='admin/contest-edit'><Icon type='plus-square-o'/></Link></span>
-          <span>
-            <Search
-              placeholder='标题'
-              size='small'
-              value={this.state.searchText}
-              onChange={this.onInputChange}
-              onPressEnter={this.onSeacrch}
-              onSearch={this.onSeacrch}
+            <span className='contest-manage-table-title-icon'>
+            创建竞赛 <Link to='admin/contest-edit'><Icon type='plus-square-o' /></Link></span>
+            <span>
+              <Search
+                placeholder='标题'
+                size='small'
+                value={this.state.searchText}
+                onChange={this.onInputChange}
+                onPressEnter={this.onSeacrch}
+                onSearch={this.onSeacrch}
             /></span>
           </span>
         )
       } else {
         return (
           <span className='contest-manage-table-title'>
-          <span className='contest-manage-table-title-icon'>
-            创建竞赛 <Link to='admin/contest-edit'><Icon type='plus-square-o'/></Link></span>
-          <span />
+            <span className='contest-manage-table-title-icon'>
+            创建竞赛 <Link to='admin/contest-edit'><Icon type='plus-square-o' /></Link></span>
+            <span />
           </span>
         )
       }

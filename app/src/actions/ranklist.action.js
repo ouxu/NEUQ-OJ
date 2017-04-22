@@ -30,7 +30,6 @@ export function getRankTable (page = 1, size = 20, scope = 'total') {
 
       jumpTo('navigation')
       await dispatch(actionCreater(LOADED))
-
     } catch (e) {
       await dispatch(actionCreater(LOADED))
       console.error(e)

@@ -24,13 +24,13 @@ const Admin = {
       path: 'problem-edit',
       component: ProblemEditContainer,
       childrenRoutes: [{path: ':id', component: ProblemEditContainer}]
-    },
+    }
   ],
 
-  getComponents(nextState, callback){
+  getComponents (nextState, callback) {
     require.ensure([], () => {
-      callback(null, require('../../components/admin/index.js'));
+      callback(null, require('../../components/admin/index.js'))
     }, 'admin')
   }
-};
+}
 export default Admin

@@ -13,4 +13,3 @@ export sec2Str from './sec2Str'
 export urlEncode from './urlEncode'
 export jumpTo from './windowScroll'
 export getLocalStorage from './getlocalStorage'
-

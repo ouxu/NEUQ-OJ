@@ -83,7 +83,7 @@
     "react-hot-loader": "^1.3.1",
     "react-quill": "^1.0.0-beta-4",
     "react-test-renderer": "15.4.2",
-    "standard": "^9.0.2",
+    "standard": "^10.0.2",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^2.2.1",
@@ -94,6 +94,9 @@
     "es6",
     "react"
   ],
+  "standard": {
+    "parser": "babel-eslint"
+  },
   "author": "out_xu",
   "license": "MIT"
 }

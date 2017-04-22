@@ -226,4 +226,3 @@ export function createContest (data) {
     dispatch(actionCreater(GET_CONTEST_SUCC, data))
   }
 }
-

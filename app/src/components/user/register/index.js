@@ -15,7 +15,7 @@ import './index.less'
 import * as requestService from '../../../utils/request'
 
 const FormItem = Form.Item
-const Step = Steps.Step;
+const Step = Steps.Step
 const mapStateToProps = () => ({})
 
 const mapDispatchToProps = (dispatch) => {
@@ -111,41 +111,41 @@ class Login extends React.Component {
 
   render () {
     const {getFieldDecorator} = this.props.form
-    const formItemLayout = {};
+    const formItemLayout = {}
     return (
-      <Card className="register-wrap">
-        <QueueAnim type="bottom">
-          <div className="register-wrap-header" key="register-wrap-header">
-            <h1 className="register-wrap-header-title">注册账号</h1>
-            <Link to='/register/verify' className="register-wrap-header-active">
-              <Icon type="info-circle-o"/> 已有账号，点此激活
+      <Card className='register-wrap'>
+        <QueueAnim type='bottom'>
+          <div className='register-wrap-header' key='register-wrap-header'>
+            <h1 className='register-wrap-header-title'>注册账号</h1>
+            <Link to='/register/active' className='register-wrap-header-active'>
+              <Icon type='info-circle-o' /> 已有账号，点此激活
             </Link>
           </div>
           <Steps
             current={0}
-            className="register-wrap-step"
-            key="register-wrapr-step"
+            className='register-wrap-step'
+            key='register-wrapr-step'
           >
-            <Step title="注册"/>
+            <Step title='注册' />
             <Step
               title={
-                <Tooltip title="已有账号，点此激活">
+                <Tooltip title='已有账号，点此激活'>
                   <Link to='/register/active'>激活</Link>
                 </Tooltip>
               }
             />
-            <Step title="Done"/>
+            <Step title='Done' />
           </Steps>
           <QueueAnim onSubmit={this.handleSubmit}
-                     className="register-wrap-form"
-                     component="Form"
-                     type="bottom"
+            className='register-wrap-form'
+            component='Form'
+            type='bottom'
           >
             <FormItem
-              label="用户名"
+              label='用户名'
               hasFeedback
               {...formItemLayout}
-              key="register-2"
+              key='register-2'
             >
               {getFieldDecorator('name', {
                 rules: [{required: true, message: '请输入用户名'}]
@@ -155,9 +155,9 @@ class Login extends React.Component {
             </FormItem>
 
             <FormItem
-              label="邮箱"
+              label='邮箱'
               {...formItemLayout}
-              key="register-3"
+              key='register-3'
             >
               {getFieldDecorator('email', {
                 rules: [{
@@ -170,10 +170,10 @@ class Login extends React.Component {
               )}
             </FormItem>
             <FormItem
-              label="密码"
+              label='密码'
               hasFeedback
               {...formItemLayout}
-              key="register-4"
+              key='register-4'
             >
               {getFieldDecorator('password', {
                 rules: [{
@@ -184,14 +184,14 @@ class Login extends React.Component {
                   validator: this.checkConfirm
                 }]
               })(
-                <Input type="password" onBlur={this.handlePasswordBlur}/>,
+                <Input type='password' onBlur={this.handlePasswordBlur} />,
               )}
             </FormItem>
             <FormItem
-              label="确认密码"
+              label='确认密码'
               hasFeedback
               {...formItemLayout}
-              key="register-5"
+              key='register-5'
             >
               {getFieldDecorator('password_confirmation', {
                 rules: [{
@@ -200,13 +200,13 @@ class Login extends React.Component {
                   validator: this.checkPassword
                 }]
               })(
-                <Input type="password"/>,
+                <Input type='password' />,
               )}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="手机号码"
-              key="register-6"
+              label='手机号码'
+              key='register-6'
             >
               {getFieldDecorator('mobile', {
                 rules: [{
@@ -220,8 +220,8 @@ class Login extends React.Component {
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="学校"
-              key="register-7"
+              label='学校'
+              key='register-7'
             >
               {getFieldDecorator('school', {
                 rules: [{
@@ -232,21 +232,21 @@ class Login extends React.Component {
               )}
             </FormItem>
             <FormItem
-              label="验证码"
-              key="register-8"
+              label='验证码'
+              key='register-8'
             >
-              <Row type="flex">
+              <Row type='flex'>
                 <Col>
                   {getFieldDecorator('captcha', {
                     rules: [{required: false, message: '请输入验证码！'}]
                   })(
-                    <Input size="large"/>,
+                    <Input size='large' />,
                   )}
                 </Col>
                 <Col>
                   <img
-                    src={`${this.state.captcha}?${this.state.captchastamp}`} alt="register-captcha"
-                    className="register-wrap-form-captcha" onClick={this.refreshCaptcha}
+                    src={`${this.state.captcha}?${this.state.captchastamp}`} alt='register-captcha'
+                    className='register-wrap-form-captcha' onClick={this.refreshCaptcha}
                     key={this.state.captchaflag + 1}
                   />
 
@@ -254,17 +254,17 @@ class Login extends React.Component {
               </Row>
             </FormItem>
             <FormItem>
-              <Row type="flex" align="bottom" key="register-9" className="register-wrap-form-footer">
+              <Row type='flex' align='bottom' key='register-9' className='register-wrap-form-footer'>
                 <Col xs={{span: 24}} sm={{span: 12}}>
                   <Checkbox onChange={this.checkAgreement}>我同意
-                    <Tooltip title="Just do it！">
-                      <span className="user-should-know">《用户协议》</span>
+                    <Tooltip title='Just do it！'>
+                      <span className='user-should-know'>《用户协议》</span>
                     </Tooltip>
                   </Checkbox>
                 </Col>
                 <Col xs={{span: 24}} sm={{span: 12}}>
                   <Button
-                    type="primary" htmlType="submit" size="large"
+                    type='primary' htmlType='submit' size='large'
                     disabled={!this.state.checkagreement}
                   >点击注册</Button>
                 </Col>
@@ -278,4 +278,3 @@ class Login extends React.Component {
 }
 
 export default Login
-

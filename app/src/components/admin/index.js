@@ -16,13 +16,13 @@ class AdminComponent extends Component {
         <Navigation />
         <QueueAnim className='admin-wrap' key='admin-wrap' type={['left', 'right']} delay={100}>
           <div className='admin-sider' key='admin-sider'>
-            <AdminSider select={path}/>
+            <AdminSider select={path} />
           </div>
           <div className='admin-main' key='admin-main'>
             {this.props.children}
           </div>
         </QueueAnim>
-        <Footer year={() => {Date.now().getFullYear()}}/>
+        <Footer year={() => { Date.now().getFullYear() }} />
       </QueueAnim>
     )
   }

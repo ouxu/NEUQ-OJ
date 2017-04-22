@@ -1,13 +1,14 @@
 /**
  * Created by out_xu on 16/12/20.
  */
-import { SET_USERINFO, SET_USERME, IS_LOGINED, CLEAN_USERME,SET_USER_ROLE } from '../actions/type'
+import { SET_USERINFO, SET_USERME, IS_LOGINED, CLEAN_USERME, SET_USER_ROLE, SET_MESSAGE_COUNT } from '../actions/type'
 
 const initUser = {
   userinfo: {},
   userme: {},
   islogined: false,
-  role: ''
+  role: '',
+  message: {}
 }
 export default function user (state = initUser, action) {
   switch (action.type) {
@@ -39,6 +40,11 @@ export default function user (state = initUser, action) {
       return {
         ...state,
         role: action.payload
+      }
+    case SET_MESSAGE_COUNT:
+      return {
+        ...state,
+        message: action.payload
       }
     default:
       return state

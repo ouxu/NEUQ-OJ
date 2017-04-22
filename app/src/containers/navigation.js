@@ -5,10 +5,10 @@ import React from 'react'
 import Navigation from '../components/plugins/navigation'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { logout, tokenVerify } from '../actions'
+import { getMessageCount, logout, tokenVerify } from '../actions'
 
 const mapDispatchToProps = (dispatch) => {
-  const actions = {logout, tokenVerify}
+  const actions = {logout, tokenVerify, getMessageCount}
   return {
     action: bindActionCreators(actions, dispatch)
   }
@@ -28,6 +28,7 @@ class NavigationContainer extends React.Component {
   async componentDidMount () {
     try {
       await this.props.action.tokenVerify()
+      this.props.action.getMessageCount()
     } catch (e) {
       // console.error(e)
     }

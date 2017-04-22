@@ -24,4 +24,3 @@ class RanklistContainer extends Component {
 }
 
 export default RanklistContainer
-

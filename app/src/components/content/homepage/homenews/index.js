@@ -9,7 +9,7 @@ const createMarkup = html => ({__html: html})
 const HomeNews = (props) => {
   const {news = []} = props
   return (
-    <div className={`home-news`} key="home-news">
+    <div className={`home-news`} key='home-news'>
       {
         news.length >= 1 && news.map((t) =>
           <Card

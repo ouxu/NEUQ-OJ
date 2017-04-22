@@ -47,8 +47,8 @@ const AdminSider = (props) => (
     {
       role === 'admin' &&
       <SubMenu key='system' title={<span>系统管理</span>}>
-      <Menu.Item key='team-generator'>账号生成</Menu.Item>
-    </SubMenu>
+        <Menu.Item key='team-generator'>账号生成</Menu.Item>
+      </SubMenu>
     }
 
   </Menu>

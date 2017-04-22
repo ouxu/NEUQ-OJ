@@ -24,14 +24,14 @@ import ContestEdit from '../../components/admin/contest/contestedit'
 class ContestEditContainer extends Component {
   componentDidMount () {
     try {
-      !!this.props.params.cid && this.props.getContestDetail(this.props.params.cid);
+      !!this.props.params.cid && this.props.getContestDetail(this.props.params.cid)
     } catch (e) {
       console.error(e)
     }
   }
 
   render () {
-    const {contest: {contest}, params: {cid}, delContest, loading, editContest} = this.props;
+    const {contest: {contest}, params: {cid}, delContest, loading, editContest} = this.props
     return (
       <ContestEdit
         contest={contest}
@@ -41,8 +41,8 @@ class ContestEditContainer extends Component {
         editContest={editContest}
         updateContestProblems={updateContestProblems}
       />
-    );
+    )
   }
 }
 
-export default ContestEditContainer;
+export default ContestEditContainer

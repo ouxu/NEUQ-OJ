@@ -126,8 +126,7 @@ export function userRegister (body) {
       //   },
       //   body: urlEncode(body)
       // }
-      // const res = await fetch(API.register, headers)
-      // const res = await fetch(API.register, headers)
+      // const json = await fetch(API.register, headers)
       // if (json.code === 0) {
       //   const data = await json.data
       //   await dispatch(actionCreater(SET_USERME, data.user))
@@ -136,7 +135,7 @@ export function userRegister (body) {
       // } else {
       //   codeHelper(json.code)
       // }
-      // requestService.post(API.register, body)
+      requestService.post(API.register, body)
       const {email, mobile, name, school} = body
       let userInfo = {email, mobile, name, school}
       const data = await requestService.post(API.register, body)
@@ -151,20 +150,38 @@ export function userRegister (body) {
   }
 }
 
+export function SendActiveMail (params) {
+  return async () => {
+    try {
+      await requestService.get(API.userMail, params)
+    } catch (e) {
+      console.error(e.message)
+    }
+  }
+}
+
+/**
+ * 通过邮箱验证码激活用户
+ * @param params 验证码
+ * @returns {function(*)}
+ * @constructor
+ */
 export function ActiveUser (params) {
   return async dispatch => {
     try {
-      const data=await requestService.get(API.emailaActive,params)
-      dispatch(actionCreater(SET_USERME,data))
+      const data = await requestService.get(API.userActive, params)
+      dispatch(actionCreater(SET_USERME, data))
       await dispatch(actionCreater(SET_USER_ROLE, data.role))
 
       window.localStorage.setItem('neuq_oj.token', data.token)
       window.localStorage.setItem('neuq_oj.name', data.user.name)
       window.localStorage.setItem('neuq_oj.id', data.user.id)
       window.localStorage.setItem('neuq_oj.role', data.role)
-      goto('/')
+      goto('/register/actived')
       message.success('激活成功')
     } catch (e) {
+      message.error('验证链接超时')
+      goto('/register/active')
       console.error(e.message)
     }
   }

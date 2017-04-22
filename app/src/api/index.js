@@ -3,6 +3,7 @@
  */
 
 // const __APIHOST__ = "http://192.168.1.191:3000"
+// const __APIHOST__ = "http://192.168.1.221:8000"
 const __APIHOST__ = 'http://oj.marklux.cn'
 
 const apiMaker = path => `${__APIHOST__}/${path}`
@@ -12,22 +13,23 @@ export default {
   // user
   tokenverify: apiMaker('token-verify'),
   register: apiMaker('user/register'),
-  emailaActive: apiMaker('user/active'),
+  userActive: apiMaker('user/active'),
+  userMail: apiMaker('user/active-mail/send'),
   login: apiMaker('user/login'),
   logout: apiMaker('user/logout'),
   userme: apiMaker('user/me'),
   userinfo: apiMaker('user/'),  // '/{id}/info'
-
+  messageCount: apiMaker('message/getMessageCount'),
+  checkMessage: apiMaker('message/checkMessage/'),
   // homedata: apiMaker('news/data'),
   homedata: 'http://rap.taobao.org/mockjsdata/12142/news/data',
-
   // problems
   problems: apiMaker('problems'),
   problem: apiMaker('problem/'),
   problemssearch: apiMaker('problems/search'),
   problemsmine: apiMaker('problems/mine'),
 
-// submit: /problem/{id}/submit
+  // submit: /problem/{id}/submit
   solution: apiMaker('solution/'),
   // status
   status: apiMaker('status'),

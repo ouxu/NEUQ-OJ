@@ -5,7 +5,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 import QueueAnim from 'rc-queue-anim'
-import { Icon, Input, message, Modal, Progress, Table,Spin } from 'antd'
+import { Icon, Input, message, Modal, Progress, Table, Spin } from 'antd'
 import './index.less'
 import { goto, newDate } from '../../../utils'
 
@@ -97,7 +97,7 @@ class ContestPage extends React.Component {
   }
 
   render () {
-    const {data,loading} = this.props
+    const {data, loading} = this.props
     const privatestatus = [
       '公开',
       '加密',
@@ -222,10 +222,10 @@ class ContestPage extends React.Component {
 
     }
     return (
-      <Spin tip="Loading..." spinning={loading}>
+      <Spin tip='Loading...' spinning={loading}>
         <QueueAnim className='contests-table-wrap' delay={100}>
           <div className='contests-table-header' key='contests-1'>
-          <span className='contests-table-header-title'>
+            <span className='contests-table-header-title'>
             竞赛列表
           </span>
             <div>

@@ -6,9 +6,9 @@ import ProblemUpload from '../../components/admin/problem/problemupload'
 class ProblemUploadContainer extends Component {
   render () {
     return (
-      <ProblemUpload/>
-    );
+      <ProblemUpload />
+    )
   }
 }
 
-export default ProblemUploadContainer;
+export default ProblemUploadContainer

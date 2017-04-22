@@ -15,11 +15,8 @@ import { getProblemTable, searchProblems } from '../actions'
   dispatch => bindActionCreators({getProblemTable, searchProblems}, dispatch),
 )
 class ProblemsContainer extends React.Component {
-  constructor (props) {
-    super(props);
-  }
   render () {
-    const {problems: {problemtable}, user: {islogined}} = this.props;
+    const {problems: {problemtable}, user: {islogined}} = this.props
     return (
       <ProblemsTable
         data={problemtable.problems}
@@ -27,7 +24,7 @@ class ProblemsContainer extends React.Component {
         searchProblems={this.props.searchProblems}
         key={`problem-table-table${islogined}`}
       />
-    );
+    )
   }
 }
-export default ProblemsContainer;
+export default ProblemsContainer

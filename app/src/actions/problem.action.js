@@ -3,9 +3,9 @@
  */
 import { actionCreater, LOADED, LOADING, REMOVE_PROBLEM_DETAIL, SET_PROBLEM_DETAIL, SET_PROBLEM_TABLE } from './type'
 import API from '../api'
-import { goto, jumpTo,getLocalStorage } from '../utils'
+import { goto, jumpTo } from '../utils'
 import * as requestService from '../utils/request'
-
+import { message } from 'antd'
 /**
  * 获取问题列表数据
  * @param page
@@ -36,6 +36,7 @@ export function getProblemTable (page = 1, size = 20) {
 
 /**
  * 获取自己所创建的问题列表
+ * TODO 自己创建的问题列表
  * @param page
  * @param size
  * @returns {function(*)}
@@ -48,6 +49,7 @@ export function getProblemMine (page = 1, size = 20) {
         page,
         size
       }
+      const data = await requestService.tget(API.getProblemTable, params)
       window.sessionStorage.setItem('neuq_oj.problempagecurr', page)
       window.sessionStorage.setItem('neuq_oj.problempagesize', size)
       window.sessionStorage.setItem('neuq_oj.problempagecount', data.total_count)
@@ -135,12 +137,10 @@ export function deleteProblem (id, body) {
     try {
       await requestService.tpost(API.problem + id + '/delete', body)
       await message.success('删除成功')
-
     } catch (e) {
       console.error(e)
     }
   }
-
 }
 
 /**
@@ -152,7 +152,7 @@ export function deleteProblem (id, body) {
 export function editProblem (body, id) {
   return async () => {
     try {
-      let url = !!id ? API.problem + id + '/update' : API.problem + 'create'
+      let url = id ? API.problem + id + '/update' : API.problem + 'create'
       console.log(url)
       requestService.tpost(url, body)
       message.success('发布成功')

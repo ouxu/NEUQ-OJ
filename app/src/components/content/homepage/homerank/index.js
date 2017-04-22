@@ -23,17 +23,17 @@ const HomeRank = (props) => {
         )}
     </div>
   )
-  const extra = <Link to="/ranklist">More</Link>
+  const extra = <Link to='/ranklist'>More</Link>
   return (
     <Card title='排行榜'
-          style={{marginBottom: 15}}
-          bodyStyle={{padding: 0}}
-          className='home-rank-ranklist'
-          extra={extra}
+      style={{marginBottom: 15}}
+      bodyStyle={{padding: 0}}
+      className='home-rank-ranklist'
+      extra={extra}
     >
       <div className='home-rank-ranklist-wrap'>
         <Row type='flex' justify='space-between' align='middle'
-             className='home-rank-ranklist-title home-rank-ranklist-content' key='home-rank'>
+          className='home-rank-ranklist-title home-rank-ranklist-content' key='home-rank'>
           <Col span='4'>No.</Col>
           <Col span='8'>昵称</Col>
           <Col span='4'>提交</Col>

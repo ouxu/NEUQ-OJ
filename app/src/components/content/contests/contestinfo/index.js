@@ -26,8 +26,8 @@ class ContestInfo extends React.Component {
   componentDidMount () {
     this.timer = setInterval(() => {
       this.setState({time: new Date()})
-      const end_time = this.props.data.contest_info && newDate(this.props.data.contest_info.end_time)
-      if (this.state.time > end_time) {
+      const endTime = this.props.data.contest_info && newDate(this.props.data.contest_info.end_time)
+      if (this.state.time > endTime) {
         clearInterval(this.timer)
       }
     }, 1000)
@@ -55,8 +55,8 @@ class ContestInfo extends React.Component {
   render () {
     const {contest_info = {}, problem_info = []} = this.props.data
     const accepted = {
-      Y: <Icon className="status-yes" type="check-circle"/>,
-      N: <Icon className="status-no" type="close-circle"/>
+      Y: <Icon className='status-yes' type='check-circle' />,
+      N: <Icon className='status-no' type='close-circle' />
     }
     const columns = [{
       title: '',
@@ -114,33 +114,33 @@ class ContestInfo extends React.Component {
     return (
       <Spin spinning={!(contest_info).hasOwnProperty('id')}>
         <Card
-          className="contest-info-wrap"
+          className='contest-info-wrap'
           bodyStyle={{padding: 0}}
         >
-          <QueueAnim className="contest-info-wrap" delay={100}>
-            <div className="contest-info-header" key="contest-info-header">
-              <h1 className="contest-info-header-title">
+          <QueueAnim className='contest-info-wrap' delay={100}>
+            <div className='contest-info-header' key='contest-info-header'>
+              <h1 className='contest-info-header-title'>
                 <Link to={'/contests'}>
                   <span> # Contest-</span>
                 </Link>
                 {contest_info.id}
-                <span className="contest-info-header-title-sub">{contest_info.title}</span>
+                <span className='contest-info-header-title-sub'>{contest_info.title}</span>
               </h1>
               <ContestProgress
                 time={this.state.time}
                 start_time={contest_info.start_time}
                 end_time={contest_info.end_time}
               />
-              <p dangerouslySetInnerHTML={this.createMarkup(contest_info.description)}/>
+              <p dangerouslySetInnerHTML={this.createMarkup(contest_info.description)} />
             </div>
 
             <Tabs
-              defaultActiveKey="contest-info-table"
-              tabPosition="right"
-              className="contest-info-content"
-              key="contest-info-content"
+              defaultActiveKey='contest-info-table'
+              tabPosition='right'
+              className='contest-info-content'
+              key='contest-info-content'
             >
-              <TabPane tab="题目列表" key="contest-info-table">
+              <TabPane tab='题目列表' key='contest-info-table'>
                 <Table
                   columns={columns}
                   rowKey={record => `contest-${record.pid}`}
@@ -148,11 +148,11 @@ class ContestInfo extends React.Component {
                   scroll={{x: 680}}
                   // size='small'
                   pagination={false}
-                  key="contest-info-content-table"
-                  className="contest-info-content-table"
+                  key='contest-info-content-table'
+                  className='contest-info-content-table'
                 />
               </TabPane>
-              <TabPane tab="排行榜" key="contest-info-rank">
+              <TabPane tab='排行榜' key='contest-info-rank'>
                 <ContestInfoTabs
                   getRank={this.getRank}
                   count_num={problem_info.length}

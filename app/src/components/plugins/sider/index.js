@@ -2,13 +2,13 @@
  * Created by out_xu on 16/11/28.
  */
 import React from 'react'
-import { goto } from '../../../utils'
+import { goto, jumpTo } from '../../../utils'
 import { Menu } from 'antd'
+import {Link} from 'react-router'
 import ACMLogo1 from '../../../images/acm_logo_short.png'
 import ACMLogo2 from '../../../images/acm_logo_long.png'
-import './index.less'
-import jumpTo from '../../../utils/windowScroll'
 
+import './index.less'
 import MenuItem from '../menuItem/'
 
 class Sider extends React.Component {
@@ -27,7 +27,9 @@ class Sider extends React.Component {
     return (
       <div id={collapse ? 'sidercollapse' : 'sidernormal'}>
         <div className='ant-layout-logo'>
-          <img src={this.props.collapse ? ACMLogo1 : ACMLogo2} className='brand-logo' height='30px'/>
+          <Link to='/' >
+            <img src={this.props.collapse ? ACMLogo1 : ACMLogo2} className='brand-logo' height='30px' />
+          </Link>
         </div>
         <Menu
           theme='dark'

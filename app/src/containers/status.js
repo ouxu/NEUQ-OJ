@@ -12,10 +12,6 @@ import StatusTable from '../components/content/status'
   dispatch => bindActionCreators({getStatusTable, searchStatus}, dispatch),
 )
 class StatusContainer extends React.Component {
-  constructor (props) {
-    super(props)
-  }
-
   render () {
     const {statustable} = this.props
     return (

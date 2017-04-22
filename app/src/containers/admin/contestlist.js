@@ -14,9 +14,8 @@ import ContestList from '../../components/admin/contest/contestlist'
   dispatch => bindActionCreators({getContestsMine, searchContests}, dispatch),
 )
 class ContestListManageContainer extends Component {
-
   render () {
-    const {contest: {conteststable}, getContestsMine, searchContests,deleteProblem} = this.props
+    const {contest: {conteststable}, getContestsMine, searchContests} = this.props
     return (
       <ContestList
         data={conteststable}

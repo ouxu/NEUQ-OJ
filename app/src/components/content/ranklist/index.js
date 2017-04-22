@@ -122,7 +122,7 @@ class RankList extends Component {
             <span className='rank-table-header-title'>排行榜</span>
 
             <div className='rank-table-header-other'>
-              <TimeSelect handleChange={this.handleChange}/>
+              <TimeSelect handleChange={this.handleChange} />
             </div>
           </div>
           <Table

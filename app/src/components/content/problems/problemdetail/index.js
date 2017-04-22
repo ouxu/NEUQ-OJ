@@ -104,22 +104,22 @@ class ProblemDetail extends React.Component {
     const data = await requestService.tpost(url, body)
     message.success('提交成功')
 
-    const solution_id = await data.solution_id
+    const solutionId = data.solution_id
     this.timer = setInterval(() => {
-      this.getResultData(solution_id)
+      this.getResultData(solutionId)
       const result = this.state.result
       if (result > 3) {
         if (result > 9) {
-          this.getErrorInfo(solution_id, result)
+          this.getErrorInfo(solutionId, result)
         }
         clearInterval(this.timer)
       }
     }, 1000)
   }
 
-  async getResultData (solution_id) {
+  async getResultData (solutionId) {
     try {
-      const data = await requestService.get(API.solution + solution_id)
+      const data = await requestService.get(API.solution + solutionId)
       await this.setState({
         resultdata: [data],
         result: data.result
@@ -147,47 +147,47 @@ class ProblemDetail extends React.Component {
 
     const {params} = this.props
     return (
-      <Card className="problem-detail-wrap" bodyStyle={{padding: 0}}>
-        <QueueAnim type="left" delay={100}>
-          <div className="problem-detail-breadcrumb" key="problem-detail-1">
+      <Card className='problem-detail-wrap' bodyStyle={{padding: 0}}>
+        <QueueAnim type='left' delay={100}>
+          <div className='problem-detail-breadcrumb' key='problem-detail-1'>
             <Link to={params.pnum ? `/contests/${params.cid}` : '/problems'}>
-              <Icon type="left" />
+              <Icon type='left'/>
               <span>{params.pnum ? '竞赛列表' : '问题列表'}</span>
             </Link>
-            <div className="problem-detail-breadcrumb-detail">
-              <span className="problem-detail-breadcrumb-detail-tags">
-                <Icon type="edit" /><span>{data.creator_name}</span>
+            <div className='problem-detail-breadcrumb-detail'>
+              <span className='problem-detail-breadcrumb-detail-tags'>
+                <Icon type='edit'/><span>{data.creator_name}</span>
               </span>
-              <span className="problem-detail-breadcrumb-detail-tags">
-                <Icon type="exception" /><span>{data.submit}</span>
+              <span className='problem-detail-breadcrumb-detail-tags'>
+                <Icon type='exception'/><span>{data.submit}</span>
               </span>
-              <span className="problem-detail-breadcrumb-detail-tags">
-                <Icon type="check" /><span>{data.accepted}</span>
+              <span className='problem-detail-breadcrumb-detail-tags'>
+                <Icon type='check'/><span>{data.accepted}</span>
               </span>
-              <span className="problem-detail-breadcrumb-detail-tags">
-                <Icon type="clock-circle" /><span>{data.time_limit} Sec</span>
+              <span className='problem-detail-breadcrumb-detail-tags'>
+                <Icon type='clock-circle'/><span>{data.time_limit} Sec</span>
               </span>
-              <span className="problem-detail-breadcrumb-detail-tags"><Icon type="save" />
+              <span className='problem-detail-breadcrumb-detail-tags'><Icon type='save'/>
                 <span>{data.memory_limit} MB</span>
               </span>
             </div>
           </div>
-          <div className="problem-detail-header" key="problem-detail-2">
-            <h2 className="problem-detail-header-title">{data.id} : {data.title}</h2>
-            <ButtonGroup className="problem-detail-buttongroup">
+          <div className='problem-detail-header' key='problem-detail-2'>
+            <h2 className='problem-detail-header-title'>{data.id} : {data.title}</h2>
+            <ButtonGroup className='problem-detail-buttongroup'>
               <Button
-                size="small"
+                size='small'
                 type={this.state.submit ? 'primary' : 'dashed'}
                 onClick={this.handleMenuClick}
               >
                 {this.state.submit ? '描述' : '提交'}
               </Button>
 
-              <Button size="small" type="dashed">讨论版</Button>
-              <Button size="small" type="dashed">状态</Button>
+              <Button size='small' type='dashed'>讨论版</Button>
+              <Button size='small' type='dashed'>状态</Button>
             </ButtonGroup>
           </div>
-          <div key="problem-detail-3">
+          <div key='problem-detail-3'>
             {this.state.submit
               ? <ProblemSub
                 updataCode={this.updateCode}
@@ -197,17 +197,16 @@ class ProblemDetail extends React.Component {
                 params={this.state}
                 data={data}
               />
-              : <ProblemDes data={data} />}
+              : <ProblemDes data={data}/>}
           </div>
 
-
-          <ButtonGroup className="problem-detail-buttongroup">
+          <ButtonGroup className='problem-detail-buttongroup'>
             <Button
               type={this.state.submit ? 'primary' : 'dashed'}
               onClick={this.handleMenuClick}
             >{this.state.submit ? '描述' : '提交'}</Button>
-            <Button type="dashed">讨论版</Button>
-            <Button type="dashed">状态</Button>
+            <Button type='dashed'>讨论版</Button>
+            <Button type='dashed'>状态</Button>
           </ButtonGroup>
         </QueueAnim>
       </Card>

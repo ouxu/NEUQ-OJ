@@ -1,1 +1,7 @@
-{"extends": ["standard", "standard-jsx"]}
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "standard",
+    "standard-jsx"
+  ]
+}

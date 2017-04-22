@@ -3,14 +3,14 @@
  */
 import {message} from 'antd'
 
-export default function getlocalStorage(value){
-    if (!localStorage) {
-        message.warn("您的浏览器不支持localStorage,请更新您的浏览器");
+export default function getlocalStorage (value) {
+  if (!window.localStorage) {
+    message.warn('您的浏览器不支持localStorage,请更新您的浏览器')
+  } else {
+    if (window.localStorage.getItem(value)) {
+      return window.localStorage.getItem(value)
     } else {
-        if (localStorage.getItem(value)){
-            return localStorage.getItem(value);
-        } else {
-            return false
-        }
+      return false
     }
+  }
 }

@@ -7,6 +7,7 @@ import NotFoundPage from '../components/plugins/nofind/nofind.js'
 import Register from '../components/user/register'
 import ForgetPassword from '../components/user/forgetpassword'
 import VerifyMail from '../components/user/verifyMail'
+import Actived from '../components/user/actived'
 
 import HomePageContainer from '../containers/homepage'
 import ProblemsContainer from '../containers/problems'
@@ -42,49 +43,52 @@ const history = process.env.NODE_ENV === 'development' ? hashHistory : browserHi
 const RouterApp = store => (
   <Router history={history}>
     <Route path='/' component={AppComponent}>
-      <IndexRoute component={HomePageContainer}/>
-      <Route path='homepage' component={HomePageContainer}/>
+      <IndexRoute component={HomePageContainer} />
+      <Route path='homepage' component={HomePageContainer} />
       <Route path='problems'>
-        <IndexRoute component={ProblemsContainer}/>
-        <Route path=':id' getComponent={ProblemDetail}/>
+        <IndexRoute component={ProblemsContainer} />
+        <Route path=':id' getComponent={ProblemDetail} />
       </Route>
-      <Route path='userpage/:id' component={UserPageContainer}/>
+      <Route path='userpage/:id' component={UserPageContainer} />
       <Route path='register'>
         <IndexRoute component={Register} />
-        <Route path='verify' component={VerifyMail}/>
-        <Route path='active' component={VerifyMail}/>
+        <Route path='verify'>
+          <IndexRoute component={VerifyMail} />
+          <Route path=':vcode' component={VerifyMail} />
+        </Route>
+        <Route path='active' component={VerifyMail} />
+        <Route path='actived' component={Actived} />
       </Route>
-      <Route path='forget' component={ForgetPassword}/>
+      <Route path='forget' component={ForgetPassword} />
       <Route path='status' components={StatusContainer}>
-        <Route path=':id' component={StatusContainer}/>
+        <Route path=':id' component={StatusContainer} />
       </Route>
-      <Route path='ranklist' component={RanklistContainer}/>
+      <Route path='ranklist' component={RanklistContainer} />
       <Route path='contests'>
-        <IndexRoute component={ContestsContainer}/>
+        <IndexRoute component={ContestsContainer} />
         <Route path=':cid'>
-          <IndexRoute component={ContestInfoContainer}/>
-          <Route path='problem/:pnum' getComponent={ProblemDetail}/>
+          <IndexRoute component={ContestInfoContainer} />
+          <Route path='problem/:pnum' getComponent={ProblemDetail} />
         </Route>
       </Route>
 
-      <Route path='404' component={NotFoundPage}/>
-
+      <Route path='404' component={NotFoundPage} />
     </Route>
 
     <Route path='admin' component={AdminComponent} onEnter={CheckData}>
-      <IndexRoute component={ProblemManageContainer}/>
-      <Route path='news' component={NewsManageContainer}/>
+      <IndexRoute component={ProblemManageContainer} />
+      <Route path='news' component={NewsManageContainer} />
 
-      <Route path='contest-list' component={ContestManageContainer}/>
+      <Route path='contest-list' component={ContestManageContainer} />
       <Route path='contest-edit' getComponent={ContestEdit}>
-        <Route path=':cid' getComponent={ContestEdit}/>
+        <Route path=':cid' getComponent={ContestEdit} />
       </Route>
 
-      <Route path='problem-list' component={ProblemManageContainer}/>
+      <Route path='problem-list' component={ProblemManageContainer} />
       <Route path='problem-edit' getComponent={ProblemEdit}>
-        <Route path=':id' getComponent={ProblemEdit}/>
+        <Route path=':id' getComponent={ProblemEdit} />
       </Route>
-      <Route path='problem-upload' component={ProblemUploadContainer}/>
+      <Route path='problem-upload' component={ProblemUploadContainer} />
     </Route>
   </Router>
 )

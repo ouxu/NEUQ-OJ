@@ -9,14 +9,14 @@ import { getContest, getContestsTable, joinContest, searchContests, tokenVerify 
 
 @connect(
   state => ({
-    contests:state.contests,
+    contests: state.contests,
     loading: state.loading
   }),
   dispatch => bindActionCreators({getContestsTable, searchContests, joinContest, getContest, tokenVerify}, dispatch),
 )
 class ContestsContainer extends React.Component {
   render () {
-    const {contests:{conteststable},loading, getContestsTable, searchContests, joinContest, getContest, tokenVerify} = this.props
+    const {contests: {conteststable}, loading, getContestsTable, searchContests, joinContest, getContest, tokenVerify} = this.props
     return (
       <ContestPage
         data={conteststable.contests}

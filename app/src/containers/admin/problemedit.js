@@ -17,7 +17,7 @@ import ProblemEdit from '../../components/admin/problem/problemedit'
 )
 class ProblemEditContainer extends Component {
   componentDidMount () {
-    this.props.params.id ? this.props.getProblemInfo(this.props.params) : this.props.clearProblem();
+    this.props.params.id ? this.props.getProblemInfo(this.props.params) : this.props.clearProblem()
   }
 
   render () {
@@ -29,8 +29,8 @@ class ProblemEditContainer extends Component {
         loading={loading}
         editProblem={editProblem}
       />
-    );
+    )
   }
 }
 
-export default ProblemEditContainer;
+export default ProblemEditContainer
