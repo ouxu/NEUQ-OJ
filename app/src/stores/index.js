@@ -4,7 +4,7 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-log'
-import rootReducer from '../reducers'
+import rootReducer from 'reducers'
 
 const configStore = (initialState) => {
   const log = createLogger()
@@ -16,7 +16,7 @@ const configStore = (initialState) => {
     // 热替换
   if (module.hot) {
     module.hot.accept('../reducers', () => {
-      const nextReducer = require('../reducers')
+      const nextReducer = require('reducers')
       store.replaceReducer(nextReducer)
     })
   }

@@ -88,15 +88,13 @@
     "url-loader": "^0.5.7",
     "webpack": "^2.2.1",
     "webpack-dashboard": "^0.3.0",
-    "webpack-dev-server": "^2.3.0"
+    "webpack-dev-server": "^2.3.0",
+    "webpack-visualizer-plugin": "^0.1.11"
   },
   "keywords": [
     "es6",
     "react"
   ],
-  "standard": {
-    "parser": "babel-eslint"
-  },
   "author": "out_xu",
   "license": "MIT"
 }

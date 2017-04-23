@@ -2,7 +2,7 @@
  * Created by out_xu on 17/3/28.
  */
 
-import {SET_NEWS_LIST, SET_NEWS} from '../actions/type'
+import {SET_NEWS_LIST, SET_NEWS} from 'actions/type'
 
 const initAdmin = {
   news: {},

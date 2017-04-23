@@ -3,7 +3,7 @@
  */
 
 import API from '../api'
-import * as requestService from '../utils/request'
+import * as requestService from 'utils/request'
 
 import {SET_MESSAGE_COUNT, actionCreater} from './type'
 

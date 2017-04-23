@@ -2,9 +2,9 @@
  * Created by out_xu on 17/2/21.
  */
 import { actionCreater, GET_CONTEST_ERR, GET_CONTEST_SUCC, LOADED, LOADING, SET_CONTESTS_LIST } from './type'
-import API from '../api'
-import { getLocalStorage, goto, jumpTo, newDate } from '../utils'
-import * as requestService from '../utils/request'
+import API from 'api'
+import { getLocalStorage, goto, jumpTo, newDate } from 'utils'
+import * as requestService from 'utils/request'
 import { message } from 'antd'
 
 /**
@@ -27,7 +27,7 @@ export function getContestsTable (page = 1, size = 20) {
       window.sessionStorage.setItem('neuq_oj.contestspagecount', data.total_count)
 
       await dispatch(actionCreater(SET_CONTESTS_LIST, data))
-      jumpTo('navigation')
+      jumpTo('Navigation')
     } catch (e) {
       console.error(e)
     }
@@ -57,7 +57,7 @@ export function searchContests (value, page = 1, size = 20) {
 
       await dispatch(actionCreater(SET_CONTESTS_LIST, data))
 
-      jumpTo('navigation')
+      jumpTo('Navigation')
     } catch (e) {
       console.error(e)
     }
@@ -90,7 +90,7 @@ export function getContestsMine (page = 1, size = 20) {
       window.sessionStorage.setItem('neuq_oj.contestspagecount', data.total_count)
 
       await dispatch(actionCreater(SET_CONTESTS_LIST, data))
-      jumpTo('navigation')
+      jumpTo('Navigation')
     } catch (e) {
       console.error(e)
     }
@@ -108,7 +108,7 @@ export function getContest (id) {
       if (id) {
         let data = await requestService.tget(API.contest + id)
         await dispatch(actionCreater(GET_CONTEST_SUCC, data))
-        jumpTo('navigation')
+        jumpTo('Navigation')
       } else {
         dispatch(actionCreater(GET_CONTEST_ERR))
       }
@@ -129,7 +129,7 @@ export function getContestDetail (id) {
     try {
       await dispatch(actionCreater(LOADING))
 
-      let data = await requestService.tget(API.contest + id + '/updatepassword')
+      let data = await requestService.tget(API.contest + id + '/update')
       let {contest_info: {start_time, end_time}} = data
       let start = newDate(start_time)
       let end = newDate(end_time)
@@ -165,9 +165,9 @@ export function joinContest (id, body) {
       const url = API.contest + id + '/join'
       await requestService.tpost(url, body)
       await getContest(id)
-      await goto('/contests/' + id)
+      await goto('/Contests/' + id)
     } catch (e) {
-      goto('/contests')
+      goto('/Contests')
     }
   }
 }
@@ -198,7 +198,7 @@ export function delContest (id, body) {
 export function editContest (body, id) {
   return async dispatch => {
     try {
-      let url = id ? API.contest + id + '/updatepassword/info' : API.createcontest
+      let url = id ? API.contest + id + '/update/info' : API.createcontest
       await requestService.tpost(url, body)
       await dispatch(actionCreater(GET_CONTEST_ERR))
       message.success('发布成功')
@@ -208,9 +208,10 @@ export function editContest (body, id) {
   }
 }
 
+
 export function updateContestProblems (id, body) {
   try {
-    requestService.tpost(API.contest + id + '/updatepassword/problem', body)
+    requestService.tpost(API.contest + id + '/update/Problem', body)
   } catch (e) {
     console.error(e)
   }

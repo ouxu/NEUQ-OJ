@@ -3,11 +3,11 @@
  */
 import { actionCreater, CLEAN_USERME, IS_LOGINED, SET_USER_ROLE, SET_USERINFO, SET_USERME } from './type'
 import { message } from 'antd'
-import * as requestService from '../utils/request'
+import * as requestService from 'utils/request'
 // 引入自定义工具
-import API from '../api'
+import API from 'api'
 
-import { goto } from '../utils'
+import { goto } from 'utils'
 
 /**
  * 登录验证
@@ -126,7 +126,7 @@ export function userRegister (body) {
       //   },
       //   body: urlEncode(body)
       // }
-      // const json = await fetch(API.register, headers)
+      // const json = await fetch(API.Register, headers)
       // if (json.code === 0) {
       //   const data = await json.data
       //   await dispatch(actionCreater(SET_USERME, data.user))
@@ -142,7 +142,7 @@ export function userRegister (body) {
         ...userInfo,
         user_id: data.user_id
       }))
-      goto('/register/verify')
+      goto('/Register/Verify')
     } catch (e) {
       console.error(e)
     }
@@ -159,7 +159,7 @@ export function sendActiveMail (params) {
   return async () => {
     try {
       await requestService.get(API.userMail, params)
-      goto('/register/verify')
+      goto('/Register/Verify')
     } catch (e) {
       console.error(e.message)
     }
@@ -183,11 +183,11 @@ export function activeUser (param) {
         window.localStorage.setItem('neuq_oj.role', data.role)
         await dispatch(actionCreater(SET_USERME, data.user))
         await dispatch(actionCreater(SET_USER_ROLE, data.role))
-        await goto('/register/actived')
+        await goto('/Register/Actived')
         message.success('激活成功')
       } catch (e) {
         message.error('验证链接超时')
-        goto('/register/active')
+        goto('/Register/Active')
         console.error(e.message)
       }
     }, 2000)

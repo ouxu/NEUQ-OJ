@@ -4,8 +4,8 @@
 
 const ContestEdit = (location, cb) => {
   require.ensure([], require => {
-    cb(null, require('../../../containers/admin/contestedit'))
-  }, 'contestedit')
+    cb(null, require('containers/admin/ContestEdit'))
+  }, 'ContestEdit')
 }
 
 export default ContestEdit

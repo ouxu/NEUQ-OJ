@@ -3,8 +3,8 @@
  */
 import { actionCreater, LOADED, LOADING, REMOVE_PROBLEM_DETAIL, SET_PROBLEM_DETAIL, SET_PROBLEM_TABLE } from './type'
 import API from '../api'
-import { goto, jumpTo } from '../utils'
-import * as requestService from '../utils/request'
+import { goto, jumpTo } from 'utils'
+import * as requestService from 'utils/request'
 import { message } from 'antd'
 /**
  * 获取问题列表数据
@@ -26,7 +26,7 @@ export function getProblemTable (page = 1, size = 20) {
       window.sessionStorage.setItem('neuq_oj.problempagecount', data.total_count)
 
       await dispatch(actionCreater(SET_PROBLEM_TABLE, data))
-      jumpTo('navigation')
+      jumpTo('Navigation')
     } catch (e) {
       console.error(e)
     }
@@ -55,7 +55,7 @@ export function getProblemMine (page = 1, size = 20) {
       window.sessionStorage.setItem('neuq_oj.problempagecount', data.total_count)
 
       await dispatch(actionCreater(SET_PROBLEM_TABLE, data))
-      jumpTo('navigation')
+      jumpTo('Navigation')
     } catch (e) {
       console.error(e)
     }
@@ -118,7 +118,7 @@ export function searchProblems (value, page = 1, size = 20) {
 
       await dispatch(actionCreater(SET_PROBLEM_TABLE, data))
 
-      jumpTo('navigation')
+      jumpTo('Navigation')
     } catch (e) {
       console.error(e)
     }
@@ -152,10 +152,10 @@ export function deleteProblem (id, body) {
 export function editProblem (body, id) {
   return async () => {
     try {
-      let url = id ? API.problem + id + '/updatepassword' : API.problem + 'create'
+      let url = id ? API.problem + id + '/update' : API.problem + 'create'
       await requestService.tpost(url, body)
       message.success('发布成功')
-      await goto('/admin/problem-list')
+      await goto('/admin/Problem-list')
     } catch (e) {
       console.error(e)
     }

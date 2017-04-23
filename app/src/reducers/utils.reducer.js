@@ -2,7 +2,7 @@
  * Created by out_xu on 17/3/12.
  */
 
-import { SET_TIME_STAMP } from '../actions/type'
+import { SET_TIME_STAMP } from 'actions/type'
 
 export default function timeStamp (state = {}, action) {
   switch (action.type) {

@@ -1,7 +1,7 @@
 /**
  * Created by out_xu on 17/2/21.
  */
-import { SET_CONTESTS_LIST, GET_CONTEST_SUCC, GET_CONTEST_ERR } from '../actions/type'
+import { SET_CONTESTS_LIST, GET_CONTEST_SUCC, GET_CONTEST_ERR } from 'actions/type'
 
 const initContests = {
   contest: {},

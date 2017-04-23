@@ -3,14 +3,14 @@
  */
 import React, { Component } from 'react'
 import QueueAnim from 'rc-queue-anim'
-import Footer from '../plugins/footer'
-import Navigation from '../../components/plugins/navigation/adminnav'
-import AdminSider from '../../components/plugins/sider/adminsider'
+import Footer from 'components/plugins/Footer'
+import Navigation from 'components/plugins/Navigation/adminnav'
+import AdminSider from 'components/plugins/Sider/AdminSider'
 import './index.less'
 
 class AdminComponent extends Component {
   render () {
-    const {path = 'problem-list'} = this.props.routes[1]
+    const {path = 'Problem-list'} = this.props.routes[1]
     return (
       <QueueAnim id='admin' type={['left', 'right']} delay={100}>
         <Navigation />

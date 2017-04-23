@@ -3,12 +3,12 @@
  */
 import React from 'react'
 import { Icon } from 'antd'
-import Navigation from '../containers/navigation'
-import Sider from './plugins/sider'
-import Footer from './plugins/footer'
+import Navigation from 'containers/Navigation'
+import Sider from 'components/plugins/Sider'
+import Footer from 'components/plugins/Footer'
 
 import './index.less'
-import {pureRender} from '../utils'
+import { pureRender } from 'utils'
 
 // 配置整体组件
 @pureRender
@@ -36,7 +36,7 @@ class AppComponent extends React.Component {
           <Sider
             collapse={collapse}
             navselect={path}
-              />
+          />
           <div className='ant-aside-action' onClick={this.onCollapseChange}>
             {collapse ? <Icon type='right' /> : <Icon type='left' />}
           </div>

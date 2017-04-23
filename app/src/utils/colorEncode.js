@@ -3,7 +3,7 @@
  */
 import React from 'react'
 
-import { sec2Str } from './'
+import { sec2Str } from 'utils'
 
 export default (record, i) => {
   let bgColor = 'eeeeee'

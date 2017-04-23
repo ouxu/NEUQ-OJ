@@ -3,7 +3,7 @@ const path = require('path')
 const autoprefixer = require('autoprefixer')
 const dflPort = 8080  // 配置端口
 module.exports = {
-    // 配置服务器
+  // 配置服务器
   devServer: {
     port: dflPort,
     contentBase: path.join(__dirname, './app'),
@@ -11,19 +11,12 @@ module.exports = {
     inline: true,
     noInfo: false,
     open: true,
-    stats: { colors: true },
+    stats: {colors: true},
     overlay: {
       warnings: true,
       errors: true
     },
     host: '0.0.0.0'
-    // proxy: [
-    //   {
-    //     context: context,
-    //     target: 'http://192.168.1.189:3000',
-    //     secure: false
-    //   }
-    // ]
   },
   devtool: 'cheap-module-eval-source-map',
 
@@ -62,7 +55,16 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: [' ', '.js', '.jsx']
+    extensions: [' ', '.js', '.jsx'],
+    alias: {
+      'actions': __dirname + '/app/src/actions',
+      'api': __dirname + '/app/src/api',
+      'components': __dirname + '/app/src/components',
+      'containers': __dirname + '/app/src/containers',
+      'images': __dirname + '/app/src/images',
+      'reducers': __dirname + '/app/src/reducers',
+      'utils': __dirname + '/app/src/utils'
+    }
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

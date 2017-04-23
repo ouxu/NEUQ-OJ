@@ -3,7 +3,7 @@
  */
 
 import API from '../api'
-import * as requestService from '../utils/request'
+import * as requestService from 'utils/request'
 import { actionCreater, LOADED, LOADING, SET_HOME_NEWS } from './type'
 
 /**

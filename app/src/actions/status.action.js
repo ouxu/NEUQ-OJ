@@ -2,9 +2,9 @@
  * Created by out_xu on 17/1/5.
  */
 import { SET_STATUS_TABLE, actionCreater } from './type'
-import API from '../api'
-import {jumpTo} from '../utils'
-import * as requestService from '../utils/request'
+import API from 'api'
+import {jumpTo} from 'utils'
+import * as requestService from 'utils/request'
 
 /**
  * 获取当前提交状态
@@ -27,7 +27,7 @@ export function getStatusTable (page = 1, size = 20, searchobj) {
       window.sessionStorage.setItem('neuq_oj.statuspagesize', size)
 
       await dispatch(actionCreater(SET_STATUS_TABLE, data))
-      jumpTo('navigation')
+      jumpTo('Navigation')
     } catch (e) {
       console.error(e)
     }

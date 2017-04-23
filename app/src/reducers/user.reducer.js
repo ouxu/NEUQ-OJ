@@ -1,7 +1,7 @@
 /**
  * Created by out_xu on 16/12/20.
  */
-import { SET_USERINFO, SET_USERME, IS_LOGINED, CLEAN_USERME, SET_USER_ROLE, SET_MESSAGE_COUNT } from '../actions/type'
+import { SET_USERINFO, SET_USERME, IS_LOGINED, CLEAN_USERME, SET_USER_ROLE, SET_MESSAGE_COUNT } from 'actions/type'
 
 const initUser = {
   userinfo: {},

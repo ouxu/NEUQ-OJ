@@ -1,18 +1,21 @@
 /**
  * Created by out_xu on 17/3/28.
  */
-
 /**
  * 获取主页信息
  * @param home
  */
 import API from '../api'
-import * as requestService from '../utils/request'
-import {SET_NEWS_LIST, SET_NEWS, actionCreater} from './type'
-import {message} from 'antd'
+import * as requestService from 'utils/request'
+import { actionCreater, SET_NEWS, SET_NEWS_LIST } from './type'
+import { message } from 'antd'
 
+/**
+ * 获取公告列表
+ * @returns {function(*)}
+ */
 export function getNewsList () {
-  return async(dispatch) => {
+  return async dispatch => {
     try {
       const param = {
         page: 1,
@@ -32,7 +35,7 @@ export function getNewsList () {
  * @returns {function(*)}
  */
 export function getNews (id) {
-  return async(dispatch) => {
+  return async dispatch => {
     try {
       const data = await requestService.get(API.news + '/' + id)
       await dispatch(actionCreater(SET_NEWS, data))
@@ -41,11 +44,16 @@ export function getNews (id) {
     }
   }
 }
-
+/**
+ * 编辑更新公告
+ * @param body
+ * @param id
+ * @returns {function()}
+ */
 export function editNews (body, id) {
-  return async() => {
+  return async () => {
     try {
-      let url = id ? API.news + '/' + id + '/updatepassword' : API.createnews
+      let url = id ? API.news + '/' + id + '/update' : API.createnews
       await requestService.tpost(url, body)
       message.success('发布成功')
     } catch (e) {
@@ -53,9 +61,13 @@ export function editNews (body, id) {
     }
   }
 }
-
+/**
+ * 删除公告
+ * @param id
+ * @returns {function()}
+ */
 export function delNews (id) {
-  return async() => {
+  return async () => {
     try {
       await requestService.tget(API.news + '/' + id + '/delete')
       message.success('删除成功')

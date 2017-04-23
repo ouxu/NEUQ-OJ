@@ -1,7 +1,7 @@
 /**
  * Created by out_xu on 16/12/20.
  */
-import {SET_HOMEPAGE_INFO, SET_HOME_NEWS} from '../actions/type'
+import {SET_HOMEPAGE_INFO, SET_HOME_NEWS} from 'actions/type'
 
 const initHome = {
   news: {}

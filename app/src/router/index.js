@@ -2,37 +2,36 @@ import React from 'react'
 import { browserHistory, hashHistory, IndexRoute, Route, Router } from 'react-router'
 import { message } from 'antd'
 // 引入单个页面（包括嵌套的子页面）
-import AppComponent from '../components'
-import NotFoundPage from '../components/plugins/nofind/nofind.js'
-import Register from '../components/user/register'
-import ForgetPassword from '../components/user/forgetpassword'
-import VerifyMail from '../components/user/verifyMail'
-import Actived from '../components/user/verifyMail/actived'
+import AppComponent from 'components'
+import NotFoundPage from 'components/plugins/Nofind'
+import Register from 'components/user/Register'
+import ForgetPassword from 'components/user/ForgetPassword'
+import VerifyMail from 'components/user/VerifyMail'
+import Actived from 'components/user/VerifyMail/Actived'
 
-import HomePageContainer from '../containers/homepage'
-import ProblemsContainer from '../containers/problems'
-import UserPageContainer from '../containers/userpage'
-import StatusContainer from '../containers/status'
-import ContestsContainer from '../containers/contest'
-import ContestInfoContainer from '../containers/contestinfo'
-import RanklistContainer from '../containers/ranklist'
-import AdminComponent from '../components/admin'
-import NewsManageContainer from '../containers/admin/news'
+import HomePageContainer from 'containers/HomePage'
+import ProblemsContainer from 'containers/Problems'
+import UserPageContainer from 'containers/UserPage'
+import StatusContainer from 'containers/Status.js'
+import ContestsContainer from 'containers/Contest'
+import ContestInfoContainer from 'containers/ContestInfo'
+import RanklistContainer from 'containers/RankList'
+import AdminComponent from 'components/admin'
+import NewsManageContainer from 'containers/admin/News'
 
-import ContestManageContainer from '../containers/admin/contestlist'
-import ProblemManageContainer from '../containers/admin/problemlist'
-// import ProblemEditContainer from '../containers/admin/problemedit'
-import ProblemUploadContainer from '../containers/admin/problemupload'
+import ContestManageContainer from 'containers/admin/ContestList'
+import ProblemManageContainer from 'containers/admin/ProblemList'
+import ProblemUploadContainer from 'containers/admin/ProblemUpload'
+import EditInfoContainer from 'containers/EditInfo'
 
-import ProblemDetail from './lazyload/problemDetail'
-import ContestEdit from './lazyload/admin/contestedit'
-import ProblemEdit from './lazyload/admin/problemedit'
-// import ContestEditContainer from '../containers/admin/contestedit'
+import ProblemDetail from './lazyload/ProblemDetail'
+import ContestEdit from './lazyload/admin/ContestEdit'
+import ProblemEdit from './lazyload/admin/ProblemEdit'
 
-// 配置路由，并将路由注入到id为app的DOM元素中，后期需要React-router-ensure
 const CheckData = (location, replace) => {
   const userRole = window.localStorage.getItem('neuq_oj.role')
-  if (userRole !== 'teacher' || userRole !== 'admin') {
+  console.log(userRole)
+  if (userRole !== 'teacher' && userRole !== 'admin') {
     message.error('权限不足')
     replace({pathname: '/'})
   }
@@ -49,6 +48,7 @@ const RouterApp = store => (
         <IndexRoute component={ProblemsContainer} />
         <Route path=':id' getComponent={ProblemDetail} />
       </Route>
+      <Route path='userpage/edit' component={EditInfoContainer} />
       <Route path='userpage/:id' component={UserPageContainer} />
       <Route path='register'>
         <IndexRoute component={Register} />

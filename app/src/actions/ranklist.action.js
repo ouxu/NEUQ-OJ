@@ -2,9 +2,9 @@
  * Created by out_xu on 17/3/11.
  */
 import { actionCreater, LOADED, LOADING, SET_RANK_TABLE } from './type'
-import API from '../api'
-import * as requestService from '../utils/request'
-import { jumpTo } from '../utils'
+import API from 'api'
+import * as requestService from 'utils/request'
+import { jumpTo } from 'utils'
 
 /**
  * 获取排行榜
@@ -28,7 +28,7 @@ export function getRankTable (page = 1, size = 20, scope = 'total') {
       window.sessionStorage.setItem('neuq_oj.ranklistpagesize', size)
       await dispatch(actionCreater(SET_RANK_TABLE, data))
 
-      jumpTo('navigation')
+      jumpTo('Navigation')
       await dispatch(actionCreater(LOADED))
     } catch (e) {
       await dispatch(actionCreater(LOADED))

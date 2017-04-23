@@ -5,7 +5,7 @@
 // 引入垫片兼容IE
 require('es6-promise')
 
-import {codeHelper, getToken} from './'
+import {codeHelper, getToken} from 'utils'
 const TIMEOUT = 15000
 
 function filterStatus (json) {

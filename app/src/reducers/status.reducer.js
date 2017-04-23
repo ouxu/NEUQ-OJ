@@ -1,7 +1,7 @@
 /**
  * Created by out_xu on 17/1/5.
  */
-import { SET_STATUS_TABLE } from '../actions/type'
+import { SET_STATUS_TABLE } from 'actions/type'
 
 const initStatus = {
   statustable: []

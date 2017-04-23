@@ -1,7 +1,7 @@
 /**
  * Created by out_xu on 16/12/30.
  */
-import { REMOVE_PROBLEM_DETAIL, SET_PROBLEM_DETAIL, SET_PROBLEM_TABLE } from '../actions/type'
+import { REMOVE_PROBLEM_DETAIL, SET_PROBLEM_DETAIL, SET_PROBLEM_TABLE } from 'actions/type'
 
 const initProblem = {
   problemtable: {},
