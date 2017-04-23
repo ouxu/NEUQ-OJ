@@ -4,14 +4,14 @@
 import { SET_RANK_TABLE } from 'actions/type'
 
 const initRanklist = {
-  ranklist: []
+  rankList: []
 }
 export default function ranklist (state = initRanklist, action) {
   switch (action.type) {
     case SET_RANK_TABLE:
       return {
         ...state,
-        ranklist: action.payload
+        rankList: action.payload
       }
     default :
       return state

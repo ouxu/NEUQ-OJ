@@ -24,11 +24,11 @@ class UserpageContainer extends React.Component {
   }
 
   render () {
-    const {user: {userinfo, userme}, status} = this.props
+    const {user: {userInfo, userMe}, status} = this.props
     const me = this.props.params.id === window.localStorage.getItem('neuq_oj.id')
     return (
       <UserPanel
-        user={me ? userme : userinfo}
+        user={me ? userMe : userInfo}
         status={status}
       />
     )

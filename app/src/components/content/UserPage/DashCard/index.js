@@ -25,11 +25,11 @@ export const DashCard = ({status}) => {
     <Badge status='error' text='运行错误' />,
     <Badge status='error' text='编译错误' />
   ]
-  const {statustable = []} = status
+  const {statusTable = []} = status
   const statuslist = (
     <div className='userpage-dashcard-collected-content'>
       {
-        statustable.map((t, i) =>
+        statusTable.map((t, i) =>
           i < 4 &&
           <Row type='flex'
             justify='start'

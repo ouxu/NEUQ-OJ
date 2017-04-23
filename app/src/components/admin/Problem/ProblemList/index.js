@@ -51,7 +51,7 @@ class ProblemList extends Component {
 
   createCon () {
     this.props.createContest({problems: this.state.selected})
-    goto('admin/Contest-edit')
+    goto('admin/contest-edit')
   }
 
   passwordChange (e) {
@@ -89,15 +89,15 @@ class ProblemList extends Component {
     const columns = [{
       title: '',
       width: '1%',
-      key: 'Status-none',
-      className: 'Status-none'
+      key: 'problem-none',
+      className: 'problem-none'
     }, {
       title: '#',
       dataIndex: 'id',
-      key: 'Problem-id',
+      key: 'problem-id',
       onCellClick: this.openProblem,
       width: 60,
-      className: 'Problem-id mock-a'
+      className: 'problem-id mock-a'
     }, {
       title: '难度',
       render: record => (
@@ -113,7 +113,7 @@ class ProblemList extends Component {
       ],
       onFilter: (value, record) => record.difficulty === Number(value),
       width: 60,
-      key: 'Problem-diff'
+      key: 'problem-diff'
     }, {
       title: '标题',
       render: record => (
@@ -127,29 +127,29 @@ class ProblemList extends Component {
                   {value.tag_title}
                 </Tag>))
             }
-            <span className='mock-a' onClick={() => openInNewTab('Problems/' + record.id)}>
+            <span className='mock-a' onClick={() => openInNewTab('problems/' + record.id)}>
               {record.title}
             </span>
           </span>
         </span>
       ),
-      key: 'Problem-title',
-      className: 'Problem-title'
+      key: 'problem-title',
+      className: 'problem-title'
     }, {
       title: '操作',
-      render: (record) => <Link to={'admin/Problem-edit/' + record.id}>修改</Link>,
+      render: (record) => <Link to={'admin/problem-edit/' + record.id}>修改</Link>,
       width: 40,
-      key: 'Problem-manage-action',
-      className: 'Problem-manage-action'
+      key: 'problem-manage-action',
+      className: 'problem-manage-action'
     }, {
       title: '删除',
       render: () => <Popconfirm title={popInput} onConfirm={this.popConfirm} okText='Yes' cancelText='No'>
         <a>删除</a>
       </Popconfirm>,
       width: 40,
-      key: 'Problem-manage-del',
+      key: 'problem-manage-del',
       onCellClick: this.delProblem,
-      className: 'Problem-manage-action'
+      className: 'problem-manage-action'
     }]
     const rowSelection = {
       onChange: async (selectedRowKeys) => {

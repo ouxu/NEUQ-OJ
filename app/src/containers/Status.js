@@ -13,10 +13,10 @@ import StatusTable from 'components/content/Status'
 )
 class StatusContainer extends React.Component {
   render () {
-    const {statustable} = this.props
+    const {statusTable} = this.props
     return (
       <StatusTable
-        data={statustable}
+        data={statusTable}
         getStatusTable={this.props.getStatusTable}
         searchStatus={this.props.searchStatus}
       />

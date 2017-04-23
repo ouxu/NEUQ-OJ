@@ -24,7 +24,7 @@ class NavigationContainer extends React.Component {
   async componentDidMount () {
     try {
       await this.props.action.tokenVerify()
-      this.props.action.getMessageCount()
+      // this.props.action.getMessageCount()
     } catch (e) {
       // console.error(e)
     }

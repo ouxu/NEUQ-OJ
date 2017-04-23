@@ -15,10 +15,10 @@ import ContestList from 'components/admin/Contest/ContestList'
 )
 class ContestListManageContainer extends Component {
   render () {
-    const {contest: {conteststable}, getContestsMine, searchContests} = this.props
+    const {contest: {contestsTable}, getContestsMine, searchContests} = this.props
     return (
       <ContestList
-        data={conteststable}
+        data={contestsTable}
         getContestsMine={getContestsMine}
         searchContests={searchContests}
       />

@@ -16,10 +16,10 @@ import { getContest, getContestsTable, joinContest, searchContests, tokenVerify 
 )
 class ContestsContainer extends React.Component {
   render () {
-    const {contests: {conteststable}, loading, getContestsTable, searchContests, joinContest, getContest, tokenVerify} = this.props
+    const {contests: {contestsTable}, loading, getContestsTable, searchContests, joinContest, getContest, tokenVerify} = this.props
     return (
       <ContestPage
-        data={conteststable.contests}
+        data={contestsTable.contests}
         loading={loading}
         getContestsTable={getContestsTable}
         searchContests={searchContests}

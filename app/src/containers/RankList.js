@@ -13,11 +13,11 @@ import RankList from 'components/content/Ranklist'
 )
 class RanklistContainer extends Component {
   render () {
-    const {ranklist} = this.props
+    const {rankList} = this.props
     return (
       <RankList
         getRankTable={this.props.getRankTable}
-        data={ranklist}
+        data={rankList}
       />
     )
   }

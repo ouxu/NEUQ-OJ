@@ -16,7 +16,7 @@ import { goto } from 'utils'
 export function tokenVerify () {
   return async (dispatch) => {
     try {
-      await requestService.tget(API.tokenverify)
+      await requestService.tget(API.tokenVerify)
       await dispatch(actionCreater(IS_LOGINED))
     } catch (e) {
       dispatch(actionCreater(CLEAN_USERME))
@@ -79,7 +79,7 @@ export function logout () {
 export function getUserMe () {
   return async (dispatch) => {
     try {
-      const data = await requestService.tget(API.userme)
+      const data = await requestService.tget(API.userMe)
       await dispatch(actionCreater(SET_USERME, data))
     } catch (e) {
       window.localStorage.removeItem('neuq_oj.token')
@@ -102,7 +102,7 @@ export function getUserMe () {
 export function getUserInfo (id) {
   return async (dispatch) => {
     try {
-      const data = await requestService.get(`${API.userinfo + id}/info`)
+      const data = await requestService.get(`${API.userInfo + id}/info`)
       dispatch(actionCreater(SET_USERINFO, data))
     } catch (e) {
       console.error(e)
@@ -142,7 +142,7 @@ export function userRegister (body) {
         ...userInfo,
         user_id: data.user_id
       }))
-      goto('/Register/Verify')
+      goto('/register/verify')
     } catch (e) {
       console.error(e)
     }
@@ -159,7 +159,7 @@ export function sendActiveMail (params) {
   return async () => {
     try {
       await requestService.get(API.userMail, params)
-      goto('/Register/Verify')
+      goto('/register/verify')
     } catch (e) {
       console.error(e.message)
     }
@@ -183,17 +183,22 @@ export function activeUser (param) {
         window.localStorage.setItem('neuq_oj.role', data.role)
         await dispatch(actionCreater(SET_USERME, data.user))
         await dispatch(actionCreater(SET_USER_ROLE, data.role))
-        await goto('/Register/Actived')
+        await goto('/register/actived')
         message.success('激活成功')
       } catch (e) {
         message.error('验证链接超时')
-        goto('/Register/Active')
+        goto('/register/active')
         console.error(e.message)
       }
     }, 2000)
   }
 }
 
+/**
+ * 发送忘记密码验证邮箱
+ * @param param
+ * @returns {function()}
+ */
 export function forgotPassword (param) {
   return async () => {
     try {
@@ -205,7 +210,11 @@ export function forgotPassword (param) {
     }
   }
 }
-
+/**
+ * 找回密码
+ * @param params
+ * @returns {number}
+ */
 export function findPassword (params) {
   return setTimeout(async () => {
     try {
@@ -216,4 +225,14 @@ export function findPassword (params) {
       goto('/forget')
     }
   }, 2000)
+}
+
+export function updateUserInfo (params) {
+  return async ()=> {
+    try {
+      await requestService.tpost(API.updateUserInfo,params)
+    } catch (e){
+      console.log(e.message)
+    }
+  }
 }

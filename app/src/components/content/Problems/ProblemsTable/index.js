@@ -49,8 +49,8 @@ class ProblemsTable extends React.Component {
     const columns = [{
       title: '',
       width: '1%',
-      key: 'Status-none',
-      className: 'Status-none'
+      key: 'problem-none',
+      className: 'problem-none'
     }, {
       title: '状态',
       render: (record) => {
@@ -63,17 +63,17 @@ class ProblemsTable extends React.Component {
         return null
       },
       width: 40,
-      key: 'Problem-Status',
-      className: 'Problem-Status'
+      key: 'problem-status',
+      className: 'problem-status'
     }, {
       title: '#',
       render: record =>
         (<span>
           <Link to={`problems/${record.id}`}> {record.id}</Link>
         </span>),
-      key: 'Problem-id',
+      key: 'problem-id',
       width: 60,
-      className: 'Problem-id'
+      className: 'problem-id'
     }, {
       title: '难度',
       render: record => (
@@ -89,7 +89,7 @@ class ProblemsTable extends React.Component {
       ],
       onFilter: (value, record) => record.difficulty === Number(value),
       width: 60,
-      key: 'Problem-diff'
+      key: 'problem-diff'
     }, {
       title: '标题',
       render: record =>
@@ -102,24 +102,24 @@ class ProblemsTable extends React.Component {
             <Link to={`problems/${record.id}`}> {record.title}</Link>
           </div>
         </span>),
-      key: 'Problem-title',
-      className: 'Problem-title'
+      key: 'problem-title',
+      className: 'problem-title'
     }, {
       title: '来源',
       dataIndex: 'source',
-      key: 'Problem-source'
+      key: 'problem-source'
     }, {
       title: '提交',
       dataIndex: 'submit',
       sorter: (a, b) => a.submit - b.submit,
       width: 80,
-      key: 'Problem-problemsubmit'
+      key: 'problem-problemsubmit'
     }, {
       title: '正确',
       dataIndex: 'accepted',
       sorter: (a, b) => a.accept - b.accept,
       width: 60,
-      key: 'Problem-accept'
+      key: 'problem-accept'
     }]
     const pagination = {
       pageSize: Number(window.sessionStorage.getItem('neuq_oj.problempagesize')),

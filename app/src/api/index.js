@@ -11,26 +11,25 @@ const apiMaker = path => `${__APIHOST__}/${path}`
 export default {
   host: apiMaker(''),
   // user
-  tokenverify: apiMaker('token-Verify'),
-  register: apiMaker('user/Register'),
-  userActive: apiMaker('user/Active'),
-  userMail: apiMaker('user/Active-mail/send'),
+  tokenVerify: apiMaker('token-verify'),
+  register: apiMaker('user/register'),
+  userActive: apiMaker('user/active'),
+  userMail: apiMaker('user/active-mail/send'),
   forgotPassword: apiMaker('user/forgot-password'),
   resetPassword: apiMaker('user/reset-password'),
-  findPassword: apiMaker('user/reset-password/Verify'),
+  findPassword: apiMaker('user/reset-password/verify'),
   login: apiMaker('user/login'),
   logout: apiMaker('user/logout'),
-  userme: apiMaker('user/me'),
-  userinfo: apiMaker('user/'),  // '/{id}/info'
+  userMe: apiMaker('user/me'),
+  userInfo: apiMaker('user/'),  // '/{id}/info'
+  updateUserInfo: apiMaker('user/update'),
   messageCount: apiMaker('message/getMessageCount'),
   checkMessage: apiMaker('message/checkMessage/'),
-  // homedata: apiMaker('News/data'),
-  homedata: 'http://rap.taobao.org/mockjsdata/12142/News/data',
   // Problems
   problems: apiMaker('problems'),
-  problem: apiMaker('Problem/'),
-  problemssearch: apiMaker('Problems/search'),
-  problemsmine: apiMaker('Problems/mine'),
+  problem: apiMaker('problem/'),
+  problemsSearch: apiMaker('problems/search'),
+  problemsMine: apiMaker('problems/mine'),
 
   // submit: /Problem/{id}/submit
   solution: apiMaker('solution/'),
@@ -39,17 +38,17 @@ export default {
 
   // Contests
   contests: apiMaker('contests'),
-  contestssearch: apiMaker('Contest/search'),
-  contest: apiMaker('Contest/'), // Contest/{id}
-  createcontest: apiMaker('Contest/create'), // Contest/{id}
-  contestsmine: apiMaker('Contests/mine'),
+  contestsSearch: apiMaker('contest/search'),
+  contest: apiMaker('contest/'), // Contest/{id}
+  createContest: apiMaker('contest/create'), // Contest/{id}
+  contestsMine: apiMaker('contests/mine'),
 
   // Ranklist
-  ranklist: apiMaker('user/Ranklist'),
+  ranklist: apiMaker('user/ranklist'),
   test: apiMaker('test'),
 
   // News
   news: apiMaker('news'),
-  createnews: apiMaker('News/create'),
-  newsindex: apiMaker('News/index')
+  createNews: apiMaker('news/create'),
+  newsIndex: apiMaker('news/index')
 }

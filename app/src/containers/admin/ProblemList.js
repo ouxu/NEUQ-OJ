@@ -17,10 +17,10 @@ import ProblemList from 'components/admin/Problem/ProblemList'
 )
 class ProblemListManageContainer extends Component {
   render () {
-    const {problems: {problemtable}, loading, getProblemTable, searchProblems, createContest, deleteProblem} = this.props
+    const {problems: {problemTable}, loading, getProblemTable, searchProblems, createContest, deleteProblem} = this.props
     return (
       <ProblemList
-        data={problemtable.problems}
+        data={problemTable.problems}
         loading={loading}
         getProblemTable={getProblemTable}
         searchProblems={searchProblems}

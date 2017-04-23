@@ -4,8 +4,8 @@
 import { REMOVE_PROBLEM_DETAIL, SET_PROBLEM_DETAIL, SET_PROBLEM_TABLE } from 'actions/type'
 
 const initProblem = {
-  problemtable: {},
-  problemdetail: {}
+  problemTable: {},
+  problemDetail: {}
 }
 
 export default function problems (state = initProblem, action) {
@@ -13,17 +13,17 @@ export default function problems (state = initProblem, action) {
     case SET_PROBLEM_TABLE:
       return {
         ...state,
-        problemtable: action.payload
+        problemTable: action.payload
       }
     case SET_PROBLEM_DETAIL:
       return {
         ...state,
-        problemdetail: action.payload
+        problemDetail: action.payload
       }
     case REMOVE_PROBLEM_DETAIL:
       return {
         ...state,
-        problemdetail: {}
+        problemDetail: {}
       }
     default:
       return state

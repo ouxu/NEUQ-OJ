@@ -9,7 +9,6 @@ import API from '../api'
 import * as requestService from 'utils/request'
 import { actionCreater, SET_NEWS, SET_NEWS_LIST } from './type'
 import { message } from 'antd'
-
 /**
  * 获取公告列表
  * @returns {function(*)}
@@ -53,7 +52,7 @@ export function getNews (id) {
 export function editNews (body, id) {
   return async () => {
     try {
-      let url = id ? API.news + '/' + id + '/update' : API.createnews
+      let url = id ? API.news + '/' + id + '/update' : API.createNews
       await requestService.tpost(url, body)
       message.success('发布成功')
     } catch (e) {

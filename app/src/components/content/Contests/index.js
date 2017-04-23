@@ -143,22 +143,22 @@ class ContestPage extends React.Component {
     const columns = [{
       title: '',
       width: '1%',
-      key: 'Status-none',
-      className: 'Status-none'
+      key: 'status-none',
+      className: 'status-none'
     }, {
       title: '#',
       dataIndex: 'id',
       width: '7%',
-      key: 'Contests-id',
+      key: 'contests-id',
       onCellClick: this.verifyPermission,
-      className: 'Contests-id'
+      className: 'contests-id'
     }, {
       title: '标题',
       dataIndex: 'title',
       width: '30%',
-      key: 'Contests-title',
+      key: 'contests-title',
       onCellClick: this.verifyPermission,
-      className: 'Contests-title'
+      className: 'contests-title'
     }, {
       title: '创建者',
       render: record => (

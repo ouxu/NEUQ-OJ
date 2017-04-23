@@ -61,8 +61,8 @@ class ContestInfo extends React.Component {
     const columns = [{
       title: '',
       width: '1%',
-      key: 'Contest-info-none',
-      className: 'Contest-info-none'
+      key: 'contest-info-none',
+      className: 'contest-info-none'
     }, {
       title: '状态',
       render: (record) => {
@@ -75,40 +75,40 @@ class ContestInfo extends React.Component {
         return null
       },
       width: '10%',
-      key: 'Contest-info-Status',
-      className: 'Contest-info-Status'
+      key: 'contest-info-Status',
+      className: 'contest-info-Status'
     }, {
       title: '#',
       render: record => <Link to={`contests/${this.props.id}/problem/${record.pnum}`}>
         Problem {String.fromCharCode(parseInt(record.pnum) + 65)} {record.pid}
       </Link>,
       width: '20%',
-      key: 'Contest-info-code',
-      className: 'Contest-info-code'
+      key: 'contest-info-code',
+      className: 'contest-info-code'
     }, {
       title: '标题',
       render: record => <Link to={`contests/${this.props.id}/problem/${record.pnum}`}> {record.title}</Link>,
       width: '35%',
-      key: 'Contest-info-title',
-      className: 'Contest-info-title'
+      key: 'contest-info-title',
+      className: 'contest-info-title'
     }, {
       title: '来源',
       dataIndex: 'source',
       width: '15%',
-      key: 'Contest-info-source',
-      className: 'Contest-info-source'
+      key: 'contest-info-source',
+      className: 'contest-info-source'
     }, {
       title: '提交',
       dataIndex: 'submit',
       width: '10%',
-      key: 'Contest-info-submit',
-      className: 'Contest-info-submit'
+      key: 'contest-info-submit',
+      className: 'contest-info-submit'
     }, {
       title: '正确',
       dataIndex: 'accepted',
       width: '10%',
-      key: 'Contest-info-accepted',
-      className: 'Contest-info-accepted'
+      key: 'contest-info-accepted',
+      className: 'contest-info-accepted'
     }]
 
     return (

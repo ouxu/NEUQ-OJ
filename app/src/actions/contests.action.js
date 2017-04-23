@@ -49,7 +49,7 @@ export function searchContests (value, page = 1, size = 20) {
         page: page,
         size: size
       }
-      const data = await requestService.get(API.contestssearch, params)
+      const data = await requestService.get(API.contestsSearch, params)
 
       window.sessionStorage.setItem('neuq_oj.contestspagecurr', page)
       window.sessionStorage.setItem('neuq_oj.contestspagesize', size)
@@ -83,7 +83,7 @@ export function getContestsMine (page = 1, size = 20) {
       if (role === 'admin') {
         data = await requestService.tget(API.contests, params)
       } else {
-        data = await requestService.tget(API.contestsmine, params)
+        data = await requestService.tget(API.contestsMine, params)
       }
       window.sessionStorage.setItem('neuq_oj.contestspagecurr', page)
       window.sessionStorage.setItem('neuq_oj.contestspagesize', size)
@@ -165,9 +165,9 @@ export function joinContest (id, body) {
       const url = API.contest + id + '/join'
       await requestService.tpost(url, body)
       await getContest(id)
-      await goto('/Contests/' + id)
+      await goto('/contests/' + id)
     } catch (e) {
-      goto('/Contests')
+      goto('/contests')
     }
   }
 }
@@ -198,7 +198,7 @@ export function delContest (id, body) {
 export function editContest (body, id) {
   return async dispatch => {
     try {
-      let url = id ? API.contest + id + '/update/info' : API.createcontest
+      let url = id ? API.contest + id + '/update/info' : API.createContest
       await requestService.tpost(url, body)
       await dispatch(actionCreater(GET_CONTEST_ERR))
       message.success('发布成功')

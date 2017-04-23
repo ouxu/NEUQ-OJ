@@ -69,12 +69,12 @@ class RankList extends Component {
       title: '',
       width: '1%',
       key: 'ranklist',
-      className: 'Ranklist-none'
+      className: 'ranklist-none'
     }, {
       title: '排名',
       dataIndex: 'num',
-      key: 'Ranklist-rank',
-      className: 'Ranklist-rank'
+      key: 'ranklist-rank',
+      className: 'ranklist-rank'
     }, {
       title: '用户',
       render: record => (
@@ -82,8 +82,8 @@ class RankList extends Component {
           <Link to={`userpage/${record.id}`}> {record.name}</Link>
         </span>
       ),
-      key: 'Ranklist-user',
-      className: 'Ranklist-user'
+      key: 'ranklist-user',
+      className: 'ranklist-user'
     }, {
       title: 'ID',
       render: record => (
@@ -91,18 +91,18 @@ class RankList extends Component {
           <Link to={`userpage/${record.id}`}> {record.id}</Link>
         </span>
       ),
-      key: 'Ranklist-id',
-      className: 'Ranklist-id'
+      key: 'ranklist-id',
+      className: 'ranklist-id'
     }, {
       title: '解决',
       dataIndex: 'solved',
-      key: 'Ranklist-solved',
-      className: 'Ranklist-solved'
+      key: 'ranklist-solved',
+      className: 'ranklist-solved'
     }, {
       title: '提交',
       dataIndex: 'submit',
-      key: 'Ranklist-submit',
-      className: 'Ranklist-submit'
+      key: 'ranklist-submit',
+      className: 'ranklist-submit'
     }, {
       title: 'AC 率',
       render: record => (
@@ -111,8 +111,8 @@ class RankList extends Component {
         </span>
       ),
       width: 80,
-      key: 'Ranklist-ac',
-      className: 'Ranklist-ac'
+      key: 'ranklist-ac',
+      className: 'ranklist-ac'
     }]
 
     return (

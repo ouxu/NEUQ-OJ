@@ -6,7 +6,7 @@ import {SET_NEWS_LIST, SET_NEWS} from 'actions/type'
 
 const initAdmin = {
   news: {},
-  newslist: {}
+  newsList: {}
 }
 
 export default function admin (state = initAdmin, action) {
@@ -14,7 +14,7 @@ export default function admin (state = initAdmin, action) {
     case SET_NEWS_LIST:
       return {
         ...state,
-        newslist: action.payload
+        newsList: action.payload
       }
     case SET_NEWS:
       return {

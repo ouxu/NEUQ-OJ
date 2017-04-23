@@ -3,8 +3,7 @@
  */
 import React from 'react'
 import { Menu } from 'antd'
-import goto from '../../../../utils/goto'
-import jumpTo from '../../../../utils/windowScroll'
+import { goto, jumpTo } from 'utils'
 
 const SubMenu = Menu.SubMenu
 

@@ -22,11 +22,11 @@ class ProblemDetailContainer extends React.Component {
   }
 
   render () {
-    const {problemdetail, tokenVerify} = this.props
+    const {problemDetail, tokenVerify} = this.props
     return (
       <ProblemDetail
         params={this.props.params}
-        data={problemdetail}
+        data={problemDetail}
         tokenVerify={tokenVerify}
       />
     )

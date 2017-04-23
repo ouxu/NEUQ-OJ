@@ -108,7 +108,7 @@ class LoginAbout extends React.Component {
               </FormItem>
 
               <Button disabled={false} type='primary' htmlType='submit' id='login-btn'>登录</Button>
-              <Link to={'/Register'}>
+              <Link to={'/register'}>
                 <span onClick={this.handleCancel}>注册账号</span>
               </Link>
               <Link to={'/forget'}>

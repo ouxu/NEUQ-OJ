@@ -111,7 +111,7 @@ export function searchProblems (value, page = 1, size = 20) {
         page,
         size
       }
-      const data = await requestService.tget(API.problemssearch, params)
+      const data = await requestService.tget(API.problemsSearch, params)
       window.sessionStorage.setItem('neuq_oj.problempagecurr', page)
       window.sessionStorage.setItem('neuq_oj.problempagesize', size)
       window.sessionStorage.setItem('neuq_oj.problempagecount', data.total_count)
@@ -155,7 +155,7 @@ export function editProblem (body, id) {
       let url = id ? API.problem + id + '/update' : API.problem + 'create'
       await requestService.tpost(url, body)
       message.success('发布成功')
-      await goto('/admin/Problem-list')
+      await goto('/admin/problem-list')
     } catch (e) {
       console.error(e)
     }

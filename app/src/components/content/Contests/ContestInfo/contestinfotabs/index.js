@@ -48,13 +48,13 @@ class ContestInfoTabs extends React.Component {
     const columns = [{
       title: '',
       width: '1%',
-      key: 'Contest-info-none',
-      className: 'Contest-info-none'
+      key: 'contest-info-none',
+      className: 'contest-info-none'
     }, {
       title: '排名',
       dataIndex: 'id',
-      key: 'Contest-info-rank',
-      className: 'Contest-info-rank'
+      key: 'contest-info-rank',
+      className: 'contest-info-rank'
     }, {
       title: '用户',
       render: record => (
@@ -62,8 +62,8 @@ class ContestInfoTabs extends React.Component {
           <Link to={`userpage/${record.user_id}`}> {record.user_name}</Link>
         </span>
       ),
-      key: 'Contest-info-user',
-      className: 'Contest-info-user'
+      key: 'contest-info-user',
+      className: 'contest-info-user'
     }, {
       title: 'ID',
       render: record => (
@@ -71,20 +71,20 @@ class ContestInfoTabs extends React.Component {
           <Link to={`userpage/${record.user_id}`}> {record.user_id}</Link>
         </span>
       ),
-      key: 'Contest-info-id',
-      className: 'Contest-info-id'
+      key: 'contest-info-id',
+      className: 'contest-info-id'
     }, {
       title: '解决',
       dataIndex: 'solved',
-      key: 'Contest-info-solved',
-      className: 'Contest-info-solved'
+      key: 'contest-info-solved',
+      className: 'contest-info-solved'
     }, {
       title: '用时',
       render: (record) => {
         return <span>{sec2Str(record.time)}</span>
       },
-      key: 'Contest-info-time',
-      className: 'Contest-info-time'
+      key: 'contest-info-time',
+      className: 'contest-info-time'
     }]
     for (let i = 0; i < countNum; i++) {
       columns.push({
@@ -92,8 +92,8 @@ class ContestInfoTabs extends React.Component {
         render: (record) => {
           return colorEncode(record, i)
         },
-        key: 'Contest-info-Problem-' + i,
-        className: 'Contest-info-Problem'
+        key: 'contest-info-Problem-' + i,
+        className: 'contest-info-Problem'
       })
     }
     return (

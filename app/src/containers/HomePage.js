@@ -33,7 +33,7 @@ class HomepageContainer extends React.Component {
   }
 
   render () {
-    const {home: {news}, ranklist: {ranklist = []}, status: {statustable}, contests: {conteststable}} = this.props
+    const {home: {news}, ranklist: {rankList = []}, status: {statusTable}, contests: {contestsTable}} = this.props
     const {latest_news = [], fixed_news = []} = news
 
     return (
@@ -47,8 +47,8 @@ class HomepageContainer extends React.Component {
         <Col className='right-content' xs={{span: 24}} sm={{span: 8}}>
           <QueueAnim delay={200} type='bottom'>
             <Carousel autoplay dots={false} key='homepage-rank'>
-              <div><HomeRank data={ranklist} /></div>
-              <div><HomeStatus data={statustable} /></div>
+              <div><HomeRank data={rankList} /></div>
+              <div><HomeStatus data={statusTable} /></div>
             </Carousel>
           </QueueAnim>
         </Col>

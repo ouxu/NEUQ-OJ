@@ -20,10 +20,10 @@ class NewsManageContainer extends Component {
   }
 
   render () {
-    const {admin: {newslist, news}, editNews, getNewsList, delNews, getNews} = this.props
+    const {admin: {newsList, news}, editNews, getNewsList, delNews, getNews} = this.props
     return (
       <NewsManage
-        newslist={newslist.news || []}
+        newsList={newsList.news || []}
         news={news}
         editNews={editNews}
         getNewsList={getNewsList}

@@ -4,8 +4,8 @@
 import { SET_USERINFO, SET_USERME, IS_LOGINED, CLEAN_USERME, SET_USER_ROLE, SET_MESSAGE_COUNT } from 'actions/type'
 
 const initUser = {
-  userinfo: {},
-  userme: {},
+  userInfo: {},
+  userMe: {},
   islogined: false,
   role: '',
   message: {}
@@ -15,19 +15,19 @@ export default function user (state = initUser, action) {
     case SET_USERINFO:
       return {
         ...state,
-        userinfo: action.payload
+        userInfo: action.payload
       }
     case SET_USERME:
       return {
         ...state,
-        userme: action.payload,
+        userMe: action.payload,
         islogined: true,
         role: user
       }
     case CLEAN_USERME:
       return {
         ...state,
-        userme: {},
+        userMe: {},
         islogined: false,
         role: ''
       }

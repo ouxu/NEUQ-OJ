@@ -21,10 +21,10 @@ class ProblemEditContainer extends Component {
   }
 
   render () {
-    const {problems: {problemdetail}, params: {id}, loading, editProblem} = this.props
+    const {problems: {problemDetail}, params: {id}, loading, editProblem} = this.props
     return (
       <ProblemEdit
-        data={problemdetail}
+        data={problemDetail}
         id={id}
         loading={loading}
         editProblem={editProblem}

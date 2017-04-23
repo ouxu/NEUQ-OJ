@@ -43,7 +43,7 @@ class ContestList extends Component {
   }
 
   openContest = record => {
-    openInNewTab('Contests/' + record.id)
+    openInNewTab('contests/' + record.id)
   }
 
   render () {
@@ -92,21 +92,21 @@ class ContestList extends Component {
     const columns = [{
       title: '',
       width: '1%',
-      key: 'News-manage',
-      className: 'News-manage-none'
+      key: 'contest-manage',
+      className: 'contest-manage-none'
     }, {
       title: '#',
       dataIndex: 'id',
-      key: 'Contest-manage-id',
+      key: 'contest-manage-id',
       onCellClick: this.openContest,
-      className: 'News-manage-num mock-a'
+      className: 'contest-manage- mock-a'
     }, {
       title: '标题',
       dataIndex: 'title',
-      key: 'Contest-manage-title',
+      key: 'contest-manage-title',
       width: 200,
       onCellClick: this.openContest,
-      className: 'Contest-manage-title mock-a'
+      className: 'contest-manage-title mock-a'
     }, {
       title: '状态',
       render: (record) => {
@@ -122,19 +122,19 @@ class ContestList extends Component {
           </div>
         )
       },
-      key: 'Contest-manage-UpdatePassword',
-      className: 'Contest-manage-UpdatePassword'
+      key: 'contest-manage-UpdatePassword',
+      className: 'contest-manage-UpdatePassword'
     }, {
       title: '权限',
       render: record => <span>{privatestatus[record.private]}</span>,
-      key: 'Contest-manage-date',
-      className: 'Contest-manage-date'
+      key: 'contest-manage-date',
+      className: 'contest-manage-date'
     }, {
       title: '操作',
-      render: (record) => <Link to={'admin/Contest-edit/' + record.id}>修改</Link>,
+      render: (record) => <Link to={'admin/contest-edit/' + record.id}>修改</Link>,
       width: 40,
-      key: 'Contest-manage-action',
-      className: 'Contest-manage-action'
+      key: 'contest-manage-action',
+      className: 'contest-manage-action'
     }]
     const pagination = {
       pageSize: Number(window.sessionStorage.getItem('neuq_oj.contestspagesize')),

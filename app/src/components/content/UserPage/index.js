@@ -5,10 +5,11 @@ import React from 'react'
 
 import QueueAnim from 'rc-queue-anim'
 import { Icon, Tooltip } from 'antd'
+import { Link } from 'react-router'
 import './index.less'
 
-import DashCard from './dashcard'
-import StatusCard from './statuscard'
+import DashCard from './DashCard'
+import StatusCard from './StatusCard'
 class UserPanel extends React.Component {
   render () {
     const {user, status} = this.props
@@ -28,10 +29,12 @@ class UserPanel extends React.Component {
               <Icon type='mobile' />
             </Tooltip>
             <Tooltip placement='left' title={user.school ? user.school : ''}>
-              <Icon type='flag' />
+                <Icon type='flag' />
             </Tooltip>
             <Tooltip placement='left' title='编辑个人信息'>
-              <Icon type='edit' />
+              <Link to='/userpage/edit'>
+                <Icon type='edit' />
+              </Link>
             </Tooltip>
           </div>
         </div>

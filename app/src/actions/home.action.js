@@ -14,7 +14,7 @@ export function fetchHomePageData () {
   return async (dispatch) => {
     try {
       await dispatch(actionCreater(LOADING))
-      const data = await requestService.get(API.newsindex)
+      const data = await requestService.get(API.newsIndex)
       await dispatch(actionCreater(SET_HOME_NEWS, data))
     } catch (e) {
       console.error(e)

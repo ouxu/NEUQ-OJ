@@ -5,7 +5,7 @@ import { SET_CONTESTS_LIST, GET_CONTEST_SUCC, GET_CONTEST_ERR } from 'actions/ty
 
 const initContests = {
   contest: {},
-  conteststable: {}
+  contestsTable: {}
 }
 
 export default function contests (state = initContests, action) {
@@ -13,7 +13,7 @@ export default function contests (state = initContests, action) {
     case SET_CONTESTS_LIST:
       return {
         ...state,
-        conteststable: action.payload
+        contestsTable: action.payload
       }
     case GET_CONTEST_SUCC :
       return {

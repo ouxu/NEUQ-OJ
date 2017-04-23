@@ -4,7 +4,7 @@
 import { SET_STATUS_TABLE } from 'actions/type'
 
 const initStatus = {
-  statustable: []
+  statusTable: []
 }
 
 export default function status (state = initStatus, action) {
@@ -12,7 +12,7 @@ export default function status (state = initStatus, action) {
     case SET_STATUS_TABLE:
       return {
         ...state,
-        statustable: action.payload
+        statusTable: action.payload
       }
     default:
       return state

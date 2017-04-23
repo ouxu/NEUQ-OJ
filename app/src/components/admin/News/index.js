@@ -92,7 +92,7 @@ class NewsManage extends Component {
   }
 
   render () {
-    let {newslist = []} = this.props
+    let {newsList = []} = this.props
     const title = () => (
       <span className='news-manage-table-title'>
         <span>公告列表</span>
@@ -104,49 +104,49 @@ class NewsManage extends Component {
     const columns = [{
       title: '',
       width: '1%',
-      key: 'News-manage',
-      className: 'News-manage-none'
+      key: 'news-manage',
+      className: 'news-manage-none'
     }, {
       title: '#',
       dataIndex: 'id',
-      key: 'News-manage-id',
-      className: 'News-manage-id'
+      key: 'news-manage-id',
+      className: 'news-manage-id'
     }, {
       title: '标题',
       dataIndex: 'title',
-      key: 'News-manage-title',
+      key: 'news-manage-title',
       width: 300,
-      className: 'News-manage-title'
+      className: 'news-manage-title'
     }, {
       title: '创建者',
       dataIndex: 'author_id',
-      key: 'News-manage-author',
-      className: 'News-manage-author'
+      key: 'news-manage-author',
+      className: 'news-manage-author'
     }, {
       title: '修改时间',
       dataIndex: 'updated_at',
-      key: 'News-manage-UpdatePassword',
-      className: 'News-manage-UpdatePassword'
+      key: 'news-manage-UpdatePassword',
+      className: 'news-manage-UpdatePassword'
     }, {
       title: '创建时间',
       dataIndex: 'created_at',
-      key: 'News-manage-date',
-      className: 'News-manage-date'
+      key: 'news-manage-date',
+      className: 'news-manage-date'
     }, {
       title: '操作',
-      render: () => <a>修改</a>,
+      render: () => '修改',
       width: 40,
-      key: 'News-manage-action',
+      key: 'news-manage-action',
       onCellClick: this.editNew,
-      className: 'News-manage-action'
+      className: 'news-manage-action mock-a'
     }, {
       render: () => <Popconfirm title='你确定要删除本条通知吗？' onConfirm={this.onConfirm} okText='Yes' cancelText='No'>
         <a>删除</a>
       </Popconfirm>,
       width: 40,
-      key: 'News-manage-del',
+      key: 'news-manage-del',
       onCellClick: this.delNew,
-      className: 'News-manage-action'
+      className: 'news-manage-action'
     }]
     const {getFieldDecorator} = this.props.form
 
@@ -158,14 +158,14 @@ class NewsManage extends Component {
         <Table
           columns={columns}
           rowKey={record => `news-manage-${record.id}`}
-          dataSource={newslist}
+          dataSource={newsList}
           pagination={false}
           size='small'
           key='news-manage-table'
           className='news-manage-table'
-            // expandedRowRender={record => <p dangerouslySetInnerHTML={this.createMarkup(record.content)}/>}
+          // expandedRowRender={record => <p dangerouslySetInnerHTML={this.createMarkup(record.content)}/>}
           title={title}
-          />
+        />
         <Modal
           visible={this.state.visible}
           title='添加公告'
@@ -176,15 +176,17 @@ class NewsManage extends Component {
           }}
           footer={[
             <Button key='back' size='large' onClick={this.handleCancel}>取消</Button>,
-            <Button key='submit'
+            <Button
+              key='submit'
               type='primary'
               size='large'
               loading={this.state.loading}
-              onClick={this.handleOk}>
-                    提交
-                </Button>
+              onClick={this.handleOk}
+            >
+              提交
+            </Button>
           ]}
-          >
+        >
           <Form onSubmit={this.handleOk}>
             <FormItem>
               {getFieldDecorator('title', {
@@ -192,7 +194,7 @@ class NewsManage extends Component {
                 initialValue: this.state.title ? this.state.title : ''
               })(
                 <Input type='textarea' placeholder='请输入标题' autosize={{maxRows: 6}} />
-                    )}
+              )}
             </FormItem>
             <FormItem>
               {getFieldDecorator('content', {
@@ -200,8 +202,8 @@ class NewsManage extends Component {
                 initialValue: this.state.content ? this.state.content : ''
               })(
                 <Input type='textarea' placeholder='请输入内容，支持 Markdown 语法，请在 Markdown 编辑器中编辑后粘贴'
-                  autosize={{minRows: 2, maxRows: 6}} />
-                    )}
+                       autosize={{minRows: 2, maxRows: 6}} />
+              )}
             </FormItem>
             <FormItem>
               <span style={{marginRight: '10px'}}>请选择重要程度，会根据程度展示不同样式</span>
@@ -215,7 +217,7 @@ class NewsManage extends Component {
                   <Radio value={2}>重要</Radio>
                   <Radio value={3}>紧急</Radio>
                 </RadioGroup>
-                    )}
+              )}
             </FormItem>
           </Form>
           <div style={{margin: '24px 0'}} />

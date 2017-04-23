@@ -49,7 +49,7 @@ class VerifyMail extends Component {
       message.success('提交成功')
       const params = {
         verify_code: input,
-        user_id: this.props.userinfo.id
+        user_id: this.props.userInfo.id
       }
       this.props.activeUser(params)
       goto('')
@@ -72,7 +72,7 @@ class VerifyMail extends Component {
   }
 
   render () {
-    const {userinfo, route: {path}} = this.props
+    const {userInfo, route: {path}} = this.props
     const addonVerify = <div onClick={this.onVerifySubmit} className='verify-mail-input-add'>确认</div>
     const addonActive = <div onClick={this.onActiveSubmit} className='verify-mail-input-add'>确认</div>
     return (
@@ -93,7 +93,7 @@ class VerifyMail extends Component {
           {
             path === 'verify'
               ? <Verify
-              email={userinfo.email}
+              email={userInfo.email}
               addonAfter={addonVerify}
               onInputChange={this.onInputChange}
             />
