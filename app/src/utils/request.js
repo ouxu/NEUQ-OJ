@@ -2,9 +2,6 @@
 /**
  * Created by out_xu on 17/3/15.
  */
-// 引入垫片兼容IE
-require('es6-promise')
-
 import {codeHelper, getToken} from 'utils'
 const TIMEOUT = 15000
 
@@ -50,12 +47,11 @@ export async function request (uri, type = 'GET', headers = {}, body = {}) {
   if (type === 'POST') {
     fetchOption.body = JSON.stringify(body)
   }
-
   const res = await fetch(uri, fetchOption)
   const json = await res.json()
 
   clearTimeout(timer)
-  return await filterStatus(json)
+  return filterStatus(json)
 }
 
 /**

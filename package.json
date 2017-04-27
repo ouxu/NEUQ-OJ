@@ -13,6 +13,7 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-runtime": "^6.11.6",
     "console-polyfill": "^0.2.2",
+    "fetch-ie8": "^1.4.2",
     "gulp": "^3.9.1",
     "gulp-rev-collector": "^1.0.5",
     "moment": "^2.18.1",
@@ -22,7 +23,6 @@
     "react-dom": "^15.3.2",
     "react-redux": "^5.0.1",
     "react-router": "^3.0.2",
-    "react-router-proxy-loader": "^0.5.1",
     "react-router-redux": "^4.0.5",
     "redux": "^3.6.0",
     "redux-log": "^2.0.0",
@@ -63,7 +63,6 @@
     "eslint-plugin-react": "^6.10.3",
     "eslint-plugin-standard": "^2.1.1",
     "extract-text-webpack-plugin": "^2.1.0",
-    "fetch-ie8": "^1.4.2",
     "file-loader": "^0.9.0",
     "gulp": "^3.9.1",
     "gulp-inject": "^4.2.0",
@@ -95,6 +94,20 @@
     "es6",
     "react"
   ],
+  "standard": {
+    "parser": "babel-eslint",
+    "env": {
+      "browser": true,
+      "node": true,
+      "commonjs": true,
+      "amd": true,
+      "es6": true
+    },
+    "extends": [
+      "standard",
+      "standard-jsx"
+    ]
+  },
   "author": "out_xu",
   "license": "MIT"
 }

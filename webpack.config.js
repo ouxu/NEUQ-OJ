@@ -57,13 +57,13 @@ module.exports = {
   resolve: {
     extensions: [' ', '.js', '.jsx'],
     alias: {
-      'actions': __dirname + '/app/src/actions',
-      'api': __dirname + '/app/src/api',
-      'components': __dirname + '/app/src/components',
-      'containers': __dirname + '/app/src/containers',
-      'images': __dirname + '/app/src/images',
-      'reducers': __dirname + '/app/src/reducers',
-      'utils': __dirname + '/app/src/utils'
+      'actions': path.join(__dirname, '/app/src/actions'),
+      'api': path.join(__dirname, '/app/src/api'),
+      'components': path.join(__dirname, '/app/src/components'),
+      'containers': path.join(__dirname, '/app/src/containers'),
+      'images': path.join(__dirname, '/app/src/images'),
+      'reducers': path.join(__dirname, '/app/src/reducers'),
+      'utils': path.join(__dirname, '/app/src/utils')
     }
   },
   plugins: [

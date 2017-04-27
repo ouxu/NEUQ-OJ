@@ -11,8 +11,8 @@ const HomeNews = (props) => {
   return (
     <div className={`home-news`} key='home-news'>
       {
-        news.length >= 1 && news.map((t) =>
-          <Card
+        news.length >= 1 && news.map((t, i) =>
+          i < 2 && <Card
             key={'home-news-' + t.id}
             title={t.title}
             style={{marginBottom: 15, fontSize: 14, backgroundColor: '#fff'}}
@@ -21,7 +21,7 @@ const HomeNews = (props) => {
             <div>
               <p dangerouslySetInnerHTML={createMarkup(t.content)} />
             </div>
-          </Card>,
+          </Card>
         )}
     </div>
   )

@@ -5,16 +5,16 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin') // 打包 css
 const autoprefixer = require('autoprefixer')               // 自动处理浏览器前缀
 const HtmlWebpackPlugin = require('html-webpack-plugin')    // 生成 html
 const CleanWebpackPlugin = require('clean-webpack-plugin')  // 用于清除上次打包文件
-const Visualizer = require('webpack-visualizer-plugin');
+const Visualizer = require('webpack-visualizer-plugin')
 module.exports = {
   entry: {
-    bundle: __dirname + '/app/src/main.js',
-    vendor1: ['whatwg-fetch', 'es6-promise', 'react', 'react-dom', 'react-router'],  // 第三方库和框架另外打包
+    bundle: path.join(__dirname, '/app/src/main.js'),
+    vendor1: ['whatwg-fetch', 'fetch-ie8', 'es6-promise', 'react', 'react-dom', 'react-router'],  // 第三方库和框架另外打包
     vendor2: ['redux', 'react-redux']
 
   },
   output: {
-    path: './dist/build/',
+    path: path.join(__dirname, '/dist/build/'),
     publicPath: 'http://ohtk9ocqw.bkt.clouddn.com/oj/',  // 表示 index.html 中引入资源的前缀path
     filename: 'js/bundle.[chunkhash:8].js',
     chunkFilename: 'js/[name].[chunkhash:8].js'
@@ -52,13 +52,13 @@ module.exports = {
   resolve: {
     extensions: [' ', '.js', '.jsx'],
     alias: {
-      'actions': __dirname + '/app/src/actions',
-      'api': __dirname + '/app/src/api',
-      'components': __dirname + '/app/src/components',
-      'containers': __dirname + '/app/src/containers',
-      'images': __dirname + '/app/src/images',
-      'reducers': __dirname + '/app/src/reducers',
-      'utils': __dirname + '/app/src/utils'
+      'actions': path.join(__dirname, '/app/src/actions'),
+      'api': path.join(__dirname, '/app/src/api'),
+      'components': path.join(__dirname, '/app/src/components'),
+      'containers': path.join(__dirname, '/app/src/containers'),
+      'images': path.join(__dirname, '/app/src/images'),
+      'reducers': path.join(__dirname, '/app/src/reducers'),
+      'utils': path.join(__dirname, '/app/src/utils')
     }
   },
   plugins: [

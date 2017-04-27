@@ -12,7 +12,7 @@ class UpdatePassword extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      loading: false,
+      loading: false
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.checkPassword = this.checkPassword.bind(this)
@@ -56,13 +56,12 @@ class UpdatePassword extends Component {
     return (
       <Form
         onSubmit={this.handleSubmit}
-        className='register-wrap-form'
       >
         <FormItem
           label='新密码'
           hasFeedback
           {...formItemLayout}
-          key='register-4'
+          key='update-password-form-password'
         >
           {getFieldDecorator('new_password', {
             rules: [{
@@ -78,7 +77,7 @@ class UpdatePassword extends Component {
           label='确认密码'
           hasFeedback
           {...formItemLayout}
-          key='register-5'
+          key='update-password-form-confirm'
         >
           {getFieldDecorator('new_password_confirmation', {
             rules: [{
@@ -100,7 +99,7 @@ class UpdatePassword extends Component {
             确认修改
           </Button>
 
-          </FormItem>
+        </FormItem>
       </Form>
     )
   }

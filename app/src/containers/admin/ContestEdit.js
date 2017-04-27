@@ -29,7 +29,6 @@ class ContestEditContainer extends Component {
       console.error(e)
     }
   }
-
   render () {
     const {contest: {contest}, params: {cid}, delContest, loading, editContest} = this.props
     return (

@@ -18,7 +18,6 @@ class Navigation extends React.Component {
   }
 
   componentDidMount () {
-
   }
 
   showModal () {
@@ -34,7 +33,7 @@ class Navigation extends React.Component {
   }
 
   render () {
-    const {user: {islogined, message}} = this.props
+    const {user: {isLogined, message}} = this.props
     const role = window.localStorage.getItem('neuq_oj.role')
 
     return (
@@ -48,28 +47,30 @@ class Navigation extends React.Component {
               this.props.admin &&
               <li><Link to={'/'}> 返回主页 <Icon type='logout' /></Link></li>
             }
-            { islogined
+            { isLogined
               ? <li className='userinfo'>
-                  <a>
-                    <div className='userinfo-name'>
-                      {message.count > 0 ? <Badge status='processing' /> :
-                        <Icon type='user' />} {window.localStorage['neuq_oj.name']}
-                    </div>
-                  </a>
-                  <ul>
+                <a>
+                  <div className='userinfo-name'>
+                    {message.count > 0 ? <Badge status='processing' />
+                      : <Icon type='user' />} {window.localStorage['neuq_oj.name']}
+                  </div>
+                </a>
+                <ul>
+                  <li>
+                    <Link to={`/userpage/${window.localStorage['neuq_oj.id']}`}>
+                      {message.count > 0 ? <Badge status='processing' /> : <Icon type='solution' />} 个人信息
+                    </Link>
+                  </li>
+                  {(role === 'teacher' || role === 'admin') &&
                     <li>
-                      <Link to={`/userpage/${window.localStorage['neuq_oj.id']}`}>
-                        {message.count > 0 ? <Badge status='processing' /> : <Icon type='solution' />} 个人信息
-                      </Link>
-                    </li>
-                    {(role === 'teacher' || role === 'admin') && <li>
                       <Link to={'/admin'}>
                         <Icon type='login' /> 后台管理
                       </Link>
-                    </li>}
-                    <li><a onClick={this.props.logout}><Icon type='export' /> 登出</a></li>
-                  </ul>
-                </li>
+                    </li>
+                  }
+                  <li><a onClick={this.props.logout}><Icon type='export' /> 登出</a></li>
+                </ul>
+              </li>
               : <Login />
             }
           </ul>

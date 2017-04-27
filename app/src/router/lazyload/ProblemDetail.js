@@ -5,7 +5,7 @@
 const ProblemDetail = (location, cb) => {
   require.ensure([], require => {
     cb(null, require('containers/ProblemDetial'))
-  }, 'problemdetial')
+  }, 'ProblemDetial')
 }
 
 export default ProblemDetail

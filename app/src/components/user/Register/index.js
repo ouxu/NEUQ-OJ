@@ -32,9 +32,9 @@ class Login extends React.Component {
     super(props)
     this.state = {
       passwordDirty: false,
-      checkagreement: false,
+      checkAgreement: false,
       captcha: '',
-      captchastamp: ''
+      captchaStamp: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handlePasswordBlur = this.handlePasswordBlur.bind(this)
@@ -96,7 +96,7 @@ class Login extends React.Component {
 
   checkAgreement (e) {
     this.setState({
-      checkagreement: e.target.checked
+      checkAgreement: e.target.checked
     })
   }
 
@@ -128,9 +128,9 @@ class Login extends React.Component {
             <Step title='Done' />
           </Steps>
           <QueueAnim onSubmit={this.handleSubmit}
-                     className='register-wrap-form'
-                     component='Form'
-                     type='bottom'
+            className='register-wrap-form'
+            component='Form'
+            type='bottom'
           >
             <FormItem
               label='用户名'
@@ -254,7 +254,7 @@ class Login extends React.Component {
                 <Col xs={{span: 24}} sm={{span: 12}}>
                   <Button
                     type='primary' htmlType='submit' size='large'
-                    disabled={!this.state.checkagreement}
+                    disabled={!this.state.checkAgreement}
                   >点击注册</Button>
                 </Col>
               </Row>

@@ -35,8 +35,6 @@ class ProblemDetail extends React.Component {
   }
 
   componentWillUnmount () {
-    // 如果存在this.timer，则使用clearTimeout清空。
-    // 如果你使用多个timer，那么用多个变量，或者用个数组来保存引用，然后逐个clear
     this.timer && clearInterval(this.timer)
   }
 
@@ -99,11 +97,11 @@ class ProblemDetail extends React.Component {
 
   async submitProblem (body) {
     const {params} = this.props
-    const url = params.pnum ? `${API.host}contest/${params.cid}/problem/${params.pnum}/submit` : `${API.host}problem/${params.id}/submit`
-
+    const url = params.pnum
+      ? `${API.host}contest/${params.cid}/problem/${params.pnum}/submit`
+      : `${API.host}problem/${params.id}/submit`
     const data = await requestService.tpost(url, body)
     message.success('提交成功')
-
     const solutionId = data.solution_id
     this.timer = setInterval(() => {
       this.getResultData(solutionId)
@@ -151,23 +149,23 @@ class ProblemDetail extends React.Component {
         <QueueAnim type='left' delay={100}>
           <div className='problem-detail-breadcrumb' key='problem-detail-1'>
             <Link to={params.pnum ? `/contests/${params.cid}` : '/problems'}>
-              <Icon type='left'/>
+              <Icon type='left' />
               <span>{params.pnum ? '竞赛列表' : '问题列表'}</span>
             </Link>
             <div className='problem-detail-breadcrumb-detail'>
               <span className='problem-detail-breadcrumb-detail-tags'>
-                <Icon type='edit'/><span>{data.creator_name}</span>
+                <Icon type='edit' /><span>{data.creator_name}</span>
               </span>
               <span className='problem-detail-breadcrumb-detail-tags'>
-                <Icon type='exception'/><span>{data.submit}</span>
+                <Icon type='exception' /><span>{data.submit}</span>
               </span>
               <span className='problem-detail-breadcrumb-detail-tags'>
-                <Icon type='check'/><span>{data.accepted}</span>
+                <Icon type='check' /><span>{data.accepted}</span>
               </span>
               <span className='problem-detail-breadcrumb-detail-tags'>
-                <Icon type='clock-circle'/><span>{data.time_limit} Sec</span>
+                <Icon type='clock-circle' /><span>{data.time_limit} Sec</span>
               </span>
-              <span className='problem-detail-breadcrumb-detail-tags'><Icon type='save'/>
+              <span className='problem-detail-breadcrumb-detail-tags'><Icon type='save' />
                 <span>{data.memory_limit} MB</span>
               </span>
             </div>
@@ -197,7 +195,7 @@ class ProblemDetail extends React.Component {
                 params={this.state}
                 data={data}
               />
-              : <ProblemDes data={data}/>}
+              : <ProblemDes data={data} />}
           </div>
 
           <ButtonGroup className='problem-detail-buttongroup'>

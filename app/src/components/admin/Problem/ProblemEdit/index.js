@@ -179,7 +179,7 @@ class ProblemEdit extends Component {
                   initialValue: data['title'] ? data.sample_input : ''
                 })(
                   <Input placeholder='用于前台展示的样例输入' type='textarea'
-                         autosize={{minRows: 2}} />
+                    autosize={{minRows: 2}} />
                 )}
 
               </FormItem>
@@ -192,7 +192,7 @@ class ProblemEdit extends Component {
                   initialValue: data['title'] ? data.sample_output : ''
                 })(
                   <Input placeholder='用于前台展示的样例输出' type='textarea'
-                         autosize={{minRows: 2}} />
+                    autosize={{minRows: 2}} />
                 )}
 
               </FormItem>
@@ -205,7 +205,7 @@ class ProblemEdit extends Component {
                   initialValue: data['title'] ? data.test_input : ''
                 })(
                   <Input placeholder='用于判题的样例输入' type='textarea'
-                         autosize={{minRows: 2}} />
+                    autosize={{minRows: 2}} />
                 )}
 
               </FormItem>
@@ -218,7 +218,7 @@ class ProblemEdit extends Component {
                   initialValue: data['title'] ? data.test_output : ''
                 })(
                   <Input placeholder='用于判题的样例输出' type='textarea'
-                         autosize={{minRows: 2}} />
+                    autosize={{minRows: 2}} />
                 )}
 
               </FormItem>
@@ -231,7 +231,7 @@ class ProblemEdit extends Component {
                   initialValue: data['title'] ? data.hint : ''
                 })(
                   <Input placeholder='可输入来源' type='textarea'
-                         autosize={{minRows: 1}} />
+                    autosize={{minRows: 1}} />
                 )}
 
               </FormItem>
@@ -244,7 +244,7 @@ class ProblemEdit extends Component {
                   initialValue: data['title'] ? data.hint : ''
                 })(
                   <Input placeholder='可输入提示' type='textarea'
-                         autosize={{minRows: 1}} />
+                    autosize={{minRows: 1}} />
                 )}
 
               </FormItem>
@@ -253,18 +253,18 @@ class ProblemEdit extends Component {
                 {
                   id
                     ? <Popconfirm title='你确定要修改本题目吗？'
-                                  onConfirm={this.handleSubmit}
-                                  okText='Yes'
-                                  cancelText='No'
+                      onConfirm={this.handleSubmit}
+                      okText='Yes'
+                      cancelText='No'
                   >
                       <Button className='contest-edit-submit' size='large' type='primary'>
                         修改题目
                       </Button>
                     </Popconfirm>
                     : <Popconfirm title='请认真审核信息'
-                                  onConfirm={this.handleSubmit}
-                                  okText='Yes'
-                                  cancelText='No'
+                      onConfirm={this.handleSubmit}
+                      okText='Yes'
+                      cancelText='No'
                   >
                       <Button type='primary' size='large'>添加题目</Button>
                     </Popconfirm>
@@ -272,9 +272,9 @@ class ProblemEdit extends Component {
                 {
                   id &&
                   <Popconfirm title='你确定要删除本题目吗？'
-                              onConfirm={this.onConfirmDel}
-                              okText='Yes'
-                              cancelText='No'
+                    onConfirm={this.onConfirmDel}
+                    okText='Yes'
+                    cancelText='No'
                   >
                     <Button type='danger' size='large'>删除题目</Button>
                   </Popconfirm>

@@ -41,6 +41,6 @@ const StepContent = (props) => {
       </div>
     )
   }
-};
+}
 
-export default StepContent;
+export default StepContent
