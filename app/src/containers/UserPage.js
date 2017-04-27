@@ -19,7 +19,7 @@ class UserpageContainer extends React.Component {
   componentDidMount () {
     const id = window.localStorage.getItem('neuq_oj.id')
     this.props.params.id === id ? this.props.getUserMe() : this.props.getUserInfo(this.props.params.id)
-    this.props.checkMessage(37)
+    // this.props.checkMessage(37)
     this.props.getStatusTable(1, 10, {user_id: this.props.params.id})
   }
 

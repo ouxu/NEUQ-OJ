@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Icon, Input, Modal } from 'antd'
+import { Button, Form, Icon, Input, Modal, Tooltip } from 'antd'
 import { Link } from 'react-router'
 import QueueAnim from 'rc-queue-anim'
 import { bindActionCreators } from 'redux'
@@ -59,7 +59,7 @@ class LoginAbout extends React.Component {
   }
 
   handleGoto () {
-    goto('register')
+    goto('/register')
   }
 
   render () {
@@ -67,7 +67,7 @@ class LoginAbout extends React.Component {
     return (
       <li className='nav-ul-user'>
         <QueueAnim delay={150}>
-          <div className='userlogin-warp' key='userlogin-1'>
+          <div className='user-login-warp' key='user-login-1'>
             <ButtonGroup>
               <Button className='nav-button' onClick={this.showModal}>登录 </Button>
               <span className='middle-warp'> | </span>
@@ -87,13 +87,15 @@ class LoginAbout extends React.Component {
           <div className='login-wrap'>
             <Form onSubmit={this.handleSubmit}>
               <FormItem>
-                {getFieldDecorator('identifier', {
-                  rules: [{
-                    required: true, message: '请输入UserName/手机号/邮箱'
-                  }]
-                })(
-                  <Input addonBefore={<Icon type='user' />} placeholder='UserName/手机号/邮箱' />,
-                )}
+                <Tooltip title='UserName: 老OJ用户的 ID，非当前用户的 ID 或昵称' placement='top' trigger={['focus']}>
+                  {getFieldDecorator('identifier', {
+                    rules: [{
+                      required: true, message: '请输入UserName/手机号/邮箱'
+                    }]
+                  })(
+                    <Input addonBefore={<Icon type='user' />} placeholder='UserName/手机号/邮箱' />
+                  )}
+                </Tooltip>
               </FormItem>
               <FormItem>
                 {getFieldDecorator('password', {
@@ -103,7 +105,7 @@ class LoginAbout extends React.Component {
                     required: true, message: '请输入密码！'
                   }]
                 })(
-                  <Input addonBefore={<Icon type='lock' />} type='password' placeholder='Password' />,
+                  <Input addonBefore={<Icon type='lock' />} type='password' placeholder='Password' />
                 )}
               </FormItem>
 

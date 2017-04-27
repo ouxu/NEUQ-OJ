@@ -2,7 +2,7 @@
  * Created by out_xu on 16/12/20.
  */
 
-// const __APIHOST__ = "http://192.168.1.191:3000"
+// const __APIHOST__ = 'http://192.168.1.191:3000'
 // const __APIHOST__ = "http://192.168.1.221:8000"
 const __APIHOST__ = 'http://oj.marklux.cn'
 

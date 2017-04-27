@@ -42,7 +42,7 @@ class ContestList extends Component {
     }
   }
 
-  openContest = record => {
+  openContest (record) {
     openInNewTab('contests/' + record.id)
   }
 

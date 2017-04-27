@@ -7,7 +7,7 @@ import * as requestService from 'utils/request'
 // 引入自定义工具
 import API from 'api'
 
-import { goto } from 'utils'
+import { getLocalStorage, goto } from 'utils'
 
 /**
  * 登录验证
@@ -202,9 +202,9 @@ export function activeUser (param) {
 export function forgotPassword (param) {
   return async () => {
     try {
+      message.success('发送成功')
       await requestService.get(API.forgotPassword, param)
       goto('/forget/succ')
-      message.success('发送成功')
     } catch (e) {
       message.success('发送失败')
     }
@@ -219,7 +219,7 @@ export function findPassword (params) {
   return setTimeout(async () => {
     try {
       await requestService.post(API.findPassword, params)
-      console.log('修改成功')
+      message.success('修改成功')
       goto('/forget/done')
     } catch (e) {
       goto('/forget')
@@ -228,10 +228,13 @@ export function findPassword (params) {
 }
 
 export function updateUserInfo (params) {
-  return async ()=> {
+  return async () => {
     try {
-      await requestService.tpost(API.updateUserInfo,params)
-    } catch (e){
+      await requestService.tpost(API.updateUserInfo, params)
+      message.success('修改成功')
+      const userId = getLocalStorage('neuq_oj.id')
+      goto('/userpage/' + userId)
+    } catch (e) {
       console.log(e.message)
     }
   }

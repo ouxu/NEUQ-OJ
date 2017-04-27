@@ -1,18 +1,18 @@
 /**
  * Created by out_xu on 17/3/25.
  */
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import {delNews, editNews, getNews, getNewsList} from 'actions'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { delNews, editNews, getNews, getNewsList } from 'actions'
 
 import NewsManage from 'components/admin/News'
 
 @connect(
-    state => ({
-      admin: state.admin
-    }),
-    dispatch => bindActionCreators({getNewsList, editNews, delNews, getNews}, dispatch),
+  state => ({
+    admin: state.admin
+  }),
+  dispatch => bindActionCreators({getNewsList, editNews, delNews, getNews}, dispatch),
 )
 class NewsManageContainer extends Component {
   componentDidMount () {
@@ -29,7 +29,7 @@ class NewsManageContainer extends Component {
         getNewsList={getNewsList}
         delNews={delNews}
         getNews={getNews}
-            />
+      />
     )
   }
 }

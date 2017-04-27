@@ -5,28 +5,22 @@ import React from 'react'
 import Navigation from 'components/plugins/Navigation'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getMessageCount, logout, tokenVerify } from 'actions'
-
-const mapDispatchToProps = (dispatch) => {
-  const actions = {logout, tokenVerify, getMessageCount}
-  return {
-    action: bindActionCreators(actions, dispatch)
-  }
-}
+import { getMessageCount, getUserMe, logout, tokenVerify } from 'actions'
 
 @connect(
   state => ({
     user: state.user
   }),
-  mapDispatchToProps,
+  dispatch => bindActionCreators({logout, tokenVerify, getMessageCount, getUserMe}, dispatch)
 )
 class NavigationContainer extends React.Component {
   async componentDidMount () {
     try {
-      await this.props.action.tokenVerify()
+      await this.props.tokenVerify()
+      await this.props.getUserMe()
       // this.props.action.getMessageCount()
     } catch (e) {
-      // console.error(e)
+      e.message !== '未登录' && console.error(e)
     }
   }
 
@@ -34,7 +28,7 @@ class NavigationContainer extends React.Component {
     return (
       <Navigation
         user={this.props.user}
-        logout={this.props.action.logout}
+        logout={this.props.logout}
       />
     )
   }

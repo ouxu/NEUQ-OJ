@@ -9,6 +9,7 @@ import API from '../api'
 import * as requestService from 'utils/request'
 import { actionCreater, SET_NEWS, SET_NEWS_LIST } from './type'
 import { message } from 'antd'
+
 /**
  * 获取公告列表
  * @returns {function(*)}

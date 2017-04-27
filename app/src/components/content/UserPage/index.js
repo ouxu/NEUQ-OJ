@@ -29,7 +29,7 @@ class UserPanel extends React.Component {
               <Icon type='mobile' />
             </Tooltip>
             <Tooltip placement='left' title={user.school ? user.school : ''}>
-                <Icon type='flag' />
+              <Icon type='flag' />
             </Tooltip>
             <Tooltip placement='left' title='编辑个人信息'>
               <Link to='/userpage/edit'>

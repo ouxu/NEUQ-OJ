@@ -51,7 +51,7 @@ class ProblemList extends Component {
 
   createCon () {
     this.props.createContest({problems: this.state.selected})
-    goto('admin/contest-edit')
+    goto('/admin/contest-edit')
   }
 
   passwordChange (e) {

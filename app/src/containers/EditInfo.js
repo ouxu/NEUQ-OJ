@@ -11,8 +11,8 @@ import { updateUserInfo } from 'actions'
 import EditInfo from 'components/user/EditInfo'
 
 export default connect(
-  state=> ({
+  state => ({
     user: state.user
   }),
-  dispatch=> bindActionCreators({updateUserInfo},dispatch)
+  dispatch => bindActionCreators({updateUserInfo}, dispatch)
 )(EditInfo)

@@ -52,7 +52,6 @@ class VerifyMail extends Component {
         user_id: this.props.userInfo.id
       }
       this.props.activeUser(params)
-      goto('')
     } else {
       message.error('请输入有效的验证码！')
     }
@@ -93,13 +92,13 @@ class VerifyMail extends Component {
           {
             path === 'verify'
               ? <Verify
-              email={userInfo.email}
-              addonAfter={addonVerify}
-              onInputChange={this.onInputChange}
+                email={userInfo.email}
+                addonAfter={addonVerify}
+                onInputChange={this.onInputChange}
             />
               : <Active
-              addonAfter={addonActive}
-              onInputChange={this.onInputChange}
+                addonAfter={addonActive}
+                onInputChange={this.onInputChange}
             />
           }
         </QueueAnim>

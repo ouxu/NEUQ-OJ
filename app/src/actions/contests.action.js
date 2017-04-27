@@ -208,7 +208,6 @@ export function editContest (body, id) {
   }
 }
 
-
 export function updateContestProblems (id, body) {
   try {
     requestService.tpost(API.contest + id + '/update/Problem', body)

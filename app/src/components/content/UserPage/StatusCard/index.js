@@ -8,7 +8,7 @@ import './index.less'
 class Statuscard extends React.Component {
   render () {
     const userdata = this.props.userdata
-    const passrate = userdata.submit?(100 * userdata.solved / userdata.submit).toFixed(2):'0'
+    const passrate = userdata.submit ? (100 * userdata.solved / userdata.submit).toFixed(2) : '0'
     return (
       <Card>
         <Row gutter={12} type='flex' className='userpage-statuscard-wrap'>
@@ -35,7 +35,7 @@ class Statuscard extends React.Component {
               <span className='userpage-statuscard-item-number'>{userdata.solved}</span>
             </div>
           </Col>
-           <Col className='userpage-statuscard-row' xs={{ span: 8 }} sm={{ span: 4 }}>
+          <Col className='userpage-statuscard-row' xs={{ span: 8 }} sm={{ span: 4 }}>
             <div className='userpage-statuscard-item'>
               <span className='userpage-statuscard-item-title'>错误</span>
               <br />

@@ -2,8 +2,8 @@
  * Created by out_xu on 17/3/28.
  */
 import React, { Component } from 'react'
-
 import './index.less'
+import moment from 'moment'
 import { Button, DatePicker, Form, Input, Popconfirm, Radio, Select, Spin } from 'antd'
 import { Link } from 'react-router'
 import { goto, verify } from 'utils'
@@ -33,7 +33,7 @@ class ContestEdit extends Component {
 
   handleSubmit (e) {
     e.preventDefault()
-    this.props.form.validateFields(async (err, fieldsValue) => {
+    this.props.form.validateFields((err, fieldsValue) => {
       if (!err) {
         const rangeTimeValue = fieldsValue['range-time-picker']
         let values = {
@@ -66,20 +66,20 @@ class ContestEdit extends Component {
             }
           }
         }
-        await this.props.editContest(values, this.props.cid)
+        this.props.editContest(values, this.props.cid)
         let problemParams = {
           'password': this.state.password,
           'problem_ids': fieldsValue.problems.map((t) => +t)
         }
-        this.props.cid && await this.props.updateContestProblems(this.props.cid, problemParams)
-        await goto('/admin/contest-list')
+        this.props.cid && this.props.updateContestProblems(this.props.cid, problemParams)
+        goto('/admin/Contest-list')
       }
     })
   }
 
   async onConfirmDel () {
     await this.props.delContest(this.props.cid, {password: this.state.password})
-    await goto('/admin/contest-list')
+    await goto('/admin/Contest-list')
   }
 
   checkPrivate () {
@@ -111,7 +111,7 @@ class ContestEdit extends Component {
               >
                 {getFieldDecorator('title', {
                   rules: [{required: true, message: '请输入标题'}],
-                  initialValue: problems.length > 0 ? contest_info.title : ''
+                  initialValue: contest_info.title || ''
                 })(
                   <Input placeholder='请输入标题' type='textarea' autosize={{minRows: 1, maxRows: 6}} />
                 )}
@@ -122,12 +122,10 @@ class ContestEdit extends Component {
               >
                 {getFieldDecorator('description', {
                   rules: [{required: true, message: '请输入描述'}],
-                  initialValue: problems.length > 0 ? contest_info.description : ''
+                  initialValue: contest_info.description || ''
                 })(
-                  <Input
-                    placeholder='请输入描述，支持 Markdown 语法，请在 Markdown 编辑器中编辑后粘贴' type='textarea'
-                    autosize={{minRows: 2}}
-                  />
+                  <Input placeholder='请输入描述，支持 Markdown 语法，请在 Markdown 编辑器中编辑后粘贴' type='textarea'
+                         autosize={{minRows: 2}} />
                 )}
 
               </FormItem>
@@ -140,8 +138,8 @@ class ContestEdit extends Component {
                   {getFieldDecorator('range-time-picker', {
                     rules: [{type: 'array', required: true, message: '请选择时间'}],
                     initialValue: cid ? [
-                      contest_info.start_time,
-                      contest_info.end_time
+                      moment(contest_info.start_time, 'YYYY-MM-DD HH:mm:ss'),
+                      moment(contest_info.end_time, 'YYYY-MM-DD HH:mm:ss')
                     ] : []
                   })(
                     <RangePicker showTime format='YYYY-MM-DD HH:mm:ss' />
@@ -156,7 +154,7 @@ class ContestEdit extends Component {
                 >
                   {getFieldDecorator('range-time-picker', {
                     rules: [{required: true, message: '请选择时间'}],
-                    initialValue: cid ? contest_info.end_time : null
+                    initialValue: cid ? moment(contest_info.end_time, 'YYYY-MM-DD HH:mm:ss') : null
                   })(
                     <DatePicker showTime format='YYYY-MM-DD HH:mm:ss' />
                   )}
@@ -202,7 +200,7 @@ class ContestEdit extends Component {
               >
                 {getFieldDecorator('langmask', {
                   rules: [{type: 'array'}],
-                  initialValue: !!contest_info.langmask && contest_info.langmask.map((t) => t + '') || []
+                  initialValue: contest_info.langmask.map((t) => t + '') || []
                 })(
                   <Select multiple placeholder='请选择支持语言'>
                     <Option value='0'>C</Option>
@@ -240,7 +238,7 @@ class ContestEdit extends Component {
                 >
                   {getFieldDecorator('users', {
                     rules: [{type: 'array'}],
-                    initialValue: !!user_ids ? user_ids.map((t) => t.user_id) : []
+                    initialValue: user_ids ? user_ids.map((t) => t.user_id) : []
                   })(
                     <Select
                       tags

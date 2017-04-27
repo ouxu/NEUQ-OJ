@@ -16,13 +16,13 @@ import { getProblemTable, searchProblems } from 'actions'
 )
 class ProblemsContainer extends React.Component {
   render () {
-    const {problems: {problemTable}, user: {islogined}} = this.props
+    const {problems: {problemTable}, user: {isLogined}} = this.props
     return (
       <ProblemsTable
         data={problemTable.problems}
         getProblemTable={this.props.getProblemTable}
         searchProblems={this.props.searchProblems}
-        key={`problem-table-table${islogined}`}
+        key={`problem-table-table${isLogined}`}
       />
     )
   }

@@ -13,7 +13,6 @@ import { fetchHomePageData, getContestsTable, getRankTable, getStatusTable } fro
 import HomeNews from 'components/content/HomePage/HomeNews'
 import HomeRank from 'components/content/HomePage/HomeRank'
 import HomeStatus from 'components/content/HomePage/HomeStatus'
-
 @connect(
   state => ({
     home: state.home,
