@@ -16,6 +16,8 @@
     "fetch-ie8": "^1.4.2",
     "gulp": "^3.9.1",
     "gulp-rev-collector": "^1.0.5",
+    "less-plugin-npm-import": "^2.1.0",
+    "less-vars-to-js": "^1.1.2",
     "moment": "^2.18.1",
     "rc-queue-anim": "^0.13.0",
     "react": "^15.3.2",
@@ -108,6 +110,7 @@
       "standard-jsx"
     ]
   },
+  "theme": "theme.config.js",
   "author": "out_xu",
   "license": "MIT"
 }

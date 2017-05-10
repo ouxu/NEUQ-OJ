@@ -2,6 +2,9 @@ const webpack = require('webpack')
 const path = require('path')
 const autoprefixer = require('autoprefixer')
 const dflPort = 8080  // 配置端口
+const getThemeConfig = require('./theme.config')
+const theme = getThemeConfig()
+
 module.exports = {
   // 配置服务器
   devServer: {
@@ -43,8 +46,8 @@ module.exports = {
         loaders: ['style-loader', 'css-loader', 'postcss-loader']
       },
       {
-        test: /\.less/,
-        loaders: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader']
+        test: /\.less$/,
+        loader: ['style-loader', 'css-loader', 'postcss-loader', `less-loader?{"modifyVars":${JSON.stringify(theme)}}`]
       },
       {
         test: /\.(png|jpg|gif|woff|woff2|svg)$/,

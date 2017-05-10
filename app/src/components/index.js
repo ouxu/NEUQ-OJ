@@ -6,7 +6,6 @@ import { Icon } from 'antd'
 import Navigation from 'containers/Navigation'
 import Sider from 'components/plugins/Sider'
 import Footer from 'components/plugins/Footer'
-
 import './index.less'
 import { pureRender } from 'utils'
 

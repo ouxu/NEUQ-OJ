@@ -5,7 +5,9 @@ import React from 'react'
 import { Link } from 'react-router'
 import QueueAnim from 'rc-queue-anim'
 import { Icon, Input, Table, Tag } from 'antd'
+import { color } from 'utils'
 import './index.less'
+
 const Search = Input.Search
 class ProblemsTable extends React.Component {
   constructor (props) {
@@ -46,6 +48,14 @@ class ProblemsTable extends React.Component {
       Y: <Icon className='status-yes' type='check-circle' />,
       N: <Icon className='status-no' type='close-circle' />
     }
+    const colorArr = {
+      1: color.green,
+      2: color.red,
+      3: color.blue,
+      4: color.yellow
+    }
+    const randomN = () => Math.floor(Math.random() * 4 + 1)
+
     const columns = [{
       title: '',
       width: '1%',
@@ -95,9 +105,11 @@ class ProblemsTable extends React.Component {
       render: record =>
         (<span>
           <span >{// 标签渲染
-            record.tags ? (record.tags.map((value, index) => <Tag color='#87d068' style={{Padding: 0}}
-              key={index + 400}
-              className='problem-title-tags'>{value.tag_title}</Tag>)) : null}</span>
+            record.tags && (record.tags.map((value, index) => (
+              <Tag color={colorArr[randomN()]} key={index + 400} className='problem-title-tags'>{value.tag_title}
+              </Tag>
+            )))}
+          </span>
           <div className='problem-title-content'>
             <Link to={`problems/${record.id}`}> {record.title}</Link>
           </div>

@@ -3,7 +3,7 @@
  */
 
 // const __APIHOST__ = 'http://192.168.1.191:3000'
-// const __APIHOST__ = "http://192.168.1.221:8000"
+// const __APIHOST__ = 'http://0.0.0.0:8080/api'
 const __APIHOST__ = 'http://oj.marklux.cn'
 
 const apiMaker = path => `${__APIHOST__}/${path}`

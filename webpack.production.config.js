@@ -6,6 +6,8 @@ const autoprefixer = require('autoprefixer')               // 自动处理浏览
 const HtmlWebpackPlugin = require('html-webpack-plugin')    // 生成 html
 const CleanWebpackPlugin = require('clean-webpack-plugin')  // 用于清除上次打包文件
 const Visualizer = require('webpack-visualizer-plugin')
+const getThemeConfig = require('./theme.config')
+const theme = getThemeConfig()
 module.exports = {
   entry: {
     bundle: path.join(__dirname, '/app/src/main.js'),
@@ -35,10 +37,10 @@ module.exports = {
         })
       },
       {
-        test: /\.less/,
+        test: /\.less$/,
         loaders: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: ['css-loader?minimize', 'postcss-loader', 'less-loader']
+          use: ['css-loader', 'postcss-loader', `less-loader?{"modifyVars":${JSON.stringify(theme)}}`]
         })
       },
       {

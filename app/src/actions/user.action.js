@@ -126,7 +126,7 @@ export function userRegister (body) {
       //   },
       //   body: urlEncode(body)
       // }
-      // const json = await fetch(API.Register, headers)
+      // const json = await fetch(API.register, headers)
       // if (json.code === 0) {
       //   const data = await json.data
       //   await dispatch(actionCreater(SET_USERME, data.user))

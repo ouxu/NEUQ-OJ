@@ -14,7 +14,7 @@ const handleClick = (e) => {
 
 const role = window.localStorage.getItem('neuq_oj.role')
 
-const AdminSider = (props) => (
+const AdminSider = props => (
   <Menu
     mode='inline'
     style={{width: 200}}

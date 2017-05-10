@@ -8,7 +8,7 @@ import { Link } from 'react-router'
 import ContestProgress from './contestprogress'
 import ContestInfoTabs from './contestinfotabs'
 import './index.less'
-import {newDate} from 'utils'
+import { newDate } from 'utils'
 import API from 'api'
 import * as requestService from 'utils/request'
 
@@ -43,7 +43,7 @@ class ContestInfo extends React.Component {
 
   async getRank (id) {
     try {
-      const data = await requestService.get(API.contest + id + '/Ranklist')
+      const data = await requestService.get(API.contest + id + '/ranklist')
       await this.setState({
         rankData: data
       })

@@ -57,7 +57,7 @@ export function searchContests (value, page = 1, size = 20) {
 
       await dispatch(actionCreater(SET_CONTESTS_LIST, data))
 
-      jumpTo('Navigation')
+      jumpTo('navigation')
     } catch (e) {
       console.error(e)
     }
@@ -210,7 +210,7 @@ export function editContest (body, id) {
 
 export function updateContestProblems (id, body) {
   try {
-    requestService.tpost(API.contest + id + '/update/Problem', body)
+    requestService.tpost(API.contest + id + '/update/problem', body)
   } catch (e) {
     console.error(e)
   }
