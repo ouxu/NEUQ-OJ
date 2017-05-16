@@ -2,7 +2,15 @@ body {
   background: #f8f8f8;
 }
 
+html {
+  height: 100%;
+}
 
+body {
+  min-height: 100%;
+}
+
+// 滚动条样式
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -11,9 +19,6 @@ body {
 ::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.2);
 }
-
-
-
 
 //通用字体样式
 .h-3 {
@@ -80,6 +85,7 @@ body {
   }
   .ant-layout-main {
     box-sizing: border-box;
+    flex: 1;
 
     position: absolute;
     top: 0;
@@ -121,3 +127,4 @@ body {
     z-index: 9999;
   }
 }
+

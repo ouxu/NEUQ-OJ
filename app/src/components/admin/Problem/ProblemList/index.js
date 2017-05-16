@@ -4,7 +4,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { Button, Icon, Input, Popconfirm, Spin, Table, Tag } from 'antd'
-import { goto, openInNewTab } from 'utils'
+import { color,goto, openInNewTab } from 'utils'
 
 import './index.less'
 
@@ -84,6 +84,13 @@ class ProblemList extends Component {
 
   render () {
     const {data, loading} = this.props
+    const colorArr = {
+      1: color.green,
+      2: color.red,
+      3: color.blue,
+      4: color.yellow
+    }
+    const randomN = () => Math.floor(Math.random() * 4 + 1)
     const difficultyArr = ['简单', '一般', '困难']
     const popInput = <Input type='password' onChange={this.passwordChange} placeholder='请输入您的登录密码' size='small' />
     const columns = [{
@@ -119,14 +126,12 @@ class ProblemList extends Component {
       render: record => (
         <span>
           <span >
-            {// 标签渲染
-              record.tags && (record.tags.map((value, index) =>
-                <Tag color='#87d068' style={{Padding: 0}}
-                  key={index + 400}
-                  className='problem-title-tags'>
-                  {value.tag_title}
-                </Tag>))
-            }
+            <span >{// 标签渲染
+              record.tags && (record.tags.map((value, index) => (
+                <Tag color={colorArr[randomN()]} key={index + 400} className='problem-title-tags'>{value.tag_title}
+              </Tag>
+              )))}
+            </span>
             <span className='mock-a' onClick={() => openInNewTab('problems/' + record.id)}>
               {record.title}
             </span>
