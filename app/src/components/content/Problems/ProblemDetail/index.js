@@ -34,6 +34,10 @@ class ProblemDetail extends React.Component {
     this.submit = this.submit.bind(this)
   }
 
+  componentDidMount () {
+    this.props.getProblemInfo(this.props.params)
+  }
+
   componentWillUnmount () {
     this.timer && clearInterval(this.timer)
   }
@@ -141,7 +145,7 @@ class ProblemDetail extends React.Component {
   }
 
   render () {
-    const data = this.props.data || {}
+    const {problemDetail: data={}} = this.props
 
     const {params} = this.props
     return (

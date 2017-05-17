@@ -35,7 +35,8 @@ class RankList extends Component {
   }
 
   render () {
-    let {data = []} = this.props
+    let {rankList: data = []} = this.props
+
     data = data.map((t = {}, i) => ({
       ...t,
       num: i + 1

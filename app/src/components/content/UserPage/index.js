@@ -10,6 +10,7 @@ import './index.less'
 
 import DashCard from './DashCard'
 import StatusCard from './StatusCard'
+import GroupStatus from './GroupStatus'
 class UserPanel extends React.Component {
   render () {
     const {user, status} = this.props
@@ -40,6 +41,7 @@ class UserPanel extends React.Component {
         </div>
         <DashCard status={status} />
         <StatusCard userdata={user} />
+        <GroupStatus/>
       </QueueAnim>
 
     )

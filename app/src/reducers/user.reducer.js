@@ -6,7 +6,7 @@ import { SET_USERINFO, SET_USERME, IS_LOGINED, CLEAN_USERME, SET_USER_ROLE, SET_
 const initUser = {
   userInfo: {},
   userMe: {},
-  isLogined: false,
+  isLogin: false,
   role: '',
   message: {}
 }
@@ -21,20 +21,20 @@ export default function user (state = initUser, action) {
       return {
         ...state,
         userMe: action.payload,
-        isLogined: true,
+        isLogin: true,
         role: user
       }
     case CLEAN_USERME:
       return {
         ...state,
         userMe: {},
-        isLogined: false,
+        isLogin: false,
         role: ''
       }
     case IS_LOGINED:
       return {
         ...state,
-        isLogined: true
+        isLogin: true
       }
     case SET_USER_ROLE:
       return {

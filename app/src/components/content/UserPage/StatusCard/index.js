@@ -2,7 +2,7 @@
  * Created by out_xu on 17/2/20.
  */
 import React from 'react'
-import { Row, Col, Card } from 'antd'
+import { Card, Col, Row } from 'antd'
 import './index.less'
 
 class Statuscard extends React.Component {
@@ -12,7 +12,7 @@ class Statuscard extends React.Component {
     return (
       <Card>
         <Row gutter={12} type='flex' className='userpage-statuscard-wrap'>
-          <Col className='userpage-statuscard-row' xs={{ span: 16 }} sm={{ span: 8 }}>
+          <Col className='userpage-statuscard-row' xs={{span: 16}} sm={{span: 8}}>
             <div className='userpage-statuscard-item'>
               <span className='userpage-statuscard-item-title'>学校</span>
               <br />
@@ -20,14 +20,14 @@ class Statuscard extends React.Component {
             </div>
           </Col>
 
-          <Col className='userpage-statuscard-row' xs={{ span: 8 }} sm={{ span: 4 }}>
+          <Col className='userpage-statuscard-row' xs={{span: 8}} sm={{span: 4}}>
             <div className='userpage-statuscard-item'>
               <span className='userpage-statuscard-item-title'>提交</span>
               <br />
               <span className='userpage-statuscard-item-number'>{userdata.submit}</span>
             </div>
           </Col>
-          <Col className='userpage-statuscard-row' xs={{ span: 8 }} sm={{ span: 4 }}>
+          <Col className='userpage-statuscard-row' xs={{span: 8}} sm={{span: 4}}>
 
             <div className='userpage-statuscard-item'>
               <span className='userpage-statuscard-item-title'>解决</span>
@@ -35,14 +35,14 @@ class Statuscard extends React.Component {
               <span className='userpage-statuscard-item-number'>{userdata.solved}</span>
             </div>
           </Col>
-          <Col className='userpage-statuscard-row' xs={{ span: 8 }} sm={{ span: 4 }}>
+          <Col className='userpage-statuscard-row' xs={{span: 8}} sm={{span: 4}}>
             <div className='userpage-statuscard-item'>
               <span className='userpage-statuscard-item-title'>错误</span>
               <br />
               <span className='userpage-statuscard-item-number'>{userdata.submit - userdata.solved}</span>
             </div>
           </Col>
-          <Col className='userpage-statuscard-row' xs={{ span: 8 }} sm={{ span: 4 }}>
+          <Col className='userpage-statuscard-row' xs={{span: 8}} sm={{span: 4}}>
             <div className='userpage-statuscard-item'>
               <span className='userpage-statuscard-item-title'>正确率</span>
               <br />

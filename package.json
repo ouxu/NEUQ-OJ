@@ -16,9 +16,11 @@
     "fetch-ie8": "^1.4.2",
     "gulp": "^3.9.1",
     "gulp-rev-collector": "^1.0.5",
+    "isomorphic-fetch": "^2.2.1",
     "less-plugin-npm-import": "^2.1.0",
     "less-vars-to-js": "^1.1.2",
     "moment": "^2.18.1",
+    "promise-polyfill": "^6.0.2",
     "rc-queue-anim": "^0.13.0",
     "react": "^15.3.2",
     "react-addons-pure-render-mixin": "^15.4.1",
@@ -30,7 +32,7 @@
     "redux-log": "^2.0.0",
     "redux-thunk": "^2.1.0",
     "run-sequence": "^1.2.2",
-    "whatwg-fetch": "^2.0.1"
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.6",

@@ -5,7 +5,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 import QueueAnim from 'rc-queue-anim'
-import { Icon, Input, message, Modal, Progress, Table, Spin } from 'antd'
+import { Icon, Input, message, Modal, Progress, Spin, Table } from 'antd'
 import './index.less'
 import { goto, newDate } from 'utils'
 
@@ -97,7 +97,9 @@ class ContestPage extends React.Component {
   }
 
   render () {
-    const {data, loading} = this.props
+    const {contests: {contestsTable = []}, loading} = this.props
+    const data = contestsTable.contests
+
     const privatestatus = [
       '公开',
       '加密',
@@ -254,7 +256,7 @@ class ContestPage extends React.Component {
             onOk={this.handleok}
           >
             <Input
-              addonBefore={<Icon type='lock'/>}
+              addonBefore={<Icon type='lock' />}
               type='password'
               placeholder='Password'
               size='large'

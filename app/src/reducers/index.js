@@ -12,9 +12,11 @@ import contests from './contests.reducer'
 import ranklist from './ranklist.reducer'
 import admin from './admin.reducer'
 import loading from './loading.reducer'
+import groups from './groups.reducer'
 const rootReducer = combineReducers({
   admin,
   contests,
+  groups,
   home,
   loading,
   problems,

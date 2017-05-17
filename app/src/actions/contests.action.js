@@ -114,6 +114,7 @@ export function getContest (id) {
       }
     } catch (e) {
       dispatch(actionCreater(GET_CONTEST_ERR))
+      goto('/contests')
       throw new Error('权限不足')
     }
   }

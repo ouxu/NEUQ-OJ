@@ -11,6 +11,8 @@ import Actived from 'components/user/VerifyMail/Actived'
 
 import HomePageContainer from 'containers/HomePage'
 import ProblemsContainer from 'containers/Problems'
+import GroupsContainer from 'containers/Groups'
+import GroupsPanelContainer from 'containers/GroupsPanel'
 import UserPageContainer from 'containers/UserPage'
 import StatusContainer from 'containers/Status.js'
 import ContestsContainer from 'containers/Contest'
@@ -48,6 +50,10 @@ const RouterApp = store => (
         <IndexRoute component={ProblemsContainer} />
         <Route path=':id' getComponent={ProblemDetail} />
       </Route>
+      <Route path='groups'>
+        <IndexRoute component={GroupsContainer} />
+        <Route path=':id' component={GroupsPanelContainer} />
+      </Route>
       <Route path='userpage/edit' component={EditInfoContainer} />
       <Route path='userpage/:id' component={UserPageContainer} />
       <Route path='register'>
@@ -80,7 +86,6 @@ const RouterApp = store => (
     <Route path='admin' component={AdminComponent} onEnter={CheckData}>
       <IndexRoute component={ProblemManageContainer} />
       <Route path='news' component={NewsManageContainer} />
-
       <Route path='contest-list' component={ContestManageContainer} />
       <Route path='contest-edit' getComponent={ContestEdit}>
         <Route path=':cid' getComponent={ContestEdit} />

@@ -12,8 +12,6 @@ const handleClick = (e) => {
   jumpTo('Navigation')
 }
 
-const role = window.localStorage.getItem('neuq_oj.role')
-
 const AdminSider = props => (
   <Menu
     mode='inline'
@@ -23,7 +21,7 @@ const AdminSider = props => (
     onClick={handleClick}
   >
     {
-      role === 'admin' &&
+      window.localStorage.getItem('neuq_oj.role') === 'admin' &&
       <SubMenu key='home' title={<span>主页管理</span>}>
         <Menu.Item key='news'>通知管理</Menu.Item>
       </SubMenu>
@@ -44,12 +42,11 @@ const AdminSider = props => (
       <Menu.Item key='problem-upload'>题目导入</Menu.Item>
     </SubMenu>
     {
-      role === 'admin' &&
+      window.localStorage.getItem('neuq_oj.role') === 'admin' &&
       <SubMenu key='system' title={<span>系统管理</span>}>
         <Menu.Item key='team-generator'>账号生成</Menu.Item>
       </SubMenu>
     }
-
   </Menu>
 )
 

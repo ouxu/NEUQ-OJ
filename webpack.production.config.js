@@ -11,7 +11,7 @@ const theme = getThemeConfig()
 module.exports = {
   entry: {
     bundle: path.join(__dirname, '/app/src/main.js'),
-    vendor1: ['whatwg-fetch', 'fetch-ie8', 'es6-promise', 'react', 'react-dom', 'react-router'],  // 第三方库和框架另外打包
+    vendor1: ['react', 'react-dom', 'react-router'],  // 第三方库和框架另外打包
     vendor2: ['redux', 'react-redux']
 
   },

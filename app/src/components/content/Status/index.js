@@ -4,7 +4,7 @@
 import React from 'react'
 
 import QueueAnim from 'rc-queue-anim'
-import { Table, Input, Button } from 'antd'
+import { Button, Input, Table } from 'antd'
 import { LanguageSelect, ResultSelect } from 'components/plugins/SelectBox'
 import './index.less'
 import { columns } from 'components/plugins/TableData'
@@ -37,6 +37,7 @@ class StatusTable extends React.Component {
       result: value
     })
   }
+
   SelectLanguage (value) {
     this.setState({
       language: value
@@ -44,17 +45,18 @@ class StatusTable extends React.Component {
   }
 
   onInputUser (e) {
-    const { value } = e.target
+    const {value} = e.target
     const reg = /^\d+$/
     if ((!isNaN(value) && reg.test(value)) || value === '') {
-      this.setState({ user_id: value === '' ? null : value })
+      this.setState({user_id: value === '' ? null : value})
     }
   }
+
   onInputId (e) {
-    const { value } = e.target
+    const {value} = e.target
     const reg = /^\d+$/
     if ((!isNaN(value) && reg.test(value)) || value === '') {
-      this.setState({ problem_id: value === '' ? null : value })
+      this.setState({problem_id: value === '' ? null : value})
     }
   }
 
@@ -73,7 +75,8 @@ class StatusTable extends React.Component {
   }
 
   render () {
-    const { data } = this.props
+    const {statusTable: data} = this.props
+
     const pagination = {
       pageSize: Number(window.sessionStorage.getItem('neuq_oj.statuspagesize')),
       current: Number(window.sessionStorage.getItem('neuq_oj.statuspagecurr')),
@@ -101,14 +104,14 @@ class StatusTable extends React.Component {
               value={this.state.problem_id}
               onChange={this.onInputId}
               onPressEnter={this.onSeacrch}
-              style={{ width: '120px' }}
+              style={{width: '120px'}}
             />
             <Input
               placeholder='用户ID'
               value={this.state.user_id}
               onChange={this.onInputUser}
               onPressEnter={this.onSeacrch}
-              style={{ width: '120px' }}
+              style={{width: '120px'}}
             />
 
             <ResultSelect handleChange={this.SelectResult} />
@@ -127,9 +130,9 @@ class StatusTable extends React.Component {
           columns={columns}
           rowKey={record => `status-${record.id}`}
           dataSource={data}
-          scroll={{ x: 960 }}
-                    // bordered
-                    // 分页
+          scroll={{x: 960}}
+          // bordered
+          // 分页
           pagination={pagination}
           key='status-1'
         />

@@ -24,9 +24,11 @@ class ContestInfo extends React.Component {
   }
 
   componentDidMount () {
+    this.props.params.cid && this.props.getContest(this.props.params.cid)
+    const {contest: {contest_info = {}}, params: {cid: id}} = this.props
     this.timer = setInterval(() => {
       this.setState({time: new Date()})
-      const endTime = this.props.data.contest_info && newDate(this.props.data.contest_info.end_time)
+      const endTime = contest_info && newDate(contest_info.end_time)
       if (this.state.time > endTime) {
         clearInterval(this.timer)
       }
@@ -34,8 +36,6 @@ class ContestInfo extends React.Component {
   }
 
   componentWillUnmount () {
-    // 如果存在this.timer，则使用clearTimeout清空。
-    // 如果你使用多个timer，那么用多个变量，或者用个数组来保存引用，然后逐个clear
     this.timer && clearInterval(this.timer)
   }
 
@@ -53,7 +53,8 @@ class ContestInfo extends React.Component {
   }
 
   render () {
-    const {contest_info = {}, problem_info = []} = this.props.data
+    const {contest = {contest_info: {}, problem_info: []}, params: {cid: id}} = this.props
+    const {contest_info = {}, problem_info = []} = contest
     const accepted = {
       Y: <Icon className='status-yes' type='check-circle' />,
       N: <Icon className='status-no' type='close-circle' />

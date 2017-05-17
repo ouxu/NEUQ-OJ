@@ -17,7 +17,14 @@ class Navigation extends React.Component {
     this.handleCancel = this.handleCancel.bind(this)
   }
 
-  componentDidMount () {
+  async componentDidMount () {
+    try {
+      await this.props.tokenVerify()
+      await this.props.getUserMe()
+      // this.props.action.getMessageCount()
+    } catch (e) {
+      e.message !== '未登录' && console.error(e)
+    }
   }
 
   showModal () {
@@ -33,7 +40,7 @@ class Navigation extends React.Component {
   }
 
   render () {
-    const {user: {isLogined, message}} = this.props
+    const {user: {isLogin, message}} = this.props
     const role = window.localStorage.getItem('neuq_oj.role')
 
     return (
@@ -47,7 +54,7 @@ class Navigation extends React.Component {
               this.props.admin &&
               <li><Link to={'/'}> 返回主页 <Icon type='logout' /></Link></li>
             }
-            { isLogined
+            { isLogin
               ? <li className='userinfo'>
                 <a>
                   <div className='userinfo-name'>
