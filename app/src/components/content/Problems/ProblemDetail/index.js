@@ -106,7 +106,7 @@ class ProblemDetail extends React.Component {
       : `${API.host}problem/${params.id}/submit`
     const data = await requestService.tpost(url, body)
     message.success('提交成功')
-    const solutionId = data.solution_id
+    const solutionId = data.solutionId
     this.timer = setInterval(() => {
       this.getResultData(solutionId)
       const result = this.state.result
@@ -131,11 +131,11 @@ class ProblemDetail extends React.Component {
     }
   }
 
-  async getErrorInfo (solution_id, result) {
+  async getErrorInfo (solutionId, result) {
     try {
       const errorMode = (result === 10 ? '/runtime-info/' : '/compile-info/')
 
-      const data = await requestService.get(API.status + errorMode + solution_id)
+      const data = await requestService.get(API.status + errorMode + solutionId)
       await this.setState({
         errorinfo: data.error
       })
@@ -145,7 +145,7 @@ class ProblemDetail extends React.Component {
   }
 
   render () {
-    const {problemDetail: data={}} = this.props
+    const {problemDetail: data = {}} = this.props
 
     const {params} = this.props
     return (

@@ -39,11 +39,11 @@ const MenuItem = {
     </Menu.Item>,
     <Menu.Item key={'groups'}>
       <Link to='/groups' className='showitem'>
-        <span className='nav-text'><Icon type="usergroup-add" /> 用户组</span>
+        <span className='nav-text'><Icon type='usergroup-add' /> 用户组</span>
       </Link>
       <Link to='/groups' className='hideitem'>
         <Tooltip placement='right' title='用户组'>
-          <span className='sidericon'><Icon type="usergroup-add" /></span>
+          <span className='sidericon'><Icon type='usergroup-add' /></span>
         </Tooltip>
       </Link>
     </Menu.Item>,

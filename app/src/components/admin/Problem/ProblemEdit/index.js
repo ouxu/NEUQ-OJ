@@ -11,6 +11,8 @@ import './index.less'
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
 
+// TODO 描述输出修改无效
+
 @Form.create()
 class ProblemEdit extends Component {
   constructor (props) {
@@ -19,17 +21,21 @@ class ProblemEdit extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+  componentDidMount () {
+    this.props.params.id ? this.props.getProblemInfo(this.props.params) : this.props.clearProblem()
+  }
+
   handleSubmit (e) {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll((err, value) => {
       if (!err) {
-        this.props.editProblem(value, this.props.id)
+        this.props.editProblem(value, this.props.params.id)
       }
     })
   }
 
   render () {
-    const {id, loading, data} = this.props
+    const {problems: {problemDetail: data}, params: {id}, loading} = this.props
 
     const {getFieldDecorator} = this.props.form
     const formItemLayout = {}
@@ -122,9 +128,9 @@ class ProblemEdit extends Component {
                     <span className='ant-form-item-required span-label'>是否公开 </span>
                     {getFieldDecorator('is_public', {
                       rules: [{required: true, message: '请选择是否公开题目'}],
-                      initialValue: data['is_public'] ? data.is_public : true
+                      initialValue: true
                     })(
-                      <Switch defaultChecked={data['is_public'] ? data.is_public : true} />
+                      <Switch defaultChecked={ true} />
                     )}
                   </FormItem>
                 </Col>
@@ -133,9 +139,9 @@ class ProblemEdit extends Component {
                     <span className='ant-form-item-required span-label'>是否特判 </span>
                     {getFieldDecorator('spj', {
                       rules: [{required: true, message: '请选择是否特判'}],
-                      initialValue: data['spj'] ? data.spj : false
+                      initialValue: false
                     })(
-                      <Switch defaultChecked={data['spj'] ? data.spj : false} />
+                      <Switch defaultChecked={ false} />
                     )}
                   </FormItem>
                 </Col>
@@ -179,7 +185,7 @@ class ProblemEdit extends Component {
                   initialValue: data['title'] ? data.sample_input : ''
                 })(
                   <Input placeholder='用于前台展示的样例输入' type='textarea'
-                    autosize={{minRows: 2}} />
+                         autosize={{minRows: 2}} />
                 )}
 
               </FormItem>
@@ -192,7 +198,7 @@ class ProblemEdit extends Component {
                   initialValue: data['title'] ? data.sample_output : ''
                 })(
                   <Input placeholder='用于前台展示的样例输出' type='textarea'
-                    autosize={{minRows: 2}} />
+                         autosize={{minRows: 2}} />
                 )}
 
               </FormItem>
@@ -205,7 +211,7 @@ class ProblemEdit extends Component {
                   initialValue: data['title'] ? data.test_input : ''
                 })(
                   <Input placeholder='用于判题的样例输入' type='textarea'
-                    autosize={{minRows: 2}} />
+                         autosize={{minRows: 2}} />
                 )}
 
               </FormItem>
@@ -218,7 +224,7 @@ class ProblemEdit extends Component {
                   initialValue: data['title'] ? data.test_output : ''
                 })(
                   <Input placeholder='用于判题的样例输出' type='textarea'
-                    autosize={{minRows: 2}} />
+                         autosize={{minRows: 2}} />
                 )}
 
               </FormItem>
@@ -231,7 +237,7 @@ class ProblemEdit extends Component {
                   initialValue: data['title'] ? data.hint : ''
                 })(
                   <Input placeholder='可输入来源' type='textarea'
-                    autosize={{minRows: 1}} />
+                         autosize={{minRows: 1}} />
                 )}
 
               </FormItem>
@@ -244,7 +250,7 @@ class ProblemEdit extends Component {
                   initialValue: data['title'] ? data.hint : ''
                 })(
                   <Input placeholder='可输入提示' type='textarea'
-                    autosize={{minRows: 1}} />
+                         autosize={{minRows: 1}} />
                 )}
 
               </FormItem>
@@ -253,30 +259,30 @@ class ProblemEdit extends Component {
                 {
                   id
                     ? <Popconfirm title='你确定要修改本题目吗？'
-                      onConfirm={this.handleSubmit}
-                      okText='Yes'
-                      cancelText='No'
+                                  onConfirm={this.handleSubmit}
+                                  okText='Yes'
+                                  cancelText='No'
                   >
-                      <Button className='contest-edit-submit' size='large' type='primary'>
-                        修改题目
-                      </Button>
-                    </Popconfirm>
+                    <Button className='contest-edit-submit' size='large' type='primary'>
+                      修改题目
+                    </Button>
+                  </Popconfirm>
                     : <Popconfirm title='请认真审核信息'
-                      onConfirm={this.handleSubmit}
-                      okText='Yes'
-                      cancelText='No'
+                                  onConfirm={this.handleSubmit}
+                                  okText='Yes'
+                                  cancelText='No'
                   >
-                      <Button type='primary' size='large'>添加题目</Button>
-                    </Popconfirm>
+                    <Button type='primary' size='large'>添加题目</Button>
+                  </Popconfirm>
                 }
                 {
                   id &&
                   <Popconfirm title='你确定要删除本题目吗？'
-                    onConfirm={this.onConfirmDel}
-                    okText='Yes'
-                    cancelText='No'
+                              onConfirm={this.onConfirmDel}
+                              okText='Yes'
+                              cancelText='No'
                   >
-                    <Button type='danger' size='large'>删除题目</Button>
+                    <Button type='danger' size='large' style={{marginLeft: 10}}>删除题目</Button>
                   </Popconfirm>
                 }
               </FormItem>

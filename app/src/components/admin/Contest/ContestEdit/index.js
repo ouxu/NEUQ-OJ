@@ -52,7 +52,6 @@ class ContestEdit extends Component {
           }
         }
         if (rangeTimeValue) {
-          console.log(typeof (rangeTimeValue))
           if (rangeTimeValue.length > 1) {
             values = {
               ...values,
@@ -202,7 +201,7 @@ class ContestEdit extends Component {
                   rules: [{type: 'array'}],
                   initialValue: contest_info.langmask.map((t) => t + '') || []
                 })(
-                  <Select multiple placeholder='请选择支持语言'>
+                  <Select mode='multiple' placeholder='请选择支持语言'>
                     <Option value='0'>C</Option>
                     <Option value='1'>C++</Option>
                     <Option value='2'>Pascal</Option>
@@ -224,7 +223,7 @@ class ContestEdit extends Component {
                   initialValue: problems || []
                 })(
                   <Select
-                    tags
+                    mode='tags'
                     tokenSeparators={[' ']}
                     notFoundContent='可在 Excel 中复制后直接粘贴'
                   />
@@ -241,7 +240,7 @@ class ContestEdit extends Component {
                     initialValue: user_ids ? user_ids.map((t) => t.user_id) : []
                   })(
                     <Select
-                      tags
+                      mode='tags'
                       tokenSeparators={[' ']}
                       notFoundContent='可在 Excel 中复制后直接粘贴'
                     />
@@ -256,17 +255,17 @@ class ContestEdit extends Component {
                                   okText='Yes'
                                   cancelText='No'
                   >
-                      <Button className='contest-edit-submit' size='large' type='primary'>
-                        修改竞赛
-                      </Button>
-                    </Popconfirm>
+                    <Button className='contest-edit-submit' size='large' type='primary'>
+                      修改竞赛
+                    </Button>
+                  </Popconfirm>
                     : <Popconfirm title='请认真审核信息'
                                   onConfirm={this.handleSubmit}
                                   okText='Yes'
                                   cancelText='No'
                   >
-                      <Button type='primary' size='large'>添加竞赛</Button>
-                    </Popconfirm>
+                    <Button type='primary' size='large'>添加竞赛</Button>
+                  </Popconfirm>
                 }
                 {
                   cid &&

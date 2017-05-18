@@ -23,6 +23,7 @@ import NewsManageContainer from 'containers/admin/News'
 
 import ContestManageContainer from 'containers/admin/ContestList'
 import ProblemManageContainer from 'containers/admin/ProblemList'
+import GroupCreateContainer from 'containers/admin/GroupCreate'
 import ProblemUploadContainer from 'containers/admin/ProblemUpload'
 import EditInfoContainer from 'containers/EditInfo'
 
@@ -92,6 +93,7 @@ const RouterApp = store => (
       </Route>
 
       <Route path='problem-list' component={ProblemManageContainer} />
+      <Route path='group-create' component={GroupCreateContainer} />
       <Route path='problem-edit' getComponent={ProblemEdit}>
         <Route path=':id' getComponent={ProblemEdit} />
       </Route>

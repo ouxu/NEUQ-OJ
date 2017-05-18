@@ -1,7 +1,13 @@
 /**
  * Created by out_xu on 17/5/17.
  */
-import { SET_GROUPS_TABLE,SET_GROUPS_USERS,SET_GROUPS_NOTICE_DETAIL,SET_GROUPS_NOTICES,SET_GROUPS_ME} from 'actions/type'
+import {
+  SET_GROUPS_ME,
+  SET_GROUPS_NOTICE_DETAIL,
+  SET_GROUPS_NOTICES,
+  SET_GROUPS_TABLE,
+  SET_GROUPS_USERS
+} from 'actions/type'
 
 const initGroups = {
   group: {},
@@ -9,7 +15,7 @@ const initGroups = {
   groupsMe: [],
   groupNotices: [],
   groupNoticeDetail: {},
-  groupUsers:[]
+  groupUsers: []
 }
 
 export default function groups (state = initGroups, action) {

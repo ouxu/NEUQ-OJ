@@ -4,7 +4,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { Button, Icon, Input, Popconfirm, Spin, Table, Tag } from 'antd'
-import { color,goto, openInNewTab } from 'utils'
+import { color, goto, openInNewTab } from 'utils'
 
 import './index.less'
 
@@ -83,7 +83,10 @@ class ProblemList extends Component {
   }
 
   render () {
-    const {data, loading} = this.props
+    const {problems: {problemTable}, loading, getProblemTable, searchProblems, createContest, deleteProblem} = this.props
+
+    const data = problemTable.problems
+
     const colorArr = {
       1: color.green,
       2: color.red,
@@ -128,8 +131,9 @@ class ProblemList extends Component {
           <span >
             <span >{// 标签渲染
               record.tags && (record.tags.map((value, index) => (
-                <Tag color={colorArr[randomN()]} key={index + 400} className='problem-title-tags'>{value.tag_title}
-              </Tag>
+                <Tag color={colorArr[randomN()]} key={index + 400} className='problem-title-tags'>
+                  {value.tag_title}
+                </Tag>
               )))}
             </span>
             <span className='mock-a' onClick={() => openInNewTab('problems/' + record.id)}>
@@ -174,7 +178,7 @@ class ProblemList extends Component {
         return (
           <div>
             已选择 {selected.length} 道 <Button type='primary' size='small' onClick={this.createCon}
-              disabled={selected.length < 1}>发起竞赛</Button>
+                                            disabled={selected.length < 1}>发起竞赛</Button>
           </div>
         )
       },
@@ -216,8 +220,8 @@ class ProblemList extends Component {
     return (
       <Spin tip='Loading...' spinning={loading}>
         <div className='h-1'>
-            问题列表
-          </div>
+          问题列表
+        </div>
         <Table
           columns={columns}
           rowKey={record => record.id}
@@ -228,7 +232,7 @@ class ProblemList extends Component {
           className='problem-manage-table'
           title={title}
           rowSelection={rowSelection}
-          />
+        />
       </Spin>
     )
   }

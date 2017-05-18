@@ -4,10 +4,9 @@
 import React from 'react'
 import { Link } from 'react-router'
 import QueueAnim from 'rc-queue-anim'
-import { Icon, Input, Table, Tag } from 'antd'
+import { Input, Table, Tag } from 'antd'
 import { color } from 'utils'
 import './index.less'
-
 const Search = Input.Search
 class ProblemsTable extends React.Component {
   constructor (props) {
@@ -20,9 +19,9 @@ class ProblemsTable extends React.Component {
   }
 
   componentDidMount () {
-    const page = window.sessionStorage.getItem('neuq_oj.problempagecurr') || 1
-    const size = window.sessionStorage.getItem('neuq_oj.problempagesize') || 20
-    this.props.getProblemTable(page, size)
+    const page = window.sessionStorage.getItem('neuq_oj.groupspagecurr') || 1
+    const size = window.sessionStorage.getItem('neuq_oj.groupspagesize') || 20
+    this.props.getGroupTable(page, size)
   }
 
   onInputChange (e) {
@@ -33,7 +32,7 @@ class ProblemsTable extends React.Component {
     const searchText = encodeURIComponent(this.state.searchText)
     if (searchText.length < 1) {
       const page = 1
-      const size = window.sessionStorage.getItem('neuq_oj.problempagesize')
+      const size = window.sessionStorage.getItem('neuq_oj.groupspagesize')
       this.props.getProblemTable(page, size)
     } else {
       this.props.searchProblems(searchText)
@@ -42,7 +41,10 @@ class ProblemsTable extends React.Component {
 
   // 正确率
   render () {
-    const {data} = this.props
+    const {groups: {groupsTable}} = this.props
+    console.log(groupsTable)
+    const {groups: data = []} = groupsTable
+    console.log(data)
     const colorArr = {
       1: color.green,
       2: color.red,
@@ -54,58 +56,55 @@ class ProblemsTable extends React.Component {
     const columns = [{
       title: '',
       width: '1%',
-      key: 'problem-none',
-      className: 'problem-none'
+      key: 'groups-none',
+      className: 'groups-none'
     }, {
       title: '#',
-      render: record =>
-        (<span>
-          <Link to={`problems/${record.id}`}> {record.id}</Link>
-        </span>),
-      key: 'problem-id',
+      dataIndex: 'id',
+      key: 'groups-id',
       width: 60,
-      className: 'problem-id'
+      className: 'groups-id'
     }, {
       title: '用户组名称',
       render: record =>
         (<span>
-          <span >{// 标签渲染
-            record.tags && (record.tags.map((value, index) => (
-              <Tag color={colorArr[randomN()]} key={index + 400} className='problem-title-tags'>{value.tag_title}
-              </Tag>
-            )))}
-          </span>
-          <div className='problem-title-content'>
-            <Link to={`problems/${record.id}`}> {record.title}</Link>
+          <div className='groups-title-content'>
+            <Link to={`groups/${record.id}`}> {record.name}</Link>
           </div>
         </span>),
-      key: 'problem-title',
-      className: 'problem-title'
-    }, {
-      title: '私有性',
-      dataIndex: 'source',
-      key: 'problem-source',
-      width: 80
+      key: 'groups-title',
+      className: 'groups-title'
     }, {
       title: '创建者',
-      dataIndex: 'submit',
+      render: record => (
+        <Link to={'/userpage/' + record.owner_id}><span>{record.owner_name}</span></Link>
+      ),
       sorter: (a, b) => a.submit - b.submit,
-      key: 'problem-problemsubmit'
+      key: 'groups-problemsubmit'
     }, {
       title: '创建时间',
-      dataIndex: 'submit',
-      sorter: (a, b) => a.submit - b.submit,
-      key: 'problem-problemsubit'
+      dataIndex: 'created_at',
+      sorter: (a, b) => a.created_at - b.created_at,
+      key: 'groups-created-at'
     }, {
       title: '组内人数/上限',
       dataIndex: 'accepted',
       sorter: (a, b) => a.accept - b.accept,
-      key: 'problem-accept'
+      key: 'groups-accept'
+    }, {
+      title: '私有性',
+      render: record => {
+        return record.is_public === 1
+          ? <Tag color={color.blue}>公开</Tag>
+          : <Tag color={color.red}>私有</Tag>
+      },
+      key: 'groups-source',
+      width: 80
     }]
     const pagination = {
-      pageSize: Number(window.sessionStorage.getItem('neuq_oj.problempagesize')),
-      current: Number(window.sessionStorage.getItem('neuq_oj.problempagecurr')),
-      total: Number(window.sessionStorage.getItem('neuq_oj.problempagecount')),
+      pageSize: Number(window.sessionStorage.getItem('neuq_oj.groupspagesize')),
+      current: Number(window.sessionStorage.getItem('neuq_oj.groupspagecurr')),
+      total: Number(window.sessionStorage.getItem('neuq_oj.groupspagecount')),
       showSizeChanger: true,
       onShowSizeChange: (current, pageSize) => {
         const searchText = encodeURIComponent(this.state.searchText)
@@ -116,9 +115,9 @@ class ProblemsTable extends React.Component {
         }
       },
       onChange: (current) => {
-        window.sessionStorage.setItem('neuq_oj.problempagecurr', current)
+        window.sessionStorage.setItem('neuq_oj.groupspagecurr', current)
         const searchText = encodeURIComponent(this.state.searchText)
-        const pageSize = window.sessionStorage.getItem('neuq_oj.problempagesize')
+        const pageSize = window.sessionStorage.getItem('neuq_oj.groupspagesize')
         if (searchText.length < 1) {
           this.props.getProblemTable(current, pageSize)
         } else {

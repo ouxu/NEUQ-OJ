@@ -36,7 +36,7 @@ class ContestList extends Component {
     if (searchText.length < 1) {
       const page = 1
       const size = window.sessionStorage.getItem('neuq_oj.contestspagesize')
-      this.props.getContestsTable(page, size)
+      this.props.getContestsMine(page, size)
     } else {
       this.props.searchContests(searchText)
     }
@@ -47,7 +47,8 @@ class ContestList extends Component {
   }
 
   render () {
-    const {data} = this.props
+    const {contest: {contestsTable:data}} = this.props
+
     const privatestatus = [
       '公开',
       '加密',
@@ -144,7 +145,7 @@ class ContestList extends Component {
       onShowSizeChange: (current, pageSize) => {
         const searchText = encodeURIComponent(this.state.searchText)
         if (searchText.length < 1) {
-          this.props.getContestsTable(current, pageSize)
+          this.props.getContestsMine(current, pageSize)
         } else {
           this.props.searchContests(searchText, current, pageSize)
         }
@@ -154,7 +155,7 @@ class ContestList extends Component {
         const searchText = encodeURIComponent(this.state.searchText)
         const pageSize = window.sessionStorage.getItem('neuq_oj.contestspagesize')
         if (searchText.length < 1) {
-          this.props.getContestsTable(current, pageSize)
+          this.props.getContestsMine(current, pageSize)
         } else {
           this.props.searchContests(searchText, current, pageSize)
         }

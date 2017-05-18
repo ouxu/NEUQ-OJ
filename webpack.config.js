@@ -19,6 +19,13 @@ module.exports = {
       warnings: true,
       errors: true
     },
+    // proxy: {
+    //   '/apply/*': {
+    //     target: 'http://123.206.55.207:7001',
+    //     changeOrigin: true,
+    //     secure: false
+    //   }
+    // },
     host: '0.0.0.0'
   },
   devtool: 'cheap-module-eval-source-map',

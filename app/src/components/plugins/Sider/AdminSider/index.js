@@ -27,7 +27,7 @@ const AdminSider = props => (
       </SubMenu>
     }
     <SubMenu key='group' title={<span>小组管理</span>}>
-      <Menu.Item key='1'>Option 1</Menu.Item>
+      <Menu.Item key='group-create'>创建用户组  </Menu.Item>
       <Menu.Item key='2'>Option 2</Menu.Item>
       <Menu.Item key='3'>Option 3</Menu.Item>
       <Menu.Item key='4'>Option 4</Menu.Item>

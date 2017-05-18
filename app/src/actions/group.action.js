@@ -62,7 +62,7 @@ export function getGroupTableMe () {
  * @param keyword
  * @param page
  * @param size
- * @returns {(p1:*)}
+ * @returns {function(*)}
  */
 export function searchGroups (keyword, page = 1, size = 20) {
   return async (dispatch) => {
@@ -88,8 +88,9 @@ export function searchGroups (keyword, page = 1, size = 20) {
 
 /**
  * 关闭用户组
+ * @param id
  * @param password
- * @returns {function(*)}
+ * @returns {function()}
  */
 export function closeUserGroup (id, password) {
   return async () => {
@@ -110,7 +111,7 @@ export function closeUserGroup (id, password) {
 export function createUserGroup (body) {
   return async () => {
     try {
-      await requestService.tpost(API.groupsCreate, body)
+      await requestService.tpost(API.groupCreate, body)
       message.success('创建成功')
     } catch (e) {
       console.error(e)
@@ -127,7 +128,7 @@ export function createUserGroup (body) {
 export function joinGroup (id, password) {
   return async () => {
     try {
-      await requestService.tpost(API.groups + '/' + id + '/join-in', password)
+      await requestService.tpost(API.group + id + '/join-in', password)
       message.success('加入成功')
     } catch (e) {
       console.error(e)
@@ -149,7 +150,7 @@ export function getGroupUsers (id, page = 1, size = 20) {
         page,
         size
       }
-      const data = requestService.tget(API.groups + '/' + id + '/members', params)
+      const data = requestService.tget(API.group + id + '/members', params)
       dispatch(actionCreater(SET_GROUPS_USERS, data))
     } catch (e) {
       dispatch(actionCreater(SET_GROUPS_USERS, []))
@@ -167,7 +168,7 @@ export function getGroupUsers (id, page = 1, size = 20) {
 export function changeGroupOwner (id, body) {
   return async () => {
     try {
-      await requestService.tpost(API.groups + '/' + id + '/change-owner', body)
+      await requestService.tpost(API.group + id + '/change-owner', body)
       message.success('修改成功')
     } catch (e) {
       console.error(e)
@@ -201,7 +202,7 @@ export function openGroup (id, password) {
 export function dismissGroup (id, password) {
   return async () => {
     try {
-      await requestService.tpost(API.groups + '/' + id + '/dismiss', password)
+      await requestService.tpost(API.group + id + '/dismiss', password)
       message.success('修改成功')
     } catch (e) {
       console.error(e.message)
@@ -218,7 +219,7 @@ export function dismissGroup (id, password) {
 export function quitGroup (id, password) {
   return async () => {
     try {
-      await requestService.tpost(API.groups + '/' + id + '/quit', password)
+      await requestService.tpost(API.group + id + '/quit', password)
       message.success('修改成功')
     } catch (e) {
       console.error(e.message)
@@ -261,7 +262,7 @@ export function getGroupNoticeDetail (id, gid) {
       const params = {
         gid
       }
-      const data = requestService.tget(API.groupsNoticeDetail + id, params)
+      const data = requestService.tget(API.groupNoticeDetail + id, params)
       dispatch(actionCreater(SET_GROUPS_NOTICE_DETAIL, data))
     } catch (e) {
       dispatch(actionCreater(SET_GROUPS_NOTICE_DETAIL, {}))
@@ -279,7 +280,7 @@ export function getGroupNoticeDetail (id, gid) {
 export function updateGroupNotice (id, body) {
   return async () => {
     try {
-      await requestService.tpost(API.groupsNoticeUpdate + id, body)
+      await requestService.tpost(API.groupNoticeUpdate + id, body)
       message.success('更新成功')
     } catch (e) {
       console.error(e.message)
@@ -299,7 +300,7 @@ export function delGroupNotice (id, gid) {
       const params = {
         gid
       }
-      await requestService.tget(API.groupsNoticeDel + id, params)
+      await requestService.tget(API.groupNoticeDel + id, params)
       message.success('删除成功')
     } catch (e) {
       console.error(e)
@@ -315,7 +316,7 @@ export function delGroupNotice (id, gid) {
 export function createGroupNotice (body) {
   return async () => {
     try {
-      await requestService.tpost(API.groupsNoticeCreate, body)
+      await requestService.tpost(API.groupNoticeCreate, body)
     } catch (e) {
       console.error(e.message)
     }

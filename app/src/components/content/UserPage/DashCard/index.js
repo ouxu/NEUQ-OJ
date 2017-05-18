@@ -31,10 +31,11 @@ export const DashCard = ({status}) => {
       {
         statusTable.map((t, i) =>
           i < 4 &&
-          <Row type='flex'
-               justify='start'
-               className='userpage-dashcard-status-content'
-               key={'userpage-dashcard-status-content' + i}
+          <Row
+            type='flex'
+            justify='start'
+            className='userpage-dashcard-status-content'
+            key={'userpage-dashcard-status-content' + i}
           >
             <Col className='rank-title' span='8'>{t.id}</Col>
             <Col className='userpage-dashcard-status-name' span='7'>
@@ -73,10 +74,11 @@ export const DashCard = ({status}) => {
       <Col className='userpage-dashcard-status' xs={{span: 24}} sm={{span: 8}}>
         <Card title={'最近提交'} style={cardstyle} bodyStyle={{paddingTop: 0, paddingBottom: 3}}>
           <div className='userpage-dashcard-status-wrap'>
-            <Row type='flex'
-                 justify='start'
-                 className='userpage-dashcard-status-title'
-                 key='userpage-dashcard-status-title'
+            <Row
+              type='flex'
+              justify='start'
+              className='userpage-dashcard-status-title'
+              key='userpage-dashcard-status-title'
             >
               <Col className='userpage-dashcard-status-name' span='8'>#</Col>
               <Col className='userpage-dashcard-status-name' span='7'>题目</Col>

@@ -32,14 +32,15 @@ export default {
   problemsMine: apiMaker('problems/mine'),
   // UserGroup
   groups: apiMaker('user-groups'),
+  group: apiMaker('user-group/'),
   userGroups: apiMaker('user/groups'),
   groupsSearch: apiMaker('user-groups/search'),
-  groupsCreate: apiMaker('user-groups/create'),
-  groupsNoticeGet: apiMaker('user-group/notices/get'),
-  groupsNoticeDetail: apiMaker('user-group/notices/show/'),
-  groupsNoticeDel: apiMaker('user-group/notices/delete/'),
-  groupsNoticeUpdate: apiMaker('user-group/notices/update/'),
-  groupsNoticeCreate: apiMaker('user-group/notices/create'),
+  groupCreate: apiMaker('user-group/create'),
+  groupNoticeGet: apiMaker('user-group/notices/get'),
+  groupNoticeDetail: apiMaker('user-group/notices/show/'),
+  groupNoticeDel: apiMaker('user-group/notices/delete/'),
+  groupNoticeUpdate: apiMaker('user-group/notices/update/'),
+  groupNoticeCreate: apiMaker('user-group/notices/create'),
   // submit: /Problem/{id}/submit
   solution: apiMaker('solution/'),
   // Status

@@ -26,6 +26,10 @@ class NewsManage extends Component {
     this.onConfirm = this.onConfirm.bind(this)
   }
 
+  componentDidMount () {
+    this.props.getNewsList()
+  }
+
   async showModal () {
     await this.setState({
       title: null,
@@ -66,15 +70,16 @@ class NewsManage extends Component {
     this.setState({visible: false})
   }
 
-  createMarkup = html => ({__html: html});
+  createMarkup = html => ({__html: html})
 
   async editNew (record) {
     await this.props.getNews(record.id)
+    const {admin: {news}} = this.props
     await this.setState({
       visible: true,
-      title: this.props.news.title,
-      content: this.props.news.content,
-      importance: this.props.news.importance,
+      title: news.title,
+      content: news.content,
+      importance: news.importance,
       id: record.id
     })
   }
@@ -92,7 +97,9 @@ class NewsManage extends Component {
   }
 
   render () {
-    let {newsList = []} = this.props
+    const {admin: {newsList}} = this.props
+    const {news = []} = newsList
+
     const title = () => (
       <span className='news-manage-table-title'>
         <span>公告列表</span>
@@ -153,12 +160,12 @@ class NewsManage extends Component {
     return (
       <div className='news-manage'>
         <div className='h-1'>
-              主页公告
-          </div>
+          主页公告
+        </div>
         <Table
           columns={columns}
           rowKey={record => `news-manage-${record.id}`}
-          dataSource={newsList}
+          dataSource={news}
           pagination={false}
           size='small'
           key='news-manage-table'
@@ -201,8 +208,9 @@ class NewsManage extends Component {
                 rules: [{required: true, message: '请输入内容！'}],
                 initialValue: this.state.content ? this.state.content : ''
               })(
-                <Input type='textarea' placeholder='请输入内容，支持 Markdown 语法，请在 Markdown 编辑器中编辑后粘贴'
-                       autosize={{minRows: 2, maxRows: 6}} />
+                <Input
+                  type='textarea' placeholder='请输入内容，支持 Markdown 语法，请在 Markdown 编辑器中编辑后粘贴'
+                  autosize={{minRows: 2, maxRows: 6}} />
               )}
             </FormItem>
             <FormItem>

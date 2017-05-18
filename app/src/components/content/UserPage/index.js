@@ -41,7 +41,7 @@ class UserPanel extends React.Component {
         </div>
         <DashCard status={status} />
         <StatusCard userdata={user} />
-        <GroupStatus/>
+        <GroupStatus />
       </QueueAnim>
 
     )

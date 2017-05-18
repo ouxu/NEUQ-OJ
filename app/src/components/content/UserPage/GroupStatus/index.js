@@ -9,19 +9,12 @@ const GroupStatus = (props) => {
     {
       title: 'avatar',
       dataIndex: 'avatar',
-      width: 48,
+      width: 48
     }, {
       title: 'content',
       dataIndex: 'content',
-      render: (record, index) => <div>
-        <h5>{record.name}</h5>
-        <p className={styles.content}>{it.content}</p>
-        <div className={styles.daterow}>
-          <Tag color={status[it.status].color}>{status[it.status].text}</Tag>
-          <span className={styles.date}>{it.date}</span>
-        </div>
-      </div>,
-    },
+      render: (record, index) => <div />
+    }
   ]
   return (
     <Card bordered={false} className='group-status'>

@@ -32,7 +32,7 @@ class HomepageContainer extends React.Component {
   }
 
   render () {
-    const {home: {news}, ranklist: {rankList = []}, status: {statusTable}, contests: {contestsTable}} = this.props
+    const {home: {news}, ranklist: {rankList = []}, status: {statusTable}} = this.props
     const {latest_news = [], fixed_news = []} = news
 
     return (
