@@ -80,7 +80,7 @@ class ContestInfo extends React.Component {
       className: 'contest-info-Status'
     }, {
       title: '#',
-      render: record => <Link to={`contests/${this.props.id}/problem/${record.pnum}`}>
+      render: record => <Link to={`contests/${id}/problem/${record.pnum}`}>
         Problem {String.fromCharCode(parseInt(record.pnum) + 65)} {record.pid}
       </Link>,
       width: '20%',
@@ -88,7 +88,7 @@ class ContestInfo extends React.Component {
       className: 'contest-info-code'
     }, {
       title: '标题',
-      render: record => <Link to={`contests/${this.props.id}/problem/${record.pnum}`}> {record.title}</Link>,
+      render: record => <Link to={`contests/${id}/problem/${record.pnum}`}> {record.title}</Link>,
       width: '35%',
       key: 'contest-info-title',
       className: 'contest-info-title'

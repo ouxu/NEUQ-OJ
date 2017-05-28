@@ -106,7 +106,7 @@ class ProblemDetail extends React.Component {
       : `${API.host}problem/${params.id}/submit`
     const data = await requestService.tpost(url, body)
     message.success('提交成功')
-    const solutionId = data.solutionId
+    const solutionId = data.solution_id
     this.timer = setInterval(() => {
       this.getResultData(solutionId)
       const result = this.state.result

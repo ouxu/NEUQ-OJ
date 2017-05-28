@@ -27,7 +27,7 @@ export function getContestsTable (page = 1, size = 20) {
       window.sessionStorage.setItem('neuq_oj.contestspagecount', data.total_count)
 
       await dispatch(actionCreater(SET_CONTESTS_LIST, data))
-      jumpTo('Navigation')
+      jumpTo('navigation')
     } catch (e) {
       console.error(e)
     }
@@ -90,7 +90,7 @@ export function getContestsMine (page = 1, size = 20) {
       window.sessionStorage.setItem('neuq_oj.contestspagecount', data.total_count)
 
       await dispatch(actionCreater(SET_CONTESTS_LIST, data))
-      jumpTo('Navigation')
+      jumpTo('navigation')
     } catch (e) {
       console.error(e)
     }
@@ -108,7 +108,7 @@ export function getContest (id) {
       if (id) {
         let data = await requestService.tget(API.contest + id)
         await dispatch(actionCreater(GET_CONTEST_SUCC, data))
-        jumpTo('Navigation')
+        jumpTo('navigation')
       } else {
         dispatch(actionCreater(GET_CONTEST_ERR))
       }

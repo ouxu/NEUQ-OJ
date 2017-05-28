@@ -24,6 +24,8 @@ import NewsManageContainer from 'containers/admin/News'
 import ContestManageContainer from 'containers/admin/ContestList'
 import ProblemManageContainer from 'containers/admin/ProblemList'
 import GroupCreateContainer from 'containers/admin/GroupCreate'
+import GroupListContainer from 'containers/admin/GroupList'
+import GroupManageContainer from 'containers/admin/GroupManage'
 import ProblemUploadContainer from 'containers/admin/ProblemUpload'
 import EditInfoContainer from 'containers/EditInfo'
 
@@ -33,7 +35,6 @@ import ProblemEdit from './lazyload/admin/ProblemEdit'
 
 const CheckData = (location, replace) => {
   const userRole = window.localStorage.getItem('neuq_oj.role')
-  console.log(userRole)
   if (userRole !== 'teacher' && userRole !== 'admin') {
     message.error('权限不足')
     replace({pathname: '/'})
@@ -93,7 +94,11 @@ const RouterApp = store => (
       </Route>
 
       <Route path='problem-list' component={ProblemManageContainer} />
+      <Route path='groups-list' component={GroupListContainer} />
       <Route path='group-create' component={GroupCreateContainer} />
+      <Route path='group-manage'>
+        <Route path=':gid' component={GroupManageContainer} />
+      </Route>
       <Route path='problem-edit' getComponent={ProblemEdit}>
         <Route path=':id' getComponent={ProblemEdit} />
       </Route>

@@ -26,7 +26,7 @@ export function getProblemTable (page = 1, size = 20) {
       window.sessionStorage.setItem('neuq_oj.problempagecount', data.total_count)
 
       await dispatch(actionCreater(SET_PROBLEM_TABLE, data))
-      jumpTo('Navigation')
+      jumpTo('navigation')
     } catch (e) {
       console.error(e)
     }
@@ -55,7 +55,7 @@ export function getProblemMine (page = 1, size = 20) {
       window.sessionStorage.setItem('neuq_oj.problempagecount', data.total_count)
 
       await dispatch(actionCreater(SET_PROBLEM_TABLE, data))
-      jumpTo('Navigation')
+      jumpTo('navigation')
     } catch (e) {
       console.error(e)
     }
@@ -118,7 +118,7 @@ export function searchProblems (value, page = 1, size = 20) {
 
       await dispatch(actionCreater(SET_PROBLEM_TABLE, data))
 
-      jumpTo('Navigation')
+      jumpTo('navigation')
     } catch (e) {
       console.error(e)
     }

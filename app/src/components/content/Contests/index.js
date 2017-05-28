@@ -1,13 +1,12 @@
-/* eslint-disable react/jsx-space-before-closing */
 /**
  * Created by out_xu on 17/2/21.
  */
 import React from 'react'
 import { Link } from 'react-router'
 import QueueAnim from 'rc-queue-anim'
-import { Icon, Input, message, Modal, Progress, Spin, Table } from 'antd'
+import { Icon, Input, message, Modal, Progress, Spin, Table, Tag } from 'antd'
 import './index.less'
-import { goto, newDate } from 'utils'
+import { color, goto, newDate } from 'utils'
 
 // TODO 搜索竞赛创建者
 const Search = Input.Search
@@ -105,6 +104,11 @@ class ContestPage extends React.Component {
       '加密',
       '私有'
     ]
+    const colorArr = {
+      0: color.green,
+      1: color.purple,
+      2: color.red
+    }
     const progress = {
       unstart: time => (
         <div>
@@ -179,9 +183,9 @@ class ContestPage extends React.Component {
         const endStatus = (this.state.presentTime > endTime)
         return (
           <div>
-            {startStatus ? progress.unstart(record.start_time) : ''}
-            {(startStatus === false && endStatus === false) ? progress.running(record.end_time, startTime, endTime) : ''}
-            {endStatus ? progress.ended(record.end_time) : ''}
+            {startStatus && progress.unstart(record.start_time)}
+            {(startStatus === false && endStatus === false) && progress.running(record.end_time, startTime, endTime)}
+            {endStatus &&progress.ended(record.end_time)}
           </div>
         )
       },
@@ -191,8 +195,7 @@ class ContestPage extends React.Component {
 
     }, {
       title: '权限',
-      // TODO private解释
-      render: record => <span>{privatestatus[record.private]}</span>,
+      render: record => <Tag color={colorArr[record.private]}>{privatestatus[record.private]}</Tag>,
       width: '8%',
       key: 'Contests-private',
       className: 'Contests-private'

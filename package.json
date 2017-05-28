@@ -12,11 +12,10 @@
     "antd": "^2.6.2",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-runtime": "^6.11.6",
-    "console-polyfill": "^0.2.2",
-    "fetch-ie8": "^1.4.2",
+    "codemirror": "^5.22.0",
+    "es6-promise": "^3.2.1",
     "gulp": "^3.9.1",
     "gulp-rev-collector": "^1.0.5",
-    "isomorphic-fetch": "^2.2.1",
     "less-plugin-npm-import": "^2.1.0",
     "less-vars-to-js": "^1.1.2",
     "moment": "^2.18.1",
@@ -32,7 +31,7 @@
     "redux-log": "^2.0.0",
     "redux-thunk": "^2.1.0",
     "run-sequence": "^1.2.2",
-    "whatwg-fetch": "^2.0.3"
+    "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.6",
@@ -54,9 +53,7 @@
     "babel-preset-stage-3": "^6.22.0",
     "bundle-loader": "^0.5.5",
     "clean-webpack-plugin": "^0.1.16",
-    "codemirror": "^5.22.0",
     "css-loader": "^0.26.1",
-    "es6-promise": "^4.1.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-config-standard": "^7.1.0",

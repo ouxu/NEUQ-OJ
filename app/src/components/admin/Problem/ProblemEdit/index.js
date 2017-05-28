@@ -7,6 +7,7 @@ import { Button, Col, Form, Input, InputNumber, Popconfirm, Radio, Row, Spin, Sw
 
 import { Link } from 'react-router'
 import './index.less'
+import QueueAnim from 'rc-queue-anim'
 
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
@@ -41,14 +42,15 @@ class ProblemEdit extends Component {
     const formItemLayout = {}
     return (
       <Spin tip='loading' spinning={loading} key={id}>
-        <div className='problem-edit'>
-          <div className='h-1'>
+        <QueueAnim className='problem-edit'>
+          <div className='h-1' key='problem-edit-header'>
             {id ? <span><Link to='admin/contest-list'>修改题目</Link> #{id}</span> : '添加题目'}
           </div>
-          <div className='problem-edit-content'>
+          <div className='problem-edit-content' key='problem-edit-content'>
             <Form
               onSubmit={this.handleSubmit}
               layout='vertical'
+              key={'problem-edit-content-' + id}
             >
               <FormItem
                 {...formItemLayout}
@@ -288,7 +290,7 @@ class ProblemEdit extends Component {
               </FormItem>
             </Form>
           </div>
-        </div>
+        </QueueAnim>
       </Spin>
     )
   }

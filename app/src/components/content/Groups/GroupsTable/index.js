@@ -42,7 +42,6 @@ class ProblemsTable extends React.Component {
   // 正确率
   render () {
     const {groups: {groupsTable}} = this.props
-    console.log(groupsTable)
     const {groups: data = []} = groupsTable
     console.log(data)
     const colorArr = {
@@ -87,10 +86,10 @@ class ProblemsTable extends React.Component {
       sorter: (a, b) => a.created_at - b.created_at,
       key: 'groups-created-at'
     }, {
-      title: '组内人数/上限',
-      dataIndex: 'accepted',
+      title: '上限',
+      dataIndex: 'max_size',
       sorter: (a, b) => a.accept - b.accept,
-      key: 'groups-accept'
+      key: 'groups-max-size'
     }, {
       title: '私有性',
       render: record => {

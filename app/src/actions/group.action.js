@@ -33,7 +33,7 @@ export function getGroupTable (page = 1, size = 20) {
       window.sessionStorage.setItem('neuq_oj.groupspagecount', data.total_count)
 
       await dispatch(actionCreater(SET_GROUPS_TABLE, data))
-      jumpTo('Navigation')
+      jumpTo('navigation')
     } catch (e) {
       await dispatch(actionCreater(SET_GROUPS_TABLE, []))
       console.error(e)
@@ -78,7 +78,7 @@ export function searchGroups (keyword, page = 1, size = 20) {
       window.sessionStorage.setItem('neuq_oj.groupspagecount', data.total_count)
 
       await dispatch(actionCreater(SET_GROUPS_TABLE, data))
-      jumpTo('Navigation')
+      jumpTo('navigation')
     } catch (e) {
       await dispatch(actionCreater(SET_GROUPS_TABLE, []))
       console.error(e)
@@ -234,7 +234,7 @@ export function quitGroup (id, password) {
  * @param size
  * @returns {function(*)}
  */
-export function getGroupNotice (gid, page = 1, size = 10) {
+export function getGroupNotices (gid, page = 1, size = 50) {
   return async (dispatch) => {
     try {
       const params = {
@@ -242,7 +242,7 @@ export function getGroupNotice (gid, page = 1, size = 10) {
         page,
         size
       }
-      const data = requestService.tget(API.groupsNoticeGet, params)
+      const data = await requestService.tget(API.groupNoticesGet, params)
       dispatch(actionCreater(SET_GROUPS_NOTICES, data))
     } catch (e) {
       dispatch(actionCreater(SET_GROUPS_NOTICES, []))

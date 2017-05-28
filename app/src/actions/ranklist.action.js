@@ -28,7 +28,7 @@ export function getRankTable (page = 1, size = 20, scope = 'total') {
       window.sessionStorage.setItem('neuq_oj.ranklistpagesize', size)
       await dispatch(actionCreater(SET_RANK_TABLE, data))
 
-      jumpTo('Navigation')
+      jumpTo('navigation')
       await dispatch(actionCreater(LOADED))
     } catch (e) {
       await dispatch(actionCreater(LOADED))

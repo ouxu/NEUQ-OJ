@@ -92,8 +92,8 @@ class ContestInfoTabs extends React.Component {
         render: (record) => {
           return colorEncode(record, i)
         },
-        key: 'contest-info-Problem-' + i,
-        className: 'contest-info-Problem'
+        key: 'contest-info-problem-' + i,
+        className: 'contest-info-problem'
       })
     }
     return (

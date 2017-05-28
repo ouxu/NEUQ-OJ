@@ -9,7 +9,7 @@ const SubMenu = Menu.SubMenu
 
 const handleClick = (e) => {
   goto(`/admin/${e.key}`)
-  jumpTo('Navigation')
+  jumpTo('navigation')
 }
 
 const AdminSider = props => (
@@ -26,11 +26,10 @@ const AdminSider = props => (
         <Menu.Item key='news'>通知管理</Menu.Item>
       </SubMenu>
     }
-    <SubMenu key='group' title={<span>小组管理</span>}>
-      <Menu.Item key='group-create'>创建用户组  </Menu.Item>
-      <Menu.Item key='2'>Option 2</Menu.Item>
-      <Menu.Item key='3'>Option 3</Menu.Item>
-      <Menu.Item key='4'>Option 4</Menu.Item>
+    <SubMenu key='group' title={<span>用户组管理</span>}>
+      <Menu.Item key='groups-list'>用户组列表 </Menu.Item>
+      <Menu.Item key='group-create'>创建用户组 </Menu.Item>
+      <Menu.Item key='group-manage' disabled>用户组管理</Menu.Item>
     </SubMenu>
     <SubMenu key='contest' title={<span>竞赛管理</span>}>
       <Menu.Item key='contest-list'>竞赛列表</Menu.Item>

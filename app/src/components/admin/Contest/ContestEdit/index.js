@@ -11,6 +11,7 @@ const FormItem = Form.Item
 const Option = Select.Option
 const RadioGroup = Radio.Group
 const RangePicker = DatePicker.RangePicker
+import QueueAnim from 'rc-queue-anim'
 
 @Form.create()
 class ContestEdit extends Component {
@@ -98,12 +99,12 @@ class ContestEdit extends Component {
     })
     return (
       <Spin tip='Loading...' spinning={loading}>
-        <div className='contest-edit'>
-          <div className='h-1'>
+        <QueueAnim className='contest-edit' delay={100} type='bottom'>
+          <div className='h-1' key='contest-edit-header'>
             {cid ? <span><Link to='admin/contest-list'>修改竞赛</Link> #{cid}</span> : '添加竞赛'}
           </div>
-          <div className='contest-edit-content'>
-            <Form onSubmit={this.handleSubmit}>
+          <div className='contest-edit-content' key='contest-edit-content'>
+            <Form onSubmit={this.handleSubmit} key={'contest-edit-content-' + cid}>
               <FormItem
                 {...formItemLayout}
                 label='标题'
@@ -280,7 +281,7 @@ class ContestEdit extends Component {
               </FormItem>
             </Form>
           </div>
-        </div>
+        </QueueAnim>
       </Spin>
     )
   }

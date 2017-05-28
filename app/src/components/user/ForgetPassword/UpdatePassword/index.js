@@ -31,7 +31,6 @@ class UpdatePassword extends Component {
           new_password_confirmation,
           verify_code: this.props.verifyCode
         }
-        console.log(params)
         this.props.findPassword(params)
         this.setState({
           loading: false

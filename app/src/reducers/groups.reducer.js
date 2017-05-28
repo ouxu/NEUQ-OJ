@@ -10,7 +10,6 @@ import {
 } from 'actions/type'
 
 const initGroups = {
-  group: {},
   groupsTable: [],
   groupsMe: [],
   groupNotices: [],

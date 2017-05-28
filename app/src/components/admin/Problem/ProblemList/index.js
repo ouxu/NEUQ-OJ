@@ -88,12 +88,13 @@ class ProblemList extends Component {
     const data = problemTable.problems
 
     const colorArr = {
-      1: color.green,
+      1: color.blue,
       2: color.red,
-      3: color.blue,
-      4: color.yellow
+      3: color.purple,
+      4: color.yellow,
+      5: color.sky
     }
-    const randomN = () => Math.floor(Math.random() * 4 + 1)
+    const randomN = () => Math.floor(Math.random() * 5 + 1)
     const difficultyArr = ['简单', '一般', '困难']
     const popInput = <Input type='password' onChange={this.passwordChange} placeholder='请输入您的登录密码' size='small' />
     const columns = [{

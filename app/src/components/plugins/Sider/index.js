@@ -19,7 +19,7 @@ class Sider extends React.Component {
 
   handleClick = (e) => {
     goto('/' + e.key)
-    jumpTo('Navigation')
+    jumpTo('navigation')
   }
 
   render () {

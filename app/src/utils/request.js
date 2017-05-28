@@ -1,10 +1,5 @@
 
-import 'whatwg-fetch'
-import 'console-polyfill'
-import 'es6-promise'
-import 'fetch-ie8'
-import 'isomorphic-fetch'
-import 'promise-polyfill'
+
 import {codeHelper, getToken} from 'utils'
 const TIMEOUT = 15000
 

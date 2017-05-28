@@ -2,10 +2,10 @@
  * Created by out_xu on 17/4/8.
  */
 import React, { Component } from 'react'
-import {message} from 'antd'
 import { Button, Col, Form, Input, InputNumber, Popconfirm, Row, Switch } from 'antd'
 import './index.less'
-import { verify } from 'utils'
+import QueueAnim from 'rc-queue-anim'
+
 const FormItem = Form.Item
 
 @Form.create()
@@ -20,7 +20,6 @@ class GroupCreate extends Component {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll((err, value) => {
       if (!err) {
-        console.log(value)
         this.props.createUserGroup(value)
       }
     })
@@ -30,11 +29,11 @@ class GroupCreate extends Component {
     const {getFieldDecorator} = this.props.form
     const formItemLayout = {}
     return (
-      <div className='problem-edit'>
-        <div className='h-1'>
+      <QueueAnim className='group-edit' delay={100}>
+        <div className='h-1' key='group-edit-header'>
           创建用户组
         </div>
-        <div className='problem-edit-content'>
+        <div className='group-edit-content' key='group-edit-form'>
           <Form
             onSubmit={this.handleSubmit}
             layout='vertical'
@@ -66,7 +65,6 @@ class GroupCreate extends Component {
 
             </FormItem>
 
-
             <Row>
               <Col xs={{span: 24}} sm={{span: 12}} style={{textAlign: 'left'}}>
                 <FormItem>
@@ -95,8 +93,7 @@ class GroupCreate extends Component {
               {...formItemLayout}
               label='用户组密码'
             >
-              {getFieldDecorator('password', {
-              })(
+              {getFieldDecorator('password', {})(
                 <Input placeholder='请输入用户组密码，不设置时任何人都可加入' />
               )}
 
@@ -114,7 +111,7 @@ class GroupCreate extends Component {
             </FormItem>
           </Form>
         </div>
-      </div>
+      </QueueAnim>
     )
   }
 }

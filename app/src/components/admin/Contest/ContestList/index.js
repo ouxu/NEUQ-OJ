@@ -3,9 +3,11 @@
  */
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import { getLocalStorage, newDate, openInNewTab } from 'utils'
+import { color, getLocalStorage, newDate, openInNewTab } from 'utils'
 import './index.less'
-import { Icon, Input, Progress, Table } from 'antd'
+import { Icon, Input, Progress, Table, Tag } from 'antd'
+import QueueAnim from 'rc-queue-anim'
+
 const Search = Input.Search
 
 // 更新竞赛描述字段，题目
@@ -47,13 +49,18 @@ class ContestList extends Component {
   }
 
   render () {
-    const {contest: {contestsTable:data}} = this.props
+    const {contest: {contestsTable: data}} = this.props
 
     const privatestatus = [
       '公开',
       '加密',
       '私有'
     ]
+    const colorArr = {
+      0: color.green,
+      1: color.purple,
+      2: color.red
+    }
     const progress = {
       unstart: time => (
         <div>
@@ -127,7 +134,7 @@ class ContestList extends Component {
       className: 'contest-manage-UpdatePassword'
     }, {
       title: '权限',
-      render: record => <span>{privatestatus[record.private]}</span>,
+      render: record => <Tag color={colorArr[record.private]}>{privatestatus[record.private]}</Tag>,
       key: 'contest-manage-date',
       className: 'contest-manage-date'
     }, {
@@ -176,7 +183,7 @@ class ContestList extends Component {
                 onChange={this.onInputChange}
                 onPressEnter={this.onSeacrch}
                 onSearch={this.onSeacrch}
-            /></span>
+              /></span>
           </span>
         )
       } else {
@@ -191,8 +198,8 @@ class ContestList extends Component {
     }
 
     return (
-      <div>
-        <div className='h-1'>
+      <QueueAnim className='contest-manage' delay={100}>
+        <div className='h-1' key='contest-manage-header' >
           竞赛列表
         </div>
         <Table
@@ -205,7 +212,7 @@ class ContestList extends Component {
           title={title}
           pagination={pagination}
         />
-      </div>
+      </QueueAnim>
     )
   }
 }

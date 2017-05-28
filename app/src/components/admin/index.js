@@ -7,10 +7,11 @@ import Footer from 'components/plugins/Footer'
 import Navigation from 'components/plugins/Navigation/adminnav'
 import AdminSider from 'components/plugins/Sider/AdminSider'
 import './index.less'
-
+import 'whatwg-fetch'
+import 'promise-polyfill'
 class AdminComponent extends Component {
   render () {
-    const {path = 'Problem-list'} = this.props.routes[1]
+    const {path = 'problem-list'} = this.props.routes[1]
     return (
       <QueueAnim id='admin' type={['left', 'right']} delay={100}>
         <Navigation />

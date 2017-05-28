@@ -235,7 +235,7 @@ export function updateUserInfo (params) {
       const userId = getLocalStorage('neuq_oj.id')
       goto('/userpage/' + userId)
     } catch (e) {
-      console.log(e.message)
+      console.error(e.message)
     }
   }
 }

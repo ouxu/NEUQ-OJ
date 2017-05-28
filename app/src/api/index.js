@@ -2,8 +2,7 @@
  * Created by out_xu on 16/12/20.
  */
 
-// const __APIHOST__ = 'http://192.168.1.191:3000'
-// const __APIHOST__ = 'http://0.0.0.0:8080/api'
+// const __APIHOST__ = 'http://192.168.1.189:3000'
 const __APIHOST__ = 'http://oj.marklux.cn'
 
 const apiMaker = path => `${__APIHOST__}/${path}`
@@ -36,7 +35,7 @@ export default {
   userGroups: apiMaker('user/groups'),
   groupsSearch: apiMaker('user-groups/search'),
   groupCreate: apiMaker('user-group/create'),
-  groupNoticeGet: apiMaker('user-group/notices/get'),
+  groupNoticesGet: apiMaker('user-group/notices/get'),
   groupNoticeDetail: apiMaker('user-group/notices/show/'),
   groupNoticeDel: apiMaker('user-group/notices/delete/'),
   groupNoticeUpdate: apiMaker('user-group/notices/update/'),

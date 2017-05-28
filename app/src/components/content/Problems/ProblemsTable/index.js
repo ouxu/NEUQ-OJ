@@ -49,13 +49,13 @@ class ProblemsTable extends React.Component {
       N: <Icon className='status-no' type='close-circle' />
     }
     const colorArr = {
-      1: color.green,
+      1: color.blue,
       2: color.red,
-      3: color.blue,
-      4: color.yellow
+      3: color.purple,
+      4: color.yellow,
+      5: color.sky
     }
-    const randomN = () => Math.floor(Math.random() * 4 + 1)
-
+    const randomN = () => Math.floor(Math.random() * 5 + 1)
     const columns = [{
       title: '',
       width: '1%',

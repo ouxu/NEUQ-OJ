@@ -27,7 +27,7 @@ export function getStatusTable (page = 1, size = 20, searchobj) {
       window.sessionStorage.setItem('neuq_oj.statuspagesize', size)
 
       await dispatch(actionCreater(SET_STATUS_TABLE, data))
-      jumpTo('Navigation')
+      jumpTo('navigation')
     } catch (e) {
       console.error(e)
     }

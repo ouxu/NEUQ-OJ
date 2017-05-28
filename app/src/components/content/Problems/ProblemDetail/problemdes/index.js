@@ -12,14 +12,14 @@ const return2Br = (str) => {
   str = str || ''
   return str.replace(/\r?\n/g, '<br/>')
 }
-
+const customPanelStyle = {}
 const ProblemDes = ({data = {}}) => (
   <Collapse
     defaultActiveKey={['problem-des', 'problem-sampleinput', 'problem-sampleoutput']}
     bordered={false}
     className='problem-detail-main'
   >
-    <Panel header='描述' key='problem-des'>
+    <Panel header='描述' key='problem-des' style={customPanelStyle}>
       <Card bodyStyle={{fontSize: 14}} className='problem-detail-main-desc'>
         <h4>题目描述：</h4>
         <p dangerouslySetInnerHTML={createMarkup(data.description)} />
