@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Button, Form, Icon, Input, Modal, Popconfirm, Radio, Table } from 'antd'
+import { Button, Form, Icon, Input, Modal, Popconfirm, Radio, Table,Tag } from 'antd'
 import './index.less'
 import QueueAnim from 'rc-queue-anim'
-
+import {color} from 'utils'
 const RadioGroup = Radio.Group
 const FormItem = Form.Item
 
@@ -100,7 +100,15 @@ class NewsManage extends Component {
   render () {
     const {admin: {newsList}} = this.props
     const {news = []} = newsList
-
+    const privatestatus = [
+      '固定',
+      '普通',
+      '重要',
+      '紧急'
+    ]
+    const colorArr = [
+      color.blue,color.green,color.yellow,color.red
+    ]
     const title = () => (
       <span className='news-manage-table-title'>
         <span>公告列表</span>
@@ -117,30 +125,43 @@ class NewsManage extends Component {
     }, {
       title: '#',
       dataIndex: 'id',
+      width: 40,
       key: 'news-manage-id',
       className: 'news-manage-id'
     }, {
       title: '标题',
       dataIndex: 'title',
       key: 'news-manage-title',
-      width: 300,
       className: 'news-manage-title'
     }, {
-      title: '创建者',
+      title: '创建者ID',
       dataIndex: 'author_id',
       key: 'news-manage-author',
+      width: 100,
       className: 'news-manage-author'
     }, {
       title: '修改时间',
       dataIndex: 'updated_at',
       key: 'news-manage-UpdatePassword',
+      width: 140,
       className: 'news-manage-UpdatePassword'
     }, {
       title: '创建时间',
       dataIndex: 'created_at',
       key: 'news-manage-date',
+      width: 140,
       className: 'news-manage-date'
     }, {
+      title: '重要性',
+      render: record => (
+        <span>
+          <Tag color={colorArr[record.importance]} >{privatestatus[record.importance]}</Tag>
+        </span>
+      ),
+      width: 40,
+      key: 'news-manage-importance',
+      className: 'news-manage-importance'
+    },{
       title: '操作',
       render: () => '修改',
       width: 40,

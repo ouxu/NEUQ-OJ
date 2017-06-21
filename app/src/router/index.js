@@ -14,24 +14,26 @@ import ProblemsContainer from 'containers/Problems'
 import GroupsContainer from 'containers/Groups'
 import GroupsPanelContainer from 'containers/GroupsPanel'
 import UserPageContainer from 'containers/UserPage'
-import StatusContainer from 'containers/Status.js'
+import StatusContainer from 'containers/Status'
 import ContestsContainer from 'containers/Contest'
 import ContestInfoContainer from 'containers/ContestInfo'
 import RanklistContainer from 'containers/RankList'
 import AdminComponent from 'components/admin'
 import NewsManageContainer from 'containers/admin/News'
 
+import ContestEdit from './lazyload/admin/ContestEdit'
 import ContestManageContainer from 'containers/admin/ContestList'
-import ProblemManageContainer from 'containers/admin/ProblemList'
+
 import GroupCreateContainer from 'containers/admin/GroupCreate'
 import GroupListContainer from 'containers/admin/GroupList'
 import GroupManageContainer from 'containers/admin/GroupManage'
-import ProblemUploadContainer from 'containers/admin/ProblemUpload'
-import EditInfoContainer from 'containers/EditInfo'
 
-import ProblemDetail from './lazyload/ProblemDetail'
-import ContestEdit from './lazyload/admin/ContestEdit'
+import ProblemManageContainer from 'containers/admin/ProblemList'
 import ProblemEdit from './lazyload/admin/ProblemEdit'
+import ProblemUploadContainer from 'containers/admin/ProblemUpload'
+import ProblemTag from 'containers/admin/ProblemTag'
+import EditInfoContainer from 'containers/EditInfo'
+import ProblemDetail from './lazyload/ProblemDetail'
 
 const CheckData = (location, replace) => {
   const userRole = window.localStorage.getItem('neuq_oj.role')
@@ -103,6 +105,7 @@ const RouterApp = store => (
         <Route path=':id' getComponent={ProblemEdit} />
       </Route>
       <Route path='problem-upload' component={ProblemUploadContainer} />
+      <Route path='problem-tag' component={ProblemTag} />
     </Route>
   </Router>
 )

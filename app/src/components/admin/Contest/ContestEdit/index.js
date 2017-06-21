@@ -7,11 +7,11 @@ import moment from 'moment'
 import { Button, DatePicker, Form, Input, Popconfirm, Radio, Select, Spin } from 'antd'
 import { Link } from 'react-router'
 import { goto, verify } from 'utils'
+import QueueAnim from 'rc-queue-anim'
 const FormItem = Form.Item
 const Option = Select.Option
 const RadioGroup = Radio.Group
 const RangePicker = DatePicker.RangePicker
-import QueueAnim from 'rc-queue-anim'
 
 @Form.create()
 class ContestEdit extends Component {
@@ -125,7 +125,7 @@ class ContestEdit extends Component {
                   initialValue: contest_info.description || ''
                 })(
                   <Input placeholder='请输入描述，支持 Markdown 语法，请在 Markdown 编辑器中编辑后粘贴' type='textarea'
-                         autosize={{minRows: 2}} />
+                    autosize={{minRows: 2}} />
                 )}
 
               </FormItem>
@@ -252,28 +252,28 @@ class ContestEdit extends Component {
                 {
                   cid
                     ? <Popconfirm title={title}
-                                  onConfirm={this.handleSubmit}
-                                  okText='Yes'
-                                  cancelText='No'
+                      onConfirm={this.handleSubmit}
+                      okText='Yes'
+                      cancelText='No'
                   >
-                    <Button className='contest-edit-submit' size='large' type='primary'>
+                      <Button className='contest-edit-submit' size='large' type='primary'>
                       修改竞赛
                     </Button>
-                  </Popconfirm>
+                    </Popconfirm>
                     : <Popconfirm title='请认真审核信息'
-                                  onConfirm={this.handleSubmit}
-                                  okText='Yes'
-                                  cancelText='No'
+                      onConfirm={this.handleSubmit}
+                      okText='Yes'
+                      cancelText='No'
                   >
-                    <Button type='primary' size='large'>添加竞赛</Button>
-                  </Popconfirm>
+                      <Button type='primary' size='large'>添加竞赛</Button>
+                    </Popconfirm>
                 }
                 {
                   cid &&
                   <Popconfirm title={title}
-                              onConfirm={this.onConfirmDel}
-                              okText='Yes'
-                              cancelText='No'
+                    onConfirm={this.onConfirmDel}
+                    okText='Yes'
+                    cancelText='No'
                   >
                     <Button type='danger' size='large'>删除竞赛</Button>
                   </Popconfirm>

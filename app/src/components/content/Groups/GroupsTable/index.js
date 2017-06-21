@@ -43,7 +43,6 @@ class ProblemsTable extends React.Component {
   render () {
     const {groups: {groupsTable}} = this.props
     const {groups: data = []} = groupsTable
-    console.log(data)
     const colorArr = {
       1: color.green,
       2: color.red,

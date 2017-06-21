@@ -2,7 +2,7 @@
  * Created by out_xu on 16/12/20.
  */
 
-// const __APIHOST__ = 'http://192.168.1.189:3000'
+// const __APIHOST__ = 'http://192.168.1.189:8080'
 const __APIHOST__ = 'http://oj.marklux.cn'
 
 const apiMaker = path => `${__APIHOST__}/${path}`
@@ -29,17 +29,18 @@ export default {
   problem: apiMaker('problem/'),
   problemsSearch: apiMaker('problems/search'),
   problemsMine: apiMaker('problems/mine'),
+
+  //Tags
+  tag: apiMaker('tag/'),
+  tagCreate: apiMaker('tag/createTag'),
+  tagDelete: apiMaker('tag/deleteTag/'),
+  tagSearchProblem: apiMaker('tag/getSameTagProblem'),
   // UserGroup
   groups: apiMaker('user-groups'),
   group: apiMaker('user-group/'),
-  userGroups: apiMaker('user/groups'),
   groupsSearch: apiMaker('user-groups/search'),
   groupCreate: apiMaker('user-group/create'),
-  groupNoticesGet: apiMaker('user-group/notices/get'),
   groupNoticeDetail: apiMaker('user-group/notices/show/'),
-  groupNoticeDel: apiMaker('user-group/notices/delete/'),
-  groupNoticeUpdate: apiMaker('user-group/notices/update/'),
-  groupNoticeCreate: apiMaker('user-group/notices/create'),
   // submit: /Problem/{id}/submit
   solution: apiMaker('solution/'),
   // Status
