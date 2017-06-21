@@ -10,6 +10,7 @@ import { color, goto, newDate } from 'utils'
 
 // TODO 搜索竞赛创建者
 const Search = Input.Search
+
 class ContestPage extends React.Component {
   constructor (props) {
     super(props)

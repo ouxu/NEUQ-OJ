@@ -8,8 +8,6 @@ import Sider from 'components/plugins/Sider'
 import Footer from 'components/plugins/Footer'
 import './index.less'
 import { pureRender } from 'utils'
-import 'whatwg-fetch'
-import 'promise-polyfill'
 // 配置整体组件
 @pureRender
 class AppComponent extends React.Component {
@@ -38,7 +36,7 @@ class AppComponent extends React.Component {
             navselect={path}
           />
           <div className='ant-aside-action' onClick={this.onCollapseChange}>
-            {collapse ? <Icon type='right' /> : <Icon type='left' />}
+            <Icon type={collapse ? 'right' : 'left'} />
           </div>
         </aside>
         <div className='ant-layout-main'>
