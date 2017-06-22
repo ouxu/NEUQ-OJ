@@ -78,7 +78,10 @@ class OtherManage extends Component {
   render () {
     return (
       <div className='group-other-manage'>
-        <Select defaultValue={['changeGroupOwner']} style={{width: 130}} onChange={this.handleChange}>
+        <div className='display2'>
+          * 其他设置
+        </div>
+        <Select defaultValue={['changeGroupOwner']} style={{width: 130, marginTop: 20}} onChange={this.handleChange}>
           <Option value='changeGroupOwner'>更改用户组所有者</Option>
           <Option value='dismissGroup'>解散用户组</Option>
         </Select>
@@ -86,7 +89,8 @@ class OtherManage extends Component {
           this.state.selected === 'changeGroupOwner' &&
           <Input onChange={this.targetInputOnChange} placeholder='需变更到的用户的 ID' style={{width: 150}} />
         }
-        <Input onChange={this.passwordInputOnChange} placeholder='请输入您的密码' style={{width: 200}} />
+        <Input onChange={this.passwordInputOnChange} placeholder='请输入您的密码' style={{width: 200, marginBottom: 20}} />
+        <br />
         <Button type='primary' loading={this.state.loading} onClick={this.handleOk}>发起申请</Button>
       </div>
 

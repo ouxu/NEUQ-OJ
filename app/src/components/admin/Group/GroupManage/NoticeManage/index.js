@@ -178,7 +178,7 @@ class NoticeManage extends Component {
             <FormItem>
               {getFieldDecorator('title', {
                 rules: [{required: true, message: '请输入标题'}],
-                initialValue: this.state.title ? this.state.title : ''
+                initialValue: this.state.title || ''
               })(
                 <Input type='textarea' placeholder='请输入标题' autosize={{maxRows: 6}} />
               )}
@@ -190,7 +190,7 @@ class NoticeManage extends Component {
                 }, {
                   pattern: /[\u4e00-\u9fa5_a-zA-Z0-9_]{6,2048}/, message: '请输入最少10个字符'
                 }],
-                initialValue: this.state.content ? this.state.content : ''
+                initialValue: this.state.content || ''
               })(
                 <Input
                   type='textarea' placeholder='请输入内容，支持 Markdown 语法，请在 Markdown 编辑器中编辑后粘贴'

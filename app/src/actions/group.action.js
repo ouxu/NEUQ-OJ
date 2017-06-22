@@ -7,7 +7,8 @@ import {
   SET_GROUPS_NOTICE_DETAIL,
   SET_GROUPS_NOTICES,
   SET_GROUPS_TABLE,
-  SET_GROUPS_USERS
+  SET_GROUPS_USERS,
+  SET_GROUPS_ME
 } from './type'
 import API from '../api'
 import { goto, jumpTo } from 'utils'
@@ -68,14 +69,10 @@ export function getGroupTableCreated () {
 export function getGroupTableMe () {
   return async (dispatch) => {
     try {
-      const params = {
-        page,
-        size
-      }
-      const data = await requestService.get(API.groups + '/created', params)
-      await dispatch(actionCreater(SET_GROUPS_TABLE, data))
+      const data = await requestService.tget(API.groups + '/created')
+      await dispatch(actionCreater(SET_GROUPS_ME, data))
     } catch (e) {
-      await dispatch(actionCreater(SET_GROUPS_TABLE, []))
+      await dispatch(actionCreater(SET_GROUPS_ME, []))
       console.error(e)
     }
   }
@@ -191,8 +188,8 @@ export function getGroupUsers (gid, page = 1, size = 20) {
         page,
         size
       }
-      const data = requestService.tget(API.group + gid + '/members', params)
-      dispatch(actionCreater(SET_GROUPS_USERS, data))
+      const data = await requestService.tget(API.group + gid + '/members', params)
+      dispatch(actionCreater(SET_GROUPS_USERS, data.members))
     } catch (e) {
       dispatch(actionCreater(SET_GROUPS_USERS, []))
       console.error(e.message)

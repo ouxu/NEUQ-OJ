@@ -6,7 +6,7 @@ import { Link } from 'react-router'
 class GroupsManage extends Component {
 
   componentDidMount () {
-    this.props.getGroupTable()
+    this.props.getGroupTableMe()
   }
 
   render () {
@@ -15,9 +15,8 @@ class GroupsManage extends Component {
         创建用户组 <Icon type='plus-square-o' />
       </Link>
     )
-    const {groups: {groupsTable}} = this.props
-    const {groups: data = []} = groupsTable
-
+    const {groups: {groupsMe}} = this.props
+    const {groups: data = []} = groupsMe
     const columns = [{
       title: '',
       width: '1%',
@@ -56,7 +55,7 @@ class GroupsManage extends Component {
     }, {
       title: '私有性',
       render: record => {
-        return record.is_public === 1
+        return record.privacy === 1
           ? <Tag color={color.blue}>公开</Tag>
           : <Tag color={color.red}>私有</Tag>
       },
