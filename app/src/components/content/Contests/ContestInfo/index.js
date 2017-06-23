@@ -11,7 +11,7 @@ import './index.less'
 import { newDate } from 'utils'
 import API from 'api'
 import * as requestService from 'utils/request'
-
+import Markdown from 'components/plugins/Markdown'
 const TabPane = Tabs.TabPane
 class ContestInfo extends React.Component {
   constructor (props) {
@@ -132,7 +132,7 @@ class ContestInfo extends React.Component {
                 start_time={contest_info.start_time}
                 end_time={contest_info.end_time}
               />
-              <p dangerouslySetInnerHTML={this.createMarkup(contest_info.description)} />
+              <Markdown content={contest_info.description} />
             </div>
 
             <Tabs

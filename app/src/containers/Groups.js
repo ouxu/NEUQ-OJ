@@ -4,11 +4,11 @@
 import GroupsTable from 'components/content/Groups/GroupsTable'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getGroupTable,getGroupTableMe} from 'actions'
+import { getGroupTable,getGroupTableMe,searchGroups} from 'actions'
 
 export default connect(
   state => ({
     groups: state.groups
   }),
-  dispatch => bindActionCreators({getGroupTable,getGroupTableMe}, dispatch),
+  dispatch => bindActionCreators({getGroupTable,getGroupTableMe,searchGroups}, dispatch),
 )(GroupsTable)

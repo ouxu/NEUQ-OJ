@@ -6,7 +6,12 @@ import { Link } from 'react-router'
 class GroupsManage extends Component {
 
   componentDidMount () {
-    this.props.getGroupTableMe()
+    const userRole = window.localStorage.getItem('neuq_oj.role')
+    if (userRole === 'admin') {
+      this.props.getGroupTable()
+    } else {
+      this.props.getGroupTableMe()
+    }
   }
 
   render () {
@@ -15,8 +20,21 @@ class GroupsManage extends Component {
         创建用户组 <Icon type='plus-square-o' />
       </Link>
     )
-    const {groups: {groupsMe}} = this.props
-    const {groups: data = []} = groupsMe
+
+    const userRole = window.localStorage.getItem('neuq_oj.role')
+    const {groups: {groupsMe, groupsTable}} = this.props
+    const {groups: data = []} = userRole === 'admin' ? groupsTable : groupsMe
+
+    const privacyStatus = [
+      '公开',
+      '加密',
+      '私有'
+    ]
+    const colorArr = {
+      0: color.green,
+      1: color.purple,
+      2: color.red
+    }
     const columns = [{
       title: '',
       width: '1%',
@@ -39,12 +57,6 @@ class GroupsManage extends Component {
       key: 'groups-title',
       className: 'groups-title'
     }, {
-      title: '创建者',
-      render: record => (
-        <Link to={'/userpage/' + record.owner_id}><span>{record.owner_name}</span></Link>
-      ),
-      key: 'groups-problemsubmit'
-    }, {
       title: '创建时间',
       dataIndex: 'created_at',
       key: 'groups-created-at'
@@ -54,11 +66,7 @@ class GroupsManage extends Component {
       key: 'groups-max-size'
     }, {
       title: '私有性',
-      render: record => {
-        return record.privacy === 1
-          ? <Tag color={color.blue}>公开</Tag>
-          : <Tag color={color.red}>私有</Tag>
-      },
+      render: record => <Tag color={colorArr[record.privacy]}>{privacyStatus[record.privacy]}</Tag>,
       key: 'groups-source',
       width: 80
     }, {

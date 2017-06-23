@@ -116,12 +116,12 @@ class InfoUpdate extends Component {
         >
           {getFieldDecorator('privacy', {
             rules: [{required: true, message: '请设置用户组加密方式'}],
-            initialValue: '' + groupInfo.privacy || '1'
+            initialValue: '' + groupInfo.privacy || '0'
           })(
             <RadioGroup>
               <Radio value='0'>公开</Radio>
               <Radio value='1'>加密</Radio>
-              <Radio value='2'>指定用户</Radio>
+              <Radio value='2'>指定用户(请在用户组管理 -> 用户选项卡 中添加)</Radio>
             </RadioGroup>
           )}
         </FormItem>

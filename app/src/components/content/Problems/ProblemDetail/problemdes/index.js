@@ -4,9 +4,9 @@
 import React from 'react'
 import { Card, Collapse } from 'antd'
 import './index.less'
+import Markdown from 'components/plugins/Markdown'
 
 const Panel = Collapse.Panel
-
 const createMarkup = html => ({__html: html})
 const return2Br = (str) => {
   str = str || ''
@@ -22,11 +22,11 @@ const ProblemDes = ({data = {}}) => (
     <Panel header='描述' key='problem-des' style={customPanelStyle}>
       <Card bodyStyle={{fontSize: 14}} className='problem-detail-main-desc'>
         <h4>题目描述：</h4>
-        <p dangerouslySetInnerHTML={createMarkup(data.description)} />
+        <Markdown content={data.description} />
         <h4>输入：</h4>
-        <p dangerouslySetInnerHTML={createMarkup(data.input)} />
+        <Markdown content={data.input} />
         <h4>输出：</h4>
-        <p dangerouslySetInnerHTML={createMarkup(data.output)} />
+        <Markdown content={data.output} />
       </Card>
     </Panel>
 
@@ -44,7 +44,7 @@ const ProblemDes = ({data = {}}) => (
       data.hint &&
       <Panel header='提示' key='problem-hint'>
         <Card>
-          <p dangerouslySetInnerHTML={createMarkup(return2Br(data.hint))} />
+          <Markdown content={data.hint} />
         </Card>
       </Panel>
     }

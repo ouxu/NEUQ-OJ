@@ -33,9 +33,9 @@ class ProblemsTable extends React.Component {
     if (searchText.length < 1) {
       const page = 1
       const size = window.sessionStorage.getItem('neuq_oj.groupspagesize')
-      this.props.getProblemTable(page, size)
+      this.props.getGroupTable(page, size)
     } else {
-      this.props.searchProblems(searchText)
+      this.props.searchGroups(searchText)
     }
   }
 
@@ -43,13 +43,17 @@ class ProblemsTable extends React.Component {
   render () {
     const {groups: {groupsTable}} = this.props
     const {groups: data = []} = groupsTable
+
+    const privacyStatus = [
+      '公开',
+      '加密',
+      '私有'
+    ]
     const colorArr = {
-      1: color.green,
-      2: color.red,
-      3: color.blue,
-      4: color.yellow
+      0: color.green,
+      1: color.purple,
+      2: color.red
     }
-    const randomN = () => Math.floor(Math.random() * 4 + 1)
 
     const columns = [{
       title: '',
@@ -91,11 +95,7 @@ class ProblemsTable extends React.Component {
       key: 'groups-max-size'
     }, {
       title: '私有性',
-      render: record => {
-        return record.is_public === 1
-          ? <Tag color={color.blue}>公开</Tag>
-          : <Tag color={color.red}>私有</Tag>
-      },
+      render: record => <Tag color={colorArr[record.privacy]}>{privacyStatus[record.privacy]}</Tag>,
       key: 'groups-source',
       width: 80
     }]
@@ -107,9 +107,9 @@ class ProblemsTable extends React.Component {
       onShowSizeChange: (current, pageSize) => {
         const searchText = encodeURIComponent(this.state.searchText)
         if (searchText.length < 1) {
-          this.props.getProblemTable(current, pageSize)
+          this.props.getGroupTable(current, pageSize)
         } else {
-          this.props.searchProblems(searchText, current, pageSize)
+          this.props.searchGroups(searchText, current, pageSize)
         }
       },
       onChange: (current) => {
@@ -117,9 +117,9 @@ class ProblemsTable extends React.Component {
         const searchText = encodeURIComponent(this.state.searchText)
         const pageSize = window.sessionStorage.getItem('neuq_oj.groupspagesize')
         if (searchText.length < 1) {
-          this.props.getProblemTable(current, pageSize)
+          this.props.getGroupTable(current, pageSize)
         } else {
-          this.props.searchProblems(searchText, current, pageSize)
+          this.props.searchGroups(searchText, current, pageSize)
         }
       }
     }

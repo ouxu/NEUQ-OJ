@@ -124,7 +124,7 @@ class GroupCreate extends Component {
                 <RadioGroup>
                   <Radio value='0'>公开</Radio>
                   <Radio value='1'>加密</Radio>
-                  <Radio value='2'>指定用户</Radio>
+                  <Radio value='2'>指定用户(请在用户组管理->用户选项卡 中添加)</Radio>
                 </RadioGroup>
               )}
             </FormItem>

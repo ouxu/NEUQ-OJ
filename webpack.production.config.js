@@ -23,6 +23,7 @@ module.exports = {
   },
   devtool: false,
   module: {
+    noParse: [/moment.js/],
     rules: [
       {
         test: /\.jsx?$/,

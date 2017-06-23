@@ -41,11 +41,13 @@ class GroupManage extends Component {
     let params = {
       type: key
     }
-    replaceQueryString(params)
+    replaceQueryString(this.props.router, params, true)
   }
 
   render () {
-    const {params: {gid}} = this.props
+    const {params: {gid}, router} = this.props
+    const {location: {query}} = router
+    const {type = 'homework'} = query
     const {delGroupUsers, updateUserInfo} = this.props
     const {createGroupNotice, getGroupNotices, delGroupNotice, getGroupNoticeDetail, updateGroupNotice} = this.props
     const {changeGroupOwner, dismissGroup, updateGroupInfo, getGroupInfo} = this.props
@@ -60,7 +62,7 @@ class GroupManage extends Component {
           </span>
         </div>
         <div className='group-manage-content' key='group-manage-form'>
-          <Tabs defaultActiveKey='homework' onChange={this.onTabChange}>
+          <Tabs defaultActiveKey={type} onChange={this.onTabChange}>
             <TabPane tab='作业&考试' key='homework'>
               <Homework />
             </TabPane>

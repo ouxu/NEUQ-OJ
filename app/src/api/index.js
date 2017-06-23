@@ -2,8 +2,8 @@
  * Created by out_xu on 16/12/20.
  */
 
-// const __APIHOST__ = 'http://192.168.1.189:8080'
-const __APIHOST__ = 'http://oj.marklux.cn'
+const __APIHOST__ = 'http://192.168.1.189:8080'
+// const __APIHOST__ = 'http://oj.marklux.cn'
 
 const apiMaker = path => `${__APIHOST__}/${path}`
 
@@ -29,6 +29,7 @@ export default {
   problem: apiMaker('problem/'),
   problemsSearch: apiMaker('problems/search'),
   problemsMine: apiMaker('problems/mine'),
+  problemsImport: apiMaker('problems/import'),
 
   //Tags
   tag: apiMaker('tag/'),
