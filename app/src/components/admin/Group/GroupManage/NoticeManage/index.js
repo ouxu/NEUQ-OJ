@@ -20,6 +20,10 @@ class NoticeManage extends Component {
     this.handleCancel = this.handleCancel.bind(this)
   }
 
+  componentDidMount () {
+    this.props.getGroupNotices(this.props.gid)
+  }
+
   showModal () {
     this.setState({
       title: '',

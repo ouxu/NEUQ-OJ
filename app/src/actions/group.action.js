@@ -181,7 +181,7 @@ export function joinGroup (id, password) {
  * @param size
  * @returns {function(*)}
  */
-export function getGroupUsers (gid, page = 1, size = 20) {
+export function getGroupUsers (gid, page = 1, size = 500) {
   return async (dispatch) => {
     try {
       const params = {
@@ -375,6 +375,23 @@ export function addGroupUsers (gid, body) {
     try {
       await requestService.tpost(API.group + gid + '/members/add', body)
       message.success('添加成功')
+    } catch (e) {
+      console.error(e.message)
+    }
+  }
+}
+
+/**
+ * 更新成员名片
+ * @returns {function()}
+ * @param gid
+ * @param body
+ */
+export function updateUserTag (gid,body) {
+  return async () => {
+    try {
+      await requestService.tpost(API.group + gid + '/members/update', body)
+      message.success('修改成功')
     } catch (e) {
       console.error(e.message)
     }

@@ -8,9 +8,24 @@ export { activeUser, sendActiveMail, forgotPassword, findPassword, updateUserInf
 export { getProblemTable, searchProblems, getProblemInfo, editProblem } from './problem.action'
 export { deleteProblem, clearProblem, getProblemMine } from './problem.action'
 export { getGroupTable, getGroupTableMe, searchGroups, createUserGroup } from './group.action'
-export { joinGroup, getGroupUsers, changeGroupOwner, dismissGroup, quitGroup, getGroupNotices,updateGroupInfo } from './group.action'
-export { getGroupNoticeDetail, updateGroupNotice, delGroupNotice, createGroupNotice,delGroupUsers} from './group.action'
-export { getGroupTableCreated,getGroupInfo,addGroupUsers} from './group.action'
+export {
+  joinGroup,
+  getGroupUsers,
+  changeGroupOwner,
+  dismissGroup,
+  quitGroup,
+  getGroupNotices,
+  updateGroupInfo
+} from './group.action'
+export {
+  getGroupNoticeDetail,
+  updateGroupNotice,
+  delGroupNotice,
+  createGroupNotice,
+  delGroupUsers,
+  updateUserTag
+} from './group.action'
+export { getGroupTableCreated, getGroupInfo, addGroupUsers } from './group.action'
 export { getStatusTable } from './status.action'
 export { getRankTable } from './ranklist.action'
 export { getContestsTable, searchContests, getContest, updateContestProblems, getContestsMine } from './contests.action'

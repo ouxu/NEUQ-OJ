@@ -119,7 +119,7 @@ ansi-styles@^2.2.1:
   version "2.2.1"
   resolved "http://registry.npm.taobao.org/ansi-styles/download/ansi-styles-2.2.1.tgz#b432dd3358b634cf75e1e4664368240533c1ddbe"
 
-antd@^2.11.1:
+antd@^2.6.2:
   version "2.11.1"
   resolved "http://registry.npm.taobao.org/antd/download/antd-2.11.1.tgz#3b5e643060beabff2727fca75919792c1bcae484"
   dependencies:

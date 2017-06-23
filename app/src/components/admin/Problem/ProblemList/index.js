@@ -22,10 +22,7 @@ class ProblemList extends Component {
     this.onInputChange = this.onInputChange.bind(this)
     this.onSearch = this.onSearch.bind(this)
     this.passwordChange = this.passwordChange.bind(this)
-    this.popConfirm = this.popConfirm.bind(this)
-    this.openProblem = this.openProblem.bind(this)
     this.createCon = this.createCon.bind(this)
-    this.delProblem = this.delProblem.bind(this)
   }
 
   componentDidMount () {

@@ -16,7 +16,8 @@ import {
   getGroupUsers,
   delGroupUsers,
   getGroupInfo,
-  updateGroupInfo
+  updateGroupInfo,
+  updateUserTag
 } from 'actions'
 
 export default connect(
@@ -35,6 +36,7 @@ export default connect(
     delGroupUsers,
     getGroupUsers,
     getGroupInfo,
-    updateGroupInfo
+    updateGroupInfo,
+    updateUserTag
   }, dispatch),
 )(GroupsManage)

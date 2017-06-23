@@ -2,62 +2,67 @@
  * Created by out_xu on 17/6/5.
  */
 import React, { Component } from 'react'
-import { Popconfirm, Table,Modal,Button } from 'antd'
-
+import { Button, Input, Modal, Table } from 'antd'
+import { jumpTo } from 'utils'
+const confirm = Modal.confirm
 class UserManage extends Component {
   constructor (props) {
     super(props)
     this.state = {
       visible: false,
-      content: ''
+      tagName: '',
+      selected: [],
+      id: ''
     }
     this.handleOk = this.handleOk.bind(this)
     this.showModal = this.showModal.bind(this)
-    this.handleCancel = this.handleCancel.bind(this)
-    this.onConfirm = this.onConfirm.bind(this)
+  }
+
+  componentDidMount () {
+    this.props.getGroupUsers(this.props.gid)
   }
 
   showModal (id) {
     this.setState({
-      content: null,
+      tagName: null,
       visible: true,
       id: id
     })
-  }
-  handleCancel () {
-    this.setState({visible: false})
-  }
-  async onConfirm (e) {
-    e.preventDefault()
-    await this.props.delNews(this.state.id)
-    await this.props.getNewsList()
   }
 
   handleOk (e) {
     e.preventDefault()
     this.setState({loading: true})
-
-    this.props.form.validateFields(async (err, values) => {
-      if (!err) {
-        await this.props.editNews(values, this.state.id)
-        await this.setState({
-          visible: false
-        })
-        await this.props.getNewsList()
-        await this.setState({
-          title: null,
-          content: null,
-          importance: null,
-          id: NaN
-        })
-      }
-    })
+    const {tagName, id} = this.state
+    const body = {
+      user_tag: tagName,
+      user_id: id
+    }
+    this.props.updateUserTag(this.props.gid, body)
     setTimeout(() => {
-      this.setState({loading: false})
+      this.props.getGroupUsers(this.props.gid)
+      this.setState({
+        loading: false,
+        visible: false,
+      })
     }, 1000)
   }
+
+  delGroupUsers = () => {
+    this.props.delGroupUsers(this.props.gid, {user_ids: this.state.selected})
+    this.props.getGroupUsers(this.props.gid)
+    jumpTo('navigation')
+  }
+
   render () {
     const {groupUsers} = this.props
+    const rowSelection = {
+      onChange: async (selectedRowKeys) => {
+        await this.setState({
+          selected: selectedRowKeys
+        })
+      }
+    }
     const columns = [{
       title: '',
       width: '1%',
@@ -89,56 +94,72 @@ class UserManage extends Component {
       render: () => '修改名片',
       width: 80,
       key: 'group-manage-action',
-      onCellClick: (record) => this.showModal(record.id),
+      onCellClick: (record) => this.showModal(record.user_id),
       className: 'group-manage-action mock-a'
-    }, {
-      render: record => (
-        <Popconfirm
-          title='你确定要移除本成员吗？'
-          onConfirm={() => this.onConfirm(record.id)}
-          okText='Yes'
-          cancelText='No'
-        >
-          <a>移除</a>
-        </Popconfirm>
-      ),
-      width: 40,
-      key: 'group-manage-del',
-      className: 'group-manage-action'
     }]
+    const showConfirm = () => {
+      confirm({
+        title: '你确定要删除以下成员？',
+        content: this.state.selected.join('、'),
+        onOk: this.delGroupUsers,
+      })
+    }
+    const footer = () => {
+      let {selected} = this.state
+      return (
+        <div style={{marginTop: 10}}>
+          <Button
+            type='primary'
+            onClick={showConfirm}
+            disabled={selected.length < 1}
+            style={{marginRight: 10}}
+          >
+            删除成员
+          </Button>
+          已选择 {selected.length} 人
+        </div>
+      )
+    }
     return (
-      <div style={{backgroundColor: '#fff'}}>
+      <div >
         <Table
           columns={columns}
-          rowKey={record => `users-manage-${record.id}`}
+          rowKey={record => record.user_id}
           dataSource={groupUsers}
-          pagination={false}
-          size='small'
           key='group-homework-table'
           className='group-homework-table'
           title={() => '作业列表'}
+          pagination={false}
+          size='small'
+          rowSelection={rowSelection}
         />
+        {footer()}
         <Modal
           visible={this.state.visible}
           title='修改成员名片'
           onOk={this.handleOk}
-          onCancel={this.handleCancel}
-          key={'news-manage-modal-' + this.state.visible}
-          footer={[
-            <Button key='back' size='large' onClick={this.handleCancel}>取消</Button>,
-            <Button
-              key='submit'
-              type='primary'
-              size='large'
-              loading={this.state.loading}
-              onClick={this.handleOk}
-            >
-              提交
-            </Button>
-          ]}
+          onCancel={() => this.setState({visible: false})}
+          footer={false}
+          width={300}
         >
-          {this.state.id}
-          <div style={{margin: '24px 0'}} />
+          <Input
+            placeholder='请输入要修改的备注名'
+            onChange={ e => {
+              this.setState({
+                tagName: e.target.value
+              })
+            }}
+          />
+          <Button
+            key='submit'
+            type='primary'
+            size='large'
+            loading={this.state.loading}
+            style={{marginTop: 10, width: '100%'}}
+            onClick={this.handleOk}
+          >
+            提交
+          </Button>
         </Modal>
       </div>
     )

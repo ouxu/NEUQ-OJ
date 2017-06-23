@@ -23,8 +23,6 @@ class GroupManage extends Component {
   }
 
   componentDidMount () {
-    this.props.getGroupNotices(this.props.params.gid)
-    this.props.getGroupUsers(this.props.params.gid)
     this.props.getGroupInfo(this.props.params.gid)
   }
 
@@ -48,7 +46,7 @@ class GroupManage extends Component {
     const {params: {gid}, router} = this.props
     const {location: {query}} = router
     const {type = 'homework'} = query
-    const {delGroupUsers, updateUserInfo} = this.props
+    const {delGroupUsers, updateUserTag, getGroupUsers} = this.props
     const {createGroupNotice, getGroupNotices, delGroupNotice, getGroupNoticeDetail, updateGroupNotice} = this.props
     const {changeGroupOwner, dismissGroup, updateGroupInfo, getGroupInfo} = this.props
     const {groupNotices = [], groupNoticeDetail, groupUsers = [], groupsTable = {}, groupInfo = {}} = this.props.groups
@@ -70,6 +68,9 @@ class GroupManage extends Component {
               <UserManage
                 delGroupUsers={delGroupUsers}
                 groupUsers={groupUsers}
+                gid={gid}
+                getGroupUsers={getGroupUsers}
+                updateUserTag={updateUserTag}
               />
             </TabPane>
             <TabPane tab='通知' key='notice'>
