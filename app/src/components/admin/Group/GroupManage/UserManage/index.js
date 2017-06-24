@@ -2,9 +2,13 @@
  * Created by out_xu on 17/6/5.
  */
 import React, { Component } from 'react'
-import { Button, Input, Modal, Table } from 'antd'
+import { Button, Icon, Input, Modal, Table } from 'antd'
 import { jumpTo } from 'utils'
+import SouTable from 'sou-react-table'
+import 'sou-react-table/SouTable.css'
+import './index.less'
 const confirm = Modal.confirm
+
 class UserManage extends Component {
   constructor (props) {
     super(props)
@@ -12,7 +16,8 @@ class UserManage extends Component {
       visible: false,
       tagName: '',
       selected: [],
-      id: ''
+      id: '',
+      excel: false
     }
     this.handleOk = this.handleOk.bind(this)
     this.showModal = this.showModal.bind(this)
@@ -22,11 +27,11 @@ class UserManage extends Component {
     this.props.getGroupUsers(this.props.gid)
   }
 
-  showModal (id) {
+  showModal (record) {
     this.setState({
-      tagName: null,
       visible: true,
-      id: id
+      id: record.user_id,
+      tagName: record.user_tag
     })
   }
 
@@ -43,7 +48,7 @@ class UserManage extends Component {
       this.props.getGroupUsers(this.props.gid)
       this.setState({
         loading: false,
-        visible: false,
+        visible: false
       })
     }, 1000)
   }
@@ -94,14 +99,14 @@ class UserManage extends Component {
       render: () => '修改名片',
       width: 80,
       key: 'group-manage-action',
-      onCellClick: (record) => this.showModal(record.user_id),
+      onCellClick: (record) => this.showModal(record),
       className: 'group-manage-action mock-a'
     }]
     const showConfirm = () => {
       confirm({
         title: '你确定要删除以下成员？',
         content: this.state.selected.join('、'),
-        onOk: this.delGroupUsers,
+        onOk: this.delGroupUsers
       })
     }
     const footer = () => {
@@ -120,20 +125,48 @@ class UserManage extends Component {
         </div>
       )
     }
+    const title = () => (
+      <span className='news-manage-table-title'>
+        <span>作业列表</span>
+        <span className='news-manage-table-title-icon'>
+                    添加用户 <Icon type='menu-unfold' onClick={() => this.setState({excel: !this.state.excel})} />
+        </span>
+      </span>
+    )
     return (
-      <div >
-        <Table
-          columns={columns}
-          rowKey={record => record.user_id}
-          dataSource={groupUsers}
-          key='group-homework-table'
-          className='group-homework-table'
-          title={() => '作业列表'}
-          pagination={false}
-          size='small'
-          rowSelection={rowSelection}
-        />
-        {footer()}
+      <div className='user-group-manage-wrap'>
+        <div>
+          <Table
+            columns={columns}
+            rowKey={record => record.user_id}
+            dataSource={groupUsers}
+            key='group-homework-table'
+            className='group-homework-table'
+            title={title}
+            pagination={false}
+            size='small'
+            rowSelection={rowSelection}
+          />
+          {footer()}
+        </div>
+
+        {
+          this.state.excel && (
+            <div className='user-group-manage-excel'>
+              <SouTable
+                tableData={[]}
+                width={200}
+                minTableCol={2}
+                minTableRow={20}
+                minCellWidth={50}
+                cellHeight={28}
+                getData={function getData (data) {
+                  console.log(data)
+                }}
+              />
+            </div>
+          )
+        }
         <Modal
           visible={this.state.visible}
           title='修改成员名片'
@@ -144,7 +177,7 @@ class UserManage extends Component {
         >
           <Input
             placeholder='请输入要修改的备注名'
-            onChange={ e => {
+            onChange={e => {
               this.setState({
                 tagName: e.target.value
               })

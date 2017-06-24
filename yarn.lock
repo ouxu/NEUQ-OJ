@@ -6608,6 +6608,12 @@ sort-keys@^1.0.0:
   dependencies:
     is-plain-obj "^1.0.0"
 
+sou-react-table@^0.1.4:
+  version "0.1.4"
+  resolved "http://registry.npm.taobao.org/sou-react-table/download/sou-react-table-0.1.4.tgz#c9b15b66dc9e0e3b9121f0f269046da2a55aeac6"
+  dependencies:
+    babel-runtime "^6.11.6"
+
 source-list-map@^0.1.7, source-list-map@~0.1.7:
   version "0.1.8"
   resolved "http://registry.npm.taobao.org/source-list-map/download/source-list-map-0.1.8.tgz#c550b2ab5427f6b3f21f5afead88c4f5587b2106"

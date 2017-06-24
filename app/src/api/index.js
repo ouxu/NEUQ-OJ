@@ -2,8 +2,8 @@
  * Created by out_xu on 16/12/20.
  */
 
-const __APIHOST__ = 'http://192.168.1.189:8080'
-// const __APIHOST__ = 'http://oj.marklux.cn'
+// const __APIHOST__ = 'http://192.168.1.189:8080'
+const __APIHOST__ = 'http://oj.marklux.cn'
 
 const apiMaker = path => `${__APIHOST__}/${path}`
 

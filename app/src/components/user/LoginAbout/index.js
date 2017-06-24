@@ -93,7 +93,7 @@ class LoginAbout extends React.Component {
                       required: true, message: '请输入UserName/手机号/邮箱'
                     }]
                   })(
-                    <Input addonBefore={<Icon type='user' style={{width:"100%"}}/>} placeholder='UserName/手机号/邮箱' />
+                    <Input addonBefore={<Icon type='user'/>} style={{width: '100%'}}  placeholder='UserName/手机号/邮箱' />
                   )}
                 </Tooltip>
               </FormItem>
@@ -105,7 +105,8 @@ class LoginAbout extends React.Component {
                     required: true, message: '请输入密码！'
                   }]
                 })(
-                  <Input addonBefore={<Icon type='lock' />} type='password' placeholder='Password' style={{width:"100%"}}/>
+                  <Input addonBefore={<Icon type='lock' />} type='password' placeholder='Password'
+                         style={{width: '100%'}} />
                 )}
               </FormItem>
 
