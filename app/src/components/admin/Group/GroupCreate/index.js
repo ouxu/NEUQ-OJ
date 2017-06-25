@@ -2,11 +2,12 @@
  * Created by out_xu on 17/4/8.
  */
 import React, { Component } from 'react'
-import { Button, Col, Form, Input, InputNumber, Popconfirm, Radio, Row } from 'antd'
+import { Button, Col, Form, Input, InputNumber, Modal, Radio, Row } from 'antd'
 import './index.less'
 import QueueAnim from 'rc-queue-anim'
-import {verify} from 'utils'
+import { verify } from 'utils'
 
+const confirm = Modal.confirm
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
 
@@ -23,7 +24,11 @@ class GroupCreate extends Component {
     this.props.form.validateFieldsAndScroll((err, value) => {
       if (!err) {
         value.is_closed = value.is_closed === '1'
-        this.props.createUserGroup(value)
+        confirm({
+          title: '确认创建',
+          content: '请认真审核信息，一旦创建，有部分信息将无法修改!',
+          onOk: async() => await this.props.createUserGroup(value)
+        })
       }
     })
   }
@@ -40,7 +45,7 @@ class GroupCreate extends Component {
               label='用户组密码'
             >
               {getFieldDecorator('password', {
-                rules: [{ pattern: verify.password, message: '请设置用户组密码'}],
+                rules: [{pattern: verify.password, message: '请设置用户组密码'}],
               })(
                 <Input type="password" />
               )}
@@ -48,8 +53,8 @@ class GroupCreate extends Component {
           </div>
         )
       }
-
     }
+
     return (
       <QueueAnim className='group-edit' delay={100}>
         <div className='h-1' key='group-edit-header'>
@@ -130,15 +135,7 @@ class GroupCreate extends Component {
             </FormItem>
             {privacyDetail()}
             <FormItem>
-              <Popconfirm
-                title='请认真审核信息'
-                onConfirm={this.handleSubmit}
-                okText='Yes'
-                cancelText='No'
-              >
-                <Button type='primary' size='large'>创建用户组</Button>
-              </Popconfirm>
-
+              <Button type='primary' size='large' onClick={this.handleSubmit}>创建用户组</Button>
             </FormItem>
           </Form>
         </div>

@@ -4,7 +4,7 @@
 import React, { Component } from 'react'
 import './index.less'
 import moment from 'moment'
-import { Button, DatePicker, Form, Input, Popconfirm, Radio, Select, Spin } from 'antd'
+import { Button, DatePicker, Form, Input, Modal, Radio, Select, Spin } from 'antd'
 import { Link } from 'react-router'
 import { goto, verify } from 'utils'
 import QueueAnim from 'rc-queue-anim'
@@ -12,6 +12,7 @@ const FormItem = Form.Item
 const Option = Select.Option
 const RadioGroup = Radio.Group
 const RangePicker = DatePicker.RangePicker
+const confirm = Modal.confirm
 
 @Form.create()
 class ContestEdit extends Component {
@@ -23,63 +24,80 @@ class ContestEdit extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.checkPrivate = this.checkPrivate.bind(this)
     this.onConfirmDel = this.onConfirmDel.bind(this)
-    this.passwordChange = this.passwordChange.bind(this)
-  }
-
-  passwordChange (e) {
-    this.setState({
-      password: e.target.value
-    })
   }
 
   handleSubmit (e) {
     e.preventDefault()
     this.props.form.validateFields((err, fieldsValue) => {
       if (!err) {
-        const rangeTimeValue = fieldsValue['range-time-picker']
-        let values = {
-          'title': fieldsValue.title,
-          'private': fieldsValue.privated,
-          'password': fieldsValue.password,
-          'langmask': fieldsValue.langmask.map((t) => +t),
-          'problems': fieldsValue.problems.map((t) => +t),
-          'description': fieldsValue.description,
-          'user_password': this.state.password
-        }
-        if (fieldsValue.users) {
-          values = {
-            ...values,
-            users: fieldsValue.users.map((t) => +t)
-          }
-        }
-        if (rangeTimeValue) {
-          if (rangeTimeValue.length > 1) {
-            values = {
-              ...values,
-              'start_time': rangeTimeValue[0].format('YYYY-MM-DD HH:mm:ss'),
-              'end_time': rangeTimeValue[1].format('YYYY-MM-DD HH:mm:ss')
+        confirm({
+          title: '请认真审核信息，确认无错误时再提交!',
+          content: (
+            <Input
+              type='password'
+              onChange={(e) => this.setState({password: e.target.value})}
+              placeholder='请输入您的登录密码'
+            />
+          ),
+          onOk: async () => {
+            const rangeTimeValue = fieldsValue['range-time-picker']
+            let values = {
+              'title': fieldsValue.title,
+              'private': fieldsValue.privated,
+              'password': fieldsValue.password,
+              'langmask': fieldsValue.langmask.map((t) => +t),
+              'problems': fieldsValue.problems.map((t) => +t),
+              'description': fieldsValue.description,
+              'user_password': this.state.password
             }
-          } else {
-            values = {
-              ...values,
-              'end_time': rangeTimeValue.format('YYYY-MM-DD HH:mm:ss')
+            if (fieldsValue.users) {
+              values = {
+                ...values,
+                users: fieldsValue.users.map((t) => +t)
+              }
             }
+            if (rangeTimeValue) {
+              if (rangeTimeValue.length > 1) {
+                values = {
+                  ...values,
+                  'start_time': rangeTimeValue[0].format('YYYY-MM-DD HH:mm:ss'),
+                  'end_time': rangeTimeValue[1].format('YYYY-MM-DD HH:mm:ss')
+                }
+              } else {
+                values = {
+                  ...values,
+                  'end_time': rangeTimeValue.format('YYYY-MM-DD HH:mm:ss')
+                }
+              }
+            }
+            let problemParams = {
+              'password': this.state.password,
+              'problem_ids': fieldsValue.problems.map((t) => +t)
+            }
+            await this.props.editContest(values, this.props.cid)
+            this.props.cid && await this.props.updateContestProblems(this.props.cid, problemParams)
+            goto('/admin/contest-list')
           }
-        }
-        this.props.editContest(values, this.props.cid)
-        let problemParams = {
-          'password': this.state.password,
-          'problem_ids': fieldsValue.problems.map((t) => +t)
-        }
-        this.props.cid && this.props.updateContestProblems(this.props.cid, problemParams)
-        goto('/admin/Contest-list')
+        })
       }
     })
   }
 
-  async onConfirmDel () {
-    await this.props.delContest(this.props.cid, {password: this.state.password})
-    await goto('/admin/Contest-list')
+  onConfirmDel () {
+    confirm({
+      title: '是否决定要删除?',
+      content: (
+        <Input
+          type='password'
+          onChange={(e) => this.setState({password: e.target.value})}
+          placeholder='请输入您的登录密码'
+        />
+      ),
+      onOk: async () => {
+        await this.props.delContest(this.props.cid, {password: this.state.password})
+        goto('/admin/contest-list')
+      }
+    })
   }
 
   checkPrivate () {
@@ -90,7 +108,7 @@ class ContestEdit extends Component {
   render () {
     const {getFieldDecorator} = this.props.form
     let {contest: {problems = [], progress, contest_info = {langmask: []}, problems_info = [], user_ids}, loading, cid} = this.props
-    const title = <Input type='password' onChange={this.passwordChange} placeholder='请输入您的登录密码' size='small' />
+
     const formItemLayout = {}
 
     problems = problems.map((t) => '' + t)
@@ -125,7 +143,7 @@ class ContestEdit extends Component {
                   initialValue: contest_info.description || ''
                 })(
                   <Input placeholder='请输入描述，支持 Markdown 语法，请在 Markdown 编辑器中编辑后粘贴' type='textarea'
-                    autosize={{minRows: 2}} />
+                         autosize={{minRows: 2}} />
                 )}
 
               </FormItem>
@@ -250,33 +268,17 @@ class ContestEdit extends Component {
               }
               <FormItem>
                 {
-                  cid
-                    ? <Popconfirm title={title}
-                      onConfirm={this.handleSubmit}
-                      okText='Yes'
-                      cancelText='No'
-                  >
-                      <Button className='contest-edit-submit' size='large' type='primary'>
+                  cid ? (
+                    <Button className='contest-edit-submit' size='large' type='primary' onClick={this.handleSubmit}>
                       修改竞赛
                     </Button>
-                    </Popconfirm>
-                    : <Popconfirm title='请认真审核信息'
-                      onConfirm={this.handleSubmit}
-                      okText='Yes'
-                      cancelText='No'
-                  >
-                      <Button type='primary' size='large'>添加竞赛</Button>
-                    </Popconfirm>
+                  ) : (
+                    <Button type='primary' size='large' onClick={this.handleSubmit}>添加竞赛</Button>
+                  )
                 }
                 {
-                  cid &&
-                  <Popconfirm title={title}
-                    onConfirm={this.onConfirmDel}
-                    okText='Yes'
-                    cancelText='No'
-                  >
-                    <Button type='danger' size='large'>删除竞赛</Button>
-                  </Popconfirm>
+                  cid && <Button type='danger' size='large' onClick={this.onConfirmDel}>删除竞赛</Button>
+
                 }
               </FormItem>
             </Form>

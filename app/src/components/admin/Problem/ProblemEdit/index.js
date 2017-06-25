@@ -3,14 +3,15 @@
  */
 import React, { Component } from 'react'
 
-import { Button, Col, Form, Input, InputNumber, Popconfirm, Radio, Row, Spin, Switch } from 'antd'
+import { Button, Col, Form, Input, InputNumber, Modal, Radio, Row, Spin, Switch } from 'antd'
 
 import { Link } from 'react-router'
-import './index.less'
 import QueueAnim from 'rc-queue-anim'
-
+import { goto } from 'utils'
+import './index.less'
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
+const confirm = Modal.confirm
 
 // TODO 描述输出修改无效
 
@@ -18,7 +19,9 @@ const RadioGroup = Radio.Group
 class ProblemEdit extends Component {
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      password: ''
+    }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -30,7 +33,31 @@ class ProblemEdit extends Component {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll((err, value) => {
       if (!err) {
-        this.props.editProblem(value, this.props.params.id)
+        confirm({
+          title: '确认提交？',
+          content: '请认真审核信息，确认无错误时再提交!',
+          onOk: async() => {
+            await this.props.editProblem(value, this.props.params.id)
+          }
+        })
+      }
+    })
+  }
+
+  onConfirmDel = (e) => {
+    e.preventDefault()
+    confirm({
+      title: '是否决定要删除?删除后无法恢复！',
+      content: (
+        <Input
+          type='password'
+          onChange={(e) => this.setState({password: e.target.value})}
+          placeholder='请输入您的登录密码'
+        />
+      ),
+      onOk: async() => {
+        await this.props.deleteProblem(this.props.params.id, {password: this.state.password})
+        goto('/admin/problem-list')
       }
     })
   }
@@ -258,34 +285,12 @@ class ProblemEdit extends Component {
               </FormItem>
 
               <FormItem>
-                {
-                  id
-                    ? <Popconfirm title='你确定要修改本题目吗？'
-                                  onConfirm={this.handleSubmit}
-                                  okText='Yes'
-                                  cancelText='No'
-                  >
-                    <Button className='contest-edit-submit' size='large' type='primary'>
-                      修改题目
-                    </Button>
-                  </Popconfirm>
-                    : <Popconfirm title='请认真审核信息'
-                                  onConfirm={this.handleSubmit}
-                                  okText='Yes'
-                                  cancelText='No'
-                  >
-                    <Button type='primary' size='large'>添加题目</Button>
-                  </Popconfirm>
-                }
+                <Button className='contest-edit-submit' size='large' type='primary' onClick={this.handleSubmit}>
+                  {id ? '修改题目' : '添加题目'}
+                </Button>
                 {
                   id &&
-                  <Popconfirm title='你确定要删除本题目吗？'
-                              onConfirm={this.onConfirmDel}
-                              okText='Yes'
-                              cancelText='No'
-                  >
-                    <Button type='danger' size='large' style={{marginLeft: 10}}>删除题目</Button>
-                  </Popconfirm>
+                  <Button type='danger' size='large' style={{marginLeft: 10}} onClick={this.onConfirmDel}>删除题目</Button>
                 }
               </FormItem>
             </Form>

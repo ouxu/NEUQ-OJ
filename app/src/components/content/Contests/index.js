@@ -25,7 +25,7 @@ class ContestPage extends React.Component {
     this.onPasswordChange = this.onPasswordChange.bind(this)
     this.onSeacrch = this.onSeacrch.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
-    this.handleok = this.handleok.bind(this)
+    this.handleOk = this.handleOk.bind(this)
     this.verifyPermission = this.verifyPermission.bind(this)
   }
 
@@ -87,7 +87,7 @@ class ContestPage extends React.Component {
     this.setState({password: e.target.value})
   }
 
-  handleok () {
+  handleOk () {
     const body = {password: this.state.password}
     this.props.joinContest(this.state.contestId, body)
     this.setState({
@@ -257,7 +257,7 @@ class ContestPage extends React.Component {
             visible={this.state.visible}
             onCancel={this.handleCancel}
             width={300}
-            onOk={this.handleok}
+            onOk={this.handleOk}
           >
             <Input
               addonBefore={<Icon type='lock' />}

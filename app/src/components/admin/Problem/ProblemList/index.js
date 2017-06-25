@@ -3,12 +3,13 @@
  */
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import { Button, Icon, Input, Popconfirm, Spin, Table, Tag } from 'antd'
+import { Button, Icon, Input, Modal, Spin, Table, Tag } from 'antd'
 import { color, goto, openInNewTab } from 'utils'
 
 import './index.less'
 
 const Search = Input.Search
+const confirm = Modal.confirm
 
 class ProblemList extends Component {
   constructor (props) {
@@ -21,7 +22,6 @@ class ProblemList extends Component {
     }
     this.onInputChange = this.onInputChange.bind(this)
     this.onSearch = this.onSearch.bind(this)
-    this.passwordChange = this.passwordChange.bind(this)
     this.createCon = this.createCon.bind(this)
   }
 
@@ -51,32 +51,29 @@ class ProblemList extends Component {
     goto('/admin/contest-edit')
   }
 
-  passwordChange (e) {
-    this.setState({
-      password: e.target.value
-    })
-  }
-
   openProblem = (record) => {
-    openInNewTab('Problems/' + record.id)
+    openInNewTab('problems/' + record.id)
   }
 
-  delProblem = async (record) => {
-    await this.setState({
-      id: record.id
+  delProblem = record => {
+    confirm({
+      title: '是否决定要删除?删除后无法恢复！',
+      content: (
+        <Input
+          type='password'
+          onChange={(e) => this.setState({password: e.target.value})}
+          placeholder='请输入您的登录密码'
+        />
+      ),
+      onOk: async () => {
+        this.props.deleteProblem(record.id, {
+          'password': this.state.password
+        })
+        const page = window.sessionStorage.getItem('neuq_oj.problempagecurr') || 1
+        const size = window.sessionStorage.getItem('neuq_oj.problempagesize') || 20
+        await this.props.getProblemTable(page, size)
+      }
     })
-  }
-
-  popConfirm = async (e) => {
-    e.preventDefault()
-    let body = {
-      'password': this.state.password
-    }
-    await this.props.deleteProblem(this.state.id, body)
-
-    const page = window.sessionStorage.getItem('neuq_oj.problempagecurr') || 1
-    const size = window.sessionStorage.getItem('neuq_oj.problempagesize') || 20
-    await this.props.getProblemTable(page, size)
   }
 
   render () {
@@ -150,9 +147,7 @@ class ProblemList extends Component {
       className: 'problem-manage-action'
     }, {
       title: '删除',
-      render: () => <Popconfirm title={popInput} onConfirm={this.popConfirm} okText='Yes' cancelText='No'>
-        <a>删除</a>
-      </Popconfirm>,
+      render: () => <a>删除</a>,
       width: 40,
       key: 'problem-manage-del',
       onCellClick: this.delProblem,
