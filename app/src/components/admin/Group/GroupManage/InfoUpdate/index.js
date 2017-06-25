@@ -2,10 +2,12 @@
  * Created by out_xu on 17/5/19.
  */
 import React, { Component } from 'react'
-import { Button, Col, Form, Input, InputNumber, Popconfirm, Radio, Row } from 'antd'
+import { Button, Col, Form, Input, InputNumber, Modal, Radio, Row } from 'antd'
 import { verify } from 'utils'
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
+const confirm = Modal.confirm
+
 @Form.create()
 class InfoUpdate extends Component {
   constructor (props) {
@@ -18,9 +20,15 @@ class InfoUpdate extends Component {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll((err, value) => {
       if (!err) {
-        value.is_closed = value.is_closed === '1'
-        this.props.updateGroupInfo(this.props.gid, value)
-        this.props.getGroupInfo(this.props.gid)
+        confirm({
+          title: '确认修改？',
+          content: '请认真审核信息，确认无错误时再提交!',
+          onOk: async() => {
+            value.is_closed = value.is_closed === '1'
+            await this.props.updateGroupInfo(this.props.gid, value)
+            await this.props.getGroupInfo(this.props.gid)
+          }
+        })
       }
     })
   }
@@ -127,15 +135,7 @@ class InfoUpdate extends Component {
         </FormItem>
         {privacyDetail()}
         <FormItem>
-          <Popconfirm
-            title='请认真审核信息'
-            onConfirm={this.handleSubmit}
-            okText='Yes'
-            cancelText='No'
-          >
-            <Button type='primary' size='large'>确认修改</Button>
-          </Popconfirm>
-
+          <Button type='primary' size='large' onClick={this.handleSubmit}>确认修改</Button>
         </FormItem>
       </Form>
     )

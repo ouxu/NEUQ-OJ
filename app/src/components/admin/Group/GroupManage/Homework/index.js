@@ -2,12 +2,33 @@
  * Created by out_xu on 17/6/5.
  */
 import React, { Component } from 'react'
-import { Col, Popconfirm, Row, Table } from 'antd'
-
+import { Col, Input, Modal, Row, Table } from 'antd'
+const confirm = Modal.confirm
 class Homework extends Component {
   constructor (props) {
     super(props)
     this.state = {}
+  }
+
+  delHomework = (record) => {
+    confirm({
+      title: '是否决定要删除?删除后无法恢复！',
+      content: (
+        <Input
+          type='password'
+          onChange={(e) => this.setState({password: e.target.value})}
+          placeholder='请输入您的登录密码'
+        />
+      ),
+      onOk: async () => {
+        // this.props.deleteProblem(record.id, {
+        //   'password': this.state.password
+        // })
+        // const page = window.sessionStorage.getItem('neuq_oj.problempagecurr') || 1
+        // const size = window.sessionStorage.getItem('neuq_oj.problempagesize') || 20
+        // await this.props.getProblemTable(page, size)
+      }
+    })
   }
 
   render () {
@@ -31,31 +52,22 @@ class Homework extends Component {
     }, {
       title: '创建时间',
       dataIndex: 'created_at',
-      key: 'news-manage-date',
+      key: 'group-manage-date',
       width: 140,
-      className: 'news-manage-date'
+      className: 'group-manage-date'
     }, {
       title: '操作',
       render: () => '修改',
       width: 40,
-      key: 'news-manage-action',
+      key: 'group-manage-action',
       onCellClick: (record) => this.showEditModal(record.id),
-      className: 'news-manage-action mock-a'
+      className: 'group-manage-action mock-a'
     }, {
-      render: record => (
-        <Popconfirm
-          title='你确定要删除本条通知吗？'
-          onConfirm={() => this.onConfirm(record.id)}
-          okText='Yes'
-          cancelText='No'
-        >
-          <a>删除</a>
-        </Popconfirm>
-      ),
+      render: () => '删除',
       width: 40,
-      key: 'news-manage-del',
-      onCellClick: this.delNew,
-      className: 'news-manage-action'
+      key: 'group-manage-del',
+      onCellClick: this.delHomework,
+      className: 'group-manage-action mock-a'
     }]
     return (
       <div style={{backgroundColor: '#fff'}}>
@@ -81,7 +93,7 @@ class Homework extends Component {
               size='small'
               key='group-exam-table'
               className='group-exam-table'
-              title={()=> '考试列表'}
+              title={() => '考试列表'}
             />
           </Col>
         </Row>

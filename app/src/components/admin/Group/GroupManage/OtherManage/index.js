@@ -89,9 +89,9 @@ class OtherManage extends Component {
           this.state.selected === 'changeGroupOwner' &&
           <Input onChange={this.targetInputOnChange} placeholder='需变更到的用户的 ID' style={{width: 150}} />
         }
-        <Input onChange={this.passwordInputOnChange} placeholder='请输入您的密码' style={{width: 200, marginBottom: 20}} />
+        <Input type='password' onChange={this.passwordInputOnChange} placeholder='请输入您的密码' style={{width: 200, marginBottom: 20}} />
         <br />
-        <Button type='primary' loading={this.state.loading} onClick={this.handleOk}>发起申请</Button>
+        <Button type='primary' size='large' loading={this.state.loading} onClick={this.handleOk}>发起申请</Button>
       </div>
 
     )

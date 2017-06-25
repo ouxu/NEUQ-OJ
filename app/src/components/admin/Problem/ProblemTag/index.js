@@ -9,12 +9,9 @@ import React, {
 class ProblemTag extends Component {
   render () {
     return (
-      <div>probelmtaf</div>
+      <div>开发中</div>
     )
   }
 }
-
-ProblemTag.propTypes = {}
-ProblemTag.defaultProps = {}
 
 export default ProblemTag

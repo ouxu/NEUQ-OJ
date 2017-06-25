@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Button, Form, Icon, Input, Modal, Popconfirm, Radio, Table } from 'antd'
+import { Button, Form, Icon, Input, Modal, Radio, Table } from 'antd'
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
-
+const confirm = Modal.confirm
 @Form.create()
 class NoticeManage extends Component {
   constructor (props) {
@@ -27,9 +27,7 @@ class NoticeManage extends Component {
   showModal () {
     this.setState({
       title: '',
-      content: ''
-    })
-    this.setState({
+      content: '',
       visible: true
     })
   }
@@ -82,9 +80,15 @@ class NoticeManage extends Component {
     this.setState({visible: false})
   }
 
-  async onConfirm (id) {
-    await this.props.delGroupNotice(id, this.props.gid)
-    await this.props.getGroupNotices(this.props.gid)
+  delNew = record => {
+    confirm({
+      title: '删除通知',
+      content: '是否决定要删除?删除后无法恢复！',
+      onOk: async () => {
+        await this.props.delGroupNotice(record.id, this.props.gid)
+        await this.props.getGroupNotices(this.props.gid)
+      }
+    })
   }
 
   render () {
@@ -132,16 +136,7 @@ class NoticeManage extends Component {
       onCellClick: (record) => this.showEditModal(record.id),
       className: 'news-manage-action mock-a'
     }, {
-      render: record => (
-        <Popconfirm
-          title='你确定要删除本条通知吗？'
-          onConfirm={() => this.onConfirm(record.id)}
-          okText='Yes'
-          cancelText='No'
-        >
-          <a>删除</a>
-        </Popconfirm>
-      ),
+      render: record => <a>删除</a>,
       width: 40,
       key: 'news-manage-del',
       onCellClick: this.delNew,
