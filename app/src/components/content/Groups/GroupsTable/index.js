@@ -4,18 +4,22 @@
 import React from 'react'
 import { Link } from 'react-router'
 import QueueAnim from 'rc-queue-anim'
-import { Input, Table, Tag } from 'antd'
-import { color } from 'utils'
+import { Input, message, Table, Tag } from 'antd'
+import { color, goto } from 'utils'
 import './index.less'
 const Search = Input.Search
-class ProblemsTable extends React.Component {
+class GroupsTable extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      searchText: ''
+      searchText: '',
+      password: ''
     }
     this.onInputChange = this.onInputChange.bind(this)
     this.onSearch = this.onSearch.bind(this)
+    this.handleCancel = this.handleCancel.bind(this)
+    this.handleOk = this.handleOk.bind(this)
+    this.verifyPermission = this.verifyPermission.bind(this)
   }
 
   componentDidMount () {
@@ -37,6 +41,50 @@ class ProblemsTable extends React.Component {
     } else {
       this.props.searchGroups(searchText)
     }
+  }
+
+  async verifyPermission (record) {
+    try {
+      await this.props.tokenVerify()
+      if (record.privacy === 0 || 2) {
+        await this.props.joinGroup(record.id)
+        goto(`/groups/${record.id}`)
+      } else if (record.privacy === 1) {
+        confirm({
+          title: '请输入密码进入！',
+          content: (
+            <Input
+              type='password'
+              onChange={(e) => this.setState({password: e.target.value})}
+              placeholder='请输入您的登录密码'
+            />
+          ),
+          onOk: async() => {
+            await this.props.deleteProblem(this.props.params.id, {password: this.state.password})
+            goto(`/groups/${record.id}`)
+          }
+        })
+      }
+    } catch (e) {
+      if (e.message === '未登录') {
+        message.error(e.message)
+      }
+    }
+  }
+
+  handleCancel () {
+    this.setState({
+      visible: false
+    })
+  }
+
+  handleOk () {
+    const body = {password: this.state.password}
+    this.props.joinContest(this.state.contestId, body)
+    this.setState({
+      visible: false
+    })
+    goto(`/contests/${this.state.contestId}`)
   }
 
   // 正确率
@@ -68,21 +116,17 @@ class ProblemsTable extends React.Component {
       className: 'groups-id'
     }, {
       title: '用户组名称',
-      render: record =>
-        (<span>
-          <div className='groups-title-content'>
-            <Link to={`groups/${record.id}`}> {record.name}</Link>
-          </div>
-        </span>),
+      dataIndex: 'name',
       key: 'groups-title',
-      className: 'groups-title'
+      onCellClick: this.verifyPermission,
+      className: 'groups-title mock-a'
     }, {
       title: '创建者',
       render: record => (
         <Link to={'/userpage/' + record.owner_id}><span>{record.owner_name}</span></Link>
       ),
       sorter: (a, b) => a.submit - b.submit,
-      key: 'groups-problemsubmit'
+      key: 'groups-problem-submit'
     }, {
       title: '创建时间',
       dataIndex: 'created_at',
@@ -141,8 +185,6 @@ class ProblemsTable extends React.Component {
           columns={columns}
           rowKey={record => `problem-${record.id}`}
           dataSource={data}
-          // bordered
-          // 分页
           pagination={pagination}
           scroll={{x: 768}}
           key='problem-2'
@@ -152,4 +194,4 @@ class ProblemsTable extends React.Component {
   }
 }
 
-export default ProblemsTable
+export default GroupsTable

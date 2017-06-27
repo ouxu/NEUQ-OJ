@@ -28,6 +28,7 @@ class AppComponent extends React.Component {
   render () {
     const collapse = this.state.collapse
     const {path = 'homepage'} = this.props.routes[1]
+    const years = (new Date()).getFullYear()
     return (
       <div className={collapse ? 'ant-layout-aside ant-layout-aside-collapse' : 'ant-layout-aside'}>
         <aside className='ant-layout-sider'>
@@ -44,7 +45,7 @@ class AppComponent extends React.Component {
           <div className='main-content'>
             {this.props.children}
           </div>
-          <Footer year='2017' />
+          <Footer year={years} />
         </div>
       </div>
     )

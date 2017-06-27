@@ -31,7 +31,7 @@ export default {
   problemsMine: apiMaker('problems/mine'),
   problemsImport: apiMaker('problems/import'),
 
-  //Tags
+  // Tags
   tag: apiMaker('tag/'),
   tagCreate: apiMaker('tag/createTag'),
   tagDelete: apiMaker('tag/deleteTag/'),
@@ -42,6 +42,7 @@ export default {
   groupsSearch: apiMaker('user-groups/search'),
   groupCreate: apiMaker('user-group/create'),
   groupNoticeDetail: apiMaker('user-group/notices/show/'),
+  groupJoined: apiMaker('user-groups/joined'),
   // submit: /Problem/{id}/submit
   solution: apiMaker('solution/'),
   // Status

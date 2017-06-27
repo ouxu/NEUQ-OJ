@@ -4,11 +4,11 @@
 import {
   actionCreater,
   SET_GROUP_INFO,
+  SET_GROUPS_ME,
   SET_GROUPS_NOTICE_DETAIL,
   SET_GROUPS_NOTICES,
   SET_GROUPS_TABLE,
-  SET_GROUPS_USERS,
-  SET_GROUPS_ME
+  SET_GROUPS_USERS
 } from './type'
 import API from '../api'
 import { goto, jumpTo } from 'utils'
@@ -387,12 +387,28 @@ export function addGroupUsers (gid, body) {
  * @param gid
  * @param body
  */
-export function updateUserTag (gid,body) {
+export function updateUserTag (gid, body) {
   return async () => {
     try {
       await requestService.tpost(API.group + gid + '/members/update', body)
       message.success('修改成功')
     } catch (e) {
+      console.error(e.message)
+    }
+  }
+}
+
+/**
+ * 获取用户加入的用户组
+ * @returns {(p1:*)}
+ */
+export function getGroupJoined () {
+  return async dispatch => {
+    try {
+      const data = await requestService.tget(API.groupJoined)
+      await dispatch(actionCreater(SET_GROUPS_ME, data))
+    } catch (e) {
+      await dispatch(actionCreater(SET_GROUPS_ME, {}))
       console.error(e.message)
     }
   }
