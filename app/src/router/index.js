@@ -23,6 +23,7 @@ import NewsManageContainer from 'containers/admin/News'
 
 import ContestManageContainer from 'containers/admin/ContestList'
 import ProblemManageContainer from 'containers/admin/ProblemList'
+import MachineManageContainer from 'containers/admin/MachineList'
 import GroupCreateContainer from 'containers/admin/GroupCreate'
 import GroupListContainer from 'containers/admin/GroupList'
 import GroupManageContainer from 'containers/admin/GroupManage'
@@ -32,6 +33,7 @@ import EditInfoContainer from 'containers/EditInfo'
 import ProblemDetail from './lazyload/ProblemDetail'
 import ContestEdit from './lazyload/admin/ContestEdit'
 import ProblemEdit from './lazyload/admin/ProblemEdit'
+import MachineEdit from './lazyload/admin/MachineEdit'
 
 const CheckData = (location, replace) => {
   const userRole = window.localStorage.getItem('neuq_oj.role')
@@ -94,6 +96,7 @@ const RouterApp = store => (
       </Route>
 
       <Route path='problem-list' component={ProblemManageContainer} />
+      <Route path='machine-list' component={MachineManageContainer} />
       <Route path='groups-list' component={GroupListContainer} />
       <Route path='group-create' component={GroupCreateContainer} />
       <Route path='group-manage'>
@@ -103,6 +106,9 @@ const RouterApp = store => (
         <Route path=':id' getComponent={ProblemEdit} />
       </Route>
       <Route path='problem-upload' component={ProblemUploadContainer} />
+      <Route path='machine-edit' getComponent={MachineEdit}>
+        <Route path=':id' getComponent={MachineEdit}/>
+      </Route>
     </Route>
   </Router>
 )

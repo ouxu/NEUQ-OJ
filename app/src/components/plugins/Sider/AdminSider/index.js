@@ -40,6 +40,11 @@ const AdminSider = props => (
       <Menu.Item key='problem-edit'>创建题目</Menu.Item>
       <Menu.Item key='problem-upload'>题目导入</Menu.Item>
     </SubMenu>
+    <SubMenu key='machine' title={<span>判题管理</span>}>
+      <Menu.Item key='machine-list'>机器列表</Menu.Item>
+      <Menu.Item key='machine-edit'>机器管理</Menu.Item>
+      {/*<Menu.Item key='machine-delete'>机器添加</Menu.Item>*/}
+    </SubMenu>
     {
       window.localStorage.getItem('neuq_oj.role') === 'admin' &&
       <SubMenu key='system' title={<span>系统管理</span>}>
