@@ -1,10 +1,18 @@
 import React, {Component} from 'react'
-import {Table, Icon} from 'antd'
+import {Table, Icon, Spin, Button} from 'antd'
+import loading from '../../../../reducers/loading.reducer'
 
 class MachineList extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+
+    }
+    this.MachineRefresh = this.MachineRefresh.bind(this)
+  }
+
+  MachineRefresh() {
+    console.log('this is the machine refresh')
   }
 
   render() {
@@ -64,7 +72,7 @@ class MachineList extends Component {
     }]
     const props = this.props
     return (
-      <div className="machine-list">
+      <Spin tip="Loading..." spinning={loading}>
         <div className='h-1'>
           机器列表
         </div>
@@ -73,7 +81,13 @@ class MachineList extends Component {
           bordered={true}
           dataSource={data}
           rowKey={record => record.id}
-        /></div>
+        />
+        <Button
+          type="primary"
+          className='refresh'
+          onClick={this.MachineRefresh}
+        >刷新</Button>
+      </Spin>
     )
   }
 }
