@@ -59,12 +59,10 @@ const RouterApp = store => (
         <IndexRoute component={ProblemsContainer} />
         <Route path=':id' getComponent={ProblemDetail} />
       </Route>
-      <Route path='groups'>
-        <IndexRoute component={GroupsContainer} />
-        {/*<IndexRoute component={GroupsPanelContainer} />*/}
-        <Route path=':id' component={GroupsPanelContainer} />
-      </Route>
-
+      {/*<Route path='groups'>*/}
+        {/*<IndexRoute component={GroupsContainer} />*/}
+        {/*<Route path=':id' component={GroupsPanelContainer} />*/}
+      {/*</Route>*/}
       <Route path='userpage/edit' component={EditInfoContainer} />
       <Route path='userpage/:id' component={UserPageContainer} />
 
