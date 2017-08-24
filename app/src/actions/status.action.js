@@ -21,7 +21,7 @@ export function getStatusTable (page = 1, size = 20, searchobj) {
         page,
         size
       }
-      const data = await requestService.get(API.status, params)
+      const data = await requestService.tget(API.status, params)
 
       window.sessionStorage.setItem('neuq_oj.statuspagecurr', page)
       window.sessionStorage.setItem('neuq_oj.statuspagesize', size)
