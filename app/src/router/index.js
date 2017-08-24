@@ -11,8 +11,8 @@ import Actived from 'components/user/VerifyMail/Actived'
 
 import HomePageContainer from 'containers/HomePage'
 import ProblemsContainer from 'containers/Problems'
-import GroupsContainer from 'containers/Groups'
-import GroupsPanelContainer from 'containers/GroupsPanel'
+// import GroupsContainer from 'containers/Groups'
+// import GroupsPanelContainer from 'containers/GroupsPanel'
 import UserPageContainer from 'containers/UserPage'
 import StatusContainer from 'containers/Status'
 import ContestsContainer from 'containers/Contest'
@@ -20,6 +20,7 @@ import ContestInfoContainer from 'containers/ContestInfo'
 import RanklistContainer from 'containers/RankList'
 import AdminComponent from 'components/admin'
 import NewsManageContainer from 'containers/admin/News'
+import ContestEdit from './lazyload/admin/ContestEdit'
 
 import ContestManageContainer from 'containers/admin/ContestList'
 

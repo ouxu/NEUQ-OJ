@@ -1,18 +1,26 @@
 import React, {Component} from 'react'
 import {Table, Icon, Spin, Button} from 'antd'
 import loading from '../../../../reducers/loading.reducer'
+import machines from '../../../../reducers/machine.reducer'
 
 class MachineList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-
+      macInfo: []
     }
     this.MachineRefresh = this.MachineRefresh.bind(this)
   }
 
+  componentWillMount() {
+    this.props.getJudgeList()
+  }
+  componentDidMount(){
+    console.log(this.state.macInfo)
+  }
   MachineRefresh() {
-    console.log('this is the machine refresh')
+    this.props.getJudgeList()
+    console.log(this.state.macInfo)
   }
 
   render() {
@@ -54,32 +62,18 @@ class MachineList extends Component {
         dataIndex: 'ping',
         key: 'ping'
       }]
-    const data = [{
-      id: 1,
-      name: 'dm1',
-      host: '120.92.114.231',
-      port: '8090',
-      status: 1,
-      created_at: null,
-      updated_at: null,
-      action: 'pong',
-      cpu: 0.10333710721963,
-      cpu_core: 2,
-      hostname: '31f624f82091',
-      judger_version: '0.1.0',
-      memory: 19.785744351631,
-      ping: '10ms'
-    }]
-    const props = this.props
+    const {machines: {machineTable = [], machineInfo = []}} = this.props
+    // console.log(machineInfo)
+    this.state.macInfo = machineInfo
     return (
-      <Spin tip="Loading..." spinning={loading}>
+      <div>
         <div className='h-1'>
           机器列表
         </div>
         <Table
           columns={columns}
           bordered={true}
-          dataSource={data}
+          dataSource={machineTable}
           rowKey={record => record.id}
         />
         <Button
@@ -87,7 +81,7 @@ class MachineList extends Component {
           className='refresh'
           onClick={this.MachineRefresh}
         >刷新</Button>
-      </Spin>
+      </div>
     )
   }
 }
