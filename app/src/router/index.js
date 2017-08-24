@@ -11,8 +11,8 @@ import Actived from 'components/user/VerifyMail/Actived'
 
 import HomePageContainer from 'containers/HomePage'
 import ProblemsContainer from 'containers/Problems'
-import GroupsContainer from 'containers/Groups'
-import GroupsPanelContainer from 'containers/GroupsPanel'
+// import GroupsContainer from 'containers/Groups'
+// import GroupsPanelContainer from 'containers/GroupsPanel'
 import UserPageContainer from 'containers/UserPage'
 import StatusContainer from 'containers/Status'
 import ContestsContainer from 'containers/Contest'
@@ -20,6 +20,8 @@ import ContestInfoContainer from 'containers/ContestInfo'
 import RanklistContainer from 'containers/RankList'
 import AdminComponent from 'components/admin'
 import NewsManageContainer from 'containers/admin/News'
+
+import ContestEdit from './lazyload/admin/ContestEdit'
 
 import ContestManageContainer from 'containers/admin/ContestList'
 
@@ -34,8 +36,8 @@ import ProblemUploadContainer from 'containers/admin/ProblemUpload'
 import ProblemTag from 'containers/admin/ProblemTag'
 import EditInfoContainer from 'containers/EditInfo'
 import ProblemDetail from './lazyload/ProblemDetail'
-import ContestEdit from './lazyload/admin/ContestEdit'
-import ProblemEdit from './lazyload/admin/ProblemEdit'
+
+
 import MachineEdit from './lazyload/admin/MachineEdit'
 
 const CheckData = (location, replace) => {
@@ -57,12 +59,10 @@ const RouterApp = store => (
         <IndexRoute component={ProblemsContainer} />
         <Route path=':id' getComponent={ProblemDetail} />
       </Route>
-      <Route path='groups'>
-        <IndexRoute component={GroupsContainer} />
-        {/*<IndexRoute component={GroupsPanelContainer} />*/}
-        <Route path=':id' component={GroupsPanelContainer} />
-      </Route>
-
+      {/*<Route path='groups'>*/}
+        {/*<IndexRoute component={GroupsContainer} />*/}
+        {/*<Route path=':id' component={GroupsPanelContainer} />*/}
+      {/*</Route>*/}
       <Route path='userpage/edit' component={EditInfoContainer} />
       <Route path='userpage/:id' component={UserPageContainer} />
 

@@ -31,6 +31,9 @@ export default {
   problemsMine: apiMaker('problems/mine'),
   problemsImport: apiMaker('problems/import'),
 
+  // judge server
+  judgeServer: apiMaker('judge/server'),
+
   // Tags
   tag: apiMaker('tag/'),
   tagCreate: apiMaker('tag/createTag'),
