@@ -108,9 +108,9 @@ const RouterApp = store => (
       <Route path='group-manage'>
         <Route path=':gid' component={GroupManageContainer} />
       </Route>
-      <Route path='problem-edit' getComponent={ProblemEdit}>
-        <Route path=':id' getComponent={ProblemEdit} />
-      </Route>
+      {/*<Route path='problem-edit' getComponent={ProblemEdit}>*/}
+        {/*<Route path=':id' getComponent={ProblemEdit} />*/}
+      {/*</Route>*/}
       <Route path='problem-upload' component={ProblemUploadContainer} />
       <Route path='machine-edit' getComponent={MachineEdit}>
         <Route path=':id' getComponent={MachineEdit} />
