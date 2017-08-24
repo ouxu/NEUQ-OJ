@@ -3,25 +3,33 @@
  */
 import React from 'react'
 
-import { Carousel, Col, Row } from 'antd'
+import { Col, Row } from 'antd'
 import QueueAnim from 'rc-queue-anim'
 // 连接redux
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { fetchHomePageData, getContestsTable, getRankTable, getStatusTable } from 'actions'
+import {
+  fetchHomePageData,
+  getContestsTable,
+  getRankTable,
+  getStatusTable,
+} from 'actions'
 // 导入子组件
 import HomeNews from 'components/content/HomePage/HomeNews'
 import HomeRank from 'components/content/HomePage/HomeRank'
-import HomeStatus from 'components/content/HomePage/HomeStatus'
+
+// import HomeStatus from 'components/content/HomePage/HomeStatus'
 @connect(
   state => ({
     home: state.home,
     ranklist: state.ranklist,
     loading: state.loading,
     status: state.status,
-    contests: state.contests
+    contests: state.contests,
   }),
-  dispatch => bindActionCreators({fetchHomePageData, getRankTable, getStatusTable, getContestsTable}, dispatch),
+  dispatch => bindActionCreators(
+    {fetchHomePageData, getRankTable, getStatusTable, getContestsTable},
+    dispatch),
 )
 class HomepageContainer extends React.Component {
   componentDidMount () {
@@ -32,7 +40,7 @@ class HomepageContainer extends React.Component {
   }
 
   render () {
-    const {home: {news}, ranklist: {rankList = []}, status: {statusTable}} = this.props
+    const {home: {news}, ranklist: {rankList = []}} = this.props
     const {latest_news = [], fixed_news = []} = news
 
     return (
@@ -45,10 +53,10 @@ class HomepageContainer extends React.Component {
         </Col>
         <Col className='right-content' xs={{span: 24}} sm={{span: 8}}>
           <QueueAnim delay={200} type='bottom'>
-            <Carousel autoplay dots={false} key='homepage-rank'>
-              <div><HomeRank data={rankList} /></div>
-              <div><HomeStatus data={statusTable} /></div>
-            </Carousel>
+            <div><HomeRank data={rankList} /></div>
+            {/*<Carousel autoplay dots={false} key='homepage-rank'>*/}
+            {/*/!*<div><HomeStatus data={statusTable} /></div>*!/*/}
+            {/*</Carousel>*/}
           </QueueAnim>
         </Col>
       </Row>
