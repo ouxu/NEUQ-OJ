@@ -30,14 +30,14 @@ import GroupCreateContainer from 'containers/admin/GroupCreate'
 import GroupListContainer from 'containers/admin/GroupList'
 import GroupManageContainer from 'containers/admin/GroupManage'
 
-import ProblemManageContainer from 'containers/admin/ProblemList'
+
 import ProblemEdit from './lazyload/admin/ProblemEdit'
 import ProblemUploadContainer from 'containers/admin/ProblemUpload'
 import ProblemTag from 'containers/admin/ProblemTag'
 import EditInfoContainer from 'containers/EditInfo'
 import ProblemDetail from './lazyload/ProblemDetail'
-import ContestEdit from './lazyload/admin/ContestEdit'
-import ProblemEdit from './lazyload/admin/ProblemEdit'
+
+
 import MachineEdit from './lazyload/admin/MachineEdit'
 
 const CheckData = (location, replace) => {
