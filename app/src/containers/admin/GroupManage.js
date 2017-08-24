@@ -4,11 +4,39 @@
 import GroupsManage from 'components/admin/Group/GroupManage'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getGroupTable, getGroupNotices,createGroupNotice} from 'actions'
+import {
+  changeGroupOwner,
+  createGroupNotice,
+  delGroupNotice,
+  dismissGroup,
+  getGroupNoticeDetail,
+  getGroupNotices,
+  getGroupTable,
+  updateGroupNotice,
+  getGroupUsers,
+  delGroupUsers,
+  getGroupInfo,
+  updateGroupInfo,
+  updateUserTag
+} from 'actions'
 
 export default connect(
   state => ({
     groups: state.groups
   }),
-  dispatch => bindActionCreators({getGroupTable,getGroupNotices,createGroupNotice}, dispatch),
+  dispatch => bindActionCreators({
+    getGroupTable,
+    getGroupNotices,
+    createGroupNotice,
+    delGroupNotice,
+    getGroupNoticeDetail,
+    updateGroupNotice,
+    dismissGroup,
+    changeGroupOwner,
+    delGroupUsers,
+    getGroupUsers,
+    getGroupInfo,
+    updateGroupInfo,
+    updateUserTag
+  }, dispatch),
 )(GroupsManage)

@@ -93,7 +93,7 @@ class LoginAbout extends React.Component {
                       required: true, message: '请输入UserName/手机号/邮箱'
                     }]
                   })(
-                    <Input addonBefore={<Icon type='user' />} placeholder='UserName/手机号/邮箱' />
+                    <Input addonBefore={<Icon type='user'/>} style={{width: '100%'}}  placeholder='UserName/手机号/邮箱' />
                   )}
                 </Tooltip>
               </FormItem>
@@ -105,16 +105,17 @@ class LoginAbout extends React.Component {
                     required: true, message: '请输入密码！'
                   }]
                 })(
-                  <Input addonBefore={<Icon type='lock' />} type='password' placeholder='Password' />
+                  <Input addonBefore={<Icon type='lock' />} type='password' placeholder='Password'
+                         style={{width: '100%'}} />
                 )}
               </FormItem>
 
               <Button disabled={false} type='primary' htmlType='submit' id='login-btn'>登录</Button>
               <Link to={'/register'}>
-                <span onClick={this.handleCancel}>注册账号</span>
+                <span>注册账号</span>
               </Link>
               <Link to={'/forget'}>
-                <span className='login-form-forgot' onClick={this.handleCancel}>忘记密码</span>
+                <span className='login-form-forgot'>忘记密码</span>
               </Link>
             </Form>
           </div>

@@ -4,8 +4,8 @@
 import React from 'react'
 import './index.less'
 import { Card } from 'antd'
+import Markdown from 'components/plugins/Markdown'
 const createMarkup = html => ({__html: html})
-
 const HomeNews = (props) => {
   const {news = []} = props
   return (
@@ -18,9 +18,7 @@ const HomeNews = (props) => {
             style={{marginBottom: 15, fontSize: 14, backgroundColor: '#fff'}}
             extra={t.created_at}
           >
-            <div>
-              <p dangerouslySetInnerHTML={createMarkup(t.content)} />
-            </div>
+            <Markdown content={t.content} />
           </Card>
         )}
     </div>

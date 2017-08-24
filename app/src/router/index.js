@@ -14,22 +14,27 @@ import ProblemsContainer from 'containers/Problems'
 import GroupsContainer from 'containers/Groups'
 import GroupsPanelContainer from 'containers/GroupsPanel'
 import UserPageContainer from 'containers/UserPage'
-import StatusContainer from 'containers/Status.js'
+import StatusContainer from 'containers/Status'
 import ContestsContainer from 'containers/Contest'
 import ContestInfoContainer from 'containers/ContestInfo'
 import RanklistContainer from 'containers/RankList'
 import AdminComponent from 'components/admin'
 import NewsManageContainer from 'containers/admin/News'
 
+import ContestEdit from './lazyload/admin/ContestEdit'
 import ContestManageContainer from 'containers/admin/ContestList'
+
 import ProblemManageContainer from 'containers/admin/ProblemList'
 import MachineManageContainer from 'containers/admin/MachineList'
 import GroupCreateContainer from 'containers/admin/GroupCreate'
 import GroupListContainer from 'containers/admin/GroupList'
 import GroupManageContainer from 'containers/admin/GroupManage'
-import ProblemUploadContainer from 'containers/admin/ProblemUpload'
-import EditInfoContainer from 'containers/EditInfo'
 
+import ProblemManageContainer from 'containers/admin/ProblemList'
+import ProblemEdit from './lazyload/admin/ProblemEdit'
+import ProblemUploadContainer from 'containers/admin/ProblemUpload'
+import ProblemTag from 'containers/admin/ProblemTag'
+import EditInfoContainer from 'containers/EditInfo'
 import ProblemDetail from './lazyload/ProblemDetail'
 import ContestEdit from './lazyload/admin/ContestEdit'
 import ProblemEdit from './lazyload/admin/ProblemEdit'
@@ -56,10 +61,13 @@ const RouterApp = store => (
       </Route>
       <Route path='groups'>
         <IndexRoute component={GroupsContainer} />
+        {/*<IndexRoute component={GroupsPanelContainer} />*/}
         <Route path=':id' component={GroupsPanelContainer} />
       </Route>
+
       <Route path='userpage/edit' component={EditInfoContainer} />
       <Route path='userpage/:id' component={UserPageContainer} />
+
       <Route path='register'>
         <IndexRoute component={Register} />
         <Route path='verify' component={VerifyMail}>
@@ -109,6 +117,7 @@ const RouterApp = store => (
       <Route path='machine-edit' getComponent={MachineEdit}>
         <Route path=':id' getComponent={MachineEdit}/>
       </Route>
+      <Route path='problem-tag' component={ProblemTag} />
     </Route>
   </Router>
 )

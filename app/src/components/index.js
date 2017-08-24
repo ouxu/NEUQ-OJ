@@ -8,8 +8,6 @@ import Sider from 'components/plugins/Sider'
 import Footer from 'components/plugins/Footer'
 import './index.less'
 import { pureRender } from 'utils'
-import 'whatwg-fetch'
-import 'promise-polyfill'
 // 配置整体组件
 @pureRender
 class AppComponent extends React.Component {
@@ -30,6 +28,7 @@ class AppComponent extends React.Component {
   render () {
     const collapse = this.state.collapse
     const {path = 'homepage'} = this.props.routes[1]
+    const years = (new Date()).getFullYear()
     return (
       <div className={collapse ? 'ant-layout-aside ant-layout-aside-collapse' : 'ant-layout-aside'}>
         <aside className='ant-layout-sider'>
@@ -38,7 +37,7 @@ class AppComponent extends React.Component {
             navselect={path}
           />
           <div className='ant-aside-action' onClick={this.onCollapseChange}>
-            {collapse ? <Icon type='right' /> : <Icon type='left' />}
+            <Icon type={collapse ? 'right' : 'left'} />
           </div>
         </aside>
         <div className='ant-layout-main'>
@@ -46,7 +45,7 @@ class AppComponent extends React.Component {
           <div className='main-content'>
             {this.props.children}
           </div>
-          <Footer year='2017' />
+          <Footer year={years} />
         </div>
       </div>
     )

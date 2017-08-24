@@ -2,13 +2,18 @@
  * Created by out_xu on 17/4/8.
  */
 import React, { Component } from 'react'
-import { Collapse, Form } from 'antd'
+import { Collapse, Form, Tabs } from 'antd'
+import { openInNewTab, replaceQueryString } from 'utils'
 import QueueAnim from 'rc-queue-anim'
 import './index.less'
 import InfoUpdate from './InfoUpdate'
 import NoticeManage from './NoticeManage'
-const Panel = Collapse.Panel
+import OtherManage from './OtherManage'
+import UserManage from './UserManage'
+import Homework from './Homework'
+const TabPane = Tabs.TabPane
 
+const Panel = Collapse.Panel
 @Form.create()
 class GroupManage extends Component {
   constructor (props) {
@@ -18,7 +23,7 @@ class GroupManage extends Component {
   }
 
   componentDidMount () {
-    this.props.getGroupNotices(this.props.params.gid)
+    this.props.getGroupInfo(this.props.params.gid)
   }
 
   handleSubmit (e) {
@@ -30,49 +35,73 @@ class GroupManage extends Component {
     })
   }
 
-  render () {
-    const customPanelStyle = {
-      background: '#f5f5f5',
-      borderRadius: 4,
-      marginBottom: 24,
-      border: 0
+  onTabChange = (key) => {
+    let params = {
+      type: key
     }
-    const {params: {gid}} = this.props
-    const {createGroupNotice,getGroupNotices} =this.props
-    const {groupNotices = [], groupNoticeDetial = {}, groupUsers = [], groupsTable = {}} = this.props.groups
+    replaceQueryString(this.props.router, params, true)
+  }
+
+  render () {
+    const {params: {gid}, router} = this.props
+    const {location: {query}} = router
+    const {type = 'homework'} = query
+    const {delGroupUsers, updateUserTag, getGroupUsers} = this.props
+    const {createGroupNotice, getGroupNotices, delGroupNotice, getGroupNoticeDetail, updateGroupNotice} = this.props
+    const {changeGroupOwner, dismissGroup, updateGroupInfo, getGroupInfo} = this.props
+    const {groupNotices = [], groupNoticeDetail, groupUsers = [], groupsTable = {}, groupInfo = {}} = this.props.groups
+
     return (
       <QueueAnim className='group-manage' delay={100}>
-        <div className='h-1' key='group-manage-header'>
-          管理用户组
+        <div className='h-1 group-manage-header' key='group-manage-header'>
+          <span>管理用户组</span>
+          <span style={{fontSize: 14}}>
+            <a onClick={() => openInNewTab('userpage/' + groupInfo.owner_id)}>所有者ID {groupInfo.owner_id}</a>
+          </span>
         </div>
         <div className='group-manage-content' key='group-manage-form'>
-          <Collapse bordered={false} defaultActiveKey={['notice', 'user', 'homework']}>
-            <Panel header='成员变更' key='user' style={customPanelStyle}>
-              <p>1231</p>
-            </Panel>
-            <Panel header='基本信息变更' key='info' style={customPanelStyle}>
-              <InfoUpdate />
-            </Panel>
-            <Panel header='公告管理' key='notice' style={customPanelStyle}>
+          <Tabs defaultActiveKey={type} onChange={this.onTabChange}>
+            <TabPane tab='作业&考试' key='homework'>
+              <Homework />
+            </TabPane>
+            <TabPane tab='用户' key='user'>
+              <UserManage
+                delGroupUsers={delGroupUsers}
+                groupUsers={groupUsers}
+                gid={gid}
+                getGroupUsers={getGroupUsers}
+                updateUserTag={updateUserTag}
+              />
+            </TabPane>
+            <TabPane tab='通知' key='notice'>
               <NoticeManage
                 groupNotices={groupNotices}
+                groupNoticeDetail={groupNoticeDetail}
                 gid={gid}
                 createGroupNotice={createGroupNotice}
                 getGroupNotices={getGroupNotices}
+                delGroupNotice={delGroupNotice}
+                getGroupNoticeDetail={getGroupNoticeDetail}
+                updateGroupNotice={updateGroupNotice}
               />
-            </Panel>
-            <Panel header='作业管理' key='homework' style={customPanelStyle}>
-              <p>1231</p>
-            </Panel>
-            <Panel header='其他操作' key='other' style={customPanelStyle}>
-              <p>1231</p>
-            </Panel>
-
-          </Collapse>
+            </TabPane>
+            <TabPane tab='设置' key='other'>
+              <InfoUpdate
+                updateGroupInfo={updateGroupInfo}
+                getGroupInfo={getGroupInfo}
+                gid={gid}
+                groupInfo={groupInfo}
+              />
+              <OtherManage
+                changeGroupOwner={changeGroupOwner}
+                dismissGroup={dismissGroup}
+                gid={gid}
+              />
+            </TabPane>
+          </Tabs>
         </div>
       </QueueAnim>
     )
-
   }
 }
 

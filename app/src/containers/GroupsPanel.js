@@ -4,10 +4,10 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import GroupsPanel from 'components/content/Groups/GroupsPanel'
-
+import {getGroupJoined} from 'actions'
 export default connect(
   state => ({
     groups: state.groups,
   }),
-  dispatch => bindActionCreators({}, dispatch),
+  dispatch => bindActionCreators({getGroupJoined}, dispatch),
 )(GroupsPanel)

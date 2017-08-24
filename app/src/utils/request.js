@@ -1,5 +1,3 @@
-
-
 import {codeHelper, getToken} from 'utils'
 const TIMEOUT = 15000
 

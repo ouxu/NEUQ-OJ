@@ -10,6 +10,7 @@ import { color, goto, newDate } from 'utils'
 
 // TODO 搜索竞赛创建者
 const Search = Input.Search
+
 class ContestPage extends React.Component {
   constructor (props) {
     super(props)
@@ -22,9 +23,9 @@ class ContestPage extends React.Component {
     }
     this.onInputChange = this.onInputChange.bind(this)
     this.onPasswordChange = this.onPasswordChange.bind(this)
-    this.onSeacrch = this.onSeacrch.bind(this)
+    this.onSearch = this.onSearch.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
-    this.handleok = this.handleok.bind(this)
+    this.handleOk = this.handleOk.bind(this)
     this.verifyPermission = this.verifyPermission.bind(this)
   }
 
@@ -38,7 +39,7 @@ class ContestPage extends React.Component {
     this.setState({searchText: e.target.value})
   }
 
-  onSeacrch () {
+  onSearch () {
     const searchText = encodeURIComponent(this.state.searchText)
     if (searchText.length < 1) {
       const page = 1
@@ -86,7 +87,7 @@ class ContestPage extends React.Component {
     this.setState({password: e.target.value})
   }
 
-  handleok () {
+  handleOk () {
     const body = {password: this.state.password}
     this.props.joinContest(this.state.contestId, body)
     this.setState({
@@ -238,8 +239,8 @@ class ContestPage extends React.Component {
                 placeholder='标题'
                 value={this.state.searchText}
                 onChange={this.onInputChange}
-                onPressEnter={this.onSeacrch}
-                onSearch={this.onSeacrch}
+                onPressEnter={this.onSearch}
+                onSearch={this.onSearch}
               />
             </div>
           </div>
@@ -256,7 +257,7 @@ class ContestPage extends React.Component {
             visible={this.state.visible}
             onCancel={this.handleCancel}
             width={300}
-            onOk={this.handleok}
+            onOk={this.handleOk}
           >
             <Input
               addonBefore={<Icon type='lock' />}

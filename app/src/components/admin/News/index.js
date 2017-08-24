@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Button, Form, Icon, Input, Modal, Popconfirm, Radio, Table } from 'antd'
+import { Button, Form, Icon, Input, Modal, Radio, Table, Tag } from 'antd'
 import './index.less'
 import QueueAnim from 'rc-queue-anim'
-
+import { color } from 'utils'
 const RadioGroup = Radio.Group
 const FormItem = Form.Item
+const confirm = Modal.confirm
 
 // TODO 公告 content
 @Form.create()
@@ -24,7 +25,6 @@ class NewsManage extends Component {
     this.handleOk = this.handleOk.bind(this)
     this.showModal = this.showModal.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
-    this.onConfirm = this.onConfirm.bind(this)
   }
 
   componentDidMount () {
@@ -85,22 +85,29 @@ class NewsManage extends Component {
     })
   }
 
-  async delNew (record) {
-    this.setState({
-      id: record.id
+  delNew (record) {
+    confirm({
+      title: '确认删除',
+      content: '请认真审核信息，一旦删除，本次删除将无法撤销!',
+      onOk: async () => {
+        await this.props.delNews(record.id)
+        await this.props.getNewsList()
+      }
     })
-  }
-
-  async onConfirm (e) {
-    e.preventDefault()
-    await this.props.delNews(this.state.id)
-    await this.props.getNewsList()
   }
 
   render () {
     const {admin: {newsList}} = this.props
     const {news = []} = newsList
-
+    const privateStatus = [
+      '固定',
+      '普通',
+      '重要',
+      '紧急'
+    ]
+    const colorArr = [
+      color.blue, color.green, color.yellow, color.red
+    ]
     const title = () => (
       <span className='news-manage-table-title'>
         <span>公告列表</span>
@@ -117,29 +124,42 @@ class NewsManage extends Component {
     }, {
       title: '#',
       dataIndex: 'id',
+      width: 40,
       key: 'news-manage-id',
       className: 'news-manage-id'
     }, {
       title: '标题',
       dataIndex: 'title',
       key: 'news-manage-title',
-      width: 300,
       className: 'news-manage-title'
     }, {
-      title: '创建者',
+      title: '创建者ID',
       dataIndex: 'author_id',
       key: 'news-manage-author',
+      width: 100,
       className: 'news-manage-author'
     }, {
       title: '修改时间',
       dataIndex: 'updated_at',
       key: 'news-manage-UpdatePassword',
+      width: 140,
       className: 'news-manage-UpdatePassword'
     }, {
       title: '创建时间',
       dataIndex: 'created_at',
       key: 'news-manage-date',
+      width: 140,
       className: 'news-manage-date'
+    }, {
+      title: '重要性',
+      render: record => (
+        <span>
+          <Tag color={colorArr[record.importance]}>{privateStatus[record.importance]}</Tag>
+        </span>
+      ),
+      width: 40,
+      key: 'news-manage-importance',
+      className: 'news-manage-importance'
     }, {
       title: '操作',
       render: () => '修改',
@@ -148,9 +168,9 @@ class NewsManage extends Component {
       onCellClick: this.editNew,
       className: 'news-manage-action mock-a'
     }, {
-      render: () => <Popconfirm title='你确定要删除本条通知吗？' onConfirm={this.onConfirm} okText='Yes' cancelText='No'>
+      render: () => (
         <a>删除</a>
-      </Popconfirm>,
+      ),
       width: 40,
       key: 'news-manage-del',
       onCellClick: this.delNew,

@@ -2,6 +2,7 @@
  * Created by out_xu on 17/5/17.
  */
 import {
+  SET_GROUP_INFO,
   SET_GROUPS_ME,
   SET_GROUPS_NOTICE_DETAIL,
   SET_GROUPS_NOTICES,
@@ -12,13 +13,19 @@ import {
 const initGroups = {
   groupsTable: [],
   groupsMe: [],
-  groupNotices: [],
+  groupNotices: {},
   groupNoticeDetail: {},
-  groupUsers: []
+  groupUsers: [],
+  groupInfo: {}
 }
 
 export default function groups (state = initGroups, action) {
   switch (action.type) {
+    case SET_GROUP_INFO:
+      return {
+        ...state,
+        groupInfo: action.payload
+      }
     case SET_GROUPS_TABLE:
       return {
         ...state,

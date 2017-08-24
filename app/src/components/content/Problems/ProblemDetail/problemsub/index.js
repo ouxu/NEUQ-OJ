@@ -7,7 +7,7 @@ import 'codemirror/mode/clike/clike'
 import { Alert, Button, Card, Checkbox, Col, Collapse, Icon, Row, Table, Tooltip } from 'antd'
 import { columns } from 'components/plugins/TableData'
 import { LanguageSelect } from 'components/plugins/SelectBox'
-
+import Markdown from 'components/plugins/Markdown'
 const Panel = Collapse.Panel
 
 class ProblemSub extends Component {
@@ -47,11 +47,11 @@ class ProblemSub extends Component {
         <Panel header='描述' key='submit-des'>
           <Card bodyStyle={{fontSize: 14}} className='problem-detail-main-desc'>
             <h4>题目描述：</h4>
-            <p dangerouslySetInnerHTML={this.createMarkup(data.description)} />
+            <Markdown content={data.description} />
             <h4>输入：</h4>
-            <p dangerouslySetInnerHTML={this.createMarkup(data.input)} />
+            <Markdown content={data.input} />
             <h4>输出：</h4>
-            <p dangerouslySetInnerHTML={this.createMarkup(data.output)} />
+            <Markdown content={data.output} />
           </Card>
         </Panel>
         <Panel header='提交' key='submit-code' className='problem-detail-main-code'>
