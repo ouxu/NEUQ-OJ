@@ -233,7 +233,7 @@ export function dismissGroup (gid, body) {
 }
 
 /**
- * 退出用户组
+ * 退出用户组r
  * @param gid
  * @param body
  * @returns {function()}

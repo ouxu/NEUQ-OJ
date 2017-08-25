@@ -1,62 +1,90 @@
 import React, {Component} from 'react'
 import './index.less'
-import {Button, Form, Input, Table} from 'antd'
+import {Button, Form, Input, Table, Modal} from 'antd'
 
+const confirm = Modal.confirm
 const FormItem = Form.Item
 import QueueAnim from 'rc-queue-anim'
 
 @Form.create()
 class TeamGenerator extends Component {
+  constructor (props){
+    super(props)
+    this.state = {}
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleSubmit (e){
+    e.preventDefault()
+    this.props.form.validateFieldsAndScroll((err, value) => {
+      if (!err) {
+        value.is_closed = value.is_closed === '1'
+        confirm({
+          title: '确认生成',
+          content: '请认真审核信息!',
+          onOk: async() => await this.props.createAccount(value)
+        })
+      }
+    })
+  }
+
   render() {
     const {getFieldDecorator} = this.props.form
     const formItemLayout = {}
     const columns = [{
       title: '帐号',
-      dataIndex: 'username',
+      dataIndex: 'prefix',
     }, {
       title: '密码',
-      dataIndex: 'password',
+      dataIndex: 'num',
+    },{
+      title: '队伍名称',
+      dataIndex: 'names'
     }];
     const data = [{
       key: '1',
-      username: 'John Brown',
-      password: '12344555666',
+      prefix: 'John Brown',
+      num: '12344555666',
+      names: '东北大学秦皇岛分校'
     }, {
       key: '2',
-      username: 'Jim Green',
-      password: 'London12344555666',
+      prefix: 'Jim Green',
+      num: 'London12344555666',
+      names: '东北大学秦皇岛分校'
     }, {
       key: '3',
-      username: 'Joe Black',
-      password: 'London12344555666',
+      prefix: 'Joe Black',
+      num: 'London12344555666',
+      names: '东北大学秦皇岛分校'
     }, {
       key: '4',
-      username: 'Joe Black',
-      password: 'Sidney No. 1 Lake Park',
+      prefix: 'Joe Black',
+      num: 'Sidney No. 1 Lake Park',
+      names: '东北大学秦皇岛分校'
     }, {
       key: '5',
-      username: 'Joe Black',
-      password: 'Sidney No. 1 Lake Park',
+      prefix: 'Joe Black',
+      num: 'Sidney No. 1 Lake Park',
     }, {
       key: '6',
-      username: 'Joe Black',
-      password: 'Sidney No. 1 Lake Park',
+      prefix: 'Joe Black',
+      num: 'Sidney No. 1 Lake Park',
     }, {
       key: '7',
-      username: 'Joe Black',
-      password: 'London12344555666',
+      prefix: 'Joe Black',
+      num: 'London12344555666',
     }, {
       key: '8',
-      username: 'Joe Black',
-      password: 'Sidney No. 1 Lake Park',
+      prefix: 'Joe Black',
+      num: 'Sidney No. 1 Lake Park',
     }, {
       key: '9',
-      username: 'Joe Black',
-      password: 'Sidney No. 1 Lake Park',
+      prefix: 'Joe Black',
+      num: 'Sidney No. 1 Lake Park',
     }, {
       key: '10',
-      username: 'Joe Black',
-      password: 'London12344555666',
+      prefix: 'Joe Black',
+      num: 'London12344555666',
     }];
     return (
       <div>
@@ -68,7 +96,7 @@ class TeamGenerator extends Component {
                 {...formItemLayout}
                 label='队伍前缀'
               >
-                {getFieldDecorator('name', {
+                {getFieldDecorator('prefix', {
                   rules: [{required: true, message: '请输入队伍前缀'}],
                   initialValue:  ''
                 })(
@@ -79,7 +107,7 @@ class TeamGenerator extends Component {
                 {...formItemLayout}
                 label='生成帐号数量'
               >
-                {getFieldDecorator('host', {
+                {getFieldDecorator('num', {
                   rules: [{required: true, message: '请输入帐号数量'}],
                   initialValue:  ''
                 })(
@@ -87,8 +115,19 @@ class TeamGenerator extends Component {
                          autosize={{minRows: 1, maxRows: 6}}/>
                 )}
               </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label='队伍名称（选填）'
+              >
+                {getFieldDecorator('names', {
+                  initialValue:  ''
+                })(
+                  <Input placeholder='请输入队伍名称' type='textarea'
+                         autosize={{minRows: 1, maxRows: 6}}/>
+                )}
+              </FormItem>
               <FormItem>
-                <Button type='primary' size='large'>添加队伍</Button>
+                <Button type='primary' size='large' onClick={this.handleSubmit}>生成帐号</Button>
               </FormItem>
               <div>
                 <h2>生成帐号列表</h2>

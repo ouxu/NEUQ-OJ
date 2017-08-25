@@ -65,5 +65,8 @@ export default {
   // News
   news: apiMaker('news'),
   createNews: apiMaker('news/create'),
-  newsIndex: apiMaker('news/index')
+  newsIndex: apiMaker('news/index'),
+
+  //team generator
+  teamGenerator: apiMaker('admin/users/generate/prefix')
 }
