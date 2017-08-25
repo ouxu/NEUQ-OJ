@@ -41,7 +41,7 @@ export function login (body) {
       window.localStorage.setItem('neuq_oj.name', data.user.name)
       window.localStorage.setItem('neuq_oj.id', data.user.id)
       window.localStorage.setItem('neuq_oj.role', data.role)
-
+      console.log(1)
       await dispatch(actionCreater(SET_USERME, data.user))
       await dispatch(actionCreater(SET_USER_ROLE, data.role))
       message.success('登录成功')

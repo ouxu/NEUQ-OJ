@@ -35,7 +35,6 @@ class HomepageContainer extends React.Component {
   componentDidMount () {
     this.props.fetchHomePageData()
     this.props.getRankTable()
-    this.props.getStatusTable()
     this.props.getContestsTable()
   }
 

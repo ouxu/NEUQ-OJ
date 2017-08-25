@@ -5,7 +5,7 @@ import { SET_STATUS_TABLE, actionCreater } from './type'
 import API from 'api'
 import {jumpTo} from 'utils'
 import * as requestService from 'utils/request'
-
+import {message} from 'antd'
 /**
  * 获取当前提交状态
  * @param page 页码
@@ -21,15 +21,16 @@ export function getStatusTable (page = 1, size = 20, searchobj) {
         page,
         size
       }
-      const data = await requestService.get(API.status, params)
+      const data = await requestService.tget(API.status, params)
 
       window.sessionStorage.setItem('neuq_oj.statuspagecurr', page)
       window.sessionStorage.setItem('neuq_oj.statuspagesize', size)
 
       await dispatch(actionCreater(SET_STATUS_TABLE, data))
       jumpTo('navigation')
+      message.success('本人只能获取个人提交记录')
     } catch (e) {
-      console.error(e)
+      message.error('请提前登陆！')
     }
   }
 }

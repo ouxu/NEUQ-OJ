@@ -20,6 +20,7 @@ import ContestInfoContainer from 'containers/ContestInfo'
 import RanklistContainer from 'containers/RankList'
 import AdminComponent from 'components/admin'
 import NewsManageContainer from 'containers/admin/News'
+
 import ContestEdit from './lazyload/admin/ContestEdit'
 
 import ContestManageContainer from 'containers/admin/ContestList'
@@ -30,7 +31,7 @@ import GroupListContainer from 'containers/admin/GroupList'
 import GroupManageContainer from 'containers/admin/GroupManage'
 
 import ProblemManageContainer from 'containers/admin/ProblemList'
-import ProblemEdit from './lazyload/admin/ProblemEdit'
+
 import ProblemUploadContainer from 'containers/admin/ProblemUpload'
 import ProblemTag from 'containers/admin/ProblemTag'
 import EditInfoContainer from 'containers/EditInfo'
@@ -108,12 +109,12 @@ const RouterApp = store => (
       <Route path='group-manage'>
         <Route path=':gid' component={GroupManageContainer} />
       </Route>
-      <Route path='problem-edit' getComponent={ProblemEdit}>
-        <Route path=':id' getComponent={ProblemEdit} />
-      </Route>
+      {/*<Route path='problem-edit' getComponent={ProblemEdit}>*/}
+        {/*<Route path=':id' getComponent={ProblemEdit} />*/}
+      {/*</Route>*/}
       <Route path='problem-upload' component={ProblemUploadContainer} />
       <Route path='machine-edit' getComponent={MachineEdit}>
-        <Route path=':id' getComponent={MachineEdit}/>
+        <Route path=':id' getComponent={MachineEdit} />
       </Route>
       <Route path='problem-tag' component={ProblemTag} />
       <Route path='team-generator' component={TeamGeneratorContainer} />
