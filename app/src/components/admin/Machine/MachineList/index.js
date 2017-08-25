@@ -1,7 +1,5 @@
 import React, {Component} from 'react'
 import {Table, Icon, Spin, Button} from 'antd'
-import loading from '../../../../reducers/loading.reducer'
-import machines from '../../../../reducers/machine.reducer'
 
 class MachineList extends Component {
   constructor(props) {
@@ -12,15 +10,12 @@ class MachineList extends Component {
     this.MachineRefresh = this.MachineRefresh.bind(this)
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getJudgeList()
   }
-  componentDidMount(){
-    console.log(this.state.macInfo)
-  }
+
   MachineRefresh() {
     this.props.getJudgeList()
-    console.log(this.state.macInfo)
   }
 
   render() {
@@ -48,23 +43,19 @@ class MachineList extends Component {
       }, {
         title: 'CPU%',
         dataIndex: 'cpu',
-        key: 'cpu'
+        key: 'cpu',
+        width: 200
       }, {
         title: 'MEM%',
         dataIndex: 'memory',
-        key: 'memory'
+        key: 'memory',
+        width: 200
       }, {
         title: 'Hostname',
         dataIndex: 'hostname',
         key: 'hostname'
-      }, {
-        title: 'Ping',
-        dataIndex: 'ping',
-        key: 'ping'
       }]
-    const {machines: {machineTable = [], machineInfo = []}} = this.props
-    // console.log(machineInfo)
-    this.state.macInfo = machineInfo
+    const {machines: {machineTable = []}} = this.props
     return (
       <div>
         <div className='h-1'>

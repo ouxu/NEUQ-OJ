@@ -29,6 +29,20 @@ class ContestEdit extends Component {
       password: e.target.value
     })
   }
+  handleSubmit (e) {
+    e.preventDefault()
+    this.props.form.validateFieldsAndScroll((err, value) => {
+      if (!err) {
+        confirm({
+          title: '确认提交？',
+          content: '请认真审核信息，确认无错误时再提交!',
+          onOk: async() => {
+            await this.props.editProblem(value, this.props.params.id)
+          }
+        })
+      }
+    })
+  }
 
   render() {
     const {getFieldDecorator} = this.props.form
