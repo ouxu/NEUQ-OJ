@@ -4,7 +4,7 @@
 import React, {Component} from 'react'
 import './index.less'
 import moment from 'moment'
-import {Button, DatePicker, Form, Input, Popconfirm, Radio, Select, Spin} from 'antd'
+import {Button, DatePicker, Form, Input, Modal, Radio, Select, Spin} from 'antd'
 import {Link} from 'react-router'
 import {goto, verify} from 'utils'
 
@@ -13,6 +13,8 @@ const Option = Select.Option
 const RadioGroup = Radio.Group
 const RangePicker = DatePicker.RangePicker
 import QueueAnim from 'rc-queue-anim'
+
+const confirm = Modal.confirm
 
 @Form.create()
 class ContestEdit extends Component {
@@ -29,14 +31,15 @@ class ContestEdit extends Component {
       password: e.target.value
     })
   }
-  handleSubmit (e) {
+
+  handleSubmit(e) {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll((err, value) => {
       if (!err) {
         confirm({
           title: '确认提交？',
           content: '请认真审核信息，确认无错误时再提交!',
-          onOk: async() => {
+          onOk: async () => {
             await this.props.editProblem(value, this.props.params.id)
           }
         })
@@ -60,7 +63,7 @@ class ContestEdit extends Component {
               >
                 {getFieldDecorator('name', {
                   rules: [{required: true, message: '请输入机器名称'}],
-                  initialValue:  ''
+                  initialValue: ''
                 })(
                   <Input placeholder='请输入机器名称' type='textarea' autosize={{minRows: 1, maxRows: 6}}/>
                 )}
@@ -71,7 +74,7 @@ class ContestEdit extends Component {
               >
                 {getFieldDecorator('rpc——token', {
                   rules: [{required: true, message: '请输入机器rpc——token'}],
-                  initialValue:  ''
+                  initialValue: ''
                 })(
                   <Input placeholder='请输入rpc——token' type='textarea' autosize={{minRows: 1, maxRows: 6}}/>
                 )}
@@ -82,7 +85,7 @@ class ContestEdit extends Component {
               >
                 {getFieldDecorator('host', {
                   rules: [{required: true, message: '请输入主机地址'}],
-                  initialValue:  ''
+                  initialValue: ''
                 })(
                   <Input placeholder='请输入主机地址' type='textarea'
                          autosize={{minRows: 1, maxRows: 6}}/>
@@ -92,7 +95,7 @@ class ContestEdit extends Component {
               <FormItem>
                 {getFieldDecorator('port', {
                   rules: [{required: true, message: '请输入主机端口'}],
-                  initialValue:  ''
+                  initialValue: ''
                 })(
                   <Input placeholder='请输入主机端口' type='textarea'
                          autosize={{minRows: 1, maxRows: 6}}/>
