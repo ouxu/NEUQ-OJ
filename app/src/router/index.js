@@ -36,6 +36,7 @@ import ProblemTag from 'containers/admin/ProblemTag'
 import EditInfoContainer from 'containers/EditInfo'
 import ProblemDetail from './lazyload/ProblemDetail'
 
+import TeamGeneratorContainer from 'containers/admin/TeamGenerator'
 
 import MachineEdit from './lazyload/admin/MachineEdit'
 
@@ -115,6 +116,7 @@ const RouterApp = store => (
         <Route path=':id' getComponent={MachineEdit}/>
       </Route>
       <Route path='problem-tag' component={ProblemTag} />
+      <Route path='team-generator' component={TeamGeneratorContainer} />
     </Route>
   </Router>
 )
