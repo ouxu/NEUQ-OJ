@@ -11,8 +11,8 @@ import Actived from 'components/user/VerifyMail/Actived'
 
 import HomePageContainer from 'containers/HomePage'
 import ProblemsContainer from 'containers/Problems'
-// import GroupsContainer from 'containers/Groups'
-// import GroupsPanelContainer from 'containers/GroupsPanel'
+import GroupsContainer from 'containers/Groups'
+import GroupsPanelContainer from 'containers/GroupsPanel'
 import UserPageContainer from 'containers/UserPage'
 import StatusContainer from 'containers/Status'
 import ContestsContainer from 'containers/Contest'
@@ -22,24 +22,18 @@ import AdminComponent from 'components/admin'
 import NewsManageContainer from 'containers/admin/News'
 
 import ContestEdit from './lazyload/admin/ContestEdit'
-
 import ContestManageContainer from 'containers/admin/ContestList'
 
-import MachineManageContainer from 'containers/admin/MachineList'
 import GroupCreateContainer from 'containers/admin/GroupCreate'
 import GroupListContainer from 'containers/admin/GroupList'
 import GroupManageContainer from 'containers/admin/GroupManage'
 
 import ProblemManageContainer from 'containers/admin/ProblemList'
-
+import ProblemEdit from './lazyload/admin/ProblemEdit'
 import ProblemUploadContainer from 'containers/admin/ProblemUpload'
 import ProblemTag from 'containers/admin/ProblemTag'
 import EditInfoContainer from 'containers/EditInfo'
 import ProblemDetail from './lazyload/ProblemDetail'
-
-import TeamGeneratorContainer from 'containers/admin/TeamGenerator'
-
-import MachineEdit from './lazyload/admin/MachineEdit'
 
 const CheckData = (location, replace) => {
   const userRole = window.localStorage.getItem('neuq_oj.role')
@@ -60,13 +54,12 @@ const RouterApp = store => (
         <IndexRoute component={ProblemsContainer} />
         <Route path=':id' getComponent={ProblemDetail} />
       </Route>
-      {/*<Route path='groups'>*/}
-        {/*<IndexRoute component={GroupsContainer} />*/}
-        {/*<Route path=':id' component={GroupsPanelContainer} />*/}
-      {/*</Route>*/}
+      <Route path='groups'>
+        <IndexRoute component={GroupsContainer} />
+        <Route path=':id' component={GroupsPanelContainer} />
+      </Route>
       <Route path='userpage/edit' component={EditInfoContainer} />
       <Route path='userpage/:id' component={UserPageContainer} />
-
       <Route path='register'>
         <IndexRoute component={Register} />
         <Route path='verify' component={VerifyMail}>
@@ -103,21 +96,16 @@ const RouterApp = store => (
       </Route>
 
       <Route path='problem-list' component={ProblemManageContainer} />
-      <Route path='machine-list' component={MachineManageContainer} />
       <Route path='groups-list' component={GroupListContainer} />
       <Route path='group-create' component={GroupCreateContainer} />
       <Route path='group-manage'>
         <Route path=':gid' component={GroupManageContainer} />
       </Route>
-      {/*<Route path='problem-edit' getComponent={ProblemEdit}>*/}
-        {/*<Route path=':id' getComponent={ProblemEdit} />*/}
-      {/*</Route>*/}
-      <Route path='problem-upload' component={ProblemUploadContainer} />
-      <Route path='machine-edit' getComponent={MachineEdit}>
-        <Route path=':id' getComponent={MachineEdit} />
+      <Route path='problem-edit' getComponent={ProblemEdit}>
+        <Route path=':id' getComponent={ProblemEdit} />
       </Route>
+      <Route path='problem-upload' component={ProblemUploadContainer} />
       <Route path='problem-tag' component={ProblemTag} />
-      <Route path='team-generator' component={TeamGeneratorContainer} />
     </Route>
   </Router>
 )
