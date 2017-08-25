@@ -23,10 +23,13 @@ export function addJudgeServer(body) {
   return async () => {
     try {
       const data = await requestService.tpost(API.judgeServer, body)
+      console.log(data)
       message.success('添加成功')
     } catch (e) {
+      message.error('服务器状态异常')
       console.error(e)
     }
+    goto('admin/machine-list')
   }
 }
 
@@ -39,7 +42,6 @@ export function getJudgeList() {
   return async (dispatch) => {
     try {
       let url = API.judgeServer + '/all'
-
       let machineInfo = []
       const data = await requestService.tget(url)
       let id = data.map(item => {
@@ -49,15 +51,25 @@ export function getJudgeList() {
         let info = {}
         try {
           if (data[i].status) info = await requestService.tget(`${API.judgeServer}/${id[i]}/info`)
+          // ok用来标志状态是否正常
+          data[i].ok = 1
         } catch (e) {
-          message.error('获取状态失败')
+          data[i].ok = 0
+          // message.error(`获取id为${id[i]}的判题服务器状态失败`)
         }
         machineInfo.push(info)
       }
       console.log(machineInfo)
       // await dispatch(actionCreater(GET_JUDGE_SERVER_INFO, machineInfo))
       machineTable = data.map((item, index) => {
-        return item.status ? Object.assign(item, machineInfo[index]) : item
+        if (item.status === 1 && item.ok === 1) {
+          item.status = '正常'
+        } else if (item.status === 1 && item.ok ===0) {
+          item.status = '异常'
+        } else if(item.status === 0){
+          item.status = '关闭'
+        }
+        return Object.assign(item, machineInfo[index])
       })
       console.log(machineTable)
       await dispatch(actionCreater(GET_ALL_JUDGE_LIST, machineTable))

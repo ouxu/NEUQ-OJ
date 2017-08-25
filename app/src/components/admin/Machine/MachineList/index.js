@@ -1,57 +1,92 @@
 import React, {Component} from 'react'
-import {Table, Icon, Spin, Button} from 'antd'
-
+import {Table, Icon, Spin, Button, message} from 'antd'
+import {getJudgeList} from '../../../../actions/machine.action'
+const COUNTER = 10
 class MachineList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      macInfo: []
+      counter: 1
     }
     this.MachineRefresh = this.MachineRefresh.bind(this)
+    this.Counter = this.Counter.bind(this)
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.getJudgeList()
+    this.timer = setInterval(this.props.getJudgeList, 3000)
+    this.counter = setInterval(this.Counter.bind(this), 3000)
+  }
+
+  componentWillUnmount() {
+    this.timer && clearInterval(this.timer)
+    this.counter && clearInterval(this.counter)
+  }
+
+  Counter() {
+    this.setState = {
+      counter: this.state.counter++
+    }
+    if (this.state.counter > COUNTER) {
+      this.timer && clearInterval(this.timer)
+      this.counter && clearInterval(this.counter)
+      message.success('自动刷新停止')
+    }
+    console.log(this.state)
   }
 
   MachineRefresh() {
+    if (this.state.counter > COUNTER) {
+      this.state.counter = 1
+      this.counter && clearInterval(this.counter)
+      this.timer && clearInterval(this.timer)
+      this.counter = setInterval(this.Counter.bind(this), 3000)
+      this.timer = setInterval(this.props.getJudgeList, 3000)
+      message.success('自动刷新开始')
+    }else {
+      this.counter && clearInterval(this.counter)
+      this.timer && clearInterval(this.timer)
+      this.state.counter = 100
+      message.success('自动刷新停止')
+    }
     this.props.getJudgeList()
+    console.log(this.state)
   }
 
   render() {
     const columns = [
       {
-        title: 'Id',
+        title: '编号',
         dataIndex: 'id',
         key: 'id'
       }, {
-        title: 'Name',
+        title: '名称',
         dataIndex: 'name',
         key: 'name'
       }, {
-        title: 'Host',
+        title: '地址',
         dataIndex: 'host',
         key: 'host'
       }, {
-        title: 'Port',
+        title: '端口',
         dataIndex: 'port',
         key: 'port'
       }, {
-        title: 'Status',
+        title: '运行状态',
         dataIndex: 'status',
         key: 'status'
       }, {
-        title: 'CPU%',
+        title: '处理器占比',
         dataIndex: 'cpu',
         key: 'cpu',
         width: 200
       }, {
-        title: 'MEM%',
+        title: '内存占比',
         dataIndex: 'memory',
         key: 'memory',
         width: 200
       }, {
-        title: 'Hostname',
+        title: '主机名称',
         dataIndex: 'hostname',
         key: 'hostname'
       }]
@@ -68,10 +103,10 @@ class MachineList extends Component {
           rowKey={record => record.id}
         />
         <Button
-          type="primary"
+          type={this.state.counter < COUNTER ? 'primary' : 'danger'}
           className='refresh'
           onClick={this.MachineRefresh}
-        >刷新</Button>
+        >{this.state.counter < COUNTER ? '停止自动刷新' : '开启自动刷新'}</Button>
       </div>
     )
   }

@@ -20,36 +20,21 @@ const confirm = Modal.confirm
 class ContestEdit extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      password: ''
-    }
-    this.passwordChange = this.passwordChange.bind(this)
-  }
-
-  passwordChange(e) {
-    this.setState({
-      password: e.target.value
-    })
+    this.state = {}
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleSubmit(e) {
     e.preventDefault()
-    this.props.form.validateFieldsAndScroll((err, value) => {
+    this.props.form.validateFieldsAndScroll(async (err, value) => {
       if (!err) {
-        confirm({
-          title: '确认提交？',
-          content: '请认真审核信息，确认无错误时再提交!',
-          onOk: async () => {
-            await this.props.editProblem(value, this.props.params.id)
-          }
-        })
+        await this.props.addJudgeServer(value)
       }
     })
   }
 
   render() {
     const {getFieldDecorator} = this.props.form
-    const title = <Input type='password' onChange={this.passwordChange} placeholder='请输入您的登录密码' size='small'/>
     const formItemLayout = {}
     return (
       <div>
@@ -72,11 +57,11 @@ class ContestEdit extends Component {
                 {...formItemLayout}
                 label='rpc_token'
               >
-                {getFieldDecorator('rpc——token', {
+                {getFieldDecorator('rpc_token', {
                   rules: [{required: true, message: '请输入机器rpc——token'}],
                   initialValue: ''
                 })(
-                  <Input placeholder='请输入rpc——token' type='textarea' autosize={{minRows: 1, maxRows: 6}}/>
+                  <Input placeholder='请输入rpc_token' type='textarea' autosize={{minRows: 1, maxRows: 6}}/>
                 )}
               </FormItem>
               <FormItem
@@ -116,7 +101,7 @@ class ContestEdit extends Component {
                 )}
               </FormItem>
               <FormItem>
-                <Button type='primary' size='large'>添加机器</Button>
+                <Button type='primary' size='large' onClick={this.handleSubmit}>添加机器</Button>
               </FormItem>
             </Form>
           </div>
