@@ -28,7 +28,13 @@ class ContestEdit extends Component {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll(async (err, value) => {
       if (!err) {
-        await this.props.addJudgeServer(value)
+        value.is_closed = value.is_closed === '1'
+        confirm({
+          title: '确认生成',
+          content: '请认真审核信息!',
+          onOk: async () => await this.props.addJudgeServer(value)
+        })
+
       }
     })
   }

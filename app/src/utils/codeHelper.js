@@ -55,6 +55,7 @@ const codeMap = {
 
 export default (code) => {
   if (code === 70002) {
+
   } else if (codeMap[code]) {
     message.error(codeMap[code])
   } else {

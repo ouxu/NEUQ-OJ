@@ -25,11 +25,11 @@ export function addJudgeServer(body) {
       const data = await requestService.tpost(API.judgeServer, body)
       console.log(data)
       message.success('添加成功')
+      goto('admin/machine-list')
     } catch (e) {
       message.error('服务器状态异常')
       console.error(e)
     }
-    goto('admin/machine-list')
   }
 }
 
@@ -62,7 +62,7 @@ export function getJudgeList() {
       // console.log(machineInfo)
       // await dispatch(actionCreater(GET_JUDGE_SERVER_INFO, machineInfo))
       machineTable = data.map((item, index) => {
-        if (item.status === 1 && item.ok ===0) {
+        if (item.status === 1 && item.ok === 0) {
           item.status = 2
         }
         return Object.assign(item, machineInfo[index])
