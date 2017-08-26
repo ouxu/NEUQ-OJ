@@ -59,19 +59,15 @@ export function getJudgeList() {
         }
         machineInfo.push(info)
       }
-      console.log(machineInfo)
+      // console.log(machineInfo)
       // await dispatch(actionCreater(GET_JUDGE_SERVER_INFO, machineInfo))
       machineTable = data.map((item, index) => {
-        if (item.status === 1 && item.ok === 1) {
-          item.status = '正常'
-        } else if (item.status === 1 && item.ok ===0) {
-          item.status = '异常'
-        } else if(item.status === 0){
-          item.status = '关闭'
+        if (item.status === 1 && item.ok ===0) {
+          item.status = 2
         }
         return Object.assign(item, machineInfo[index])
       })
-      console.log(machineTable)
+      // console.log(machineTable)
       await dispatch(actionCreater(GET_ALL_JUDGE_LIST, machineTable))
       // message.success('获取全部判题机器配置成功')
     } catch (e) {

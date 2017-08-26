@@ -77,7 +77,10 @@ class ContestEdit extends Component {
                 )}
 
               </FormItem>
-              <FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="主机端口"
+              >
                 {getFieldDecorator('port', {
                   rules: [{required: true, message: '请输入主机端口'}],
                   initialValue: ''
@@ -88,7 +91,7 @@ class ContestEdit extends Component {
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label='status'
+                label='启用状态'
               >
                 {getFieldDecorator('status', {
                   rules: [{required: true, message: '请设置开启状态'}],
