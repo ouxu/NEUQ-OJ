@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 import CodeMirror from 'react-codemirror'
 import 'codemirror/mode/clike/clike'
 import { Alert, Button, Card, Checkbox, Col, Collapse, Icon, Row, Table, Tooltip } from 'antd'
-import { columns } from 'components/plugins/TableData'
+import { columns } from './Config'
 import { LanguageSelect } from 'components/plugins/SelectBox'
 import Markdown from 'components/plugins/Markdown'
 const Panel = Collapse.Panel
@@ -21,7 +21,7 @@ class ProblemSub extends Component {
   createMarkup = html => ({__html: html});
 
   render () {
-    const {source_code, errorinfo, resultdata, privated, unsubmit, language} = this.props.params
+    const {source_code, errorinfo, resultData, privated, unsubmit, language} = this.props.params
 
     const {data} = this.props
     const mode = [
@@ -81,7 +81,7 @@ class ProblemSub extends Component {
                 disabled={unsubmit}
                 loading={this.state.loading}
               > 提交
-                      </Button>
+              </Button>
             </Col>
             <Col >
               <Checkbox
@@ -101,7 +101,7 @@ class ProblemSub extends Component {
           <Table
             columns={columns}
             rowKey={record => `result-${record.id}`}
-            dataSource={resultdata}
+            dataSource={resultData}
             scroll={{x: 960}}
             size='small'
             pagination={false}

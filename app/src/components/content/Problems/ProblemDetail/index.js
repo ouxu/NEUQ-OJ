@@ -10,6 +10,7 @@ import ProblemDes from './problemdes'
 import ProblemSub from './problemsub'
 import * as requestService from 'utils/request'
 import API from 'api'
+
 const ButtonGroup = Button.Group
 
 class ProblemDetail extends React.Component {
@@ -21,9 +22,9 @@ class ProblemDetail extends React.Component {
       source_code: '',
       language: 1,
       privated: false,
-      resultdata: [],
+      resultData: [],
       result: null,
-      errorinfo: ''
+      errorinfo: '',
     }
     this.handleMenuClick = this.handleMenuClick.bind(this)
     this.updateCode = this.updateCode.bind(this)
@@ -52,7 +53,7 @@ class ProblemDetail extends React.Component {
     this.setState({
       source_code: newCode,
       result: null,
-      unsubmit: false
+      unsubmit: false,
     })
   }
 
@@ -60,7 +61,7 @@ class ProblemDetail extends React.Component {
     this.setState({
       language: parseInt(value),
       result: null,
-      unsubmit: false
+      unsubmit: false,
     })
   }
 
@@ -68,7 +69,7 @@ class ProblemDetail extends React.Component {
     this.setState({
       privated: e.target.checked,
       result: null,
-      unsubmit: false
+      unsubmit: false,
     })
   }
 
@@ -76,7 +77,7 @@ class ProblemDetail extends React.Component {
     const {source_code, language} = this.state
     let obj = {source_code, language}
     obj = Object.assign({
-      private: this.state.privated
+      private: this.state.privated,
     }, obj)
     return obj
   }
@@ -90,7 +91,7 @@ class ProblemDetail extends React.Component {
       } else {
         this.setState({
           unsubmit: true,
-          errorinfo: ''
+          errorinfo: '',
         })
         await this.submitProblem(obj)
       }
@@ -106,38 +107,39 @@ class ProblemDetail extends React.Component {
       : `${API.host}problem/${params.id}/submit`
     const data = await requestService.tpost(url, body)
     message.success('提交成功')
-    const solutionId = data.solution_id
-    this.timer = setInterval(() => {
-      this.getResultData(solutionId)
-      const result = this.state.result
-      if (result > 3) {
-        if (result > 9) {
-          this.getErrorInfo(solutionId, result)
-        }
-        clearInterval(this.timer)
-      }
-    }, 1000)
+    const {result_data, result_code} = data
+    const {Passed, UnPassed} = result_data
+    console.log(result_data)
+    const {CpuTime = '', Result = '', Memory = '', OutputMD5 = ''} = Passed[0]
+    // const {CpuTimeU = '', ResultU = '', MemoryU = '', OutputMD5U = ''} = UnPassed[0]
+    console.log(UnPassed[0].Memory)
+    await this.setState({
+      resultData: [
+        {
+          key: Memory,
+          result_code,
+          CpuTime,
+          Result,
+          Memory,
+          OutputMD5
+        }, {
+          key: UnPassed[0].Memory,
+          result_code,
+          CpuTime: UnPassed[0].CpuTime,
+          Result: UnPassed[0].Result,
+          Memory: UnPassed[0].Memory,
+          OutputMD5: UnPassed[0].OutputMD5
+        }]
+    })
+    console.log(this.state)
   }
-
-  async getResultData (solutionId) {
-    try {
-      const data = await requestService.get(API.solution + solutionId)
-      await this.setState({
-        resultdata: [data],
-        result: data.result
-      })
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
   async getErrorInfo (solutionId, result) {
     try {
       const errorMode = (result === 10 ? '/runtime-info/' : '/compile-info/')
 
       const data = await requestService.get(API.status + errorMode + solutionId)
       await this.setState({
-        errorinfo: data.error
+        errorinfo: data.error,
       })
     } catch (e) {
       console.error(e)
@@ -169,13 +171,15 @@ class ProblemDetail extends React.Component {
               <span className='problem-detail-breadcrumb-detail-tags'>
                 <Icon type='clock-circle' /><span>{data.time_limit} Sec</span>
               </span>
-              <span className='problem-detail-breadcrumb-detail-tags'><Icon type='save' />
+              <span className='problem-detail-breadcrumb-detail-tags'><Icon
+                type='save' />
                 <span>{data.memory_limit} MB</span>
               </span>
             </div>
           </div>
           <div className='problem-detail-header' key='problem-detail-2'>
-            <h2 className='problem-detail-header-title'>{data.id} : {data.title}</h2>
+            <h2 className='problem-detail-header-title'>{data.id}
+              : {data.title}</h2>
             <ButtonGroup className='problem-detail-buttongroup'>
               <Button
                 size='small'

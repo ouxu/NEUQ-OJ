@@ -30,7 +30,7 @@ export function getStatusTable (page = 1, size = 20, searchobj) {
       jumpTo('navigation')
       message.success('本人只能获取个人提交记录')
     } catch (e) {
-      message.error('请提前登陆！')
+      message.warn('请提前登陆！')
     }
   }
 }
