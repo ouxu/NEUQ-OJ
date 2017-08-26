@@ -105,6 +105,7 @@ class MachineList extends Component {
         key: 'hostname'
       }]
     const {machines: {machineTable = []}} = this.props
+    console.log(machineTable)
     return (
       <div>
         <QueueAnim className='machine-list' delay={100} type='bottom'>

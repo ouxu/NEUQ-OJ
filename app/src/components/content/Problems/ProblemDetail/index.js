@@ -109,10 +109,10 @@ class ProblemDetail extends React.Component {
     message.success('提交成功')
     const {result_data, result_code} = data
     const {Passed, UnPassed} = result_data
-    console.log(result_data)
+    // console.log(result_data)
     const {CpuTime = '', Result = '', Memory = '', OutputMD5 = ''} = Passed[0]
     // const {CpuTimeU = '', ResultU = '', MemoryU = '', OutputMD5U = ''} = UnPassed[0]
-    console.log(UnPassed[0].Memory)
+    // console.log(UnPassed[0].Memory)
     await this.setState({
       resultData: [
         {
@@ -131,7 +131,7 @@ class ProblemDetail extends React.Component {
           OutputMD5: UnPassed[0].OutputMD5
         }]
     })
-    console.log(this.state)
+    console.log(this.state.resultData)
   }
   async getErrorInfo (solutionId, result) {
     try {

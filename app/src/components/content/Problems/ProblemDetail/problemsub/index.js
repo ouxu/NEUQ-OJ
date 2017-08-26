@@ -100,7 +100,7 @@ class ProblemSub extends Component {
         <Panel header='运行结果' key='submit-result'>
           <Table
             columns={columns}
-            rowKey={record => `result-${record.id}`}
+            rowKey={record => `result-${record.key}`}
             dataSource={resultData}
             scroll={{x: 960}}
             size='small'
