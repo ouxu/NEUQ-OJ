@@ -13,27 +13,22 @@ export function createAccount (body) {
       const data = await requestService.tpost(API.teamGenerator, body)
       console.log(data)
       message.success('创建成功')
-      window.onload()
-    } catch (e) {
-      console.error(e)
-    }
-  }
-}
-
-
-/**
- * 获取队伍列表
- * @returns {function(*)}
- */
-export function fetchTeamData () {
-  return async dispatch => {
-    try {
-      const param = {
-        page: 1,
-        size: 1000
-      }
-      const teamTable = await requestService.get(API.teamGenerator, param)
-      await dispatch(actionCreater(GET_Team_LIST, teamTable))
+      const {email, name, password} = data
+      await this.setState({
+        resultData: [
+          {
+            key: id,
+            name,
+            email,
+            password
+          }, {
+            key: data[0].id,
+            name: data[0].name,
+            email: data[0].email,
+            password: data[0].password
+          }]
+      })
+      console.log(this.state.resultData)
     } catch (e) {
       console.error(e)
     }

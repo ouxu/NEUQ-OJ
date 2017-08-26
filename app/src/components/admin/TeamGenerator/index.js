@@ -18,10 +18,6 @@ class TeamGenerator extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount () {
-    this.props.fetchTeamData()
-  }
-
   handleSubmit (e) {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll((err, value) => {
@@ -50,7 +46,12 @@ class TeamGenerator extends Component {
       title: '队伍名称',
       dataIndex: 'names'
     }]
-    const {generator: {teamTable = []}} = this.props
+    const data = [{
+      key:'',
+      prefix:'',
+      names:''
+    }]
+    // const {generator: {teamTable = []}} = this.props
     return (
       <div>
         <QueueAnim className='contest-edit' delay={100} type='bottom'>
@@ -96,7 +97,7 @@ class TeamGenerator extends Component {
               </FormItem>
               <div>
                 <h2>生成帐号列表</h2>
-                <Table columns={columns} dataSource={teamTable} size="middle" pagination={false} />
+                <Table columns={columns} dataSource={data} size="middle" pagination={false} />
                 <Button type='primary' size='large' className='download'>点击下载</Button>
                 <Button type='primary' size='large' className='copy'>点击复制</Button>
               </div>
