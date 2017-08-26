@@ -27,20 +27,22 @@ class MachineList extends Component {
   }
 
   Counter() {
-    this.setState = {
-      counter: this.state.counter++
-    }
-    if (this.state.counter > COUNTER) {
+    this.setState({
+      counter: this.state.counter + 1
+    })
+    if (this.state.counter >= COUNTER) {
       this.timer && clearInterval(this.timer)
       this.counter && clearInterval(this.counter)
       message.success('自动刷新停止')
     }
-    // console.log(this.state)
+    console.log(this.state)
   }
 
   MachineRefresh() {
     if (this.state.counter > COUNTER) {
-      this.state.counter = 1
+      this.setState({
+        counter: 1
+      })
       this.counter && clearInterval(this.counter)
       this.timer && clearInterval(this.timer)
       this.counter = setInterval(this.Counter.bind(this), 3000)
@@ -48,7 +50,6 @@ class MachineList extends Component {
       message.success('自动刷新开始')
     } else {
       this.counter && clearInterval(this.counter)
-      this.timer && clearInterval(this.timer)
       this.state.counter = 100
       message.success('自动刷新停止')
     }
