@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Table, Icon, Spin, Button, message, Tag} from 'antd'
 import {color} from 'utils'
+import QueueAnim from 'rc-queue-anim'
 
 const COUNTER = 10
 
@@ -106,20 +107,22 @@ class MachineList extends Component {
     const {machines: {machineTable = []}} = this.props
     return (
       <div>
-        <div className='h-1'>
-          机器列表
-        </div>
-        <Table
-          columns={columns}
-          bordered={true}
-          dataSource={machineTable}
-          rowKey={record => record.id}
-        />
-        <Button
-          type={this.state.counter < COUNTER ? 'primary' : 'danger'}
-          className='refresh'
-          onClick={this.MachineRefresh}
-        >{this.state.counter < COUNTER ? '停止自动刷新' : '开启自动刷新'}</Button>
+        <QueueAnim className='machine-list' delay={100} type='bottom'>
+          <div className='h-1'>
+            机器列表
+          </div>
+          <Table
+            columns={columns}
+            bordered={true}
+            dataSource={machineTable}
+            rowKey={record => record.id}
+          />
+          <Button
+            type={this.state.counter < COUNTER ? 'primary' : 'danger'}
+            className='refresh'
+            onClick={this.MachineRefresh}
+          >{this.state.counter < COUNTER ? '停止自动刷新' : '开启自动刷新'}</Button>
+        </QueueAnim>
       </div>
     )
   }

@@ -17,7 +17,7 @@ import QueueAnim from 'rc-queue-anim'
 const confirm = Modal.confirm
 
 @Form.create()
-class ContestEdit extends Component {
+class MachineEdit extends Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -44,10 +44,10 @@ class ContestEdit extends Component {
     const formItemLayout = {}
     return (
       <div>
-        <QueueAnim className='contest-edit' delay={100} type='bottom'>
-          <div className='h-1' key='contest-edit-header'>添加机器</div>
-          <div className='contest-edit-content' key='contest-edit-content'>
-            <Form onSubmit={this.handleSubmit} key={'contest-edit-content-'}>
+        <QueueAnim className='machine-edit' delay={100} type='bottom'>
+          <div className='h-1' key='machine-edit-header'>添加机器</div>
+          <div className='machine-edit-content' key='machine-edit-content'>
+            <Form onSubmit={this.handleSubmit} key={'machine-edit-content-'}>
               <FormItem
                 {...formItemLayout}
                 label='机器名称'
@@ -120,4 +120,4 @@ class ContestEdit extends Component {
   }
 }
 
-export default ContestEdit
+export default MachineEdit
