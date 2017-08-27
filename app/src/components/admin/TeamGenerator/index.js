@@ -5,6 +5,9 @@ import { Button, Form, Input, Table, Modal } from 'antd'
 const confirm = Modal.confirm
 const FormItem = Form.Item
 import QueueAnim from 'rc-queue-anim'
+import * as requestService from 'utils/request'
+import API from 'api'
+import { message } from 'antd'
 
 @Form.create()
 class TeamGenerator extends Component {
@@ -13,6 +16,7 @@ class TeamGenerator extends Component {
     this.state = {
       prefix:null,
       num:null,
+      resultData: [],
       names:null
     }
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -27,30 +31,54 @@ class TeamGenerator extends Component {
         confirm({
           title: '确认生成',
           content: '请认真审核信息!',
-          onOk: async () => await this.props.createAccount({string, num, prefix})
+          onOk: async () => await this.createAccount({string, num, prefix})
         })
       }
     })
   }
+  async createAccount (body) {
+    const data = await requestService.tpost(API.teamGenerator, body)
+    message.success('创建成功')
+    const {email, name, password, id} = data[0]
+    console.log(id)
+    this.setState({
+      resultData: [
+        {
+          key: id,
+           name,
+           email,
+           password
+        }, {
+          key: data.id,
+           name: data.name,
+           email: data.email,
+           password: data.password
+        }]
+    })
+    console.log(id)
+    console.log(this.state.resultData[0].key)
+  }
 
   render () {
+
     const {getFieldDecorator} = this.props.form
     const formItemLayout = {}
     const columns = [{
       title: '帐号',
-      dataIndex: 'prefix',
+      dataIndex: 'email',
     }, {
       title: '密码',
-      dataIndex: 'num',
+      dataIndex: 'password',
     }, {
       title: '队伍名称',
-      dataIndex: 'names'
+      dataIndex: 'name'
     }]
-    const data = [{
-      key:'',
-      prefix:'',
-      names:''
-    }]
+    // const resultData = [{
+    //   key:'',
+    //   email:'',
+    //   password:'',
+    //   name:''
+    // }]
     // const {generator: {teamTable = []}} = this.props
     return (
       <div>
@@ -97,7 +125,7 @@ class TeamGenerator extends Component {
               </FormItem>
               <div>
                 <h2>生成帐号列表</h2>
-                <Table columns={columns} dataSource={data} size="middle" pagination={false} />
+                <Table columns={columns} dataSource={this.state.resultData} size="middle" key={this.state.resultData.key} pagination={false} />
                 <Button type='primary' size='large' className='download'>点击下载</Button>
                 <Button type='primary' size='large' className='copy'>点击复制</Button>
               </div>

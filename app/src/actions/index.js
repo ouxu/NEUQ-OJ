@@ -21,4 +21,3 @@ export {joinContest, delContest, editContest, getContestDetail, createContest} f
 export {getNewsList, editNews, delNews, getNews} from './admin.action'
 export {getMessageCount, checkMessage} from './message.action'
 
-export {createAccount,fetchTeamData} from './generator.action'
