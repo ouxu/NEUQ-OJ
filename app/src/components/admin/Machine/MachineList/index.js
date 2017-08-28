@@ -50,6 +50,7 @@ class MachineList extends Component {
       message.success('自动刷新开始')
     } else {
       this.counter && clearInterval(this.counter)
+      this.timer && clearInterval(this.timer)
       this.state.counter = 100
       message.success('自动刷新停止')
     }
