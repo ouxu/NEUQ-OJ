@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack  --progress --hide-modules --color --config webpack.production.config.js",
     "start": "webpack-dev-server --env=dev",
-    "upload": "gulp --colors"
+    "upload": "gulp --colors",
+    "push":"git add . && git commit && git push origin master"
   },
   "dependencies": {
     "antd": "^2.6.2",

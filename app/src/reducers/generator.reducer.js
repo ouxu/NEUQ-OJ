@@ -1,11 +1,12 @@
-import {GET_Team_LIST} from 'actions/type'
+import {GET_TEAM_LIST} from 'actions/type'
 
-export default function generator (state = {}, action) {
+export default function generator(state = {}, action) {
   switch (action.type) {
-    case GET_Team_LIST:
+
+    case GET_TEAM_LIST:
       return {
         ...state,
-        teamList:action.payload
+        teamList: action.data
       }
     default:
       return state

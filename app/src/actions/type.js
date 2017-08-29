@@ -46,7 +46,7 @@ export const SET_HOME_NEWS = 'SET_HOME_NEWS'
 export const SET_NEWS_LIST = 'SET_NEWS_LIST'
 export const SET_NEWS = 'SET_NEWS'
 
-export const GET_Team_LIST = 'GET_Team_LIST'
+export const GET_TEAM_LIST = 'GET_TEAM_LIST'
 
 export const actionCreater = (type, payload = {}) => ({
   type: type,
