@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import './index.less'
-import {Button, Form, Input, Table, Modal} from 'antd'
+import {Button, Form, Input, Table, Modal, notification} from 'antd'
+import copy from 'copy-to-clipboard'
 
 const confirm = Modal.confirm
 const FormItem = Form.Item
@@ -37,6 +38,17 @@ class TeamGenerator extends Component {
       }
     })
   }
+
+  handleCopy=()=>{
+    const {teamList} = this.props.generator
+    // console.log(teamList)
+    // const data =[{"id":7777,"name":"1","email":"22201@neuqoj.com","password":"AD230E286C"},{"id":7778,"name":"2","email":"22202@neuqoj.com","password":"4BE7D48B1A"}]
+    const text = teamList.map(item => Object.keys(item).map(key => item[key]).join(' ')).join('\n')
+    copy(text);
+    notification.open({
+      message: '你已成功复制到剪切板'
+    });
+}
 
   render() {
     console.log(this.props.generator)
@@ -92,7 +104,7 @@ class TeamGenerator extends Component {
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label='队伍名称（选填，队名之间请以中文逗号分隔）'
+                label='队伍名称（选填，队名之间请英文逗号分隔）'
               >
                 {getFieldDecorator('names', {
                   initialValue: ''
@@ -109,8 +121,7 @@ class TeamGenerator extends Component {
               <h2>生成帐号列表</h2>
               <Table columns={columns} dataSource={teamList} size="middle"
                      rowKey={record => record.id} pagination={false}/>
-              <Button type='primary' size='large' className='download'>点击下载</Button>
-              <Button type='primary' size='large' className='copy'>点击复制</Button>
+              <Button type='primary' size='large' className='copy' onClick={this.handleCopy}>点击复制</Button>
             </div>
           </div>
         </QueueAnim>
