@@ -1,7 +1,6 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import './index.less'
-import {Button, Form, Input, Table, Modal, notification} from 'antd'
-import copy from 'copy-to-clipboard'
+import { Button, Form, Input, Table, Modal } from 'antd'
 
 const confirm = Modal.confirm
 const FormItem = Form.Item

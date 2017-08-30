@@ -25,6 +25,7 @@ class ProblemDetail extends React.Component {
       resultData: [],
       result: null,
       errorinfo: '',
+      resultCode: '',
     }
     this.handleMenuClick = this.handleMenuClick.bind(this)
     this.updateCode = this.updateCode.bind(this)
@@ -106,33 +107,57 @@ class ProblemDetail extends React.Component {
       ? `${API.host}contest/${params.cid}/problem/${params.pnum}/submit`
       : `${API.host}problem/${params.id}/submit`
     const data = await requestService.tpost(url, body)
+    // console.log(data)
     message.success('提交成功')
     const {result_data, result_code} = data
-    const {Passed, UnPassed} = result_data
-    // console.log(result_data)
-    const {CpuTime = '', Result = '', Memory = '', OutputMD5 = ''} = Passed[0]
-    // const {CpuTimeU = '', ResultU = '', MemoryU = '', OutputMD5U = ''} = UnPassed[0]
-    // console.log(UnPassed[0].Memory)
-    await this.setState({
-      resultData: [
-        {
-          key: Memory,
-          result_code,
-          CpuTime,
-          Result,
-          Memory,
-          OutputMD5
-        }, {
-          key: UnPassed[0].Memory,
-          result_code,
-          CpuTime: UnPassed[0].CpuTime,
-          Result: UnPassed[0].Result,
-          Memory: UnPassed[0].Memory,
-          OutputMD5: UnPassed[0].OutputMD5
-        }]
-    })
-    console.log(this.state.resultData)
+    const selectCode = (code) => {
+      if(code === -1) {
+        return '判题系统异常'
+      }else if (code === 2){
+        return '编译错误'
+      }else if (code === 3){
+        return '部分通过'
+      }else if (code === 4) {
+        return 'AC'
+      }
+    }
+    if (result_code === 3 || result_code === 4) {
+      const {Passed, UnPassed} = result_data
+      const {CpuTime = '', Result = '', Memory = '', OutputMD5 = ''} = Passed[0]
+      await this.setState({
+        resultCode: data.result_code,
+        resultData: [
+          {
+            key: Memory,
+            result_code: selectCode(result_code)+'-Passed',
+            CpuTime,
+            Result,
+            Memory,
+            OutputMD5,
+          }, {
+            key: UnPassed[0].Memory,
+            result_code: selectCode(result_code)+'-UnPassed',
+            CpuTime: UnPassed[0].CpuTime,
+            Result: UnPassed[0].Result,
+            Memory: UnPassed[0].Memory,
+            OutputMD5: UnPassed[0].OutputMD5,
+          }],
+      })
+    } else if (result_code === 2 || result_code === -1) {
+      await this.setState({
+        resultCode: data.result_code,
+        resultData: [
+          {
+            key: 2,
+            result_code: selectCode(result_code),
+            result_data: result_data
+          }
+        ]
+      })
+      // console.log(result_data)
+    }
   }
+
   async getErrorInfo (solutionId, result) {
     try {
       const errorMode = (result === 10 ? '/runtime-info/' : '/compile-info/')
@@ -180,7 +205,7 @@ class ProblemDetail extends React.Component {
           <div className='problem-detail-header' key='problem-detail-2'>
             <h2 className='problem-detail-header-title'>{data.id}
               : {data.title}</h2>
-            <ButtonGroup className='problem-detail-buttongroup'>
+            <ButtonGroup className='problem-detail-buttonGroup'>
               <Button
                 size='small'
                 type={this.state.submit ? 'primary' : 'dashed'}
@@ -206,7 +231,7 @@ class ProblemDetail extends React.Component {
               : <ProblemDes data={data} />}
           </div>
 
-          <ButtonGroup className='problem-detail-buttongroup'>
+          <ButtonGroup className='problem-detail-buttonGroup'>
             <Button
               type={this.state.submit ? 'primary' : 'dashed'}
               onClick={this.handleMenuClick}

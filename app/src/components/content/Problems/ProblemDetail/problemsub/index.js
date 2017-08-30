@@ -4,42 +4,57 @@
 import React, { Component } from 'react'
 import CodeMirror from 'react-codemirror'
 import 'codemirror/mode/clike/clike'
-import { Alert, Button, Card, Checkbox, Col, Collapse, Icon, Row, Table, Tooltip } from 'antd'
-import { columns } from './Config'
+import {
+  Alert,
+  Button,
+  Card,
+  Checkbox,
+  Col,
+  Collapse,
+  Icon,
+  Row,
+  Table,
+  Tooltip,
+} from 'antd'
+import { columnsP, columnsUP } from './Config'
 import { LanguageSelect } from 'components/plugins/SelectBox'
 import Markdown from 'components/plugins/Markdown'
+
 const Panel = Collapse.Panel
 
 class ProblemSub extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      loading: false
+      loading: false,
     }
   }
 
-  createMarkup = html => ({__html: html});
+  createMarkup = html => ({__html: html})
 
   render () {
-    const {source_code, errorinfo, resultData, privated, unsubmit, language} = this.props.params
-
+    const {source_code, errorinfo, resultData, privated, unsubmit, language, resultCode} = this.props.params
     const {data} = this.props
     const mode = [
       'text/x-csrc',
       'text/x-c++src',
       '',
-      'text/x-java'
+      'text/x-java',
     ]
-
+    const tColumns = ((resultCode === -1 || resultCode === 2)
+      ? columnsUP
+      : columnsP)
+    // const tColumns = []
+    // tColumns = ((resultCode === 3 || resultCode === 4) ? columnsP : columnsUP)
     const options = {
       indentUnit: 4,
       lineNumbers: true,
       matchBrackets: true,
-      mode: mode[language]
+      mode: mode[language],
     }
     return (
       <Collapse
-        defaultActiveKey={['submit-code', 'submit-des', 'submit-result']}
+        defaultActiveKey={['submit-code', 'submit-des','submit-result']}
         bordered={false}
         className='problem-detail-main'
       >
@@ -66,14 +81,14 @@ class ProblemSub extends Component {
             type='flex' align='bottom' key='register-9'
             className='problem-detail-main-code'
           >
-            <Col >
+            <Col>
               <LanguageSelect
                 handleChange={this.props.selectLanguage}
                 defaultvalue={String(language)}
                 allowClear
               />
             </Col>
-            <Col >
+            <Col>
               <Button
                 type='primary'
                 onClick={this.props.submit}
@@ -83,7 +98,7 @@ class ProblemSub extends Component {
               > 提交
               </Button>
             </Col>
-            <Col >
+            <Col>
               <Checkbox
                 onChange={this.props.checkPrivate}
                 checked={privated}
@@ -97,16 +112,19 @@ class ProblemSub extends Component {
             </Col>
           </Row>
         </Panel>
-        <Panel header='运行结果' key='submit-result'>
-          <Table
-            columns={columns}
-            rowKey={record => `result-${record.key}`}
-            dataSource={resultData}
-            scroll={{x: 960}}
-            size='small'
-            pagination={false}
-            key='result-1'
-          />
+        <Panel header='运行结果' key='submit-result' className="problem-detail-main-result">
+          {resultData.length > 0 && (
+            <Table
+              columns={tColumns}
+              // columns={(this.props.params.resultCode === 3 || this.props.params.resultCode === 4) ? columnsP : columnsUP}
+              rowKey={record => `result-${record.OutputMD5}`}
+              dataSource={resultData}
+              scroll={{x: 960}}
+              size='small'
+              pagination={false}
+              key='result-1'
+            />
+          )}
           {
             errorinfo &&
             <Alert
