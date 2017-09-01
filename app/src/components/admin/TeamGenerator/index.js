@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import './index.less'
-import { Button, Form, Input, Table, Modal } from 'antd'
+import {Button, Form, Input, Table, Modal, notification} from 'antd'
+import copy from 'copy-to-clipboard'
 
 const confirm = Modal.confirm
 const FormItem = Form.Item
@@ -21,7 +22,6 @@ class TeamGenerator extends Component {
     }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-
   handleSubmit(e) {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll((err, value) => {
@@ -39,14 +39,18 @@ class TeamGenerator extends Component {
   }
 
   handleCopy=()=>{
-    const {teamList} = this.props.generator
-    // console.log(teamList)
-    // const data =[{"id":7777,"name":"1","email":"22201@neuqoj.com","password":"AD230E286C"},{"id":7778,"name":"2","email":"22202@neuqoj.com","password":"4BE7D48B1A"}]
-    const text = teamList.map(item => Object.keys(item).map(key => item[key]).join(' ')).join('\n')
-    copy(text);
-    notification.open({
-      message: '你已成功复制到剪切板'
-    });
+    try {
+      const {teamList} = this.props.generator
+      const text = teamList.map(item => Object.keys(item).map(key => item[key]).join(' ')).join('\n')
+      copy(text);
+      notification.open({
+        message: '你已成功复制到剪切板'
+      });
+    } catch (e) {
+      notification.open({
+        message: '请生成帐号后复制'
+      });
+    }
 }
 
   render() {
