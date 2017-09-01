@@ -3,7 +3,7 @@
  */
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { clearProblem, editProblem, getProblemInfo,deleteProblem } from 'actions'
+import { clearProblem, editProblem, getProblemInfo, deleteProblem, createProblems } from 'actions'
 
 import ProblemEdit from 'components/admin/Problem/ProblemEdit'
 
@@ -12,5 +12,5 @@ export default connect(
     problems: state.problems,
     loading: state.loading
   }),
-  dispatch => bindActionCreators({getProblemInfo, editProblem, clearProblem,deleteProblem}, dispatch)
+  dispatch => bindActionCreators({getProblemInfo, editProblem, clearProblem, deleteProblem, createProblems}, dispatch)
 )(ProblemEdit)

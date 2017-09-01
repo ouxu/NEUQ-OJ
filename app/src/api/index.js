@@ -30,6 +30,7 @@ export default {
   problemsSearch: apiMaker('problems/search'),
   problemsMine: apiMaker('problems/mine'),
   problemsImport: apiMaker('problems/import'),
+  problemCreate: apiMaker('problem/create'),
 
   // judge server
   judgeServer: apiMaker('judge/server'),

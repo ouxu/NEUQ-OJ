@@ -6,6 +6,7 @@ import API from '../api'
 import { goto, jumpTo } from 'utils'
 import * as requestService from 'utils/request'
 import { message } from 'antd'
+
 /**
  * 获取问题列表数据
  * @param page
@@ -161,8 +162,24 @@ export function editProblem (body, id) {
     }
   }
 }
+
 /**
  * 提交问题
  *
  * 组件内进行 未集中管理
  */
+
+/**
+ * 创建问题
+ *
+ */
+export function createProblems (body) {
+  return async () => {
+    try {
+      await requestService.tpost(API.problemCreate, body)
+      message.success('发布成功')
+    } catch (e) {
+      console.log(e)
+    }
+  }
+}
