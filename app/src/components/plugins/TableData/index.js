@@ -2,22 +2,19 @@
  * Created by out_xu on 17/2/28.
  */
 import React from 'react'
-import { Link } from 'react-router'
-import { Badge } from 'antd'
+import {Link} from 'react-router'
+import {Badge} from 'antd'
 
+/**
+ * 因为后端给的result值是从-1到5的整数，所以在后面对 result 进行了加一的操作
+ * @type {[XML,XML,XML,XML,XML,XML,XML,XML,XML,XML,XML,XML]}
+ */
 const result = [
-  <Badge status='processing' text='等待中' />,
-  <Badge status='processing' text='等待中' />,
-  <Badge status='processing' text='编译中' />,
-  <Badge status='processing' text='运行中' />,
-  <Badge status='success' text='正确' />,
-  <Badge status='error' text='格式错误' />,
-  <Badge status='error' text='答案错误' />,
-  <Badge status='warning' text='时间超限' />,
-  <Badge status='error' text='内存错误' />,
-  <Badge status='error' text='输出错误' />,
-  <Badge status='error' text='运行错误' />,
-  <Badge status='error' text='编译错误' />
+  <Badge status='error' text='系统错误'/>,
+  <Badge status='success' text=''/>,
+  <Badge status='error' text=''/>,
+  <Badge status='error' text='编译错误'/>,
+  <Badge status='warning' text='部分通过'/>
 ]
 const language = [
   'C',
@@ -45,7 +42,7 @@ export const columns = [{
   title: '问题',
   render: record =>
     <span>
-      <Link to={`problems/${record.problem_id}`} > {record.problem_id}</Link>
+      <Link to={`problems/${record.problem_id}`}> {record.problem_id}</Link>
     </span>,
   key: 'status-problem-id',
   className: 'status-problem-id'
@@ -53,7 +50,7 @@ export const columns = [{
   title: '用户ID',
   render: record =>
     <span>
-      <Link to={`userpage/${record.user_id}`} > {record.user_id}</Link>
+      <Link to={`userpage/${record.user_id}`}> {record.user_id}</Link>
     </span>,
   key: 'status-user-id',
   className: 'status—user-id'
@@ -61,7 +58,7 @@ export const columns = [{
   title: '用户名',
   render: record =>
     <span>
-      <Link to={`userpage/${record.user_id}`} > {record.name}</Link>
+      <Link to={`userpage/${record.user_id}`}> {record.name}</Link>
     </span>,
   key: 'status-user-name',
   className: 'status—user-name'
@@ -69,20 +66,18 @@ export const columns = [{
   title: '运行结果',
   render: record =>
     <span>
-      {result[record.result]}
+      {result[record.result +1]}
     </span>,
   key: 'status-result',
   className: 'status-result'
 }, {
-  title: '内存',
-  dataIndex: 'memory',
-  key: 'status-memory',
-  className: 'status-memory'
-}, {
-  title: '耗时',
-  dataIndex: 'time',
-  key: 'status-time',
-  className: 'status-time'
+  title: '通过率',
+  dataIndex: 'pass_rate',
+  render: record =>
+    (<span>{record *100}%</span>)
+  ,
+  key: 'pass_rate',
+  className: 'pass_rate'
 }, {
   title: '语言',
   render: record =>
