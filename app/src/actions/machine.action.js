@@ -12,7 +12,6 @@ import * as requestService from 'utils/request'
 import {message} from 'antd'
 
 let machineTable = []
-let indexArr = []
 
 /**
  *添加判题服务器
@@ -24,11 +23,24 @@ export function addJudgeServer(body) {
   return async () => {
     try {
       const data = await requestService.tpost(API.judgeServer, body)
-      console.log(data)
       message.success('添加成功')
       goto('admin/machine-list')
     } catch (e) {
       message.error('服务器状态异常')
+      console.error(e)
+    }
+  }
+}
+
+/**
+ * @param id 机器id
+ * */
+export function toggleJudgeServerState(id) {
+  return async (dispatch) => {
+    try {
+      let url = API.judgeServer + id + '/'
+      const data = await requestService.tget(url)
+    } catch (e) {
       console.error(e)
     }
   }
@@ -78,7 +90,7 @@ export function getJudgeList() {
 }
 
 /**
- *获取获取全部判题机器配置和情况
+ *获取获取全部判题机器配置和情况,由于这个接口会向全部的机器发请求，所以很慢，不推荐使用
  * @param
  * @returns {function(*)}
  */

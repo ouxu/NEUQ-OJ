@@ -48,12 +48,13 @@ class MachineList extends Component {
     } else {
       this.stopRefresh()
       message.success('自动刷新停止')
-
     }
     this.props.getJudgeList()
     // console.log(this.state)
   }
-
+getJudgeList(){
+    this.props.getJudgeList()
+}
   /**
    * 停止自动刷新函数
    */
@@ -90,11 +91,15 @@ class MachineList extends Component {
     } else {
       message.error('机器状态异常，请查明原因')
     }
+    //完成之后，调用一次信息
+    this.props.getJudgeList()
   }
   // 删除对应的机器
   delMachine(e) {
     this.stopRefresh()
     console.log('sure? but can\'t')
+    //完成之后，调用一次信息
+    this.props.getJudgeList()
   }
 
   render() {
