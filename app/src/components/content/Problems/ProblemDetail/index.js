@@ -20,7 +20,7 @@ class ProblemDetail extends React.Component {
       submit: this.props.submit || false,
       unsubmit: false,
       source_code: '',
-      percent:0,
+      percent: 0,
       language: 1,
       privated: false,
       resultData: [],

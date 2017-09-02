@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router'
 import {Table, Icon, Spin, Button, message, Tag} from 'antd'
 import {color} from 'utils'
 import QueueAnim from 'rc-queue-anim'
@@ -11,8 +12,12 @@ class MachineList extends Component {
     this.state = {
       counter: 1
     }
-    this.MachineRefresh = this.MachineRefresh.bind(this)
+    this.handleButtonClick = this.handleButtonClick.bind(this)
     this.Counter = this.Counter.bind(this)
+    this.toggleMachineState = this.toggleMachineState.bind(this)
+    this.stopRefresh = this.stopRefresh.bind(this)
+    this.startRefresh = this.startRefresh.bind(this)
+    this.delMachine = this.delMachine.bind(this)
   }
 
   componentWillMount() {
@@ -31,31 +36,65 @@ class MachineList extends Component {
       counter: this.state.counter + 1
     })
     if (this.state.counter >= COUNTER) {
-      this.timer && clearInterval(this.timer)
-      this.counter && clearInterval(this.counter)
+      this.stopRefresh()
       message.success('自动刷新停止')
     }
     console.log(this.state)
   }
-
-  MachineRefresh() {
+  handleButtonClick() {
     if (this.state.counter > COUNTER) {
-      this.setState({
-        counter: 1
-      })
-      this.counter && clearInterval(this.counter)
-      this.timer && clearInterval(this.timer)
-      this.counter = setInterval(this.Counter.bind(this), 3000)
-      this.timer = setInterval(this.props.getJudgeList, 3000)
+      this.startRefresh(3)
       message.success('自动刷新开始')
     } else {
-      this.counter && clearInterval(this.counter)
-      this.timer && clearInterval(this.timer)
-      this.state.counter = 100
+      this.stopRefresh()
       message.success('自动刷新停止')
+
     }
     this.props.getJudgeList()
     // console.log(this.state)
+  }
+
+  /**
+   * 停止自动刷新函数
+   */
+  stopRefresh() {
+    this.counter && clearInterval(this.counter)
+    this.timer && clearInterval(this.timer)
+    this.state.counter = 100
+  }
+
+  /*
+   *开始自动刷新函数
+   * @param time 间隔时间，单位为秒
+   */
+  startRefresh(time) {
+    this.setState({
+      counter: 1
+    })
+    this.counter && clearInterval(this.counter)
+    this.timer && clearInterval(this.timer)
+    this.counter = setInterval(this.Counter.bind(this), time * 1000)
+    this.timer = setInterval(this.props.getJudgeList, time * 1000)
+  }
+
+  /*
+  切换机器状态的函数
+   */
+  toggleMachineState(e) {
+    // 修改机器的状态之前，首先先停止自动刷新
+    this.stopRefresh()
+    // 默认传入的函数中的参数event包含了该行全部的信息，所以可以容易的获取ID值和状态值
+    const {id, status} = e
+    if (id && (status === 0 || status === 1)) {
+      message.success('机器正常，可以开启或者关闭')
+    } else {
+      message.error('机器状态异常，请查明原因')
+    }
+  }
+  // 删除对应的机器
+  delMachine(e) {
+    this.stopRefresh()
+    console.log('sure? but can\'t')
   }
 
   render() {
@@ -90,6 +129,7 @@ class MachineList extends Component {
         title: '运行状态',
         // dataIndex: 'status',
         render: record => <Tag color={colorArr[record.status]}>{machineStatus[record.status]}</Tag>,
+        onCellClick: this.toggleMachineState,
         key: 'status'
       }, {
         title: '处理器占比',
@@ -105,6 +145,19 @@ class MachineList extends Component {
         title: '主机名称',
         dataIndex: 'hostname',
         key: 'hostname'
+      }, {
+        title: '操作',
+        render: (record) => <Link to={'admin/machine-edit/' + record.id}>修改</Link>,
+        width: 40,
+        key: 'problem-manage-action',
+        className: 'problem-manage-action'
+      }, {
+        title: '删除',
+        render: () => <a>删除</a>,
+        width: 40,
+        key: 'problem-manage-del',
+        onCellClick: this.delMachine,
+        className: 'problem-manage-action'
       }]
     const {machines: {machineTable = []}} = this.props
     console.log(machineTable)
@@ -123,7 +176,7 @@ class MachineList extends Component {
           <Button
             type={this.state.counter < COUNTER ? 'primary' : 'danger'}
             className='refresh'
-            onClick={this.MachineRefresh}
+            onClick={this.handleButtonClick}
           >{this.state.counter < COUNTER ? '停止自动刷新' : '开启自动刷新'}</Button>
         </QueueAnim>
       </div>
