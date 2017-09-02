@@ -6,9 +6,7 @@ import copy from 'copy-to-clipboard'
 const confirm = Modal.confirm
 const FormItem = Form.Item
 import QueueAnim from 'rc-queue-anim'
-import * as requestService from 'utils/request'
-import API from 'api'
-import {message} from 'antd'
+
 
 @Form.create()
 class TeamGenerator extends Component {
@@ -122,8 +120,7 @@ class TeamGenerator extends Component {
             </Form>
             <div>
               <h2>生成帐号列表</h2>
-              <Table columns={columns} dataSource={teamList} size="middle"
-                     rowKey={record => record.id} pagination={false}/>
+              <Table columns={columns} dataSource={teamList} size="middle" rowKey={record => record.id} pagination={false}/>
               <Button type='primary' size='large' className='copy' onClick={this.handleCopy}>点击复制</Button>
             </div>
           </div>

@@ -1,28 +1,43 @@
+import React from 'react'
+import {Badge} from 'antd'
+const result = [
+  <Badge status='error' text='答案错误'/>,
+  <Badge status='success' text='通过'/>,
+  <Badge status='warning' text='CPU时间超限'/>,
+  <Badge status='warning' text='运行时间超限'/>,
+  <Badge status='warning' text='内存超限'/>,
+  <Badge status='error' text='运行时错误'/>,
+  <Badge status='error' text='系统错误'/>
+]
+const result2 = [
+  <Badge status='error' text='判题系统异常'/>,
+  <Badge status='error' text=''/>,
+  <Badge status='error' text=''/>,
+  <Badge status='error' text='编译错误'/>
+]
 const columnsP = [{
   title: '',
   width: '1%',
   key: 'status-none',
   className: 'status-none'
 }, {
-  title: '运行结果',
-  dataIndex: 'result_code',
+  title: '结果',
+  width: '20%',
+  render: record =>
+    <span>
+      {result[record.Result+1]}
+    </span>,
   className: 'status-result-code'
 }, {
   title: '耗时',
+  width: '40%',
   dataIndex: 'CpuTime',
   className: 'status—cpu-time'
 }, {
-  title: 'Result',
-  dataIndex: 'Result',
-  className: 'status-result'
-}, {
   title: '内存',
+  width: '40%',
   dataIndex: 'Memory',
   className: 'status-memory'
-}, {
-  title: 'OutputMD5',
-  dataIndex: 'OutputMD5',
-  className: 'status-out-put'
 }]
 
 const columnsUP = [{
@@ -31,8 +46,11 @@ const columnsUP = [{
   key: 'status-none',
   className: 'status-none'
 }, {
-  title: '运行结果',
-  dataIndex: 'result_code',
+  title: '结果',
+  render: record =>
+    <span>
+      {result2[record.result_code+1]}
+    </span>,
   width: '20%',
   className: 'problem-detail-main-result-1'
 }, {

@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import { Link } from 'react-router'
-import { Button, Card, Icon, message } from 'antd'
+import { Button, Card, Icon, message, Badge} from 'antd'
 import './index.less'
 import QueueAnim from 'rc-queue-anim'
 import ProblemDes from './problemdes'
@@ -25,6 +25,8 @@ class ProblemDetail extends React.Component {
       resultData: [],
       result: null,
       errorinfo: '',
+      resultDataP: [],
+      resultDataUp: [],
       resultCode: '',
     }
     this.handleMenuClick = this.handleMenuClick.bind(this)
@@ -107,55 +109,37 @@ class ProblemDetail extends React.Component {
       ? `${API.host}contest/${params.cid}/problem/${params.pnum}/submit`
       : `${API.host}problem/${params.id}/submit`
     const data = await requestService.tpost(url, body)
-    // console.log(data)
     message.success('提交成功')
     const {result_data, result_code} = data
-    const selectCode = (code) => {
-      if(code === -1) {
-        return '判题系统异常'
-      }else if (code === 2){
-        return '编译错误'
-      }else if (code === 3){
-        return '部分通过'
-      }else if (code === 4) {
-        return 'AC'
-      }
-    }
     if (result_code === 3 || result_code === 4) {
       const {Passed, UnPassed} = result_data
-      const {CpuTime = '', Result = '', Memory = '', OutputMD5 = ''} = Passed[0]
+      // const {CpuTime = '', Result = '', Memory = '', OutputMD5 = ''} = Passed[0]
+      const aPassed = Passed.map((a, i) => ({
+        ...a,
+        key: i + 1,
+      }))
+      const aUnPassed = UnPassed.map((aUn, i) => ({
+        ...aUn,
+        key: i + 1,
+      }))
       await this.setState({
-        resultCode: data.result_code,
-        resultData: [
-          {
-            key: Memory,
-            result_code: selectCode(result_code)+'-Passed',
-            CpuTime,
-            Result,
-            Memory,
-            OutputMD5,
-          }, {
-            key: UnPassed[0].Memory,
-            result_code: selectCode(result_code)+'-UnPassed',
-            CpuTime: UnPassed[0].CpuTime,
-            Result: UnPassed[0].Result,
-            Memory: UnPassed[0].Memory,
-            OutputMD5: UnPassed[0].OutputMD5,
-          }],
+        resultDataP: aPassed,
+        resultDataUp: aUnPassed
       })
     } else if (result_code === 2 || result_code === -1) {
       await this.setState({
-        resultCode: data.result_code,
         resultData: [
           {
             key: 2,
-            result_code: selectCode(result_code),
-            result_data: result_data
-          }
-        ]
+            result_code,
+            result_data
+          },
+        ],
       })
-      // console.log(result_data)
     }
+    this.setState({
+      resultCode: result_code
+    })
   }
 
   async getErrorInfo (solutionId, result) {
@@ -173,7 +157,6 @@ class ProblemDetail extends React.Component {
 
   render () {
     const {problemDetail: data = {}} = this.props
-
     const {params} = this.props
     return (
       <Card className='problem-detail-wrap' bodyStyle={{padding: 0}}>
@@ -213,7 +196,6 @@ class ProblemDetail extends React.Component {
               >
                 {this.state.submit ? '描述' : '提交'}
               </Button>
-
               <Button size='small' type='dashed'>讨论版</Button>
               <Button size='small' type='dashed'>状态</Button>
             </ButtonGroup>
