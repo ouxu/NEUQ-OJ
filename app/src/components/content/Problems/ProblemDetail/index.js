@@ -99,7 +99,7 @@ class ProblemDetail extends React.Component {
         await this.submitProblem(obj)
       }
     } catch (e) {
-      message.warn(e.message)
+      message.error(e.message)
     }
   }
 
@@ -112,13 +112,14 @@ class ProblemDetail extends React.Component {
     message.success('提交成功')
     const {result_data, result_code} = data
     if (result_code === 3 || result_code === 4) {
-      const {Passed, UnPassed} = result_data
+      const {Passed, UnPassed=[]} = result_data
+
       // const {CpuTime = '', Result = '', Memory = '', OutputMD5 = ''} = Passed[0]
-      const aPassed = Passed.map((a, i) => ({
+      const aPassed = [].concat(Passed).map((a, i) => ({
         ...a,
         key: i + 1,
       }))
-      const aUnPassed = UnPassed.map((aUn, i) => ({
+      const aUnPassed = [].concat(UnPassed).map((aUn, i) => ({
         ...aUn,
         key: i + 1,
       }))
