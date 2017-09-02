@@ -116,7 +116,7 @@ class ProblemSub extends Component {
             <div style={{width: '100%'}}>
                <span>通过率</span><Progress strokeWidth={5} percent={percent} />
             </div>)}
-          {(resultCode === -1 || resultCode === 2) && resultDataUp.length > 0 && (
+          {(resultCode === -1 || resultCode === 2) && (
             <Table
               columns={tColumns} bordered
               rowKey={record => `result-${record.key}`}
