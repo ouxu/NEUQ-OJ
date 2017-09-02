@@ -1,5 +1,6 @@
 import React from 'react'
 import {Badge} from 'antd'
+
 const result = [
   <Badge status='error' text='答案错误'/>,
   <Badge status='success' text='通过'/>,
@@ -16,16 +17,11 @@ const result2 = [
   <Badge status='error' text='编译错误'/>
 ]
 const columnsP = [{
-  title: '',
-  width: '1%',
-  key: 'status-none',
-  className: 'status-none'
-}, {
   title: '结果',
   width: '20%',
   render: record =>
     <span>
-      {result[record.Result+1]}
+      {result[record.Result + 1]}
     </span>,
   className: 'status-result-code'
 }, {
@@ -41,15 +37,10 @@ const columnsP = [{
 }]
 
 const columnsUP = [{
-  title: '',
-  width: '1%',
-  key: 'status-none',
-  className: 'status-none'
-}, {
   title: '结果',
   render: record =>
     <span>
-      {result2[record.result_code+1]}
+      {result2[record.result_code + 1]}
     </span>,
   width: '20%',
   className: 'problem-detail-main-result-1'

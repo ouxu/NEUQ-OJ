@@ -1,7 +1,7 @@
 /**
  * Created by out_xu on 17/3/21.
  */
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import CodeMirror from 'react-codemirror'
 import 'codemirror/mode/clike/clike'
 import {
@@ -15,34 +15,31 @@ import {
   Row,
   Table,
   Tooltip,
-  Progress,
+  Progress
 } from 'antd'
-import { columnsP, columnsUP } from './Config'
-import { LanguageSelect } from 'components/plugins/SelectBox'
+import {columnsP, columnsUP} from './Config'
+import {LanguageSelect} from 'components/plugins/SelectBox'
 import Markdown from 'components/plugins/Markdown'
 
 const Panel = Collapse.Panel
 
 class ProblemSub extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      loading: false,
+      loading: false
     }
   }
-
   createMarkup = html => ({__html: html})
 
-  render () {
-    const {source_code, errorinfo, resultData, resultDataP, resultDataUp, privated, unsubmit, language, resultCode} = this.props.params
+  render() {
+    const {source_code, errorinfo, resultData, percent,resultDataP, resultDataUp, privated, unsubmit, language, resultCode} = this.props.params
     const {data} = this.props
-    const percent = (resultDataP.length / (resultDataP.length + resultDataUp.length) * 100) || ''
-    console.log(resultData)
     const mode = [
       'text/x-csrc',
       'text/x-c++src',
       '',
-      'text/x-java',
+      'text/x-java'
     ]
     const tColumns = ((resultCode === -1 || resultCode === 2)
       ? columnsUP
@@ -51,7 +48,7 @@ class ProblemSub extends Component {
       indentUnit: 4,
       lineNumbers: true,
       matchBrackets: true,
-      mode: mode[language],
+      mode: mode[language]
     }
     return (
       <Collapse
@@ -62,11 +59,11 @@ class ProblemSub extends Component {
         <Panel header='描述' key='submit-des'>
           <Card bodyStyle={{fontSize: 14}} className='problem-detail-main-desc'>
             <h4>题目描述：</h4>
-            <Markdown content={data.description} />
+            <Markdown content={data.description}/>
             <h4>输入：</h4>
-            <Markdown content={data.input} />
+            <Markdown content={data.input}/>
             <h4>输出：</h4>
-            <Markdown content={data.output} />
+            <Markdown content={data.output}/>
           </Card>
         </Panel>
         <Panel header='提交' key='submit-code'
@@ -104,7 +101,7 @@ class ProblemSub extends Component {
                 checked={privated}
               >
                 <Tooltip title='他人答对后是否可以查看你的代码'>
-                  <span className='user-should-know'>隐藏代码<Icon type='question-circle' />
+                  <span className='user-should-know'>隐藏代码<Icon type='question-circle'/>
                   </span>
                 </Tooltip>
               </Checkbox>
@@ -114,7 +111,7 @@ class ProblemSub extends Component {
         <Panel header='运行结果' key='submit-result' className="problem-detail-main-result">
           {percent > 0 && (
             <div style={{width: '100%'}}>
-               <span>通过率</span><Progress strokeWidth={5} percent={percent} />
+              <span>通过率</span><Progress strokeWidth={5} percent={percent}/>
             </div>)}
           {(resultCode === -1 || resultCode === 2) && (
             <Table
@@ -128,27 +125,32 @@ class ProblemSub extends Component {
             />
           )}
           {(resultCode === 3 || resultCode === 4) && resultDataP.length > 0 && (
-            <Table
-              columns={tColumns} bordered
-              rowKey={record => `result-${record.key}`}
-              dataSource={resultDataP}
-              scroll={{x: 960}}
-              size='small'
-              pagination={false}
-              key='result-1'
-            />
+            <div style={{marginTop:20}}>
+              通过的数据：
+              <Table
+                columns={tColumns} bordered
+                rowKey={record => `result-${record.key}`}
+                dataSource={resultDataP}
+                scroll={{x: 960}}
+                size='small'
+                pagination={false}
+                key='result-1'
+              />
+            </div>
           )}
           {(resultCode === 3 || resultCode === 4) && resultDataUp.length > 0 &&
           (
-            <Table
-              columns={tColumns} bordered showHeader={false}
+            <div style={{marginTop:20}}>
+              未通过的数据:
+              <Table
+              columns={tColumns} bordered
               rowKey={record => `result-${record.key}`}
               dataSource={resultDataUp}
               scroll={{x: 960}}
               size='small'
               pagination={false}
               key='result-2'
-            />
+            /></div>
           )}
           {
             errorinfo &&
