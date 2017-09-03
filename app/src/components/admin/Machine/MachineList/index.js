@@ -1,16 +1,18 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router'
-import {Table, Icon, Spin, Button, message, Tag} from 'antd'
+import {Table, Modal, Icon, Spin, Button, message, Tag} from 'antd'
 import {color} from 'utils'
 import QueueAnim from 'rc-queue-anim'
 
+const confirm = Modal.confirm
 const COUNTER = 10
 
 class MachineList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      counter: 1
+      counter: 1,
+      flag: false
     }
     this.handleButtonClick = this.handleButtonClick.bind(this)
     this.Counter = this.Counter.bind(this)
@@ -41,6 +43,7 @@ class MachineList extends Component {
     }
     console.log(this.state)
   }
+
   handleButtonClick() {
     if (this.state.counter > COUNTER) {
       this.startRefresh(3)
@@ -52,9 +55,11 @@ class MachineList extends Component {
     this.props.getJudgeList()
     // console.log(this.state)
   }
-getJudgeList(){
+
+  getJudgeList() {
     this.props.getJudgeList()
-}
+  }
+
   /**
    * 停止自动刷新函数
    */
@@ -69,6 +74,7 @@ getJudgeList(){
    * @param time 间隔时间，单位为秒
    */
   startRefresh(time) {
+    this.props.getJudgeList()
     this.setState({
       counter: 1
     })
@@ -94,12 +100,23 @@ getJudgeList(){
     //完成之后，调用一次信息
     this.props.getJudgeList()
   }
+
   // 删除对应的机器
-  delMachine(e) {
+  delMachine = (record) => {
     this.stopRefresh()
-    console.log('sure? but can\'t')
+    confirm({
+      title: '确定删除',
+      content: '请确定是否删除该判题服务器',
+      onOk: async () => {
+        await this.props.delJudgeServer(record.id)
+        this.setState({
+          flag: !this.state.flag
+        })
+        this.startRefresh(3)
+      }
+    })
     //完成之后，调用一次信息
-    this.props.getJudgeList()
+
   }
 
   render() {

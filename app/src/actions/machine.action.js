@@ -32,18 +32,35 @@ export function addJudgeServer(body) {
   }
 }
 
+// 这里计划使用和add同样的页面
 /**
  * @param id 机器id
  * */
-export function toggleJudgeServerState(id) {
+export function updateJudgeServer(id) {
   return async (dispatch) => {
     try {
-      let url = API.judgeServer + id + '/'
-      const data = await requestService.tget(url)
+      let url = API.judgeServer + id + '/update'
+      const data = await requestService.post(url)
     } catch (e) {
       console.error(e)
     }
   }
+}
+
+/**
+ *
+ */
+export function delJudgeServer(id) {
+  return async (dispatch) => {
+    try {
+      let url = `${API.judgeServer}/${id}/delete`
+      const data = await requestService.tget(url)
+      console.log(data)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
 }
 
 /**

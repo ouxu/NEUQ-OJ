@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {getJudgeList, addJudgeServer, getJudgeServerInfo} from 'actions'
+import {getJudgeList, delJudgeServer} from 'actions'
 import MachineList from 'components/admin/Machine/MachineList'
 
 export default connect(
@@ -8,5 +8,5 @@ export default connect(
     machines: state.machines,
     loading: state.loading
   }),
-  dispatch => bindActionCreators({getJudgeList,getJudgeServerInfo}, dispatch),
+  dispatch => bindActionCreators({getJudgeList,delJudgeServer}, dispatch),
 )(MachineList)
