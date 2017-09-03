@@ -3,7 +3,8 @@ import {
   ADD_JUDGE_SERVER,
   GET_ALL_JUDGE_LIST,
   GET_JUDGE_LIST_AND_INFO,
-  GET_JUDGE_SERVER_INFO
+  GET_JUDGE_SERVER_INFO,
+  REMOVE_JUDGE_SERVER
 } from 'actions/type'
 
 import API from 'api'
@@ -26,7 +27,8 @@ export function addJudgeServer(body) {
       message.success('添加成功')
       goto('admin/machine-list')
     } catch (e) {
-      message.error('服务器状态异常')
+      message.error('添加成功，但是服务器状态异常')
+      goto('admin/machine-list')
       console.error(e)
     }
   }
@@ -39,10 +41,21 @@ export function addJudgeServer(body) {
 export function updateJudgeServer(id) {
   return async (dispatch) => {
     try {
-      let url = API.judgeServer + id + '/update'
-      const data = await requestService.post(url)
+      let url = `${API.judgeServer}/${id}/update`
+      const data = await requestService.tpost(url)
+      console.log(data)
     } catch (e) {
       console.error(e)
+    }
+  }
+}
+
+export function clearJudgeSever() {
+  return async (dispatch) => {
+    try {
+      await dispatch(actionCreater(REMOVE_JUDGE_SERVER))
+    } catch (e) {
+      console.err(e.message)
     }
   }
 }
@@ -61,6 +74,15 @@ export function delJudgeServer(id) {
     }
   }
 
+}
+
+export function getServerInfo(id) {
+  return async (dispatch) => {
+    let url = `${API.judgeServer}/${id}/info`
+    const data = await requestService.tget(url)
+    console.log(data)
+    await dispatch(actionCreater(GET_JUDGE_SERVER_INFO, data))
+  }
 }
 
 /**
@@ -105,6 +127,7 @@ export function getJudgeList() {
     }
   }
 }
+
 
 /**
  *获取获取全部判题机器配置和情况,由于这个接口会向全部的机器发请求，所以很慢，不推荐使用

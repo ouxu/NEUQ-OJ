@@ -24,6 +24,12 @@ class MachineEdit extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+  componentDidMount() {
+    const {id} = this.props.params
+    console.log(this.props.params)
+    id ? this.props.getServerInfo(id):this.props.clearJudgeSever()
+  }
+
   handleSubmit(e) {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll(async (err, value) => {
@@ -41,11 +47,12 @@ class MachineEdit extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form
+    const {id} = this.props.params
     const formItemLayout = {}
     return (
       <div>
         <QueueAnim className='machine-edit' delay={100} type='bottom'>
-          <div className='h-1' key='machine-edit-header'>添加机器</div>
+          <div className='h-1' key='machine-edit-header'>{id ? '编辑机器' : '添加机器'}</div>
           <div className='machine-edit-content' key='machine-edit-content'>
             <Form onSubmit={this.handleSubmit} key={'machine-edit-content-'}>
               <FormItem
