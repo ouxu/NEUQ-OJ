@@ -121,7 +121,7 @@ class ProblemDetail extends React.Component {
       } else if (UnPassed == null) {
         percent = 100
       } else {
-        percent = (Passed.length) / (Passed.length + UnPassed.length) * 100
+        percent = Math.floor((Passed.length) / (Passed.length + UnPassed.length) * 10000)/100
       }
       // const {CpuTime = '', Result = '', Memory = '', OutputMD5 = ''} = Passed[0]
       const aPassed = [].concat(Passed).map((a, i) => ({

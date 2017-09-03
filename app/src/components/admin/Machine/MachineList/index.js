@@ -157,12 +157,12 @@ class MachineList extends Component {
         title: '处理器占比',
         dataIndex: 'cpu',
         key: 'cpu',
-        width: 200
+        width: 150
       }, {
         title: '内存占比',
         dataIndex: 'memory',
         key: 'memory',
-        width: 200
+        width: 150
       }, {
         title: '主机名称',
         dataIndex: 'hostname',
@@ -170,13 +170,13 @@ class MachineList extends Component {
       }, {
         title: '操作',
         render: (record) => <Link to={'admin/machine-edit/' + record.id}>修改</Link>,
-        width: 40,
+        width: 100,
         key: 'problem-manage-action',
         className: 'problem-manage-action'
       }, {
         title: '删除',
         render: () => <a>删除</a>,
-        width: 40,
+        width: 100,
         key: 'problem-manage-del',
         onCellClick: this.delMachine,
         className: 'problem-manage-action'
@@ -190,7 +190,9 @@ class MachineList extends Component {
             机器列表
           </div>
           <Table
+            style={{textAlign: 'center'}}
             columns={columns}
+            pagination={false}
             bordered={true}
             dataSource={machineTable}
             rowKey={record => record.id}
