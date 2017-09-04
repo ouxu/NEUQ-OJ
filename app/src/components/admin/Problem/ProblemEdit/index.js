@@ -128,7 +128,6 @@ class ProblemEdit extends Component {
 
   render () {
     const {problems: {problemDetail: data}, params: {id}, loading} = this.props
-
     const {getFieldDecorator} = this.props.form
     const formItemLayout = {}
 

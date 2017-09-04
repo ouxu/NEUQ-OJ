@@ -182,7 +182,6 @@ class MachineList extends Component {
         className: 'problem-manage-action'
       }]
     const {machines: {machineTable = []}} = this.props
-    console.log(machineTable)
     return (
       <div>
         <QueueAnim className='machine-list' delay={100} type='bottom'>

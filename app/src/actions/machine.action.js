@@ -36,14 +36,18 @@ export function addJudgeServer(body) {
 
 // 这里计划使用和add同样的页面
 /**
- * @param id 机器id
- * */
-export function updateJudgeServer(id) {
+ *
+ * @param id
+ * @param body
+ * @return {function(*)}
+ */
+export function updateJudgeServer(id, body) {
   return async (dispatch) => {
     try {
       let url = `${API.judgeServer}/${id}/update`
-      const data = await requestService.tpost(url)
-      console.log(data)
+      const data = await requestService.tpost(url, body)
+      message.success('修改成功')
+      goto('admin/machine-list')
     } catch (e) {
       console.error(e)
     }
@@ -53,7 +57,8 @@ export function updateJudgeServer(id) {
 export function clearJudgeSever() {
   return async (dispatch) => {
     try {
-      await dispatch(actionCreater(REMOVE_JUDGE_SERVER))
+      await dispatch(actionCreater(GET_JUDGE_SERVER_INFO, {}))
+
     } catch (e) {
       console.err(e.message)
     }
@@ -61,7 +66,9 @@ export function clearJudgeSever() {
 }
 
 /**
- *
+ * 删除单个服务器
+ * @param id
+ * @return {function(*)}
  */
 export function delJudgeServer(id) {
   return async (dispatch) => {
@@ -76,12 +83,17 @@ export function delJudgeServer(id) {
 
 }
 
+/**
+ * 获取单个判题服务器信息
+ * @param id
+ * @return {function(*)}
+ */
 export function getServerInfo(id) {
   return async (dispatch) => {
-    let url = `${API.judgeServer}/${id}/info`
+    let url = `${API.judgeServer}/${id}`
     const data = await requestService.tget(url)
     console.log(data)
-    await dispatch(actionCreater(GET_JUDGE_SERVER_INFO, data))
+    await dispatch(actionCreater(GET_JUDGE_SERVER_INFO, data[0]))
   }
 }
 

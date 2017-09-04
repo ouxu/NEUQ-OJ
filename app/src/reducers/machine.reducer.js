@@ -3,7 +3,7 @@ import {ADD_JUDGE_SERVER, GET_ALL_JUDGE_LIST, GET_JUDGE_LIST_AND_INFO, GET_JUDGE
 const initMachine = {
   machineAdd: {},
   machineTable: [],
-  machineInfo: []
+  machineInfo: {}
 }
 export default function machines(state = initMachine, action) {
   switch (action.type) {

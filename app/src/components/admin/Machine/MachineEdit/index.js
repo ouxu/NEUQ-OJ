@@ -27,7 +27,7 @@ class MachineEdit extends Component {
   componentDidMount() {
     const {id} = this.props.params
     console.log(this.props.params)
-    id ? this.props.getServerInfo(id):this.props.clearJudgeSever()
+    id ? this.props.getServerInfo(id) : this.props.clearJudgeSever()
   }
 
   handleSubmit(e) {
@@ -38,7 +38,9 @@ class MachineEdit extends Component {
         confirm({
           title: '确认生成',
           content: '请认真审核信息!',
-          onOk: async () => await this.props.addJudgeServer(value)
+          onOk: async () => {
+            this.props.params.id ? await this.props.updateJudgeServer(this.props.params.id, value) : await this.props.addJudgeServer(value)
+          }
         })
 
       }
@@ -46,24 +48,23 @@ class MachineEdit extends Component {
   }
 
   render() {
-    const {getFieldDecorator} = this.props.form
-    const {id} = this.props.params
+    const {machines: {machineInfo}, form: {getFieldDecorator}, params: {id}} = this.props
     const formItemLayout = {}
     return (
       <div>
         <QueueAnim className='machine-edit' delay={100} type='bottom'>
-          <div className='h-1' key='machine-edit-header'>{id ? '编辑机器' : '添加机器'}</div>
+          <div className='h-1' key='machine-edit-header'>{id ? `编辑机器###${id}` : '添加机器'}</div>
           <div className='machine-edit-content' key='machine-edit-content'>
-            <Form onSubmit={this.handleSubmit} key={'machine-edit-content-'}>
+            <Form onSubmit={this.handleSubmit} key={`machine-edit-content-${id}`}>
               <FormItem
                 {...formItemLayout}
                 label='机器名称'
               >
                 {getFieldDecorator('name', {
                   rules: [{required: true, message: '请输入机器名称'}],
-                  initialValue: ''
+                  initialValue: machineInfo.name ? machineInfo.name : ''
                 })(
-                  <Input placeholder='请输入机器名称' type='textarea' autosize={{minRows: 1, maxRows: 6}}/>
+                  <Input placeholder='请输入机器名称' type='textarea' disabled={machineInfo.name} autosize={{minRows: 1, maxRows: 6}}/>
                 )}
               </FormItem>
               <FormItem
@@ -71,7 +72,7 @@ class MachineEdit extends Component {
                 label='rpc_token'
               >
                 {getFieldDecorator('rpc_token', {
-                  rules: [{required: true, message: '请输入机器rpc——token'}],
+                  rules: [{required: true, message: '请输入机器rpc_token'}],
                   initialValue: ''
                 })(
                   <Input placeholder='请输入rpc_token' type='textarea' autosize={{minRows: 1, maxRows: 6}}/>
@@ -83,7 +84,7 @@ class MachineEdit extends Component {
               >
                 {getFieldDecorator('host', {
                   rules: [{required: true, message: '请输入主机地址'}],
-                  initialValue: ''
+                  initialValue: machineInfo.host ? machineInfo.host : ''
                 })(
                   <Input placeholder='请输入主机地址' type='textarea'
                          autosize={{minRows: 1, maxRows: 6}}/>
@@ -96,7 +97,7 @@ class MachineEdit extends Component {
               >
                 {getFieldDecorator('port', {
                   rules: [{required: true, message: '请输入主机端口'}],
-                  initialValue: ''
+                  initialValue: machineInfo.port ? machineInfo.port : ''
                 })(
                   <Input placeholder='请输入主机端口' type='textarea'
                          autosize={{minRows: 1, maxRows: 6}}/>
@@ -108,7 +109,7 @@ class MachineEdit extends Component {
               >
                 {getFieldDecorator('status', {
                   rules: [{required: true, message: '请设置开启状态'}],
-                  initialValue: ''
+                  initialValue: machineInfo.status ? machineInfo.status : 0 // 这里由于initialValue
                 })(
                   <RadioGroup>
                     <Radio value='0'>关闭</Radio>
@@ -117,7 +118,7 @@ class MachineEdit extends Component {
                 )}
               </FormItem>
               <FormItem>
-                <Button type='primary' size='large' onClick={this.handleSubmit}>添加机器</Button>
+                <Button type='primary' size='large' onClick={this.handleSubmit}>{id ? `编辑机器` : '添加机器'}</Button>
               </FormItem>
             </Form>
           </div>
