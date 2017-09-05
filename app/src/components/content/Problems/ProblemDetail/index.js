@@ -204,13 +204,11 @@ class ProblemDetail extends React.Component {
             <ButtonGroup className='problem-detail-buttonGroup'>
               <Button
                 size='small'
-                type={this.state.submit ? 'primary' : 'dashed'}
+                type={this.state.submit ? 'primary' : 'default'}
                 onClick={this.handleMenuClick}
               >
-                {this.state.submit ? '描述' : '提交'}
+                {this.state.submit ? '题目描述' : '提交代码'}
               </Button>
-              <Button size='small' type='dashed'>讨论版</Button>
-              <Button size='small' type='dashed'>状态</Button>
             </ButtonGroup>
           </div>
           <div key='problem-detail-3'>
@@ -228,11 +226,9 @@ class ProblemDetail extends React.Component {
 
           <ButtonGroup className='problem-detail-buttonGroup'>
             <Button
-              type={this.state.submit ? 'primary' : 'dashed'}
+              type={this.state.submit ? 'primary' : 'default'}
               onClick={this.handleMenuClick}
-            >{this.state.submit ? '描述' : '提交'}</Button>
-            <Button type='dashed'>讨论版</Button>
-            <Button type='dashed'>状态</Button>
+            >{this.state.submit ? '题目描述' : '提交代码'}</Button>
           </ButtonGroup>
         </QueueAnim>
       </Card>

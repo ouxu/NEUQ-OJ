@@ -22,13 +22,13 @@ export function getStatusTable (page = 1, size = 20, searchobj) {
         size
       }
       const data = await requestService.tget(API.status, params)
+      // message.success('本人只能获取个人提交记录')
 
       window.sessionStorage.setItem('neuq_oj.statuspagecurr', page)
       window.sessionStorage.setItem('neuq_oj.statuspagesize', size)
 
       await dispatch(actionCreater(SET_STATUS_TABLE, data))
       jumpTo('navigation')
-      message.success('本人只能获取个人提交记录')
     } catch (e) {
       message.warn('请提前登陆！')
     }

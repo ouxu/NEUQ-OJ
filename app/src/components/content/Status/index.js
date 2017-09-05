@@ -96,7 +96,7 @@ class StatusTable extends React.Component {
     return (
       <QueueAnim className='status-table-warp' delay={100}>
         <div className='status-table-header' key='status-2'>
-          <span className='status-table-header-title'>最近提交</span>
+          <span className='status-table-header-title'>个人最近提交</span>
 
           <div className='status-table-header-other'>
             <Input
@@ -131,8 +131,6 @@ class StatusTable extends React.Component {
           rowKey={record => `status-${record.id}`}
           dataSource={data}
           scroll={{x: 960}}
-          // bordered
-          // 分页
           pagination={pagination}
           key='status-1'
         />
