@@ -20,7 +20,7 @@ class StatusTable extends React.Component {
     }
     this.onInputUser = this.onInputUser.bind(this)
     this.onInputId = this.onInputId.bind(this)
-    this.onSeacrch = this.onSeacrch.bind(this)
+    this.onSearch = this.onSearch.bind(this)
     this.SelectResult = this.SelectResult.bind(this)
     this.SelectLanguage = this.SelectLanguage.bind(this)
     this.Cancel = this.Cancel.bind(this)
@@ -60,7 +60,7 @@ class StatusTable extends React.Component {
     }
   }
 
-  onSeacrch () {
+  onSearch () {
     const searchobj = this.state
     const page = 1
     const size = window.sessionStorage.getItem('neuq_oj.statuspagesize')
@@ -96,27 +96,27 @@ class StatusTable extends React.Component {
     return (
       <QueueAnim className='status-table-warp' delay={100}>
         <div className='status-table-header' key='status-2'>
-          <span className='status-table-header-title'>最近提交</span>
+          <span className='status-table-header-title'>个人最近提交</span>
 
           <div className='status-table-header-other'>
             <Input
               placeholder='题号'
               value={this.state.problem_id}
               onChange={this.onInputId}
-              onPressEnter={this.onSeacrch}
+              onPressEnter={this.onSearch}
               style={{width: '120px'}}
             />
             <Input
               placeholder='用户ID'
               value={this.state.user_id}
               onChange={this.onInputUser}
-              onPressEnter={this.onSeacrch}
+              onPressEnter={this.onSearch}
               style={{width: '120px'}}
             />
 
             <ResultSelect handleChange={this.SelectResult} />
             <LanguageSelect handleChange={this.SelectLanguage} />
-            <Button type='primary' onClick={this.onSeacrch}>搜索</Button>
+            <Button type='primary' onClick={this.onSearch}>搜索</Button>
 
             {/* <ButtonGroup> */}
             {/* <Button type="primary" onClick={this.onSeacrch}>搜索</Button> */}
@@ -131,8 +131,6 @@ class StatusTable extends React.Component {
           rowKey={record => `status-${record.id}`}
           dataSource={data}
           scroll={{x: 960}}
-          // bordered
-          // 分页
           pagination={pagination}
           key='status-1'
         />

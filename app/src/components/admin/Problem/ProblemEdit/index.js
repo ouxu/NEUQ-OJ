@@ -3,17 +3,20 @@
  */
 import React, { Component } from 'react'
 
-import { Button, Col, Form, Input, InputNumber, Modal, Radio, Row, Spin, Switch } from 'antd'
+import { Button, Col, Form, Input, InputNumber, Modal, Radio, Row, Spin, Switch, Icon } from 'antd'
 
 import { Link } from 'react-router'
 import QueueAnim from 'rc-queue-anim'
 import { goto } from 'utils'
 import './index.less'
+
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
 const confirm = Modal.confirm
 
 // TODO 描述输出修改无效
+
+let uuid = 0
 
 @Form.create()
 class ProblemEdit extends Component {
@@ -36,8 +39,41 @@ class ProblemEdit extends Component {
         confirm({
           title: '确认提交？',
           content: '请认真审核信息，确认无错误时再提交!',
-          onOk: async() => {
-            await this.props.editProblem(value, this.props.params.id)
+          onOk: async () => {
+            let input = []
+            let output = []
+            Object.keys(value).forEach(key => {
+              if (key.match(/^test_output?/)) {
+                output.push(value[key])
+              }
+              if (key.match(/^test_input?/)) {
+                input.push(value[key])
+              }
+            })
+            let test_data = []
+            for (let i = 0; i < input.length; i++) {
+              let item = {
+                input: input[i],
+                output: output[i]
+              }
+              test_data.push(item)
+            }
+            const {title, description, sample_input, sample_output, difficulty, source, time_limit, memory_limit, spj, is_public, hint} = value
+            const body = {
+              title: title,
+              description: description,
+              sample_input: sample_input,
+              sample_output: sample_output,
+              difficulty: difficulty,
+              source: source,
+              time_limit: time_limit,
+              memory_limit: memory_limit,
+              spj: spj,
+              is_public: is_public,
+              hint: hint,
+              test_data: test_data
+            }
+            await this.props.createProblems(body)
           }
         })
       }
@@ -55,23 +91,102 @@ class ProblemEdit extends Component {
           placeholder='请输入您的登录密码'
         />
       ),
-      onOk: async() => {
+      onOk: async () => {
         await this.props.deleteProblem(this.props.params.id, {password: this.state.password})
         goto('/admin/problem-list')
       }
     })
   }
 
+  add = () => {
+    uuid++
+    const {form} = this.props
+    // can use data-binding to get
+    const keys = form.getFieldValue('keys')
+    const nextKeys = keys.concat(uuid)
+    // can use data-binding to set
+    // important! notify form to detect changes
+    form.setFieldsValue({
+      keys: nextKeys,
+    })
+  }
+
+  remove = (k) => {
+    const {form} = this.props
+    // can use data-binding to get
+    const keys = form.getFieldValue('keys')
+    // We need at least one passenger
+    if (keys.length === 0) {
+      return
+    }
+
+    // can use data-binding to set
+    form.setFieldsValue({
+      keys: keys.filter(key => key !== k),
+    })
+  }
+
   render () {
     const {problems: {problemDetail: data}, params: {id}, loading} = this.props
-
     const {getFieldDecorator} = this.props.form
     const formItemLayout = {}
+
+    const {getFieldValue} = this.props.form
+    getFieldDecorator('keys', {initialValue: []})
+    const keys = getFieldValue('keys')
+    const formItems = keys.map((k, index) => {
+      console.log(k)
+      return (
+        <div key={k}>
+          <hr style={{border: '1px solid #E0E0E0'}} />
+          <br />
+          <FormItem
+            {...formItemLayout}
+            label={'测试输入 ' + (index + 2)}
+            key={'test-input' + (k + 2)}
+          >
+            {getFieldDecorator('test_input#' + (k + 2), {
+              rules: [{required: false, message: '请输入测试输入'}],
+              initialValue: data['title'] ? data.test_input : ''
+            })(
+              <Input placeholder='用于判题的样例输入' type='textarea'
+                     autosize={{minRows: 2}} />
+            )}
+
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label={'测试输出 ' + (index + 2)}
+            key={'test-output' + (k + 2)}
+          >
+            {getFieldDecorator('test_output#' + (k + 2), {
+              rules: [{required: true, message: '请输入测试输出'}],
+              initialValue: data['title'] ? data.test_output : ''
+            })(
+              <Input placeholder='用于判题的样例输出' type='textarea'
+                     autosize={{minRows: 2}} />
+            )}
+
+          </FormItem>
+          {keys.length > 0 ? (
+            <Icon
+              className="dynamic-delete-button"
+              type="minus-circle-o"
+              disabled={keys.length === 1}
+              onClick={() => this.remove(k)}
+            />
+          ) : null}
+        </div>
+      )
+    })
+
     return (
       <Spin tip='loading' spinning={loading} key={id}>
         <QueueAnim className='problem-edit'>
           <div className='h-1' key='problem-edit-header'>
             {id ? <span><Link to='admin/contest-list'>修改题目</Link> #{id}</span> : '添加题目'}
+            {id && <Link to={`admin/problem-run-data?id=` + id} style={{marginLeft: 10}}><Icon type='edit'
+                                                                                               style={{fontSize: '18px'}} /></Link>}
           </div>
           <div className='problem-edit-content' key='problem-edit-content'>
             <Form
@@ -111,7 +226,7 @@ class ProblemEdit extends Component {
                 {...formItemLayout}
                 label='描述输入'
               >
-                {getFieldDecorator('input', {
+                {getFieldDecorator('sample_input', {
                   rules: [{required: true, message: '请描述输入'}],
                   initialValue: data['title'] ? data.sample_input : ''
                 })(
@@ -126,7 +241,7 @@ class ProblemEdit extends Component {
                 {...formItemLayout}
                 label='描述输出'
               >
-                {getFieldDecorator('output', {
+                {getFieldDecorator('sample_output', {
                   rules: [{required: true, message: '请描述输出'}],
                   initialValue: data['title'] ? data.sample_output : ''
                 })(
@@ -159,7 +274,7 @@ class ProblemEdit extends Component {
                       rules: [{required: true, message: '请选择是否公开题目'}],
                       initialValue: true
                     })(
-                      <Switch defaultChecked={ true} />
+                      <Switch defaultChecked={true} />
                     )}
                   </FormItem>
                 </Col>
@@ -170,7 +285,7 @@ class ProblemEdit extends Component {
                       rules: [{required: true, message: '请选择是否特判'}],
                       initialValue: false
                     })(
-                      <Switch defaultChecked={ false} />
+                      <Switch defaultChecked={false} />
                     )}
                   </FormItem>
                 </Col>
@@ -231,24 +346,26 @@ class ProblemEdit extends Component {
                 )}
 
               </FormItem>
-              <FormItem
+              {!id && <FormItem
                 {...formItemLayout}
-                label='测试输入'
+                label='测试输入 1'
+                key={'test-input1'}
               >
-                {getFieldDecorator('test_input', {
+                {getFieldDecorator('test_input#1', {
                   rules: [{required: false, message: '请输入测试输入'}],
                   initialValue: data['title'] ? data.test_input : ''
                 })(
                   <Input placeholder='用于判题的样例输入' type='textarea'
                          autosize={{minRows: 2}} />
                 )}
-
               </FormItem>
-              <FormItem
+              }
+              {!id && <FormItem
                 {...formItemLayout}
-                label='测试输出'
+                label='测试输出 1'
+                key={'test-output1'}
               >
-                {getFieldDecorator('test_output', {
+                {getFieldDecorator('test_output#1', {
                   rules: [{required: true, message: '请输入测试输出'}],
                   initialValue: data['title'] ? data.test_output : ''
                 })(
@@ -256,7 +373,14 @@ class ProblemEdit extends Component {
                          autosize={{minRows: 2}} />
                 )}
 
-              </FormItem>
+              </FormItem>}
+              {!id && formItems}
+              <br />
+              {!id && <FormItem {...formItemLayout}>
+                <Button type="dashed" onClick={this.add} style={{width: '60%'}}>
+                  <Icon type="plus" /> 增加测试数据
+                </Button>
+              </FormItem>}
               <FormItem
                 {...formItemLayout}
                 label='来源'
@@ -285,12 +409,14 @@ class ProblemEdit extends Component {
               </FormItem>
 
               <FormItem>
-                <Button className='contest-edit-submit' size='large' type='primary' onClick={this.handleSubmit}>
+                <Button className='contest-edit-submit' size='large' type='primary'
+                        onClick={this.handleSubmit}>
                   {id ? '修改题目' : '添加题目'}
                 </Button>
                 {
                   id &&
-                  <Button type='danger' size='large' style={{marginLeft: 10}} onClick={this.onConfirmDel}>删除题目</Button>
+                  <Button type='danger' size='large' style={{marginLeft: 10}}
+                          onClick={this.onConfirmDel}>删除题目</Button>
                 }
               </FormItem>
             </Form>

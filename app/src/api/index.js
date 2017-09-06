@@ -30,6 +30,14 @@ export default {
   problemsSearch: apiMaker('problems/search'),
   problemsMine: apiMaker('problems/mine'),
   problemsImport: apiMaker('problems/import'),
+  problemCreate: apiMaker('problem/create'),
+  problemRunData: apiMaker('problem/id/rundata'),
+  downloadRunData: apiMaker('rundata'),
+  deleteRunData: apiMaker('rundata/id/delete'),
+  uploadRunData: apiMaker('problem/id/rundata/add'),
+
+  // judge server
+  judgeServer: apiMaker('judge/server'),
 
   // Tags
   tag: apiMaker('tag/'),
@@ -62,5 +70,8 @@ export default {
   // News
   news: apiMaker('news'),
   createNews: apiMaker('news/create'),
-  newsIndex: apiMaker('news/index')
+  newsIndex: apiMaker('news/index'),
+
+  //team generator
+  teamGenerator: apiMaker('admin/users/generate/prefix')
 }

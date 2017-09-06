@@ -9,6 +9,8 @@ import ContestEditContainer from 'containers/admin/ContestEdit'
 import ProblemManageContainer from 'containers/admin/ProblemList'
 import ProblemEditContainer from 'containers/admin/ProblemEdit'
 
+import MachineManageContainer from 'containers/admin/MachineList'
+import MachineEditContainer from 'containers/admin/MachineEdit'
 const Admin = {
   path: 'admin',
   childrenRoutes: [
@@ -24,6 +26,12 @@ const Admin = {
       path: 'Problem-edit',
       component: ProblemEditContainer,
       childrenRoutes: [{path: ':id', component: ProblemEditContainer}]
+    },
+    {path: 'Machine-list', component: MachineManageContainer},
+    {
+      path: 'Machine-edit',
+      component: MachineEditContainer,
+      childrenRoutes: [{path: ':id', component: MachineEditContainer}]
     }
   ],
 

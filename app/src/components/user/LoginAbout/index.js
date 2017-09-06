@@ -112,10 +112,10 @@ class LoginAbout extends React.Component {
 
               <Button disabled={false} type='primary' htmlType='submit' id='login-btn'>登录</Button>
               <Link to={'/register'}>
-                <span onClick={this.handleCancel}>注册账号</span>
+                <span>注册账号</span>
               </Link>
               <Link to={'/forget'}>
-                <span className='login-form-forgot' onClick={this.handleCancel}>忘记密码</span>
+                <span className='login-form-forgot'>忘记密码</span>
               </Link>
             </Form>
           </div>

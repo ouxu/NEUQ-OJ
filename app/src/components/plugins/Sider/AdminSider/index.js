@@ -26,11 +26,11 @@ const AdminSider = props => (
         <Menu.Item key='news'>通知管理</Menu.Item>
       </SubMenu>
     }
-    <SubMenu key='group' title={<span>用户组管理</span>}>
-      <Menu.Item key='groups-list'>用户组列表 </Menu.Item>
-      <Menu.Item key='group-create'>创建用户组 </Menu.Item>
-      <Menu.Item key='group-manage' disabled>用户组管理</Menu.Item>
-    </SubMenu>
+    {/*<SubMenu key='group' title={<span>用户组管理</span>}>*/}
+      {/*<Menu.Item key='groups-list'>用户组列表 </Menu.Item>*/}
+      {/*<Menu.Item key='group-create'>创建用户组 </Menu.Item>*/}
+      {/*<Menu.Item key='group-manage' disabled>用户组管理</Menu.Item>*/}
+    {/*</SubMenu>*/}
     <SubMenu key='contest' title={<span>竞赛管理</span>}>
       <Menu.Item key='contest-list'>竞赛列表</Menu.Item>
       <Menu.Item key='contest-edit'>添加竞赛</Menu.Item>
@@ -40,6 +40,11 @@ const AdminSider = props => (
       <Menu.Item key='problem-edit'>创建题目</Menu.Item>
       <Menu.Item key='problem-tag'>标签管理</Menu.Item>
       <Menu.Item key='problem-upload'>题目导入</Menu.Item>
+    </SubMenu>
+    <SubMenu key='machine' title={<span>判题管理</span>}>
+      <Menu.Item key='machine-list'>机器列表</Menu.Item>
+      <Menu.Item key='machine-edit'>机器管理</Menu.Item>
+      {/*<Menu.Item key='machine-delete'>机器添加</Menu.Item>*/}
     </SubMenu>
     {
       window.localStorage.getItem('neuq_oj.role') === 'admin' &&

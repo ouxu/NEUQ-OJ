@@ -7,6 +7,8 @@ import timeStamp from './utils.reducer'
 import user from './user.reducer'
 import home from './home.reducer'
 import problems from './problem.reducer'
+import generator from './generator.reducer'
+import machines from './machine.reducer'
 import status from './status.reducer'
 import contests from './contests.reducer'
 import ranklist from './ranklist.reducer'
@@ -16,6 +18,8 @@ import groups from './groups.reducer'
 const rootReducer = combineReducers({
   admin,
   contests,
+  machines,
+  generator,
   groups,
   home,
   loading,

@@ -2,28 +2,33 @@
  * Created by out_xu on 17/1/3.
  */
 import React from 'react'
-import { Link } from 'react-router'
-import { Button, Card, Icon, message } from 'antd'
+import {Link} from 'react-router'
+import {Button, Card, Icon, message, Badge} from 'antd'
 import './index.less'
 import QueueAnim from 'rc-queue-anim'
 import ProblemDes from './problemdes'
 import ProblemSub from './problemsub'
 import * as requestService from 'utils/request'
 import API from 'api'
+
 const ButtonGroup = Button.Group
 
 class ProblemDetail extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       submit: this.props.submit || false,
       unsubmit: false,
       source_code: '',
+      percent: 0,
       language: 1,
       privated: false,
-      resultdata: [],
+      resultData: [],
       result: null,
-      errorinfo: ''
+      errorinfo: '',
+      resultDataP: [],
+      resultDataUp: [],
+      resultCode: ''
     }
     this.handleMenuClick = this.handleMenuClick.bind(this)
     this.updateCode = this.updateCode.bind(this)
@@ -34,21 +39,21 @@ class ProblemDetail extends React.Component {
     this.submit = this.submit.bind(this)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.getProblemInfo(this.props.params)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.timer && clearInterval(this.timer)
   }
 
   createMarkup = html => ({__html: html})
 
-  handleMenuClick () {
+  handleMenuClick() {
     this.setState({submit: !this.state.submit})
   }
 
-  updateCode (newCode) {
+  updateCode(newCode) {
     this.setState({
       source_code: newCode,
       result: null,
@@ -56,7 +61,7 @@ class ProblemDetail extends React.Component {
     })
   }
 
-  selectLanguage (value) {
+  selectLanguage(value) {
     this.setState({
       language: parseInt(value),
       result: null,
@@ -64,7 +69,7 @@ class ProblemDetail extends React.Component {
     })
   }
 
-  checkPrivate (e) {
+  checkPrivate(e) {
     this.setState({
       privated: e.target.checked,
       result: null,
@@ -72,7 +77,7 @@ class ProblemDetail extends React.Component {
     })
   }
 
-  combinObj () {
+  combinObj() {
     const {source_code, language} = this.state
     let obj = {source_code, language}
     obj = Object.assign({
@@ -81,7 +86,7 @@ class ProblemDetail extends React.Component {
     return obj
   }
 
-  async submit () {
+  async submit() {
     try {
       await this.props.tokenVerify()
       const obj = this.combinObj()
@@ -95,43 +100,62 @@ class ProblemDetail extends React.Component {
         await this.submitProblem(obj)
       }
     } catch (e) {
-      message.warn(e.message)
+      message.error(e.message)
     }
   }
 
-  async submitProblem (body) {
+  async submitProblem(body) {
     const {params} = this.props
     const url = params.pnum
       ? `${API.host}contest/${params.cid}/problem/${params.pnum}/submit`
       : `${API.host}problem/${params.id}/submit`
     const data = await requestService.tpost(url, body)
     message.success('提交成功')
-    const solutionId = data.solution_id
-    this.timer = setInterval(() => {
-      this.getResultData(solutionId)
-      const result = this.state.result
-      if (result > 3) {
-        if (result > 9) {
-          this.getErrorInfo(solutionId, result)
-        }
-        clearInterval(this.timer)
+    const {result_data, result_code} = data
+    if (result_code === 3 || result_code === 4) {
+      const {Passed, UnPassed = []} = result_data
+      let percent = 0
+      // 如果全部通过或者全部没通过的时候，后端都会返回一个null，导致在后边map的时候出现的问题，所以在这里需要计算一下通过率
+      if (Passed == null) {
+        percent = 0
+      } else if (UnPassed == null) {
+        percent = 100
+      } else {
+        percent = Math.floor((Passed.length) / (Passed.length + UnPassed.length) * 10000)/100
       }
-    }, 1000)
-  }
-
-  async getResultData (solutionId) {
-    try {
-      const data = await requestService.get(API.solution + solutionId)
-      await this.setState({
-        resultdata: [data],
-        result: data.result
+      // const {CpuTime = '', Result = '', Memory = '', OutputMD5 = ''} = Passed[0]
+      const aPassed = [].concat(Passed).map((a, i) => ({
+        ...a,
+        key: i + 1
+      }))
+      const aUnPassed = [].concat(UnPassed).map((aUn, i) => ({
+        ...aUn,
+        key: i + 1
+      }))
+      console.log(aPassed)
+      console.log(aUnPassed)
+      this.setState({
+        percent: percent,
+        resultDataP: aPassed,
+        resultDataUp: aUnPassed
       })
-    } catch (e) {
-      console.error(e)
+    } else if (result_code === 2 || result_code === -1) {
+      this.setState({
+        resultData: [
+          {
+            key: 2,
+            result_code,
+            result_data
+          }
+        ]
+      })
     }
+    this.setState({
+      resultCode: result_code
+    })
   }
 
-  async getErrorInfo (solutionId, result) {
+  async getErrorInfo(solutionId, result) {
     try {
       const errorMode = (result === 10 ? '/runtime-info/' : '/compile-info/')
 
@@ -144,49 +168,47 @@ class ProblemDetail extends React.Component {
     }
   }
 
-  render () {
+  render() {
     const {problemDetail: data = {}} = this.props
-
     const {params} = this.props
     return (
       <Card className='problem-detail-wrap' bodyStyle={{padding: 0}}>
         <QueueAnim type='left' delay={100}>
           <div className='problem-detail-breadcrumb' key='problem-detail-1'>
             <Link to={params.pnum ? `/contests/${params.cid}` : '/problems'}>
-              <Icon type='left' />
+              <Icon type='left'/>
               <span>{params.pnum ? '竞赛列表' : '问题列表'}</span>
             </Link>
             <div className='problem-detail-breadcrumb-detail'>
               <span className='problem-detail-breadcrumb-detail-tags'>
-                <Icon type='edit' /><span>{data.creator_name}</span>
+                <Icon type='edit'/><span>{data.creator_name}</span>
               </span>
               <span className='problem-detail-breadcrumb-detail-tags'>
-                <Icon type='exception' /><span>{data.submit}</span>
+                <Icon type='exception'/><span>{data.submit}</span>
               </span>
               <span className='problem-detail-breadcrumb-detail-tags'>
-                <Icon type='check' /><span>{data.accepted}</span>
+                <Icon type='check'/><span>{data.accepted}</span>
               </span>
               <span className='problem-detail-breadcrumb-detail-tags'>
-                <Icon type='clock-circle' /><span>{data.time_limit} Sec</span>
+                <Icon type='clock-circle'/><span>{data.time_limit} Sec</span>
               </span>
-              <span className='problem-detail-breadcrumb-detail-tags'><Icon type='save' />
+              <span className='problem-detail-breadcrumb-detail-tags'><Icon
+                type='save'/>
                 <span>{data.memory_limit} MB</span>
               </span>
             </div>
           </div>
           <div className='problem-detail-header' key='problem-detail-2'>
-            <h2 className='problem-detail-header-title'>{data.id} : {data.title}</h2>
-            <ButtonGroup className='problem-detail-buttongroup'>
+            <h2 className='problem-detail-header-title'>{data.id}
+              : {data.title}</h2>
+            <ButtonGroup className='problem-detail-buttonGroup'>
               <Button
                 size='small'
-                type={this.state.submit ? 'primary' : 'dashed'}
+                type={this.state.submit ? 'primary' : 'default'}
                 onClick={this.handleMenuClick}
               >
-                {this.state.submit ? '描述' : '提交'}
+                {this.state.submit ? '题目描述' : '提交代码'}
               </Button>
-
-              <Button size='small' type='dashed'>讨论版</Button>
-              <Button size='small' type='dashed'>状态</Button>
             </ButtonGroup>
           </div>
           <div key='problem-detail-3'>
@@ -199,16 +221,14 @@ class ProblemDetail extends React.Component {
                 params={this.state}
                 data={data}
               />
-              : <ProblemDes data={data} />}
+              : <ProblemDes data={data}/>}
           </div>
 
-          <ButtonGroup className='problem-detail-buttongroup'>
+          <ButtonGroup className='problem-detail-buttonGroup'>
             <Button
-              type={this.state.submit ? 'primary' : 'dashed'}
+              type={this.state.submit ? 'primary' : 'default'}
               onClick={this.handleMenuClick}
-            >{this.state.submit ? '描述' : '提交'}</Button>
-            <Button type='dashed'>讨论版</Button>
-            <Button type='dashed'>状态</Button>
+            >{this.state.submit ? '题目描述' : '提交代码'}</Button>
           </ButtonGroup>
         </QueueAnim>
       </Card>
