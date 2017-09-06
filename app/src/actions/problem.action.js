@@ -1,7 +1,15 @@
 /**
  * Created by out_xu on 16/12/30.
  */
-import { actionCreater, LOADED, LOADING, REMOVE_PROBLEM_DETAIL, SET_PROBLEM_DETAIL, SET_PROBLEM_TABLE } from './type'
+import {
+  actionCreater,
+  LOADED,
+  LOADING,
+  REMOVE_PROBLEM_DETAIL,
+  SET_PROBLEM_DETAIL,
+  SET_PROBLEM_TABLE,
+  SET_PROBLEM_RUN_DATA_TABLE
+} from './type'
 import API from '../api'
 import { goto, jumpTo } from 'utils'
 import * as requestService from 'utils/request'
@@ -133,6 +141,7 @@ export function searchProblems (value, page = 1, size = 20) {
  * @param body 密码等
  * @returns {function()}
  */
+
 export function deleteProblem (id, body) {
   return async () => {
     try {
@@ -179,7 +188,84 @@ export function createProblems (body) {
       await requestService.tpost(API.problemCreate, body)
       message.success('发布成功')
     } catch (e) {
-      console.log(e)
+      console.error(e)
+    }
+  }
+}
+
+/**
+ * 获取指定题目测试数据列表
+ * @param id
+ * @returns {function()}
+ */
+
+export function getProblemRunDataTable (id) {
+  return async (dispatch) => {
+    try {
+      await dispatch(actionCreater(LOADING))
+      let data = await requestService.tget(API.problemRunData.replace(/id/, id))
+      await dispatch(actionCreater(SET_PROBLEM_RUN_DATA_TABLE, data.files))
+    } catch (e) {
+      console.error(e)
+    }
+    await dispatch(actionCreater(LOADED))
+  }
+}
+
+/**
+ * 删除单个测试数据
+ * @param body
+ * @returns {function()}
+ */
+export function deleteProblemRunData (id, body) {
+  return async (dispatch) => {
+    try {
+      await requestService.tpost(API.deleteRunData.replace(/id/, id), body)
+      message.success('删除')
+      let data = await requestService.tget(API.problemRunData.replace(/id/, id))
+      await dispatch(actionCreater(SET_PROBLEM_RUN_DATA_TABLE, data.files))
+    } catch (e) {
+      console.error(e)
+    }
+  }
+}
+
+const downFile = (blob, fileName) => {
+  if (window.navigator.msSaveOrOpenBlob) {
+    window.navigator.msSaveBlob(blob, fileName)
+  } else {
+    let link = document.createElement('a')
+    link.href = window.URL.createObjectURL(blob)
+    link.download = fileName
+    link.target = '_blank'
+    link.click()
+    window.URL.revokeObjectURL(link.href)
+  }
+}
+
+/**
+ * 下载单个测试数据
+ * @param body
+ * @returns {function()}
+ */
+export function downloadRunData (body, fileName) {
+  return async () => {
+    try {
+      // await requestService.tpost(API.downloadRunData, body)
+      const res = await fetch(API.downloadRunData, {
+        method: 'post',
+        headers: {
+          token: window.localStorage.getItem('neuq_oj.token'),
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      })
+      const blob = await res.blob()
+      const filesname = fileName.split('/')
+      downFile(blob, filesname[5])
+      message.success('下载')
+    } catch (e) {
+      console.error(e)
     }
   }
 }

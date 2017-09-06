@@ -31,6 +31,7 @@ import GroupManageContainer from 'containers/admin/GroupManage'
 
 import ProblemManageContainer from 'containers/admin/ProblemList'
 import ProblemEdit from './lazyload/admin/ProblemEdit'
+import ProblemRunDataContainer from 'containers/admin/ProblemRunData'
 import ProblemUploadContainer from 'containers/admin/ProblemUpload'
 import ProblemTag from 'containers/admin/ProblemTag'
 import EditInfoContainer from 'containers/EditInfo'
@@ -111,9 +112,12 @@ const RouterApp = store => (
       <Route path='problem-edit' getComponent={ProblemEdit}>
         <Route path=':id' getComponent={ProblemEdit} />
       </Route>
+      <Route path='problem-run-data' component={ProblemRunDataContainer}>
+        <Route path=':id' component={ProblemRunDataContainer} />
+      </Route>
       <Route path='problem-upload' component={ProblemUploadContainer} />
       <Route path='machine-edit' getComponent={MachineEdit}>
-        <Route path=':id' getComponent={MachineEdit}/>
+        <Route path=':id' getComponent={MachineEdit} />
       </Route>
       <Route path='problem-tag' component={ProblemTag} />
       <Route path='team-generator' component={TeamGeneratorContainer} />

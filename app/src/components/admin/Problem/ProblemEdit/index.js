@@ -185,6 +185,8 @@ class ProblemEdit extends Component {
         <QueueAnim className='problem-edit'>
           <div className='h-1' key='problem-edit-header'>
             {id ? <span><Link to='admin/contest-list'>修改题目</Link> #{id}</span> : '添加题目'}
+            {id && <Link to={`admin/problem-run-data?id=` + id} style={{marginLeft: 10}}><Icon type='edit'
+                                                                                               style={{fontSize: '18px'}} /></Link>}
           </div>
           <div className='problem-edit-content' key='problem-edit-content'>
             <Form
@@ -344,7 +346,7 @@ class ProblemEdit extends Component {
                 )}
 
               </FormItem>
-              <FormItem
+              {!id && <FormItem
                 {...formItemLayout}
                 label='测试输入 1'
                 key={'test-input1'}
@@ -356,9 +358,9 @@ class ProblemEdit extends Component {
                   <Input placeholder='用于判题的样例输入' type='textarea'
                          autosize={{minRows: 2}} />
                 )}
-
               </FormItem>
-              <FormItem
+              }
+              {!id && <FormItem
                 {...formItemLayout}
                 label='测试输出 1'
                 key={'test-output1'}
@@ -371,14 +373,14 @@ class ProblemEdit extends Component {
                          autosize={{minRows: 2}} />
                 )}
 
-              </FormItem>
-              {formItems}
+              </FormItem>}
+              {!id && formItems}
               <br />
-              <FormItem {...formItemLayout}>
+              {!id && <FormItem {...formItemLayout}>
                 <Button type="dashed" onClick={this.add} style={{width: '60%'}}>
                   <Icon type="plus" /> 增加测试数据
                 </Button>
-              </FormItem>
+              </FormItem>}
               <FormItem
                 {...formItemLayout}
                 label='来源'

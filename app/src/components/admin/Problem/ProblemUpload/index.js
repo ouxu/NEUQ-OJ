@@ -1,17 +1,16 @@
-/**
- * Created by qoder on 16/11/5.
- */
 import React, { Component } from 'react'
 import API from 'api'
 import { Icon, message, Upload } from 'antd'
 import { checkFileType, codeHelper, getLocalStorage } from 'utils'
+
 const Dragger = Upload.Dragger
+
 class ProblemUpload extends Component {
   render () {
     const props = {
       name: 'fps',
       showUploadList: true,
-      action: API.problemsImport,
+      action: API.problemRunData.replace(/id/, 1111),
       headers: {
         'token': getLocalStorage('neuq_oj.token')
       },
@@ -43,7 +42,7 @@ class ProblemUpload extends Component {
     }
     return (
       <div>
-        <span className='h-1'>导入题目</span>
+        <span className='h-1'>导入题目(开发中)</span>
         <div style={{marginTop: 16, height: 180}}>
           <Dragger {...props}>
             <p className='ant-upload-drag-icon'>

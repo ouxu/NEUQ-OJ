@@ -31,6 +31,10 @@ export default {
   problemsMine: apiMaker('problems/mine'),
   problemsImport: apiMaker('problems/import'),
   problemCreate: apiMaker('problem/create'),
+  problemRunData: apiMaker('problem/id/rundata'),
+  downloadRunData: apiMaker('rundata'),
+  deleteRunData: apiMaker('rundata/id/delete'),
+  uploadRunData: apiMaker('problem/id/rundata/add'),
 
   // judge server
   judgeServer: apiMaker('judge/server'),
