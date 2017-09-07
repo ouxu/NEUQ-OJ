@@ -185,7 +185,7 @@ class ProblemEdit extends Component {
         <QueueAnim className='problem-edit'>
           <div className='h-1' key='problem-edit-header'>
             {id ? <span><Link to='admin/contest-list'>修改题目</Link> #{id}</span> : '添加题目'}
-            {id && <Link to={`admin/problem-run-data?id=` + id} style={{marginLeft: 10}}><Icon type='edit'
+            {id && <Link to={`/admin/problem-run-data?id=` + id} style={{marginLeft: 10}}><Icon type='edit'
                                                                                                style={{fontSize: '18px'}} /></Link>}
           </div>
           <div className='problem-edit-content' key='problem-edit-content'>
