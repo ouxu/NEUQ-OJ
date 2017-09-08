@@ -223,13 +223,13 @@ class ContestEdit extends Component {
                   <Select mode='multiple' placeholder='请选择支持语言'>
                     <Option value='0'>C</Option>
                     <Option value='1'>C++</Option>
-                    <Option value='2'>Pascal</Option>
-                    <Option value='3'>Java</Option>
-                    <Option value='4'>Ruby</Option>
-                    <Option value='5'>Shell</Option>
-                    <Option value='6'>Python</Option>
-                    <Option value='7'>php</Option>
-                    <Option value='9'>perl</Option>
+                    {/*<Option value='2'>Pascal</Option>*/}
+                    <Option value='2'>Java</Option>
+                    {/*<Option value='4'>Ruby</Option>*/}
+                    {/*<Option value='5'>Shell</Option>*/}
+                    <Option value='3'>Python</Option>
+                    {/*<Option value='7'>php</Option>*/}
+                    {/*<Option value='9'>perl</Option>*/}
                   </Select>
                 )}
               </FormItem>
