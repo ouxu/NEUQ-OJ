@@ -10,6 +10,8 @@ function filterStatus (json) {
     window.localStorage.removeItem('neuq_oj.id')
     window.localStorage.removeItem('neuq_oj.role')
     throw new Error('Did not Login')
+  } else if (json.code === 1007) {
+    throw new Error('权限不足')
   } else {
     throw new Error('ResponseUnexpected', codeHelper(json.code))
   }

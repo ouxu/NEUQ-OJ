@@ -169,7 +169,7 @@ class MachineList extends Component {
         key: 'hostname'
       }, {
         title: '操作',
-        render: (record) => <Link to={'admin/machine-edit/' + record.id}>修改</Link>,
+        render: (record) => <Link to={'/admin/machine-edit/' + record.id}>修改</Link>,
         width: 100,
         key: 'problem-manage-action',
         className: 'problem-manage-action'

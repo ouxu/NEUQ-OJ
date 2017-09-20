@@ -15,6 +15,7 @@ import ProblemsContainer from 'containers/Problems'
 // import GroupsPanelContainer from 'containers/GroupsPanel'
 import UserPageContainer from 'containers/UserPage'
 import StatusContainer from 'containers/Status'
+import StatusDetailContainer from 'containers/StatusDetail'
 import ContestsContainer from 'containers/Contest'
 import ContestInfoContainer from 'containers/ContestInfo'
 import RanklistContainer from 'containers/RankList'
@@ -79,8 +80,9 @@ const RouterApp = store => (
         <IndexRoute component={ForgetPassword} />
         <Route path=':type' component={ForgetPassword} />
       </Route>
-      <Route path='status' components={StatusContainer}>
-        <Route path=':id' component={StatusContainer} />
+      <Route path='status'>
+        <IndexRoute component={StatusContainer}/>
+        <Route path=':id' component={StatusDetailContainer} />
       </Route>
       <Route path='ranklist' component={RanklistContainer} />
       <Route path='contests'>

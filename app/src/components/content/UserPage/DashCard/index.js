@@ -12,18 +12,12 @@ export const DashCard = ({status}) => {
     system: 0
   }
   const result = [
-    <Badge status='processing' text='等待中' />,
-    <Badge status='processing' text='等待中' />,
-    <Badge status='processing' text='编译中' />,
-    <Badge status='processing' text='运行中' />,
-    <Badge status='success' text='正确' />,
-    <Badge status='error' text='格式错误' />,
-    <Badge status='error' text='答案错误' />,
-    <Badge status='warning' text='时间超限' />,
-    <Badge status='error' text='内存错误' />,
-    <Badge status='error' text='输出错误' />,
-    <Badge status='error' text='运行错误' />,
-    <Badge status='error' text='编译错误' />
+    <Badge status='error' text='系统错误' />,
+    <Badge status='success' text='' />,
+    <Badge status='error' text='' />,
+    <Badge status='error' text='编译错误' />,
+    <Badge status='warning' text='部分通过' />,
+    <Badge status='success' text='正确' />
   ]
   const {statusTable = []} = status
   const statuslist = (
@@ -37,9 +31,13 @@ export const DashCard = ({status}) => {
             className='userpage-dashcard-status-content'
             key={'userpage-dashcard-status-content' + i}
           >
-            <Col className='rank-title' span='8'>{t.id}</Col>
+            <Col className='rank-title' span='8'>
+              <Link to={'/status/' + t.id}>
+                {t.id}
+              </Link>
+              </Col>
             <Col className='userpage-dashcard-status-name' span='7'>
-              <Link to={'problems/' + t.problem_id}>
+              <Link to={'/problems/' + t.problem_id}>
                 {t.problem_id}
               </Link>
             </Col>
@@ -72,7 +70,7 @@ export const DashCard = ({status}) => {
         </Card>
       </Col>
       <Col className='userpage-dashcard-status' xs={{span: 24}} sm={{span: 8}}>
-        <Card title={'最近提交'} style={cardstyle} bodyStyle={{paddingTop: 0, paddingBottom: 3}}>
+        <Card title={'最近提交'} style={cardstyle}  extra={(<Link to='/status'>More</Link>)} bodyStyle={{paddingTop: 0, paddingBottom: 3}}>
           <div className='userpage-dashcard-status-wrap'>
             <Row
               type='flex'

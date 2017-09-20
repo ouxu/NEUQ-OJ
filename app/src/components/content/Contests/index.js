@@ -170,7 +170,7 @@ class ContestPage extends React.Component {
       title: '创建者',
       render: record => (
         <span>
-          <Link to={`userpage/${record.creator_id}`}> {record.creator_name}</Link>
+          <Link to={`/userpage/${record.creator_id}`}> {record.creator_name}</Link>
         </span>
       ),
       width: '10%',
@@ -262,6 +262,7 @@ class ContestPage extends React.Component {
             <Input
               addonBefore={<Icon type='lock' />}
               type='password'
+              style={{width: '100%'}}
               placeholder='Password'
               size='large'
               onChange={this.onPasswordChange}

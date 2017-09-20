@@ -38,20 +38,22 @@ class ContestInfoTabs extends React.Component {
   }
 
   render () {
-    let {rankData = [], count_num: countNum} = this.props
+    let {rankData = [{}], count_num: countNum} = this.props
     // 给rankData添加索引
-    rankData = rankData.map((t = {}, i) => ({
-      ...t,
-      id: i + 1
-    }))
-
+    rankData = rankData.map((t = {}, i) => {
+      return {
+        ...t,
+        id: i + 1
+      }
+    })
     const columns = [{
       title: '',
-      width: '1%',
+      width: 10,
       key: 'contest-info-none',
       className: 'contest-info-none'
     }, {
       title: '排名',
+      width: 80,
       dataIndex: 'id',
       key: 'contest-info-rank',
       className: 'contest-info-rank'
@@ -59,27 +61,31 @@ class ContestInfoTabs extends React.Component {
       title: '用户',
       render: record => (
         <span>
-          <Link to={`userpage/${record.user_id}`}> {record.user_name}</Link>
+          <Link to={`/userpage/${record.user_id}`}> {record.user_name}</Link>
         </span>
       ),
       key: 'contest-info-user',
+      width: 200,
       className: 'contest-info-user'
     }, {
       title: 'ID',
       render: record => (
         <span>
-          <Link to={`userpage/${record.user_id}`}> {record.user_id}</Link>
+          <Link to={`/userpage/${record.user_id}`}> {record.user_id}</Link>
         </span>
       ),
       key: 'contest-info-id',
+      width: 80,
       className: 'contest-info-id'
     }, {
       title: '解决',
       dataIndex: 'solved',
+      width: 55,
       key: 'contest-info-solved',
       className: 'contest-info-solved'
     }, {
       title: '用时',
+      width: 150,
       render: (record) => {
         return <span>{sec2Str(record.time)}</span>
       },
@@ -93,7 +99,8 @@ class ContestInfoTabs extends React.Component {
           return colorEncode(record, i)
         },
         key: 'contest-info-problem-' + i,
-        className: 'contest-info-problem'
+        className: 'contest-info-problem',
+        width: 100
       })
     }
     return (
@@ -101,7 +108,7 @@ class ContestInfoTabs extends React.Component {
         columns={columns}
         rowKey={record => `contest-info-${record.id}`}
         dataSource={rankData}
-        scroll={{x: countNum * 80 + 300}}
+        scroll={{x: countNum * 100 + 700, y: window.screen.availHeight - 260}}
         // size='small'
         loading={this.state.loading}
         pagination={false}

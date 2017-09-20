@@ -143,13 +143,13 @@ class ProblemSub extends Component {
             <div style={{marginTop:20}}>
               未通过的数据:
               <Table
-              columns={tColumns} bordered
-              rowKey={record => `result-${record.key}`}
-              dataSource={resultDataUp}
-              scroll={{x: 960}}
-              size='small'
-              pagination={false}
-              key='result-2'
+                columns={tColumns} bordered
+                rowKey={record => `result-${record.key}`}
+                dataSource={resultDataUp}
+                scroll={{x: 960}}
+                size='small'
+                pagination={false}
+                key='result-2'
             /></div>
           )}
           {

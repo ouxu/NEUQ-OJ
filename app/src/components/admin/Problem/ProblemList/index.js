@@ -139,7 +139,7 @@ class ProblemList extends Component {
       className: 'problem-title'
     }, {
       title: '操作',
-      render: (record) => <Link to={'admin/problem-edit/' + record.id}>修改</Link>,
+      render: (record) => <Link to={'/admin/problem-edit/' + record.id}>修改</Link>,
       width: 40,
       key: 'problem-manage-action',
       className: 'problem-manage-action'
@@ -195,7 +195,7 @@ class ProblemList extends Component {
     const title = () => (
       <span className='contest-manage-table-title'>
         <span className='contest-manage-table-title-icon'>
-          创建问题 <Link to='admin/contest-edit'><Icon type='plus-square-o'/></Link></span>
+          创建问题 <Link to='/admin/contest-edit'><Icon type='plus-square-o'/></Link></span>
         <span>
           <Search
             placeholder='题号/标题/作者/标签'

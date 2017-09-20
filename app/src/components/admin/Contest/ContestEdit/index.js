@@ -119,7 +119,7 @@ class ContestEdit extends Component {
       <Spin tip='Loading...' spinning={loading}>
         <QueueAnim className='contest-edit' delay={100} type='bottom'>
           <div className='h-1' key='contest-edit-header'>
-            {cid ? <span><Link to='admin/contest-list'>修改竞赛</Link> #{cid}</span> : '添加竞赛'}
+            {cid ? <span><Link to='/admin/contest-list'>修改竞赛</Link> #{cid}</span> : '添加竞赛'}
           </div>
           <div className='contest-edit-content' key='contest-edit-content'>
             <Form onSubmit={this.handleSubmit} key={'contest-edit-content-' + cid}>

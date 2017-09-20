@@ -15,7 +15,7 @@ const HomeRank = (props) => {
           i < 9 &&
           <Row type='flex' justify='space-between' align='middle' className='rank-title' key={'home-rank-' + i}>
             <Col span='4'>{i + 1}</Col>
-            <Col span='8'> <Link to={`userpage/${t.id}`}>{t.name}</Link></Col>
+            <Col span='8'> <Link to={`/userpage/${t.id}`}>{t.name}</Link></Col>
             <Col span='4'>{t.submit}</Col>
             <Col span='4'>{t.solved}</Col>
             <Col span='4'>{parseInt(100 * (t.solved / t.submit))}%</Col>

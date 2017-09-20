@@ -80,7 +80,7 @@ class RankList extends Component {
       title: '用户',
       render: record => (
         <span>
-          <Link to={`userpage/${record.id}`}> {record.name}</Link>
+          <Link to={`/userpage/${record.id}`}> {record.name}</Link>
         </span>
       ),
       key: 'ranklist-user',
@@ -89,7 +89,7 @@ class RankList extends Component {
       title: 'ID',
       render: record => (
         <span>
-          <Link to={`userpage/${record.id}`}> {record.id}</Link>
+          <Link to={`/userpage/${record.id}`}> {record.id}</Link>
         </span>
       ),
       key: 'ranklist-id',

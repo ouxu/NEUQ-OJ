@@ -9,6 +9,7 @@ import QueueAnim from 'rc-queue-anim'
 import ProblemDes from './problemdes'
 import ProblemSub from './problemsub'
 import * as requestService from 'utils/request'
+import {jumpTo} from 'utils'
 import API from 'api'
 
 const ButtonGroup = Button.Group
@@ -132,8 +133,6 @@ class ProblemDetail extends React.Component {
         ...aUn,
         key: i + 1
       }))
-      console.log(aPassed)
-      console.log(aUnPassed)
       this.setState({
         percent: percent,
         resultDataP: aPassed,
@@ -201,35 +200,32 @@ class ProblemDetail extends React.Component {
           <div className='problem-detail-header' key='problem-detail-2'>
             <h2 className='problem-detail-header-title'>{data.id}
               : {data.title}</h2>
-            <ButtonGroup className='problem-detail-buttonGroup'>
-              <Button
-                size='small'
-                type={this.state.submit ? 'primary' : 'default'}
-                onClick={this.handleMenuClick}
-              >
-                {this.state.submit ? '题目描述' : '提交代码'}
-              </Button>
-            </ButtonGroup>
           </div>
           <div key='problem-detail-3'>
-            {this.state.submit
-              ? <ProblemSub
-                updataCode={this.updateCode}
-                submit={this.submit}
-                selectLanguage={this.selectLanguage}
-                checkPrivate={this.checkPrivate}
-                params={this.state}
-                data={data}
-              />
-              : <ProblemDes data={data}/>}
-          </div>
+            <ProblemDes data={data}/>
 
-          <ButtonGroup className='problem-detail-buttonGroup'>
-            <Button
-              type={this.state.submit ? 'primary' : 'default'}
-              onClick={this.handleMenuClick}
-            >{this.state.submit ? '题目描述' : '提交代码'}</Button>
-          </ButtonGroup>
+          </div>
+          <div key='problem-detail-4'>
+            {this.state.submit && <ProblemSub
+              updataCode={this.updateCode}
+              submit={this.submit}
+              selectLanguage={this.selectLanguage}
+              checkPrivate={this.checkPrivate}
+              params={this.state}
+              data={data}
+            />}
+          </div>
+          {
+            !this.state.submit  && (
+              <ButtonGroup className='problem-detail-buttonGroup'>
+                <Button
+                  type={!this.state.submit ? 'primary' : 'default'}
+                  onClick={this.handleMenuClick}
+                >提交代码</Button>
+              </ButtonGroup>
+            )
+          }
+
         </QueueAnim>
       </Card>
     )

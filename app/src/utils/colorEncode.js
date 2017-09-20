@@ -17,7 +17,7 @@ export default (record, i) => {
     //     bgColor="aaaaff";
     // }
     return <div style={{height: '100%', backgroundColor: '#' + bgColor}}>
-      <span style={{padding: 5}}>{sec2Str(record.problem_ac_sec[i])}</span>
+      <span style={{padding: 5}}>{sec2Str(record.problem_ac_sec[i])} {record.problem_wa_num[i] ? '(-' + record.problem_wa_num[i] + ')' : ''} </span>
     </div>
   } else if (record.problem_wa_num[i] && record.problem_wa_num[i] > 0) {
     aa = 0xaa - record.problem_wa_num[i] * 10

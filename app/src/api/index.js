@@ -55,6 +55,7 @@ export default {
   solution: apiMaker('solution/'),
   // Status
   status: apiMaker('status'),
+  statusDetail: apiMaker('status/source-code/:id'),
 
   // Contests
   contests: apiMaker('contests'),

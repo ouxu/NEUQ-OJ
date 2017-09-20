@@ -86,16 +86,16 @@ class LoginAbout extends React.Component {
         >
           <div className='login-wrap'>
             <Form onSubmit={this.handleSubmit}>
-              <FormItem>
-                <Tooltip title='UserName: 老OJ用户的 ID，非当前用户的 ID 或昵称' placement='top' trigger={['focus']}>
-                  {getFieldDecorator('identifier', {
-                    rules: [{
-                      required: true, message: '请输入UserName/手机号/邮箱'
-                    }]
-                  })(
-                    <Input addonBefore={<Icon type='user'/>} style={{width: '100%'}}  placeholder='UserName/手机号/邮箱' />
-                  )}
-                </Tooltip>
+              <FormItem
+                help='UserName: 老OJ用户的 ID，非当前用户的 ID'
+              >
+                {getFieldDecorator('identifier', {
+                  rules: [{
+                    required: true, message: '请输入UserName/手机号/邮箱'
+                  }]
+                })(
+                  <Input addonBefore={<Icon type='user' />} style={{width: '100%'}} placeholder='UserName/手机号/邮箱' />
+                )}
               </FormItem>
               <FormItem>
                 {getFieldDecorator('password', {
@@ -106,7 +106,7 @@ class LoginAbout extends React.Component {
                   }]
                 })(
                   <Input addonBefore={<Icon type='lock' />} type='password' placeholder='Password'
-                         style={{width: '100%'}} />
+                    style={{width: '100%'}} />
                 )}
               </FormItem>
 
