@@ -41,8 +41,8 @@ export const DashCard = ({status}) => {
                 {t.problem_id}
               </Link>
             </Col>
-            <Col className='userpage-dashcard-status-result'> {result[t.result]}</Col>
-          </Row>,
+            <Col className='userpage-dashcard-status-result'> {result[t.result + 1]}</Col>
+          </Row>
         )}
     </div>
   )
