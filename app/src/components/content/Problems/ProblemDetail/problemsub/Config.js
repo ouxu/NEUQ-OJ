@@ -1,20 +1,20 @@
 import React from 'react'
-import {Badge} from 'antd'
+import { Badge } from 'antd'
 
 const result = [
-  <Badge status='error' text='答案错误'/>,
-  <Badge status='success' text='通过'/>,
-  <Badge status='warning' text='CPU时间超限'/>,
-  <Badge status='warning' text='运行时间超限'/>,
-  <Badge status='warning' text='内存超限'/>,
-  <Badge status='error' text='运行时错误'/>,
-  <Badge status='error' text='系统错误'/>
+  <Badge status='error' text='答案错误' />,
+  <Badge status='success' text='通过' />,
+  <Badge status='warning' text='CPU时间超限' />,
+  <Badge status='warning' text='运行时间超限' />,
+  <Badge status='warning' text='内存超限' />,
+  <Badge status='error' text='运行时错误' />,
+  <Badge status='error' text='系统错误' />
 ]
 const result2 = [
-  <Badge status='error' text='判题系统异常'/>,
-  <Badge status='error' text=''/>,
-  <Badge status='error' text=''/>,
-  <Badge status='error' text='编译错误'/>
+  <Badge status='error' text='判题系统异常' />,
+  <Badge status='error' text='' />,
+  <Badge status='error' text='' />,
+  <Badge status='error' text='编译错误' />
 ]
 const columnsP = [{
   title: '结果',
@@ -51,4 +51,4 @@ const columnsUP = [{
   className: 'status-result-data'
 }]
 
-export {columnsP, columnsUP}
+export { columnsP, columnsUP }
