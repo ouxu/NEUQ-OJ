@@ -35,6 +35,8 @@ export default {
   downloadRunData: apiMaker('rundata'),
   deleteRunData: apiMaker('rundata/id/delete'),
   uploadRunData: apiMaker('problem/id/rundata/add'),
+  changeProblem: apiMaker('problem/id/update'),
+  deleteProblem: apiMaker('problem/id/delete'),
 
   // judge server
   judgeServer: apiMaker('judge/server'),

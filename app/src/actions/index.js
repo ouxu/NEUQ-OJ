@@ -15,7 +15,7 @@ export {
   deleteProblemRunData,
   getProblemRunDataTable
 } from './problem.action'
-export {deleteProblem, clearProblem, getProblemMine} from './problem.action'
+export {deleteProblem, clearProblem, getProblemMine, changeProblem} from './problem.action'
 export {addJudgeServer, getJudgeList, getJudgeListAndInfo, delJudgeServer,updateJudgeServer,clearJudgeSever,getServerInfo} from './machine.action'
 export {getGroupTable, getGroupTableMe, searchGroups, createUserGroup} from './group.action'
 export {joinGroup, getGroupUsers, changeGroupOwner, dismissGroup, quitGroup, getGroupNotices} from './group.action'

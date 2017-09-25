@@ -145,7 +145,7 @@ export function searchProblems (value, page = 1, size = 20) {
 export function deleteProblem (id, body) {
   return async () => {
     try {
-      await requestService.tpost(API.problem + id + '/delete', body)
+      await requestService.tpost(API.deleteProblem.replace(/id/, id), body)
       await message.success('删除成功')
     } catch (e) {
       console.error(e)
@@ -266,6 +266,23 @@ export function downloadRunData (body, fileName) {
       message.success('下载')
     } catch (e) {
       console.error(e)
+    }
+  }
+}
+
+/**
+ * 修改问题
+ * @param body
+ * @param id
+ * @returns {function()}
+ */
+export function changeProblem (id, body) {
+  return async () => {
+    try {
+      await requestService.tpost(API.changeProblem.replace(/id/, id), body)
+      await message.success('修改成功')
+    } catch (e) {
+      console.log(e)
     }
   }
 }
