@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react'
 
-import { Button, Col, Form, Input, InputNumber, Modal, Radio, Row, Spin, Switch, Icon } from 'antd'
+import { Button, Col, Form, Input, InputNumber, Modal, Radio, Row, Spin, Switch, Icon, Tag } from 'antd'
 
 import { Link } from 'react-router'
 import QueueAnim from 'rc-queue-anim'
@@ -25,14 +25,60 @@ class ProblemEdit extends Component {
     this.state = {
       password: ''
     }
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleAdd = this.handleAdd.bind(this)
   }
 
   componentDidMount () {
     this.props.params.id ? this.props.getProblemInfo(this.props.params) : this.props.clearProblem()
   }
 
-  handleSubmit (e) {
+  handleChange (e) {
+    e.preventDefault()
+    this.props.form.validateFieldsAndScroll(async (err, value) => {
+      if (!err) {
+        let input = []
+        let output = []
+        Object.keys(value).forEach(key => {
+          if (key.match(/^test_output?/)) {
+            output.push(value[key])
+          }
+          if (key.match(/^test_input?/)) {
+            input.push(value[key])
+          }
+        })
+        let test_data = []
+        for (let i = 0; i < input.length; i++) {
+          let item = {
+            input: input[i],
+            output: output[i]
+          }
+          test_data.push(item)
+        }
+        const {title, description, sample_input, sample_output, difficulty, source, time_limit, memory_limit, spj, is_public, hint} = value
+        const body = {
+          title: title,
+          description: description,
+          sample_input: sample_input,
+          sample_output: sample_output,
+          difficulty: difficulty,
+          source: source,
+          time_limit: time_limit,
+          memory_limit: memory_limit,
+          spj: spj,
+          is_public: is_public,
+          hint: hint,
+          test_data: test_data
+        }
+        console.log(JSON.stringify(body))
+        const id = this.props.params.id
+        await this.props.changeProblem(id, body)
+        await this.props.getProblemInfo(this.props.params)
+      }
+    })
+  }
+
+  handleAdd (e) {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll((err, value) => {
       if (!err) {
@@ -73,6 +119,7 @@ class ProblemEdit extends Component {
               hint: hint,
               test_data: test_data
             }
+            console.log(body)
             await this.props.createProblems(body)
           }
         })
@@ -93,7 +140,7 @@ class ProblemEdit extends Component {
       ),
       onOk: async () => {
         await this.props.deleteProblem(this.props.params.id, {password: this.state.password})
-        goto('/admin/problem-list')
+        goto('admin/problem-list')
       }
     })
   }
@@ -185,8 +232,7 @@ class ProblemEdit extends Component {
         <QueueAnim className='problem-edit'>
           <div className='h-1' key='problem-edit-header'>
             {id ? <span><Link to='admin/contest-list'>修改题目</Link> #{id}</span> : '添加题目'}
-            {id && <Link to={`/admin/problem-run-data?id=` + id} style={{marginLeft: 10}}><Icon type='edit'
-                                                                                               style={{fontSize: '18px'}} /></Link>}
+            {id && <Link to={`/admin/problem-run-data?id=` + id} style={{marginLeft: 10}}><Tag color='blue'>管理测试数据</Tag></Link>}
           </div>
           <div className='problem-edit-content' key='problem-edit-content'>
             <Form
@@ -410,7 +456,7 @@ class ProblemEdit extends Component {
 
               <FormItem>
                 <Button className='contest-edit-submit' size='large' type='primary'
-                        onClick={this.handleSubmit}>
+                        onClick={id ? this.handleChange : this.handleAdd}>
                   {id ? '修改题目' : '添加题目'}
                 </Button>
                 {
