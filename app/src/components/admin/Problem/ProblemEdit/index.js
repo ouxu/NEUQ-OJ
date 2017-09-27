@@ -8,6 +8,7 @@ import { Button, Col, Form, Input, InputNumber, Modal, Radio, Row, Spin, Switch,
 import { Link } from 'react-router'
 import QueueAnim from 'rc-queue-anim'
 import { goto } from 'utils'
+import MarkdownArea from 'components/plugins/Markdown'
 import './index.less'
 
 const FormItem = Form.Item
@@ -258,7 +259,7 @@ class ProblemEdit extends Component {
               >
                 {getFieldDecorator('description', {
                   rules: [{required: true, message: '请输入描述'}],
-                  initialValue: data['title'] ? data.description : ''
+                  initialValue: data['title'] ? data.description: ''
                 })(
                   <Input
                     placeholder='请输入描述，支持 Markdown 语法，请在 Markdown 编辑器中编辑后粘贴' type='textarea'
@@ -433,7 +434,7 @@ class ProblemEdit extends Component {
               >
                 {getFieldDecorator('source', {
                   rules: [{required: false, message: '可输入来源'}],
-                  initialValue: data['title'] ? data.hint : ''
+                  initialValue: data['title'] ? data.source : ''
                 })(
                   <Input placeholder='可输入来源' type='textarea'
                          autosize={{minRows: 1}} />
