@@ -99,6 +99,9 @@ class ProblemDetail extends React.Component {
           errorinfo: ''
         })
         await this.submitProblem(obj)
+        await this.setState({
+          unsubmit: false
+        })
       }
     } catch (e) {
       message.error(e.message)
@@ -122,7 +125,7 @@ class ProblemDetail extends React.Component {
       } else if (UnPassed == null) {
         percent = 100
       } else {
-        percent = Math.floor((Passed.length) / (Passed.length + UnPassed.length) * 10000)/100
+        percent = Math.floor((Passed.length) / (Passed.length + UnPassed.length) * 10000) / 100
       }
       // const {CpuTime = '', Result = '', Memory = '', OutputMD5 = ''} = Passed[0]
       const aPassed = [].concat(Passed).map((a, i) => ({
@@ -175,24 +178,24 @@ class ProblemDetail extends React.Component {
         <QueueAnim type='left' delay={100}>
           <div className='problem-detail-breadcrumb' key='problem-detail-1'>
             <Link to={params.pnum ? `/contests/${params.cid}` : '/problems'}>
-              <Icon type='left'/>
+              <Icon type='left' />
               <span>{params.pnum ? '竞赛列表' : '问题列表'}</span>
             </Link>
             <div className='problem-detail-breadcrumb-detail'>
               <span className='problem-detail-breadcrumb-detail-tags'>
-                <Icon type='edit'/><span>{data.creator_name}</span>
+                <Icon type='edit' /><span>{data.creator_name}</span>
               </span>
               <span className='problem-detail-breadcrumb-detail-tags'>
-                <Icon type='exception'/><span>{data.submit}</span>
+                <Icon type='exception' /><span>{data.submit}</span>
               </span>
               <span className='problem-detail-breadcrumb-detail-tags'>
-                <Icon type='check'/><span>{data.accepted}</span>
+                <Icon type='check' /><span>{data.accepted}</span>
               </span>
               <span className='problem-detail-breadcrumb-detail-tags'>
-                <Icon type='clock-circle'/><span>{data.time_limit} Sec</span>
+                <Icon type='clock-circle' /><span>{data.time_limit} Sec</span>
               </span>
               <span className='problem-detail-breadcrumb-detail-tags'><Icon
-                type='save'/>
+                type='save' />
                 <span>{data.memory_limit} MB</span>
               </span>
             </div>
@@ -202,7 +205,7 @@ class ProblemDetail extends React.Component {
               : {data.title}</h2>
           </div>
           <div key='problem-detail-3'>
-            <ProblemDes data={data}/>
+            <ProblemDes data={data} />
 
           </div>
           <div key='problem-detail-4'>
@@ -216,7 +219,7 @@ class ProblemDetail extends React.Component {
             />}
           </div>
           {
-            !this.state.submit  && (
+            !this.state.submit && (
               <ButtonGroup className='problem-detail-buttonGroup'>
                 <Button
                   type={!this.state.submit ? 'primary' : 'default'}
