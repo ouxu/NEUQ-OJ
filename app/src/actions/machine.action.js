@@ -25,10 +25,10 @@ export function addJudgeServer(body) {
     try {
       const data = await requestService.tpost(API.judgeServer, body)
       message.success('添加成功')
-      goto('admin/machine-list')
+      goto('/admin/machine-list')
     } catch (e) {
       message.error('添加成功，但是服务器状态异常')
-      goto('admin/machine-list')
+      goto('/admin/machine-list')
       console.error(e)
     }
   }

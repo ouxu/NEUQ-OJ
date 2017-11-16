@@ -39,7 +39,7 @@ class ContestEdit extends Component {
               placeholder='请输入您的登录密码'
             />
           ),
-          onOk: async () => {
+          onOk: () => {
             const rangeTimeValue = fieldsValue['range-time-picker']
             let values = {
               'title': fieldsValue.title,
@@ -74,9 +74,17 @@ class ContestEdit extends Component {
               'password': this.state.password,
               'problem_ids': fieldsValue.problems.map((t) => +t)
             }
-            await this.props.editContest(values, this.props.cid)
-            this.props.cid && await this.props.updateContestProblems(this.props.cid, problemParams)
-            goto('/admin/contest-list')
+
+            try {
+              if (this.props.cid){
+                this.props.updateContestProblems(this.props.cid, problemParams)
+              } else {
+                this.props.editContest(values, this.props.cid)
+              }
+              goto('/admin/contest-list')
+            } catch (e) {
+              console.log(e)
+            }
           }
         })
       }
@@ -93,8 +101,8 @@ class ContestEdit extends Component {
           placeholder='请输入您的登录密码'
         />
       ),
-      onOk: async () => {
-        await this.props.delContest(this.props.cid, {password: this.state.password})
+      onOk: () => {
+        this.props.delContest(this.props.cid, {password: this.state.password})
         goto('/admin/contest-list')
       }
     })
@@ -143,7 +151,7 @@ class ContestEdit extends Component {
                   initialValue: contest_info.description || ''
                 })(
                   <Input placeholder='请输入描述，支持 Markdown 语法，请在 Markdown 编辑器中编辑后粘贴' type='textarea'
-                         autosize={{minRows: 2}} />
+                    autosize={{minRows: 2}} />
                 )}
 
               </FormItem>

@@ -24,7 +24,7 @@ export class LanguageSelect extends React.Component {
         <Option value='2'>Java</Option>
         {/* <Option value="4">Ruby</Option> */}
         {/* <Option value="5">Shell</Option> */}
-        <Option value='3'>Python</Option>
+        <Option value='3'>Python2.7</Option>
         {/* <Option value="7">php</Option> */}
         {/* <Option value="9">perl</Option> */}
       </Select>
@@ -43,17 +43,10 @@ export class ResultSelect extends React.Component {
         className='status-table-header-other-select'
         allowClear
       >
-        <Option value='0'>等待中</Option>
-        <Option value='2'>编译中</Option>
-        <Option value='3'>运行中</Option>
+        <Option value='-1'>系统错误</Option>
+        <Option value='2'>编译错误</Option>
+        <Option value='3'>部分通过</Option>
         <Option value='4'>正确</Option>
-        <Option value='5'>格式错误</Option>
-        <Option value='6'>答案错误</Option>
-        <Option value='7'>时间超限</Option>
-        <Option value='8'>内存超限</Option>
-        <Option value='9'>输出超限</Option>
-        <Option value='10'>运行错误</Option>
-        <Option value='11'>编译错误</Option>
       </Select>
     )
   }

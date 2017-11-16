@@ -19,13 +19,8 @@ const result = [
 const language = [
   'C',
   'C++',
-  'Pascal',
   'Java',
-  'ruby',
-  'Shell',
-  'Python',
-  'php',
-  'perl'
+  'Python2.7',
 ]
 
 export const columns = [{
