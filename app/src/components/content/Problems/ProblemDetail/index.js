@@ -12,7 +12,16 @@ import * as requestService from 'utils/request'
 import {jumpTo} from 'utils'
 import API from 'api'
 
+const Count = 1
+const TIME = 10000
+// 休眠的时间
+const SLEEP = 1000
 const ButtonGroup = Button.Group
+const sleep = (delay = 0) => {
+  new Promise((resolve) => {
+    setTimeout(resolve, delay)
+  })
+}
 
 class ProblemDetail extends React.Component {
   constructor(props) {
@@ -21,6 +30,7 @@ class ProblemDetail extends React.Component {
       submit: this.props.submit || false,
       unsubmit: false,
       source_code: '',
+      solution: '',
       percent: 0,
       language: 1,
       privated: false,
@@ -104,57 +114,120 @@ class ProblemDetail extends React.Component {
         })
       }
     } catch (e) {
+      this.setState({
+        unsubmit: false
+      })
       message.error(e.message)
     }
   }
+
+  // /**
+  //  * 获取答案
+  //  * @param solutionId
+  //  * @returns {Promise.<*>}
+  //  */
+  // async getSolution(solutionId) {
+  //   const solutionUrl = `${API.devHost}judge/${solutionId}/result`
+  //   let data = ''
+  //   let time = 10000
+  //   let count = 0
+  //   // sleep(SLEEP).then(() => {
+  //   data = await requestService.tget(solutionUrl, solutionId)
+  //   let timer = setInterval(async function () {
+  //     data = await requestService.tget(solutionUrl, solutionId)
+  //     count++
+  //     console.log(data, count)
+  //     if (count >= Count) {
+  //       timer && clearInterval(timer)
+  //     }
+  //     if (data) {
+  //       timer && clearInterval(timer)
+  //     }
+  //   }, time)
+  //   await this.setState({
+  //     solution: data
+  //   })
+  //   // })
+  // }
 
   async submitProblem(body) {
     const {params} = this.props
     const url = params.pnum
       ? `${API.host}contest/${params.cid}/problem/${params.pnum}/submit`
-      : `${API.host}problem/${params.id}/submit`
+      : `${API.devHost}problem/${params.id}/submit`
     const data = await requestService.tpost(url, body)
-    message.success('提交成功')
-    const {result_data, result_code} = data
-    if (result_code === 3 || result_code === 4) {
-      const {Passed, UnPassed = []} = result_data
-      let percent = 0
-      // 如果全部通过或者全部没通过的时候，后端都会返回一个null，导致在后边map的时候出现的问题，所以在这里需要计算一下通过率
-      if (Passed == null) {
-        percent = 0
-      } else if (UnPassed == null) {
-        percent = 100
-      } else {
-        percent = Math.floor((Passed.length) / (Passed.length + UnPassed.length) * 10000) / 100
-      }
-      // const {CpuTime = '', Result = '', Memory = '', OutputMD5 = ''} = Passed[0]
-      const aPassed = [].concat(Passed).map((a, i) => ({
-        ...a,
-        key: i + 1
-      }))
-      const aUnPassed = [].concat(UnPassed).map((aUn, i) => ({
-        ...aUn,
-        key: i + 1
-      }))
-      this.setState({
-        percent: percent,
-        resultDataP: aPassed,
-        resultDataUp: aUnPassed
-      })
-    } else if (result_code === 2 || result_code === -1) {
-      this.setState({
-        resultData: [
-          {
-            key: 2,
-            result_code,
-            result_data
+    message.success('提交成功,正在判题... 请稍候')
+    // 新需求要求在这里返回 {"code":0,"data":{"solutionId":383888}} 这个样子的结果，然后根据这个 id 去轮询
+    if (data) {
+      const {solutionId} = data
+      const solutionUrl = `${API.devHost}judge/${solutionId}/result`
+      let solution = ''
+      let time = TIME
+      let count = 0
+      // sleep(SLEEP)
+      solution = await requestService.tget(solutionUrl, solutionId)
+      try{
+        let timers = setInterval(async ()=> {
+          if (solution) {
+            timers && clearInterval(timers)
+            const {result_code, result_data} = solution
+            if (result_code === 3 || result_code === 4) {
+              const {Passed, UnPassed = []} = result_data
+              let percent = 0
+              // 如果全部通过或者全部没通过的时候，后端都会返回一个null，导致在后边map的时候出现的问题，所以在这里需要计算一下通过率
+              if (Passed == null) {
+                percent = 0
+              } else if (UnPassed == null) {
+                percent = 100
+              } else {
+                percent = Math.floor((Passed.length) / (Passed.length + UnPassed.length) * 10000) / 100
+              }
+              // const {CpuTime = '', Result = '', Memory = '', OutputMD5 = ''} = Passed[0]
+              const aPassed = [].concat(Passed).map((a, i) => ({
+                ...a,
+                key: i + 1
+              }))
+              const aUnPassed = [].concat(UnPassed).map((aUn, i) => ({
+                ...aUn,
+                key: i + 1
+              }))
+              this.setState({
+                percent: percent,
+                resultDataP: aPassed,
+                resultDataUp: aUnPassed
+              })
+            } else if (result_code === 2 || result_code === -1) {
+              this.setState({
+                resultData: [
+                  {
+                    key: 2,
+                    result_code,
+                    result_data
+                  }
+                ]
+              })
+            }
+            this.setState({
+              resultCode: result_code
+            })
           }
-        ]
-      })
+          if (count >= Count) {
+            timers && clearInterval(timers)
+            if (!solution){
+              message.error('当前排队人数太多，请重新提交')
+            }
+          }
+          solution = await requestService.tget(solutionUrl, solutionId)
+          count++
+          console.log(data, count)
+        }, time)
+      }catch (e){
+        console.error(e)
+      }
+      console.log(solution)
+    } else {
+      message.error('提交失败,请重新提交')
     }
-    this.setState({
-      resultCode: result_code
-    })
   }
 
   async getErrorInfo(solutionId, result) {

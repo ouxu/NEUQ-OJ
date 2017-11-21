@@ -4,11 +4,14 @@
 
 // const __APIHOST__ = 'http://192.168.1.189:8080'
 const __APIHOST__ = 'http://oj.marklux.cn'
-
+const __DEVHOST__ = 'http://192.168.1.18:3000'
 const apiMaker = path => `${__APIHOST__}/${path}`
+const devApiMaker = path => `${__DEVHOST__}/${path}`
 
 export default {
   host: apiMaker(''),
+  // 增加新需求，返回 solutionId
+  devHost: devApiMaker(''),
   // user
   tokenVerify: apiMaker('token-verify'),
   register: apiMaker('user/register'),
