@@ -12,8 +12,8 @@ import * as requestService from 'utils/request'
 import {jumpTo} from 'utils'
 import API from 'api'
 
-const Count = 1
-const TIME = 10000
+const Count = 30
+const TIME = 2000
 // 休眠的时间
 const SLEEP = 1000
 const ButtonGroup = Button.Group
@@ -109,9 +109,9 @@ class ProblemDetail extends React.Component {
           errorinfo: ''
         })
         await this.submitProblem(obj)
-        await this.setState({
-          unsubmit: false
-        })
+        // await this.setState({
+        //   unsubmit: false
+        // })
       }
     } catch (e) {
       this.setState({
@@ -120,56 +120,29 @@ class ProblemDetail extends React.Component {
       message.error(e.message)
     }
   }
-
-  // /**
-  //  * 获取答案
-  //  * @param solutionId
-  //  * @returns {Promise.<*>}
-  //  */
-  // async getSolution(solutionId) {
-  //   const solutionUrl = `${API.devHost}judge/${solutionId}/result`
-  //   let data = ''
-  //   let time = 10000
-  //   let count = 0
-  //   // sleep(SLEEP).then(() => {
-  //   data = await requestService.tget(solutionUrl, solutionId)
-  //   let timer = setInterval(async function () {
-  //     data = await requestService.tget(solutionUrl, solutionId)
-  //     count++
-  //     console.log(data, count)
-  //     if (count >= Count) {
-  //       timer && clearInterval(timer)
-  //     }
-  //     if (data) {
-  //       timer && clearInterval(timer)
-  //     }
-  //   }, time)
-  //   await this.setState({
-  //     solution: data
-  //   })
-  //   // })
-  // }
-
   async submitProblem(body) {
     const {params} = this.props
     const url = params.pnum
       ? `${API.host}contest/${params.cid}/problem/${params.pnum}/submit`
-      : `${API.devHost}problem/${params.id}/submit`
+      : `${API.host}problem/${params.id}/submit`
     const data = await requestService.tpost(url, body)
     message.success('提交成功,正在判题... 请稍候')
     // 新需求要求在这里返回 {"code":0,"data":{"solutionId":383888}} 这个样子的结果，然后根据这个 id 去轮询
     if (data) {
       const {solutionId} = data
-      const solutionUrl = `${API.devHost}judge/${solutionId}/result`
+      const solutionUrl = `${API.host}judge/${solutionId}/result`
       let solution = ''
       let time = TIME
       let count = 0
+      let timers = null
       // sleep(SLEEP)
       solution = await requestService.tget(solutionUrl, solutionId)
       try{
-        let timers = setInterval(async ()=> {
+        timers = setInterval(async ()=> {
           if (solution) {
             timers && clearInterval(timers)
+            console.log('返回结果，定时器被清除啦')
+            message.success('判题成功')
             const {result_code, result_data} = solution
             if (result_code === 3 || result_code === 4) {
               const {Passed, UnPassed = []} = result_data
@@ -208,13 +181,18 @@ class ProblemDetail extends React.Component {
               })
             }
             this.setState({
-              resultCode: result_code
+              resultCode: result_code,
+              unsubmit: false
             })
           }
           if (count >= Count) {
             timers && clearInterval(timers)
+            console.log('时间到了，定时器被清除啦')
             if (!solution){
               message.error('当前排队人数太多，请重新提交')
+              this.setState({
+                unsubmit: false
+              })
             }
           }
           solution = await requestService.tget(solutionUrl, solutionId)
@@ -222,6 +200,8 @@ class ProblemDetail extends React.Component {
           console.log(data, count)
         }, time)
       }catch (e){
+        timers && clearInterval(timers)
+        console.log('500，定时器被清除啦')
         console.error(e)
       }
       console.log(solution)
