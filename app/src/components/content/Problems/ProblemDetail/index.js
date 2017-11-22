@@ -11,7 +11,6 @@ import ProblemSub from './problemsub'
 import * as requestService from 'utils/request'
 import {jumpTo} from 'utils'
 import API from 'api'
-
 const Count = 30
 const TIME = 2000
 // 休眠的时间
