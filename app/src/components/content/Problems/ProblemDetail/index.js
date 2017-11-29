@@ -17,7 +17,7 @@ const TIME = 2000
 const SLEEP = 1000
 const ButtonGroup = Button.Group
 const sleep = (delay = 0) => {
-  new Promise((resolve) => {
+  return Promise((resolve) => {
     setTimeout(resolve, delay)
   })
 }
