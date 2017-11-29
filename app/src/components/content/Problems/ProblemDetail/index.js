@@ -15,7 +15,7 @@ import API from 'api'
 const Count = 30
 const TIME = 2000
 // 休眠的时间
-const SLEEP = 6000
+const SLEEP = 2000
 const ButtonGroup = Button.Group
 const sleep = (delay = 0) => {
   new Promise((resolve) => {
@@ -203,7 +203,7 @@ class ProblemDetail extends React.Component {
               })
             }
           }
-          if (count > SLEEP / TIME) {
+          if (count >= SLEEP / TIME) {
             solution = await requestService.tget(solutionUrl, solutionId)
           }
           count++
