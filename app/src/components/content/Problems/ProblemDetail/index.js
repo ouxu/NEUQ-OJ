@@ -11,10 +11,11 @@ import ProblemSub from './problemsub'
 import * as requestService from 'utils/request'
 import {jumpTo} from 'utils'
 import API from 'api'
+
 const Count = 30
 const TIME = 2000
 // 休眠的时间
-const SLEEP = 5000
+const SLEEP = 0
 const ButtonGroup = Button.Group
 const sleep = (delay = 0) => {
   new Promise((resolve) => {
@@ -120,13 +121,14 @@ class ProblemDetail extends React.Component {
       message.error(e.message)
     }
   }
+
   async submitProblem(body) {
     const {params} = this.props
     const url = params.pnum
       ? `${API.host}contest/${params.cid}/problem/${params.pnum}/submit`
       : `${API.host}problem/${params.id}/submit`
     const data = await requestService.tpost(url, body)
-    message.success('提交成功,正在判题... 请稍候')
+    message.success('提交成功... 请稍候')
     // 新需求要求在这里返回 {"code":0,"data":{"solutionId":383888}} 这个样子的结果，然后根据这个 id 去轮询
     if (data) {
       const {solutionId} = data
@@ -135,71 +137,79 @@ class ProblemDetail extends React.Component {
       let time = TIME
       let count = 0
       let timers = null
-      try{
-        sleep(SLEEP).then(
-          timers = setInterval(async ()=> {
-            if (solution) {
-              timers && clearInterval(timers)
-              console.log('返回结果，定时器被清除啦')
-              message.success('判题成功')
-              const {result_code, result_data} = solution
-              if (result_code === 3 || result_code === 4) {
-                const {Passed, UnPassed = []} = result_data
-                let percent = 0
-                // 如果全部通过或者全部没通过的时候，后端都会返回一个null，导致在后边map的时候出现的问题，所以在这里需要计算一下通过率
-                if (Passed == null) {
-                  percent = 0
-                } else if (UnPassed == null) {
-                  percent = 100
-                } else {
-                  percent = Math.floor((Passed.length) / (Passed.length + UnPassed.length) * 10000) / 100
-                }
-                // const {CpuTime = '', Result = '', Memory = '', OutputMD5 = ''} = Passed[0]
-                const aPassed = [].concat(Passed).map((a, i) => ({
-                  ...a,
-                  key: i + 1
-                }))
-                const aUnPassed = [].concat(UnPassed).map((aUn, i) => ({
-                  ...aUn,
-                  key: i + 1
-                }))
-                this.setState({
-                  percent: percent,
-                  resultDataP: aPassed,
-                  resultDataUp: aUnPassed
-                })
-              } else if (result_code === 2 || result_code === -1) {
-                this.setState({
-                  resultData: [
-                    {
-                      key: 2,
-                      result_code,
-                      result_data
-                    }
-                  ]
-                })
+      try {
+        timers = setInterval(async () => {
+          if (solution && solution['result_code'] > 0) {
+            timers && clearInterval(timers)
+            console.log('返回结果，定时器被清除啦')
+            message.success('判题成功')
+            const {result_code, result_data} = solution
+            if (result_code === 3 || result_code === 4) {
+              const {Passed, UnPassed = []} = result_data
+              let percent = 0
+              // 如果全部通过或者全部没通过的时候，后端都会返回一个null，导致在后边map的时候出现的问题，所以在这里需要计算一下通过率
+              if (Passed == null) {
+                percent = 0
+              } else if (UnPassed == null) {
+                percent = 100
+              } else {
+                percent = Math.floor((Passed.length) / (Passed.length + UnPassed.length) * 10000) / 100
               }
+              // const {CpuTime = '', Result = '', Memory = '', OutputMD5 = ''} = Passed[0]
+              const aPassed = [].concat(Passed).map((a, i) => ({
+                ...a,
+                key: i + 1
+              }))
+              const aUnPassed = [].concat(UnPassed).map((aUn, i) => ({
+                ...aUn,
+                key: i + 1
+              }))
               this.setState({
-                resultCode: result_code,
+                percent: percent,
+                resultDataP: aPassed,
+                resultDataUp: aUnPassed
+              })
+            } else if (result_code === 2 || result_code === -1) {
+              this.setState({
+                resultData: [
+                  {
+                    key: 2,
+                    result_code,
+                    result_data
+                  }
+                ]
+              })
+            } else if (result_code === -2) {
+            }
+            this.setState({
+              resultCode: result_code,
+              unsubmit: false
+            })
+          }
+          if (solution && solution['result_code'] === -2) {
+            message.info('正在判题....')
+          }
+          if (solution && solution['result_code'] === -3) {
+            message.info('服务器异常')
+            timers && clearInterval(timers)
+          }
+          if (count >= Count) {
+            timers && clearInterval(timers)
+            console.log('时间到了，定时器被清除啦')
+            if (!solution) {
+              message.error('当前排队人数太多，请重新提交')
+              this.setState({
                 unsubmit: false
               })
             }
-            if (count >= Count) {
-              timers && clearInterval(timers)
-              console.log('时间到了，定时器被清除啦')
-              if (!solution){
-                message.error('当前排队人数太多，请重新提交')
-                this.setState({
-                  unsubmit: false
-                })
-              }
-            }
+          }
+          if (count > SLEEP / TIME) {
             solution = await requestService.tget(solutionUrl, solutionId)
-            count++
-            console.log(data, count)
-          }, time)
-        )
-      }catch (e){
+          }
+          count++
+          console.log(data, count)
+        }, time)
+      } catch (e) {
         timers && clearInterval(timers)
         console.log('500，定时器被清除啦')
         console.error(e)
