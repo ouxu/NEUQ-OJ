@@ -11,13 +11,15 @@ import ProblemSub from './problemsub'
 import * as requestService from 'utils/request'
 import {jumpTo} from 'utils'
 import API from 'api'
+
 const Count = 30
 const TIME = 2000
 // 休眠的时间
-const SLEEP = 1000
+const SLEEP = 2000
 const ButtonGroup = Button.Group
 const sleep = (delay = 0) => {
-  return Promise((resolve) => {
+  new Promise((resolve) => {
+    console.log('等着！！！')
     setTimeout(resolve, delay)
   })
 }
@@ -119,13 +121,14 @@ class ProblemDetail extends React.Component {
       message.error(e.message)
     }
   }
+
   async submitProblem(body) {
     const {params} = this.props
     const url = params.pnum
       ? `${API.host}contest/${params.cid}/problem/${params.pnum}/submit`
       : `${API.host}problem/${params.id}/submit`
     const data = await requestService.tpost(url, body)
-    message.success('提交成功,正在判题... 请稍候')
+    message.success('提交成功... 请稍候')
     // 新需求要求在这里返回 {"code":0,"data":{"solutionId":383888}} 这个样子的结果，然后根据这个 id 去轮询
     if (data) {
       const {solutionId} = data
@@ -134,11 +137,9 @@ class ProblemDetail extends React.Component {
       let time = TIME
       let count = 0
       let timers = null
-      // sleep(SLEEP)
-      solution = await requestService.tget(solutionUrl, solutionId)
-      try{
-        timers = setInterval(async ()=> {
-          if (solution) {
+      try {
+        timers = setInterval(async () => {
+          if (solution && solution['result_code'] > 0) {
             timers && clearInterval(timers)
             console.log('返回结果，定时器被清除啦')
             message.success('判题成功')
@@ -178,27 +179,37 @@ class ProblemDetail extends React.Component {
                   }
                 ]
               })
+            } else if (result_code === -2) {
             }
             this.setState({
               resultCode: result_code,
               unsubmit: false
             })
           }
+          if (solution && solution['result_code'] === -2) {
+            message.info('正在判题....')
+          }
+          if (solution && solution['result_code'] === -3) {
+            message.info('服务器异常')
+            timers && clearInterval(timers)
+          }
           if (count >= Count) {
             timers && clearInterval(timers)
             console.log('时间到了，定时器被清除啦')
-            if (!solution){
+            if (!solution) {
               message.error('当前排队人数太多，请重新提交')
               this.setState({
                 unsubmit: false
               })
             }
           }
-          solution = await requestService.tget(solutionUrl, solutionId)
+          if (count >= SLEEP / TIME) {
+            solution = await requestService.tget(solutionUrl, solutionId)
+          }
           count++
           console.log(data, count)
         }, time)
-      }catch (e){
+      } catch (e) {
         timers && clearInterval(timers)
         console.log('500，定时器被清除啦')
         console.error(e)
