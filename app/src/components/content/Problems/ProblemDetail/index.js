@@ -14,10 +14,11 @@ import API from 'api'
 const Count = 30
 const TIME = 2000
 // 休眠的时间
-const SLEEP = 1000
+const SLEEP = 5000
 const ButtonGroup = Button.Group
 const sleep = (delay = 0) => {
-  return Promise((resolve) => {
+  new Promise((resolve) => {
+    console.log('等着！！！')
     setTimeout(resolve, delay)
   })
 }
@@ -134,70 +135,70 @@ class ProblemDetail extends React.Component {
       let time = TIME
       let count = 0
       let timers = null
-      // sleep(SLEEP)
-      solution = await requestService.tget(solutionUrl, solutionId)
       try{
-        timers = setInterval(async ()=> {
-          if (solution) {
-            timers && clearInterval(timers)
-            console.log('返回结果，定时器被清除啦')
-            message.success('判题成功')
-            const {result_code, result_data} = solution
-            if (result_code === 3 || result_code === 4) {
-              const {Passed, UnPassed = []} = result_data
-              let percent = 0
-              // 如果全部通过或者全部没通过的时候，后端都会返回一个null，导致在后边map的时候出现的问题，所以在这里需要计算一下通过率
-              if (Passed == null) {
-                percent = 0
-              } else if (UnPassed == null) {
-                percent = 100
-              } else {
-                percent = Math.floor((Passed.length) / (Passed.length + UnPassed.length) * 10000) / 100
+        sleep(SLEEP).then(
+          timers = setInterval(async ()=> {
+            if (solution) {
+              timers && clearInterval(timers)
+              console.log('返回结果，定时器被清除啦')
+              message.success('判题成功')
+              const {result_code, result_data} = solution
+              if (result_code === 3 || result_code === 4) {
+                const {Passed, UnPassed = []} = result_data
+                let percent = 0
+                // 如果全部通过或者全部没通过的时候，后端都会返回一个null，导致在后边map的时候出现的问题，所以在这里需要计算一下通过率
+                if (Passed == null) {
+                  percent = 0
+                } else if (UnPassed == null) {
+                  percent = 100
+                } else {
+                  percent = Math.floor((Passed.length) / (Passed.length + UnPassed.length) * 10000) / 100
+                }
+                // const {CpuTime = '', Result = '', Memory = '', OutputMD5 = ''} = Passed[0]
+                const aPassed = [].concat(Passed).map((a, i) => ({
+                  ...a,
+                  key: i + 1
+                }))
+                const aUnPassed = [].concat(UnPassed).map((aUn, i) => ({
+                  ...aUn,
+                  key: i + 1
+                }))
+                this.setState({
+                  percent: percent,
+                  resultDataP: aPassed,
+                  resultDataUp: aUnPassed
+                })
+              } else if (result_code === 2 || result_code === -1) {
+                this.setState({
+                  resultData: [
+                    {
+                      key: 2,
+                      result_code,
+                      result_data
+                    }
+                  ]
+                })
               }
-              // const {CpuTime = '', Result = '', Memory = '', OutputMD5 = ''} = Passed[0]
-              const aPassed = [].concat(Passed).map((a, i) => ({
-                ...a,
-                key: i + 1
-              }))
-              const aUnPassed = [].concat(UnPassed).map((aUn, i) => ({
-                ...aUn,
-                key: i + 1
-              }))
               this.setState({
-                percent: percent,
-                resultDataP: aPassed,
-                resultDataUp: aUnPassed
-              })
-            } else if (result_code === 2 || result_code === -1) {
-              this.setState({
-                resultData: [
-                  {
-                    key: 2,
-                    result_code,
-                    result_data
-                  }
-                ]
-              })
-            }
-            this.setState({
-              resultCode: result_code,
-              unsubmit: false
-            })
-          }
-          if (count >= Count) {
-            timers && clearInterval(timers)
-            console.log('时间到了，定时器被清除啦')
-            if (!solution){
-              message.error('当前排队人数太多，请重新提交')
-              this.setState({
+                resultCode: result_code,
                 unsubmit: false
               })
             }
-          }
-          solution = await requestService.tget(solutionUrl, solutionId)
-          count++
-          console.log(data, count)
-        }, time)
+            if (count >= Count) {
+              timers && clearInterval(timers)
+              console.log('时间到了，定时器被清除啦')
+              if (!solution){
+                message.error('当前排队人数太多，请重新提交')
+                this.setState({
+                  unsubmit: false
+                })
+              }
+            }
+            solution = await requestService.tget(solutionUrl, solutionId)
+            count++
+            console.log(data, count)
+          }, time)
+        )
       }catch (e){
         timers && clearInterval(timers)
         console.log('500，定时器被清除啦')
