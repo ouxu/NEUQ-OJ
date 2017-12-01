@@ -5,7 +5,7 @@ import React from 'react'
 
 import { sec2Str } from 'utils'
 
-export default (record, i) => {
+export default (record, i, first_ac = []) => {
   let bgColor = 'eeeeee'
   let aa
   if (record.problem_ac_sec[i] && record.problem_ac_sec[i] > 0) {
@@ -13,11 +13,12 @@ export default (record, i) => {
     aa = aa > 0xaa ? 0xaa : aa
     aa = aa.toString(16)
     bgColor = aa + 'ff' + aa
-    // if(){
-    //     bgColor="aaaaff";
-    // }
+    if (first_ac[i] === record.user_id) {
+      bgColor = 'aaaaff'
+    }
     return <div style={{height: '100%', backgroundColor: '#' + bgColor}}>
-      <span style={{padding: 5}}>{sec2Str(record.problem_ac_sec[i])} {record.problem_wa_num[i] ? '(-' + record.problem_wa_num[i] + ')' : ''} </span>
+      <span
+        style={{padding: 5}}>{sec2Str(record.problem_ac_sec[i])} {record.problem_wa_num[i] ? '(-' + record.problem_wa_num[i] + ')' : ''} </span>
     </div>
   } else if (record.problem_wa_num[i] && record.problem_wa_num[i] > 0) {
     aa = 0xaa - record.problem_wa_num[i] * 10
