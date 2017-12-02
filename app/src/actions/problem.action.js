@@ -84,7 +84,7 @@ export function getProblemInfo (params) {
       const data = await requestService.tget(url)
       await dispatch(actionCreater(SET_PROBLEM_DETAIL, data))
     } catch (e) {
-      goto(params.cid ? 'contests' : 'problems')
+      goto(params.cid ? '/contests' : '/problems')
     }
   }
 }

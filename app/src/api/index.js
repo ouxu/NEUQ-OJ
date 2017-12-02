@@ -3,7 +3,7 @@
  */
 
 // const __APIHOST__ = 'http://192.168.1.189:8080'
-const __APIHOST__ = 'http://112.126.70.205:8088/'
+const __APIHOST__ = 'http://47.93.120.131:8080'
 const __DEVHOST__ = 'http://192.168.1.18:3000'
 const apiMaker = path => `${__APIHOST__}/${path}`
 const devApiMaker = path => `${__DEVHOST__}/${path}`

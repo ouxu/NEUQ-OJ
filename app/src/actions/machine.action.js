@@ -47,7 +47,7 @@ export function updateJudgeServer(id, body) {
       let url = `${API.judgeServer}/${id}/update`
       const data = await requestService.tpost(url, body)
       message.success('修改成功')
-      goto('admin/machine-list')
+      goto('/admin/machine-list')
     } catch (e) {
       console.error(e)
     }

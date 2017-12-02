@@ -41,7 +41,6 @@ export function login (body) {
       window.localStorage.setItem('neuq_oj.name', data.user.name)
       window.localStorage.setItem('neuq_oj.id', data.user.id)
       window.localStorage.setItem('neuq_oj.role', data.role)
-      console.log(1)
       await dispatch(actionCreater(SET_USERME, data.user))
       await dispatch(actionCreater(SET_USER_ROLE, data.role))
       message.success('登录成功')
@@ -135,14 +134,15 @@ export function userRegister (body) {
       // } else {
       //   codeHelper(json.code)
       // }
-      const {email, mobile, name, school} = body
+      const {email, mobile, name, school,password} = body
       let userInfo = {email, mobile, name, school}
       const data = await requestService.post(API.register, body)
       dispatch(actionCreater(SET_USERINFO, {
         ...userInfo,
         user_id: data.user_id
       }))
-      goto('/register/verify')
+      goto('/')
+      message.success('注册成功，请登录')
     } catch (e) {
       console.error(e)
     }

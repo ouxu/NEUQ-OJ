@@ -10,7 +10,7 @@ import { Badge } from 'antd'
  */
 const result = [
   <Badge status='error' text='系统错误' />,
-  <Badge status='success' text='' />,
+  <Badge status='processing' text='排队中' />,
   <Badge status='error' text='' />,
   <Badge status='error' text='编译错误' />,
   <Badge status='warning' text='部分通过' />,

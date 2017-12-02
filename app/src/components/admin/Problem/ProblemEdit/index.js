@@ -144,7 +144,7 @@ class ProblemEdit extends Component {
       ),
       onOk: async () => {
         await this.props.deleteProblem(this.props.params.id, {password: this.state.password})
-        goto('admin/problem-list')
+        goto('/admin/problem-list')
       }
     })
   }

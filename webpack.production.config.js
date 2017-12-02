@@ -17,7 +17,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, '/dist/build/'),
-    publicPath: 'http://ou77rcnh8.bkt.clouddn.com/oj/',  // 表示 index.html 中引入资源的前缀path
+    publicPath: 'http://ohtk9ocqw.bkt.clouddn.com/oj/',  // 表示 index.html 中引入资源的前缀path
     filename: 'js/bundle.[chunkhash:8].js',
     chunkFilename: 'js/[name].[chunkhash:8].js'
   },
