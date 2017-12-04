@@ -115,7 +115,7 @@ class Login extends React.Component {
           <Steps
             current={0}
             className='register-wrap-step'
-            key='register-wrapr-step'
+            key='register-wrap-step'
           >
             <Step title='注册' />
             <Step
@@ -141,7 +141,7 @@ class Login extends React.Component {
               {getFieldDecorator('name', {
                 rules: [{required: true, message: '请输入用户名'}]
               })(
-                <Input />,
+                <Input />
               )}
             </FormItem>
 
@@ -157,7 +157,7 @@ class Login extends React.Component {
                   required: true, message: '请输入邮箱!'
                 }]
               })(
-                <Input />,
+                <Input />
               )}
             </FormItem>
             <FormItem
@@ -173,7 +173,7 @@ class Login extends React.Component {
                   required: true, message: '请输入你的密码'
                 }]
               })(
-                <Input type='password' onBlur={this.handlePasswordBlur} />,
+                <Input type='password' onBlur={this.handlePasswordBlur} />
               )}
             </FormItem>
             <FormItem
@@ -189,7 +189,7 @@ class Login extends React.Component {
                   validator: this.checkPassword
                 }]
               })(
-                <Input type='password' />,
+                <Input type='password' />
               )}
             </FormItem>
             <FormItem
@@ -204,7 +204,7 @@ class Login extends React.Component {
                   required: true, message: '请输入你的手机号码'
                 }]
               })(
-                <Input />,
+                <Input />
               )}
             </FormItem>
             <FormItem

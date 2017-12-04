@@ -37,7 +37,7 @@ class ProblemSub extends Component {
   render() {
     const {source_code, errorinfo, resultData, percent, resultDataP, resultDataUp, privated, unsubmit, language, resultCode} = this.props.params
     const {data} = this.props
-    console.log(this.state.loading)
+    // console.log(this.state.loading)
     const mode = [
       'text/x-csrc',
       'text/x-c++src',
@@ -54,7 +54,7 @@ class ProblemSub extends Component {
       mode: mode[language]
     }
     return (
-      <Spin tip="正在判题，请稍等" spinning={unsubmit}>
+      <Spin tip="loading..." spinning={unsubmit}>
         <Collapse
           defaultActiveKey={['submit-code', 'submit-des', 'submit-result']}
           bordered={false}

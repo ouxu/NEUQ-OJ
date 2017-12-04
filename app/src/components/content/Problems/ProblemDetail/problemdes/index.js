@@ -32,12 +32,12 @@ const ProblemDes = ({data = {}}) => (
 
     <Panel header='样例输入' key='problem-sampleinput'>
       <Card >
-        <p dangerouslySetInnerHTML={createMarkup(return2Br(data.sample_input))} />
+        <pre dangerouslySetInnerHTML={createMarkup(return2Br(data.sample_input))} />
       </Card>
     </Panel>
     <Panel header='样例输出' key='problem-sampleoutput'>
       <Card>
-        <p dangerouslySetInnerHTML={createMarkup(return2Br(data.sample_output))} />
+        <pre dangerouslySetInnerHTML={createMarkup(return2Br(data.sample_output))} />
       </Card>
     </Panel>
     {

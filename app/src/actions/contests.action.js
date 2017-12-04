@@ -210,11 +210,7 @@ export function editContest (body, id) {
 }
 
 export function updateContestProblems (id, body) {
-  try {
-    requestService.tpost(API.contest + id + '/update/problem', body)
-  } catch (e) {
-    console.error(e)
-  }
+  requestService.tpost(API.contest + id + '/update/problem', body)
 }
 
 /**

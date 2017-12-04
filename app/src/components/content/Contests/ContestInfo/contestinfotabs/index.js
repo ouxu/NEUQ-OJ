@@ -38,7 +38,7 @@ class ContestInfoTabs extends React.Component {
   }
 
   render () {
-    let {rankData = [{}], count_num: countNum} = this.props
+    let {rankData: {rank_data: rankData = [], first_ac = []}, count_num: countNum} = this.props
     // 给rankData添加索引
     rankData = rankData.map((t = {}, i) => {
       return {
@@ -96,7 +96,7 @@ class ContestInfoTabs extends React.Component {
       columns.push({
         title: String.fromCharCode(parseInt(i) + 65),
         render: (record) => {
-          return colorEncode(record, i)
+          return colorEncode(record, i, first_ac)
         },
         key: 'contest-info-problem-' + i,
         className: 'contest-info-problem',
