@@ -2,14 +2,13 @@
  * Created by out_xu on 17/1/3.
  */
 import React from 'react'
-import {Link} from 'react-router'
-import {Button, Card, Icon, message, Badge} from 'antd'
+import { Link } from 'react-router'
+import { Button, Card, Icon, message } from 'antd'
 import './index.less'
 import QueueAnim from 'rc-queue-anim'
 import ProblemDes from './problemdes'
 import ProblemSub from './problemsub'
 import * as requestService from 'utils/request'
-import {jumpTo} from 'utils'
 import API from 'api'
 
 const Count = 30
@@ -25,7 +24,7 @@ const sleep = (delay = 0) => {
 }
 
 class ProblemDetail extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       submit: this.props.submit || false,
@@ -51,21 +50,21 @@ class ProblemDetail extends React.Component {
     this.submit = this.submit.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.getProblemInfo(this.props.params)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.timer && clearInterval(this.timer)
   }
 
   createMarkup = html => ({__html: html})
 
-  handleMenuClick() {
+  handleMenuClick () {
     this.setState({submit: !this.state.submit})
   }
 
-  updateCode(newCode) {
+  updateCode (newCode) {
     this.setState({
       source_code: newCode,
       result: null,
@@ -73,7 +72,7 @@ class ProblemDetail extends React.Component {
     })
   }
 
-  selectLanguage(value) {
+  selectLanguage (value) {
     this.setState({
       language: parseInt(value),
       result: null,
@@ -81,7 +80,7 @@ class ProblemDetail extends React.Component {
     })
   }
 
-  checkPrivate(e) {
+  checkPrivate (e) {
     this.setState({
       privated: e.target.checked,
       result: null,
@@ -89,7 +88,7 @@ class ProblemDetail extends React.Component {
     })
   }
 
-  combinObj() {
+  combinObj () {
     const {source_code, language} = this.state
     let obj = {source_code, language}
     obj = Object.assign({
@@ -98,7 +97,7 @@ class ProblemDetail extends React.Component {
     return obj
   }
 
-  async submit() {
+  async submit () {
     try {
       await this.props.tokenVerify()
       const obj = this.combinObj()
@@ -122,7 +121,7 @@ class ProblemDetail extends React.Component {
     }
   }
 
-  async submitProblem(body) {
+  async submitProblem (body) {
     const {params} = this.props
     const url = params.pnum
       ? `${API.host}contest/${params.cid}/problem/${params.pnum}/submit`
@@ -145,6 +144,7 @@ class ProblemDetail extends React.Component {
             message.success('判题成功')
             const {result_code, result_data} = solution
             if (result_code === 3 || result_code === 4) {
+              timers && clearInterval(timers)
               const {Passed, UnPassed = []} = result_data
               let percent = 0
               // 如果全部通过或者全部没通过的时候，后端都会返回一个null，导致在后边map的时候出现的问题，所以在这里需要计算一下通过率
@@ -186,6 +186,13 @@ class ProblemDetail extends React.Component {
               unsubmit: false
             })
           }
+          if (solution && solution['result_code'] === -1) {
+            timers && clearInterval(timers)
+            message.info('题目未上传')
+            this.setState({
+              unsubmit: false
+            })
+          }
           if (solution && solution['result_code'] === -2) {
             message.info('正在判题....')
           }
@@ -220,7 +227,7 @@ class ProblemDetail extends React.Component {
     }
   }
 
-  async getErrorInfo(solutionId, result) {
+  async getErrorInfo (solutionId, result) {
     try {
       const errorMode = (result === 10 ? '/runtime-info/' : '/compile-info/')
 
@@ -233,7 +240,7 @@ class ProblemDetail extends React.Component {
     }
   }
 
-  render() {
+  render () {
     const {problemDetail: data = {}} = this.props
     const {params} = this.props
     return (

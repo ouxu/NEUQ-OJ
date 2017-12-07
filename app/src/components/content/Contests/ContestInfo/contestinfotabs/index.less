@@ -1,33 +1,54 @@
 
 .contest-info {
-    &-content {
-        margin-top: 20px;
+  &-content {
+    margin-top: 20px;
 
-        &-table {
-            border: 1px solid #e9e9e9;
-            border-radius: 4px;
-
-        }
+    &-table {
+      border: 1px solid #e9e9e9;
+      border-radius: 4px;
     }
-    &-source,&-code,&-title  {
-        overflow: hidden;
-        word-break:keep-all;/* 不换行 */
-        white-space:nowrap;/* 不换行 */
-    }
-    &-problem {
-        line-height: 3;
+    .contest-rank-table {
+      .ant-table-tbody > tr > td {
         padding: 0 !important;
-        min-width: 80px;
-        div {
-            padding: 2px;
-            display: flex;
-            height: 100%;
-            align-items: center;/*垂直居中*/
-            justify-content: center;
+        text-align: center;
 
-            span {
-            }
-        }
-
+      }
+      .ant-table-thead > tr > th {
+        padding: 8px 0;
+        text-align: center;
+      }
+      .contest-rank-table-title {
+        display: flex;
+        justify-content: space-between;
+      }
     }
+  }
+  &-source, &-code, &-title {
+    overflow: hidden;
+    word-break: keep-all; /* 不换行 */
+    white-space: nowrap; /* 不换行 */
+  }
+  &-user {
+    overflow: hidden;
+    max-width: 100px;
+    word-break: keep-all; /* 不换行 */
+    white-space: nowrap; /* 不换行 */
+  }
+  &-problem {
+    max-width: 90px;
+    overflow: hidden;
+    word-break: keep-all; /* 不换行 */
+    white-space: nowrap; /* 不换行 */
+    div {
+      padding: 2px;
+      display: flex;
+      height: 100%;
+      align-items: center; /*垂直居中*/
+      justify-content: center;
+
+      span {
+      }
+    }
+
+  }
 }

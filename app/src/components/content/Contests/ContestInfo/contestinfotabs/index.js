@@ -6,7 +6,7 @@ import { Link } from 'react-router'
 import { Table } from 'antd'
 import './index.less'
 import { colorEncode, newDate, sec2Str } from 'utils'
-
+import Fullscreenable from 'react-fullscreenable';
 class ContestInfoTabs extends React.Component {
   constructor (props) {
     super(props)
@@ -47,13 +47,8 @@ class ContestInfoTabs extends React.Component {
       }
     })
     const columns = [{
-      title: '',
-      width: 10,
-      key: 'contest-info-none',
-      className: 'contest-info-none'
-    }, {
       title: '排名',
-      width: 80,
+      width: 50,
       dataIndex: 'id',
       key: 'contest-info-rank',
       className: 'contest-info-rank'
@@ -65,27 +60,17 @@ class ContestInfoTabs extends React.Component {
         </span>
       ),
       key: 'contest-info-user',
-      width: 200,
-      className: 'contest-info-user'
-    }, {
-      title: 'ID',
-      render: record => (
-        <span>
-          <Link to={`/userpage/${record.user_id}`}> {record.user_id}</Link>
-        </span>
-      ),
-      key: 'contest-info-id',
-      width: 80,
-      className: 'contest-info-id'
+      className: 'contest-info-user',
+      width: 100
     }, {
       title: '解决',
       dataIndex: 'solved',
-      width: 55,
+      width: 35,
       key: 'contest-info-solved',
       className: 'contest-info-solved'
     }, {
       title: '用时',
-      width: 150,
+      width: 100,
       render: (record) => {
         return <span>{sec2Str(record.time)}</span>
       },
@@ -100,7 +85,7 @@ class ContestInfoTabs extends React.Component {
         },
         key: 'contest-info-problem-' + i,
         className: 'contest-info-problem',
-        width: 100
+        width: 90
       })
     }
     return (
@@ -108,15 +93,19 @@ class ContestInfoTabs extends React.Component {
         columns={columns}
         rowKey={record => `contest-info-${record.id}`}
         dataSource={rankData}
-        scroll={{x: countNum * 100 + 700, y: window.screen.availHeight - 260}}
-        // size='small'
+        scroll={{x: countNum * 90 + 1000, y: window.screen.availHeight - 80}}
+        bordered
+        title={()=>(<div className='contest-rank-table-title' >
+          <div>排行榜</div>
+          <div onClick={this.props.toggleFullscreen}> {this.props.isFullscreen?'退出全屏':'全屏显示'} </div>
+        </div>)}
         loading={this.state.loading}
         pagination={false}
         key='contest-info-content-rank'
-        className='contest-info-content-table'
+        className='contest-info-content-table contest-rank-table'
       />
     )
   }
 }
 
-export default ContestInfoTabs
+export default Fullscreenable()(ContestInfoTabs)

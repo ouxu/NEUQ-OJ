@@ -15,16 +15,21 @@ import { getLocalStorage, goto } from 'utils'
  */
 export function tokenVerify () {
   return async (dispatch) => {
-    try {
-      await requestService.tget(API.tokenVerify)
-      await dispatch(actionCreater(IS_LOGINED))
-    } catch (e) {
-      dispatch(actionCreater(CLEAN_USERME))
-      window.localStorage.removeItem('neuq_oj.token')
-      window.localStorage.removeItem('neuq_oj.name')
-      window.localStorage.removeItem('neuq_oj.id')
-      window.localStorage.removeItem('neuq_oj.role')
-      throw new Error('未登录')
+    const tokenTime = window.localStorage.getItem('neuq_oj.token_verify')
+
+    if (!tokenTime || +Date.now() - tokenTime > 5 * 60 * 1000) {
+      try {
+        await requestService.tget(API.tokenVerify)
+        await dispatch(actionCreater(IS_LOGINED))
+        window.localStorage.setItem('neuq_oj.token_verify', +Date.now())
+      } catch (e) {
+        dispatch(actionCreater(CLEAN_USERME))
+        window.localStorage.removeItem('neuq_oj.token')
+        window.localStorage.removeItem('neuq_oj.name')
+        window.localStorage.removeItem('neuq_oj.id')
+        window.localStorage.removeItem('neuq_oj.role')
+        throw new Error('未登录')
+      }
     }
   }
 }
@@ -134,7 +139,7 @@ export function userRegister (body) {
       // } else {
       //   codeHelper(json.code)
       // }
-      const {email, mobile, name, school,password} = body
+      const {email, mobile, name, school, password} = body
       let userInfo = {email, mobile, name, school}
       const data = await requestService.post(API.register, body)
       dispatch(actionCreater(SET_USERINFO, {
@@ -210,6 +215,7 @@ export function forgotPassword (param) {
     }
   }
 }
+
 /**
  * 找回密码
  * @param params

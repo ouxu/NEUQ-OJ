@@ -18,7 +18,7 @@ export default (record, i, first_ac = []) => {
     }
     return <div style={{height: '100%', backgroundColor: '#' + bgColor}}>
       <span
-        style={{padding: 5}}>{sec2Str(record.problem_ac_sec[i])} {record.problem_wa_num[i] ? '(-' + record.problem_wa_num[i] + ')' : ''} </span>
+        style={{padding: '3px 0'}}>{sec2Str(record.problem_ac_sec[i])} {record.problem_wa_num[i] ? '(-' + record.problem_wa_num[i] + ')' : ''} </span>
     </div>
   } else if (record.problem_wa_num[i] && record.problem_wa_num[i] > 0) {
     aa = 0xaa - record.problem_wa_num[i] * 10
@@ -27,7 +27,7 @@ export default (record, i, first_ac = []) => {
 
     bgColor = 'ff' + aa + aa
     return <div style={{height: '100%', backgroundColor: '#' + bgColor}}>
-      <span>{'-' + record.problem_wa_num[i]}</span>
+      <span style={{padding: '3px 0' }}>{'-' + record.problem_wa_num[i]}</span>
     </div>
   }
 }
