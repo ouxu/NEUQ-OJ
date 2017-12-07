@@ -6,7 +6,10 @@ import { Link } from 'react-router'
 import { Table } from 'antd'
 import './index.less'
 import { colorEncode, newDate, sec2Str } from 'utils'
-import Fullscreenable from 'react-fullscreenable';
+import Footer from 'components/plugins/Footer'
+import Fullscreenable from 'react-fullscreenable'
+import ACMLogo from 'images/acm_logo_long.png'
+
 class ContestInfoTabs extends React.Component {
   constructor (props) {
     super(props)
@@ -88,17 +91,22 @@ class ContestInfoTabs extends React.Component {
         width: 90
       })
     }
+    const {isFullscreen, toggleFullscreen,contestInfo} = this.props
     return (
       <Table
         columns={columns}
         rowKey={record => `contest-info-${record.id}`}
         dataSource={rankData}
-        scroll={{x: countNum * 90 + 1000, y: window.screen.availHeight - 80}}
+        scroll={{x: countNum * 90 + 1000, y: window.screen.availHeight - 135}}
         bordered
-        title={()=>(<div className='contest-rank-table-title' >
-          <div>排行榜</div>
-          <div onClick={this.props.toggleFullscreen}> {this.props.isFullscreen?'退出全屏':'全屏显示'} </div>
+        title={() => (<div className='contest-rank-table-title'>
+          <div> {isFullscreen ? <img src={ACMLogo} height={40} /> : '排行榜'} </div>
+          {isFullscreen && (
+            <div style={{fontSize: 28,fontWeight: 300}}>{contestInfo.title}</div>
+          )}
+          <div onClick={toggleFullscreen}> {isFullscreen ? '退出全屏' : '全屏显示'} </div>
         </div>)}
+        footer={!isFullscreen ? false : () => <Footer />}
         loading={this.state.loading}
         pagination={false}
         key='contest-info-content-rank'

@@ -22,7 +22,7 @@ class AdminComponent extends Component {
             {this.props.children}
           </div>
         </QueueAnim>
-        <Footer year={() => { Date.now().getFullYear() }} />
+        <Footer />
       </QueueAnim>
     )
   }

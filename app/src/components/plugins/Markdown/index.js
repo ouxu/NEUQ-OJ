@@ -5,7 +5,7 @@ import React from 'react'
 
 import Markdown from 'react-markdown'
 import './index.less'
-const MarkdownArea = ({content}) => {
+const MarkdownArea = ({content=''}) => {
   return (
     <div>
       <Markdown className='markdown-body' source={content} />
