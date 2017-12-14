@@ -8,6 +8,7 @@ import { Button, DatePicker, Form, Input, Modal, Radio, Select, Spin } from 'ant
 import { Link } from 'react-router'
 import { goto, verify } from 'utils'
 import QueueAnim from 'rc-queue-anim'
+
 const FormItem = Form.Item
 const Option = Select.Option
 const RadioGroup = Radio.Group
@@ -75,16 +76,11 @@ class ContestEdit extends Component {
               'problem_ids': fieldsValue.problems.map((t) => +t)
             }
 
-            try {
-              if (this.props.cid){
-                this.props.updateContestProblems(this.props.cid, problemParams)
-              } else {
-                this.props.editContest(values, this.props.cid)
-              }
-              goto('/admin/contest-list')
-            } catch (e) {
-              console.log(e)
+            if (this.props.cid) {
+              this.props.updateContestProblems(this.props.cid, problemParams)
             }
+            this.props.editContest(values, this.props.cid)
+            return Promise.resolve()
           }
         })
       }
@@ -151,7 +147,7 @@ class ContestEdit extends Component {
                   initialValue: contest_info.description || ''
                 })(
                   <Input placeholder='请输入描述，支持 Markdown 语法，请在 Markdown 编辑器中编辑后粘贴' type='textarea'
-                    autosize={{minRows: 2}} />
+                         autosize={{minRows: 2}} />
                 )}
 
               </FormItem>

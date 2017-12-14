@@ -86,16 +86,6 @@ module.exports = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      output: {
-        comments: false  // remove all comments
-      },
-      compress: {
-        warnings: false,
-        drop_debugger: true,
-        drop_console: true
-      }
-    }),
     new Visualizer(),
     new webpack.optimize.LimitChunkCountPlugin({maxChunks: 15}),
     new webpack.optimize.MinChunkSizePlugin({minChunkSize: 1000}),

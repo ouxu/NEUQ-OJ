@@ -91,7 +91,7 @@ class ContestInfoTabs extends React.Component {
         width: 90
       })
     }
-    const {isFullscreen, toggleFullscreen,contestInfo} = this.props
+    const {isFullscreen, toggleFullscreen, contestInfo} = this.props
     return (
       <Table
         columns={columns}
@@ -102,9 +102,12 @@ class ContestInfoTabs extends React.Component {
         title={() => (<div className='contest-rank-table-title'>
           <div> {isFullscreen ? <img src={ACMLogo} height={40} /> : '排行榜'} </div>
           {isFullscreen && (
-            <div style={{fontSize: 28,fontWeight: 300}}>{contestInfo.title}</div>
+            <div style={{fontSize: 28, fontWeight: 300}}>{contestInfo.title}</div>
           )}
-          <div onClick={toggleFullscreen}> {isFullscreen ? '退出全屏' : '全屏显示'} </div>
+          <div onClick={toggleFullscreen} style={{
+            width: '150px',
+            textAlign: 'right'
+          }}> {isFullscreen ? '退出全屏' : '全屏显示'} </div>
         </div>)}
         footer={!isFullscreen ? false : () => <Footer />}
         loading={this.state.loading}
