@@ -2,7 +2,7 @@
  * Created by out_xu on 16/12/21.
  */
 export default {
-  mobile: /^1[3|4|5|7|8][0-9]\d{8}$/,
+  mobile: /^(1+\d{10})$/,
   password: /^\w{6,18}$/,
   mail: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
   phone: /^1[3|4|5|7|8][0-9]\d{8}$/,
