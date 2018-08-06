@@ -5,7 +5,8 @@
   "main": "app/src/main.js",
   "scripts": {
     "build": "webpack  --progress --hide-modules --color --config webpack.production.config.js",
-    "start": "webpack-dev-server --env=dev"
+    "start": "webpack-dev-server --env=dev",
+    "pub": "fjpublish env new -y"
   },
   "dependencies": {
     "antd": "^2.13.3",
@@ -71,6 +72,7 @@
     "eslint-plugin-standard": "^2.1.1",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.9.0",
+    "fjpublish": "^2.0.1",
     "gulp": "^3.9.1",
     "gulp-inject": "^4.3.0",
     "gulp-qiniu": "^0.2.4",
