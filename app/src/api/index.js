@@ -3,8 +3,12 @@
  */
 
 // const __APIHOST__ = 'http://192.168.1.189:8080'
-const __APIHOST__ = 'http://140.143.222.61:8088'
+
+// const __APIHOST__ = 'http://oj.marklux.cn'
+const __APIHOST__ = 'http://140.143.222.61:8088/'
+
 const __DEVHOST__ = 'http://192.168.1.18:3000'
+
 const apiMaker = path => `${__APIHOST__}/${path}`
 const devApiMaker = path => `${__DEVHOST__}/${path}`
 
@@ -79,5 +83,6 @@ export default {
   newsIndex: apiMaker('news/index'),
 
   //team generator
-  teamGenerator: apiMaker('admin/users/generate/prefix')
+  teamGenerator: apiMaker('admin/users/generate/prefix'),
+  editorCode: apiMaker('admin/password/change')
 }

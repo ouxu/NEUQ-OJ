@@ -1,6 +1,6 @@
 
 import React from 'react'
-import TeamGenerator from 'components/admin/TeamGenerator'
+import TeamGenerator from 'components/admin/TeamGenerator/index'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { createAccount} from 'actions'

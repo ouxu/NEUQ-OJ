@@ -39,6 +39,7 @@ import EditInfoContainer from 'containers/EditInfo'
 import ProblemDetail from './lazyload/ProblemDetail'
 
 import TeamGeneratorContainer from 'containers/admin/TeamGenerator'
+import EditorCode from 'containers/admin/EditorCode'
 
 import MachineEdit from './lazyload/admin/MachineEdit'
 
@@ -123,6 +124,7 @@ const RouterApp = store => (
       </Route>
       <Route path='problem-tag' component={ProblemTag} />
       <Route path='team-generator' component={TeamGeneratorContainer} />
+      <Route path='team-editorCode' component={EditorCode} />
     </Route>
   </Router>
 )
