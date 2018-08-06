@@ -29,5 +29,5 @@ export {getContestsTable, searchContests, getContest, updateContestProblems, get
 export {joinContest, delContest, editContest, getContestDetail, createContest} from './contests.action'
 export {getNewsList, editNews, delNews, getNews} from './admin.action'
 export {getMessageCount, checkMessage} from './message.action'
-export {createAccount} from './generator.action'
+export {createAccount, editorCode } from './generator.action'
 

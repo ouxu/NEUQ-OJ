@@ -50,6 +50,7 @@ const AdminSider = props => (
       window.localStorage.getItem('neuq_oj.role') === 'admin' &&
       <SubMenu key='system' title={<span>系统管理</span>}>
         <Menu.Item key='team-generator'>账号生成</Menu.Item>
+        <Menu.Item key='team-editorCode'>修改密码</Menu.Item>
       </SubMenu>
     }
   </Menu>
