@@ -4,9 +4,10 @@
 import React from 'react'
 import './index.less'
 
-const Footer = ({year}) =>
+const Footer = ({year = (new Date).getFullYear()}) => (
   <div className='footer' key='footer-1'>
-    <p > NEUQ ACM OJ 版权所有 © {year} 由ACM club技术部支持</p>
+    <p> NEUQ ACM OJ 版权所有 © {year} 由ACM club技术部支持</p>
   </div>
+)
 
 export default Footer

@@ -139,7 +139,7 @@ class ContestList extends Component {
       className: 'contest-manage-date'
     }, {
       title: '操作',
-      render: (record) => <Link to={'admin/contest-edit/' + record.id}>修改</Link>,
+      render: (record) => <Link to={'/admin/contest-edit/' + record.id}>修改</Link>,
       width: 40,
       key: 'contest-manage-action',
       className: 'contest-manage-action'
@@ -174,7 +174,7 @@ class ContestList extends Component {
         return (
           <span className='contest-manage-table-title'>
             <span className='contest-manage-table-title-icon'>
-            创建竞赛 <Link to='admin/contest-edit'><Icon type='plus-square-o' /></Link></span>
+            创建竞赛 <Link to='/admin/contest-edit'><Icon type='plus-square-o' /></Link></span>
             <span>
               <Search
                 placeholder='标题'
@@ -190,7 +190,7 @@ class ContestList extends Component {
         return (
           <span className='contest-manage-table-title'>
             <span className='contest-manage-table-title-icon'>
-            创建竞赛 <Link to='admin/contest-edit'><Icon type='plus-square-o' /></Link></span>
+            创建竞赛 <Link to='/admin/contest-edit'><Icon type='plus-square-o' /></Link></span>
             <span />
           </span>
         )

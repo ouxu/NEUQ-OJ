@@ -3,12 +3,11 @@
  */
 import React, { Component } from 'react'
 
-import { Button, Col, Form, Input, InputNumber, Modal, Radio, Row, Spin, Switch, Icon, Tag } from 'antd'
+import { Button, Col, Form, Icon, Input, InputNumber, Modal, Radio, Row, Spin, Switch, Tag } from 'antd'
 
 import { Link } from 'react-router'
 import QueueAnim from 'rc-queue-anim'
 import { goto } from 'utils'
-import MarkdownArea from 'components/plugins/Markdown'
 import './index.less'
 
 const FormItem = Form.Item
@@ -59,6 +58,8 @@ class ProblemEdit extends Component {
         const {title, description, sample_input, sample_output, difficulty, source, time_limit, memory_limit, spj, is_public, hint} = value
         const body = {
           title: title,
+          input: value.input,
+          output: value.output,
           description: description,
           sample_input: sample_input,
           sample_output: sample_output,
@@ -108,6 +109,8 @@ class ProblemEdit extends Component {
             const {title, description, sample_input, sample_output, difficulty, source, time_limit, memory_limit, spj, is_public, hint} = value
             const body = {
               title: title,
+              input: value.input,
+              output: value.output,
               description: description,
               sample_input: sample_input,
               sample_output: sample_output,
@@ -141,7 +144,7 @@ class ProblemEdit extends Component {
       ),
       onOk: async () => {
         await this.props.deleteProblem(this.props.params.id, {password: this.state.password})
-        goto('admin/problem-list')
+        goto('/admin/problem-list')
       }
     })
   }
@@ -198,7 +201,7 @@ class ProblemEdit extends Component {
               initialValue: data['title'] ? data.test_input : ''
             })(
               <Input placeholder='用于判题的样例输入' type='textarea'
-                     autosize={{minRows: 2}} />
+                autosize={{minRows: 2}} />
             )}
 
           </FormItem>
@@ -212,7 +215,7 @@ class ProblemEdit extends Component {
               initialValue: data['title'] ? data.test_output : ''
             })(
               <Input placeholder='用于判题的样例输出' type='textarea'
-                     autosize={{minRows: 2}} />
+                autosize={{minRows: 2}} />
             )}
 
           </FormItem>
@@ -259,7 +262,7 @@ class ProblemEdit extends Component {
               >
                 {getFieldDecorator('description', {
                   rules: [{required: true, message: '请输入描述'}],
-                  initialValue: data['title'] ? data.description: ''
+                  initialValue: data['title'] ? data.description : ''
                 })(
                   <Input
                     placeholder='请输入描述，支持 Markdown 语法，请在 Markdown 编辑器中编辑后粘贴' type='textarea'
@@ -273,9 +276,9 @@ class ProblemEdit extends Component {
                 {...formItemLayout}
                 label='描述输入'
               >
-                {getFieldDecorator('sample_input', {
+                {getFieldDecorator('input', {
                   rules: [{required: true, message: '请描述输入'}],
-                  initialValue: data['title'] ? data.sample_input : ''
+                  initialValue: data['title'] ? data.input : ''
                 })(
                   <Input
                     placeholder='描述所需的输入格式和内容' type='textarea'
@@ -288,9 +291,9 @@ class ProblemEdit extends Component {
                 {...formItemLayout}
                 label='描述输出'
               >
-                {getFieldDecorator('sample_output', {
+                {getFieldDecorator('output', {
                   rules: [{required: true, message: '请描述输出'}],
-                  initialValue: data['title'] ? data.sample_output : ''
+                  initialValue: data['title'] ? data.output : ''
                 })(
                   <Input
                     placeholder='描述所需的输出格式和内容' type='textarea'
@@ -376,7 +379,7 @@ class ProblemEdit extends Component {
                   initialValue: data['title'] ? data.sample_input : ''
                 })(
                   <Input placeholder='用于前台展示的样例输入' type='textarea'
-                         autosize={{minRows: 2}} />
+                    autosize={{minRows: 2}} />
                 )}
 
               </FormItem>
@@ -389,7 +392,7 @@ class ProblemEdit extends Component {
                   initialValue: data['title'] ? data.sample_output : ''
                 })(
                   <Input placeholder='用于前台展示的样例输出' type='textarea'
-                         autosize={{minRows: 2}} />
+                    autosize={{minRows: 2}} />
                 )}
 
               </FormItem>
@@ -403,7 +406,7 @@ class ProblemEdit extends Component {
                   initialValue: data['title'] ? data.test_input : ''
                 })(
                   <Input placeholder='用于判题的样例输入' type='textarea'
-                         autosize={{minRows: 2}} />
+                    autosize={{minRows: 2}} />
                 )}
               </FormItem>
               }
@@ -417,7 +420,7 @@ class ProblemEdit extends Component {
                   initialValue: data['title'] ? data.test_output : ''
                 })(
                   <Input placeholder='用于判题的样例输出' type='textarea'
-                         autosize={{minRows: 2}} />
+                    autosize={{minRows: 2}} />
                 )}
 
               </FormItem>}
@@ -437,7 +440,7 @@ class ProblemEdit extends Component {
                   initialValue: data['title'] ? data.source : ''
                 })(
                   <Input placeholder='可输入来源' type='textarea'
-                         autosize={{minRows: 1}} />
+                    autosize={{minRows: 1}} />
                 )}
 
               </FormItem>
@@ -450,20 +453,20 @@ class ProblemEdit extends Component {
                   initialValue: data['title'] ? data.hint : ''
                 })(
                   <Input placeholder='可输入提示' type='textarea'
-                         autosize={{minRows: 1}} />
+                    autosize={{minRows: 1}} />
                 )}
 
               </FormItem>
 
               <FormItem>
                 <Button className='contest-edit-submit' size='large' type='primary'
-                        onClick={id ? this.handleChange : this.handleAdd}>
+                  onClick={id ? this.handleChange : this.handleAdd}>
                   {id ? '修改题目' : '添加题目'}
                 </Button>
                 {
                   id &&
                   <Button type='danger' size='large' style={{marginLeft: 10}}
-                          onClick={this.onConfirmDel}>删除题目</Button>
+                    onClick={this.onConfirmDel}>删除题目</Button>
                 }
               </FormItem>
             </Form>

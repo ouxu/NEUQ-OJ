@@ -49,14 +49,12 @@ const codeMap = {
   8004: '竞赛已结束',
   8005: '作业不存在',
   8006: '作业现在不可用',
-  70002: '添加成功，但是服务器状态异常'
+  70002: '服务器状态异常'
 
 }
 
 export default (code) => {
-  if (code === 70002) {
-
-  } else if (codeMap[code]) {
+  if (codeMap[code]) {
     message.error(codeMap[code])
   } else {
     message.error('未知错误')

@@ -8,6 +8,7 @@ import { Button, DatePicker, Form, Input, Modal, Radio, Select, Spin } from 'ant
 import { Link } from 'react-router'
 import { goto, verify } from 'utils'
 import QueueAnim from 'rc-queue-anim'
+
 const FormItem = Form.Item
 const Option = Select.Option
 const RadioGroup = Radio.Group
@@ -39,7 +40,7 @@ class ContestEdit extends Component {
               placeholder='请输入您的登录密码'
             />
           ),
-          onOk: async () => {
+          onOk: () => {
             const rangeTimeValue = fieldsValue['range-time-picker']
             let values = {
               'title': fieldsValue.title,
@@ -74,9 +75,12 @@ class ContestEdit extends Component {
               'password': this.state.password,
               'problem_ids': fieldsValue.problems.map((t) => +t)
             }
-            await this.props.editContest(values, this.props.cid)
-            this.props.cid && await this.props.updateContestProblems(this.props.cid, problemParams)
-            goto('/admin/contest-list')
+
+            if (this.props.cid) {
+              this.props.updateContestProblems(this.props.cid, problemParams)
+            }
+            this.props.editContest(values, this.props.cid)
+            return Promise.resolve()
           }
         })
       }
@@ -93,8 +97,8 @@ class ContestEdit extends Component {
           placeholder='请输入您的登录密码'
         />
       ),
-      onOk: async () => {
-        await this.props.delContest(this.props.cid, {password: this.state.password})
+      onOk: () => {
+        this.props.delContest(this.props.cid, {password: this.state.password})
         goto('/admin/contest-list')
       }
     })

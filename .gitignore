@@ -6,3 +6,5 @@ gulpfile.js
 stories
 dist/build/*
 package-lock.json
+yarn.lock
+publishConfig.js

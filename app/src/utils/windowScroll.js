@@ -1,13 +1,14 @@
 /**
- * Created by out_xu on 17/2/27.
+ * Created by out_xu on 17/10/29.
  */
-export default (anchorName) => {
+import scrollToView from 'scroll-into-view'
+
+const scrollToAnchor = (anchorName, config={}) => {
   if (anchorName) {
-    // 找到锚点
-    const anchorElement = document.getElementById(anchorName)
-    // 如果对应id的锚点存在，就跳转到锚点
-    if (anchorElement) {
-      anchorElement.scrollIntoView()
-    }
+
+    let anchorElement = document.getElementById(anchorName)
+    if (anchorElement) { scrollToView(anchorElement, config) }
   }
 }
+
+export default scrollToAnchor

@@ -12,7 +12,7 @@ const Search = Input.Search
 const confirm = Modal.confirm
 
 class ProblemList extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       searchText: '',
@@ -25,17 +25,17 @@ class ProblemList extends Component {
     this.createCon = this.createCon.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const page = window.sessionStorage.getItem('neuq_oj.problempagecurr') || 1
     const size = window.sessionStorage.getItem('neuq_oj.problempagesize') || 20
     this.props.getProblemTable(page, size)
   }
 
-  onInputChange(e) {
+  onInputChange (e) {
     this.setState({searchText: e.target.value})
   }
 
-  onSearch() {
+  onSearch () {
     const searchText = encodeURIComponent(this.state.searchText)
     if (searchText.length < 1) {
       const page = 1
@@ -46,7 +46,7 @@ class ProblemList extends Component {
     }
   }
 
-  createCon() {
+  createCon () {
     this.props.createContest({problems: this.state.selected})
     goto('/admin/contest-edit')
   }
@@ -76,7 +76,7 @@ class ProblemList extends Component {
     })
   }
 
-  render() {
+  render () {
     const {problems: {problemTable}, loading, getProblemTable, searchProblems, createContest, deleteProblem} = this.props
     const data = problemTable.problems
     const colorArr = {
@@ -88,7 +88,7 @@ class ProblemList extends Component {
     }
     const randomN = () => Math.floor(Math.random() * 5 + 1)
     const difficultyArr = ['简单', '一般', '困难']
-    const popInput = <Input type='password' onChange={this.passwordChange} placeholder='请输入您的登录密码' size='small'/>
+    const popInput = <Input type='password' onChange={this.passwordChange} placeholder='请输入您的登录密码' size='small' />
     const columns = [{
       title: '',
       width: '1%',
@@ -169,7 +169,7 @@ class ProblemList extends Component {
         return (
           <div>
             已选择 {selected.length} 道 <Button type='primary' size='small' onClick={this.createCon}
-                                            disabled={selected.length < 1}>发起竞赛</Button>
+              disabled={selected.length < 1}>发起竞赛</Button>
           </div>
         )
       },
@@ -195,7 +195,7 @@ class ProblemList extends Component {
     const title = () => (
       <span className='contest-manage-table-title'>
         <span className='contest-manage-table-title-icon'>
-          创建问题 <Link to='/admin/contest-edit'><Icon type='plus-square-o'/></Link></span>
+          创建问题 <Link to='/admin/problem-edit'><Icon type='plus-square-o' /></Link></span>
         <span>
           <Search
             placeholder='题号/标题/作者/标签'

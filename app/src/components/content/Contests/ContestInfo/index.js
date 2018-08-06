@@ -17,7 +17,6 @@ class ContestInfo extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      time: new Date(),
       rankData: []
     }
     this.getRank = this.getRank.bind(this)
@@ -26,17 +25,6 @@ class ContestInfo extends React.Component {
   componentDidMount () {
     this.props.params.cid && this.props.getContest(this.props.params.cid)
     const {contest: {contest_info = {}}, params: {cid: id}} = this.props
-    this.timer = setInterval(() => {
-      this.setState({time: new Date()})
-      const endTime = contest_info && newDate(contest_info.end_time)
-      if (this.state.time > endTime) {
-        clearInterval(this.timer)
-      }
-    }, 1000)
-  }
-
-  componentWillUnmount () {
-    this.timer && clearInterval(this.timer)
   }
 
   createMarkup = html => ({__html: html})
@@ -128,9 +116,7 @@ class ContestInfo extends React.Component {
                 <span className='contest-info-header-title-sub'>{contest_info.title}</span>
               </h1>
               <ContestProgress
-                time={this.state.time}
-                start_time={contest_info.start_time}
-                end_time={contest_info.end_time}
+                contest_info={contest_info}
               />
               <Markdown content={contest_info.description} />
             </div>
@@ -160,6 +146,7 @@ class ContestInfo extends React.Component {
                   time={this.state.time}
                   end_time={contest_info.end_time}
                   rankData={this.state.rankData}
+                  contestInfo = {contest_info}
                   id={contest_info.id}
                   scroll={{x: 960}}
                 />

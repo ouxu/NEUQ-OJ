@@ -6,8 +6,10 @@ const autoprefixer = require('autoprefixer')               // 自动处理浏览
 const HtmlWebpackPlugin = require('html-webpack-plugin')    // 生成 html
 const CleanWebpackPlugin = require('clean-webpack-plugin')  // 用于清除上次打包文件
 const Visualizer = require('webpack-visualizer-plugin')
+const QiniuPlugin = require('qiniu-webpack-plugin')
 const getThemeConfig = require('./theme.config')
 const theme = getThemeConfig()
+
 module.exports = {
   entry: {
     bundle: path.join(__dirname, '/app/src/main.js'),
@@ -17,7 +19,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, '/dist/build/'),
-    publicPath: 'http://ohtk9ocqw.bkt.clouddn.com/oj/',  // 表示 index.html 中引入资源的前缀path
+    publicPath: 'http://p0y3d4gdq.bkt.clouddn.com/fe/',  // 表示 index.html 中引入资源的前缀path
     filename: 'js/bundle.[chunkhash:8].js',
     chunkFilename: 'js/[name].[chunkhash:8].js'
   },
@@ -86,16 +88,6 @@ module.exports = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      output: {
-        comments: false  // remove all comments
-      },
-      compress: {
-        warnings: false,
-        drop_debugger: true,
-        drop_console: true
-      }
-    }),
     new Visualizer(),
     new webpack.optimize.LimitChunkCountPlugin({maxChunks: 15}),
     new webpack.optimize.MinChunkSizePlugin({minChunkSize: 1000}),
@@ -108,6 +100,7 @@ module.exports = {
     new CleanWebpackPlugin(['dist/build'], {
       verbose: true,
       dry: false
-    })
+    }),
+    new QiniuPlugin(require('./publishConfig').qiniu)
   ]
 }

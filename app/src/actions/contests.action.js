@@ -202,7 +202,8 @@ export function editContest (body, id) {
       let url = id ? API.contest + id + '/update/info' : API.createContest
       await requestService.tpost(url, body)
       await dispatch(actionCreater(GET_CONTEST_ERR))
-      message.success('发布成功')
+      message.success('操作成功')
+      goto('/admin/contest-list')
     } catch (e) {
       console.error(e)
     }
@@ -210,11 +211,7 @@ export function editContest (body, id) {
 }
 
 export function updateContestProblems (id, body) {
-  try {
-    requestService.tpost(API.contest + id + '/update/problem', body)
-  } catch (e) {
-    console.error(e)
-  }
+  requestService.tpost(API.contest + id + '/update/problem', body)
 }
 
 /**

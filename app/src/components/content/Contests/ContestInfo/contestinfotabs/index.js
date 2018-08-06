@@ -6,6 +6,9 @@ import { Link } from 'react-router'
 import { Table } from 'antd'
 import './index.less'
 import { colorEncode, newDate, sec2Str } from 'utils'
+import Footer from 'components/plugins/Footer'
+import Fullscreenable from 'react-fullscreenable'
+import ACMLogo from 'images/acm_logo_long.png'
 
 class ContestInfoTabs extends React.Component {
   constructor (props) {
@@ -38,7 +41,7 @@ class ContestInfoTabs extends React.Component {
   }
 
   render () {
-    let {rankData = [{}], count_num: countNum} = this.props
+    let {rankData: {rank_data: rankData = [], first_ac = []}, count_num: countNum} = this.props
     // 给rankData添加索引
     rankData = rankData.map((t = {}, i) => {
       return {
@@ -47,13 +50,8 @@ class ContestInfoTabs extends React.Component {
       }
     })
     const columns = [{
-      title: '',
-      width: 10,
-      key: 'contest-info-none',
-      className: 'contest-info-none'
-    }, {
       title: '排名',
-      width: 80,
+      width: 50,
       dataIndex: 'id',
       key: 'contest-info-rank',
       className: 'contest-info-rank'
@@ -65,27 +63,17 @@ class ContestInfoTabs extends React.Component {
         </span>
       ),
       key: 'contest-info-user',
-      width: 200,
-      className: 'contest-info-user'
-    }, {
-      title: 'ID',
-      render: record => (
-        <span>
-          <Link to={`/userpage/${record.user_id}`}> {record.user_id}</Link>
-        </span>
-      ),
-      key: 'contest-info-id',
-      width: 80,
-      className: 'contest-info-id'
+      className: 'contest-info-user',
+      width: 100
     }, {
       title: '解决',
       dataIndex: 'solved',
-      width: 55,
+      width: 35,
       key: 'contest-info-solved',
       className: 'contest-info-solved'
     }, {
       title: '用时',
-      width: 150,
+      width: 100,
       render: (record) => {
         return <span>{sec2Str(record.time)}</span>
       },
@@ -96,27 +84,39 @@ class ContestInfoTabs extends React.Component {
       columns.push({
         title: String.fromCharCode(parseInt(i) + 65),
         render: (record) => {
-          return colorEncode(record, i)
+          return colorEncode(record, i, first_ac)
         },
         key: 'contest-info-problem-' + i,
         className: 'contest-info-problem',
-        width: 100
+        width: 90
       })
     }
+    const {isFullscreen, toggleFullscreen, contestInfo} = this.props
     return (
       <Table
         columns={columns}
         rowKey={record => `contest-info-${record.id}`}
         dataSource={rankData}
-        scroll={{x: countNum * 100 + 700, y: window.screen.availHeight - 260}}
-        // size='small'
+        scroll={{x: countNum * 90 + 1000, y: window.screen.availHeight - 135}}
+        bordered
+        title={() => (<div className='contest-rank-table-title'>
+          <div> {isFullscreen ? <img src={ACMLogo} height={40} /> : '排行榜'} </div>
+          {isFullscreen && (
+            <div style={{fontSize: 28, fontWeight: 300}}>{contestInfo.title}</div>
+          )}
+          <div onClick={toggleFullscreen} style={{
+            width: '150px',
+            textAlign: 'right'
+          }}> {isFullscreen ? '退出全屏' : '全屏显示'} </div>
+        </div>)}
+        footer={!isFullscreen ? false : () => <Footer />}
         loading={this.state.loading}
         pagination={false}
         key='contest-info-content-rank'
-        className='contest-info-content-table'
+        className='contest-info-content-table contest-rank-table'
       />
     )
   }
 }
 
-export default ContestInfoTabs
+export default Fullscreenable()(ContestInfoTabs)

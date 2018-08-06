@@ -15,16 +15,21 @@ import { getLocalStorage, goto } from 'utils'
  */
 export function tokenVerify () {
   return async (dispatch) => {
-    try {
-      await requestService.tget(API.tokenVerify)
-      await dispatch(actionCreater(IS_LOGINED))
-    } catch (e) {
-      dispatch(actionCreater(CLEAN_USERME))
-      window.localStorage.removeItem('neuq_oj.token')
-      window.localStorage.removeItem('neuq_oj.name')
-      window.localStorage.removeItem('neuq_oj.id')
-      window.localStorage.removeItem('neuq_oj.role')
-      throw new Error('未登录')
+    const tokenTime = window.localStorage.getItem('neuq_oj.token_verify')
+
+    if (!tokenTime || +Date.now() - tokenTime > 5 * 60 * 1000) {
+      try {
+        await requestService.tget(API.tokenVerify)
+        await dispatch(actionCreater(IS_LOGINED))
+        window.localStorage.setItem('neuq_oj.token_verify', +Date.now())
+      } catch (e) {
+        dispatch(actionCreater(CLEAN_USERME))
+        window.localStorage.removeItem('neuq_oj.token')
+        window.localStorage.removeItem('neuq_oj.name')
+        window.localStorage.removeItem('neuq_oj.id')
+        window.localStorage.removeItem('neuq_oj.role')
+        throw new Error('未登录')
+      }
     }
   }
 }
@@ -41,7 +46,6 @@ export function login (body) {
       window.localStorage.setItem('neuq_oj.name', data.user.name)
       window.localStorage.setItem('neuq_oj.id', data.user.id)
       window.localStorage.setItem('neuq_oj.role', data.role)
-      console.log(1)
       await dispatch(actionCreater(SET_USERME, data.user))
       await dispatch(actionCreater(SET_USER_ROLE, data.role))
       message.success('登录成功')
@@ -135,14 +139,15 @@ export function userRegister (body) {
       // } else {
       //   codeHelper(json.code)
       // }
-      const {email, mobile, name, school} = body
+      const {email, mobile, name, school, password} = body
       let userInfo = {email, mobile, name, school}
       const data = await requestService.post(API.register, body)
       dispatch(actionCreater(SET_USERINFO, {
         ...userInfo,
         user_id: data.user_id
       }))
-      goto('/register/verify')
+      goto('/')
+      message.success('注册成功，请登录')
     } catch (e) {
       console.error(e)
     }
@@ -210,6 +215,7 @@ export function forgotPassword (param) {
     }
   }
 }
+
 /**
  * 找回密码
  * @param params

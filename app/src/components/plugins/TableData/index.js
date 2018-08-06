@@ -10,7 +10,7 @@ import { Badge } from 'antd'
  */
 const result = [
   <Badge status='error' text='系统错误' />,
-  <Badge status='success' text='' />,
+  <Badge status='processing' text='排队中' />,
   <Badge status='error' text='' />,
   <Badge status='error' text='编译错误' />,
   <Badge status='warning' text='部分通过' />,
@@ -19,13 +19,8 @@ const result = [
 const language = [
   'C',
   'C++',
-  'Pascal',
   'Java',
-  'ruby',
-  'Shell',
-  'Python',
-  'php',
-  'perl'
+  'Python2.7',
 ]
 
 export const columns = [{
