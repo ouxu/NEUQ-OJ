@@ -35,9 +35,10 @@ class ProblemSub extends Component {
   createMarkup = html => ({__html: html})
 
   render() {
-    const {source_code, errorinfo, resultData, percent, resultDataP, resultDataUp, privated, unsubmit, language, resultCode} = this.props.params
+    const {source_code, errorinfo, resultData, percent, resultDataP, resultDataUp, privated, unsubmit, language} = this.props.params
     const {data} = this.props
     // console.log(this.state.loading)
+    const resultCode = this.props.params.resultCode
     const mode = [
       'text/x-csrc',
       'text/x-c++src',
@@ -142,10 +143,10 @@ class ProblemSub extends Component {
                 />
               </div>
             )}
-            {(resultCode === 3 || resultCode === 4) && resultDataUp.length > 0 &&
-            (
+            {(resultCode === 5 || resultCode === 6 || resultCode === 7 || resultCode === 8) && resultDataUp.length > 0 && (
               <div style={{marginTop: 20}}>
                 未通过的数据:
+                {console.log('===>', resultDataUp)}
                 <Table
                   columns={tColumns} bordered
                   rowKey={record => `result-${record.key}`}
@@ -153,8 +154,9 @@ class ProblemSub extends Component {
                   scroll={{x: 960}}
                   size='small'
                   pagination={false}
-                  key='result-2'
-                /></div>
+                  key='result-test'
+                />
+              </div>
             )}
             {
               errorinfo &&

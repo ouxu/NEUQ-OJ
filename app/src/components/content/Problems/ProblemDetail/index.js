@@ -143,7 +143,8 @@ class ProblemDetail extends React.Component {
             console.log('返回结果，定时器被清除啦')
             message.success('判题成功')
             const {result_code, result_data} = solution
-            if (result_code === 3 || result_code === 4) {
+            console.log('result_code', result_code)
+            if (result_code === 3 || result_code === 4 ) {
               timers && clearInterval(timers)
               const {Passed, UnPassed = []} = result_data
               let percent = 0
@@ -179,7 +180,29 @@ class ProblemDetail extends React.Component {
                   }
                 ]
               })
-            } else if (result_code === -2) {
+            } else if (result_code === 5 || result_code === 6 || result_code === 7 || result_code === 8) {
+              timers && clearInterval(timers)
+              const {Passed, UnPassed = []} = result_data
+              let percent = 0
+              message.error('答案有点问题')
+              const aPassed = [].concat(Passed).map((a, i) => ({
+                ...a,
+                key: i + 1
+              }))
+              const aUnPassed = [].concat(UnPassed).map((aUn, i) => ({
+                ...aUn,
+                key: i + 1
+              }))
+              this.setState({
+                percent: percent,
+                resultDataP: aPassed,
+                resultDataUp: aUnPassed
+              })
+              this.setState({
+                submit: true,
+                resultCode: result_code,
+                unsubmit: false,
+              })
             }
             this.setState({
               resultCode: result_code,
@@ -286,6 +309,7 @@ class ProblemDetail extends React.Component {
               checkPrivate={this.checkPrivate}
               params={this.state}
               data={data}
+              resultCode={this.state.result_code}
             />}
           </div>
           {

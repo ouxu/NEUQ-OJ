@@ -82,7 +82,7 @@ const RouterApp = store => (
         <Route path=':type' component={ForgetPassword} />
       </Route>
       <Route path='status'>
-        <IndexRoute component={StatusContainer}/>
+        <IndexRoute component={StatusContainer} />
         <Route path=':id' component={StatusDetailContainer} />
       </Route>
       <Route path='ranklist' component={RanklistContainer} />
