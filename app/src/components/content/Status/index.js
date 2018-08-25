@@ -76,7 +76,6 @@ class StatusTable extends React.Component {
 
   render () {
     const {statusTable: data} = this.props
-
     const pagination = {
       pageSize: Number(window.sessionStorage.getItem('neuq_oj.statuspagesize')),
       current: Number(window.sessionStorage.getItem('neuq_oj.statuspagecurr')),

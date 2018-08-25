@@ -14,7 +14,11 @@ const result = [
   <Badge status='error' text='' />,
   <Badge status='error' text='编译错误' />,
   <Badge status='warning' text='部分通过' />,
-  <Badge status='success' text='正确' />
+  <Badge status='success' text='正确' />,
+  <Badge status='error' text='运行错误' />,
+  <Badge status='warning' text='时间超限' />,
+  <Badge status='warning' text='内存超限' />,
+  <Badge status='error' text='答案错误' />
 ]
 const language = [
   'C',
