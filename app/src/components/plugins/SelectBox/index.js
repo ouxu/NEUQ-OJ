@@ -47,6 +47,10 @@ export class ResultSelect extends React.Component {
         <Option value='2'>编译错误</Option>
         <Option value='3'>部分通过</Option>
         <Option value='4'>正确</Option>
+        <Option value='5'>运行错误</Option>
+        <Option value='6'>时间超限</Option>
+        <Option value='7'>内存超限</Option>
+        <Option value='8'>答案错误</Option>
       </Select>
     )
   }
